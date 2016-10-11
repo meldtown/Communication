@@ -1,3 +1,17 @@
+<table cellpadding="5" cellspacing="0" border="1">
+	<tbody>
+	<tr>
+		<td width="30%" valign="top">
+			<div data-bind="template: { name: 'ConversationSidebarPreview', foreach: conversations }"></div>
+		</td>
+		<td width="70%" valign="top">
+			<div data-bind="with: messageList">
+				<div data-bind="template: { name: 'MessageList', foreach: messages }"></div>
+			</div>
+		</td>
+	</tr>
+	</tbody>
+</table>
 <div>
     <span data-bind="text: aHasFocus"></span>
     <label for="a">a</label>
