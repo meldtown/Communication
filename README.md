@@ -38,6 +38,16 @@
 * style-loader
 * css-loader
 
+### Lint
+
+* lint-staged
+* babel-eslint
+* eslint
+* eslint-plugin-import
+* stylelint
+* stylelint-config-standard
+
+
 # WebStorm configure tests runner
 
 Extra Mocha options: `--require babel-register --require ignore-styles --require jsdom-global/register`
