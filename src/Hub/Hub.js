@@ -2,8 +2,8 @@ import $ from 'jquery'
 import * as ko from 'knockout'
 import './Hub.scss'
 import '../bindingHandlers/hasFocus'
-import Conversation from '../Conversation/Conversation'
-import MessageList from '../MessageList/MessageList'
+import Conversation from '../Conversation/ConversationList'
+import MessageList from '../Message/MessageList'
 
 export default class Hub {
 	constructor() {
