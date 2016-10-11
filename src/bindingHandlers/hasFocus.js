@@ -1,7 +1,6 @@
 import $ from 'jquery'
 import * as ko from 'knockout'
 
-//noinspection JSUnusedGlobalSymbols
 const hasFocus = {
     init: (element, valueAccessor) => {
         $(element).focus(() => {

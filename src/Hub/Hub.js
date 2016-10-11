@@ -19,10 +19,10 @@ export default class Hub {
     }
 
     fetch() {
-        return $.getJSON('https://jsonplaceholder.typicode.com/users')
-            .then(users => {
-                this.a(users.length / 2)
-                this.b(users.length / 2)
+        return $.getJSON(`${api}/conversations`)
+            .then(conversations => {
+                this.a(conversations.length / 2)
+                this.b(conversations.length / 2)
             })
             .fail(() => {
                 this.a(1)

@@ -1,14 +1,18 @@
 import path from 'path'
-import webpack from 'webpack'
+import DefinePlugin from 'webpack/lib/DefinePlugin'
+import LoaderOptionsPlugin from 'webpack/lib/LoaderOptionsPlugin'
+import ProvidePlugin from 'webpack/lib/ProvidePlugin'
+import CommonsChunkPlugin from 'webpack/lib/optimize/CommonsChunkPlugin'
+import HotModuleReplacementPlugin from 'webpack/lib/HotModuleReplacementPlugin'
 import autoprefixer from 'autoprefixer'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 const isProduction = 'production' === (process.env.NODE_ENV = process.argv.indexOf('-p') === -1 ? 'development' : 'production')
 
 const plugins = [
-	new webpack.LoaderOptionsPlugin({options: {context: __dirname, postcss: [autoprefixer]}}),
-	new webpack.optimize.CommonsChunkPlugin('commons'),
-	new webpack.ProvidePlugin({
+	new LoaderOptionsPlugin({options: {context: __dirname, postcss: [autoprefixer]}}),
+	new CommonsChunkPlugin('commons'),
+	new ProvidePlugin({
 		ko: 'knockout',
 		$: 'jquery'
 	})
@@ -17,7 +21,7 @@ const plugins = [
 export default (app) => ({
 	devtool: isProduction ? 'source-map' : 'eval',
 	entry: {
-		app1: './entry/app1.js'
+		hub: './entry/hub.js'
 	},
 	output: {
 		path: path.join(__dirname, 'dist'),
@@ -38,7 +42,9 @@ export default (app) => ({
 			}
 		]
 	},
-	plugins: isProduction ? plugins.concat([new ExtractTextPlugin('[name].css')]) : plugins.concat([new webpack.HotModuleReplacementPlugin()]),
+	plugins: isProduction
+		? plugins.concat([new ExtractTextPlugin('[name].css')])
+		: plugins.concat([new DefinePlugin({api: '"http://localhost:8181"'}), new HotModuleReplacementPlugin()]),
 	devServer: {
 		hot: true,
 		historyApiFallback: {

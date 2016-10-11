@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "concurrently \"npm run start:db\" \"npm run start:hub\"",
-    "start:app1": "webpack-dev-server --env hub",
+    "start:hub": "webpack-dev-server --env hub",
     "start:db": "json-server --watch db.json --port 8181",
     "dist": "webpack -p",
     "test": "mocha --reporter spec --require babel-register --require ignore-styles --require jsdom-global/register \"src/**/*.spec.js\"",

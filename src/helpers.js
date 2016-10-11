@@ -1,4 +1,3 @@
-//noinspection JSUnusedGlobalSymbols
 export const injectTemplate = (name, template) => {
     let script = document.createElement('SCRIPT')
     script.setAttribute('id', name)
