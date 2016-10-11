@@ -1,0 +1,9 @@
+<div>
+    <span data-bind="text: aHasFocus"></span>
+    <label for="a">a</label>
+    <input id="a" data-bind="value: a, valueUpdate: 'keyup', hasFocus: aHasFocus" />
+    <label for="b">b</label>
+    <input id="b" data-bind="value: b, valueUpdate: 'keyup'" />
+    <span data-bind="text: sum"></span>
+    <button data-bind="click: fetch">fetch</button>
+</div>
