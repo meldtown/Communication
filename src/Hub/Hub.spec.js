@@ -3,11 +3,15 @@ import assert from 'assert'
 import Hub from './Hub'
 import jQueryMockAjax from 'jquery-mockjax'
 
+const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
 $.mockjaxSettings.logging = 0
 
 
 describe('Hub', () => {
+    before(() => {
+        global.api = api
+    })
     afterEach(() => mockjax.clear())
 
     it('should have default 0 for a', () => {
@@ -17,7 +21,7 @@ describe('Hub', () => {
 
     it('can mock ajax', done => {
         mockjax({
-            url: 'https://jsonplaceholder.typicode.com/users',
+            url: `${api}/conversations`,
             responseText: [1, 2, 3, 4]
         })
 
