@@ -21,7 +21,8 @@ const plugins = [
 export default (app) => ({
 	devtool: isProduction ? 'source-map' : 'eval',
 	entry: {
-		hub: './entry/hub.js'
+		hub: './entry/hub.js',
+		templates: './entry/templates.js'
 	},
 	output: {
 		path: path.join(__dirname, 'dist'),
