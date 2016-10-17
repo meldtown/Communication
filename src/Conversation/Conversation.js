@@ -1,3 +1,4 @@
+import * as actions from '../actions'
 import * as ko from 'knockout'
 
 export default class Conversation {
@@ -11,5 +12,9 @@ export default class Conversation {
 		this.lastMessage = ko.observable(lastMessage)
 
 		this.isSelected = ko.observable(false)
+
+		dispatcher.subscribe(id => {
+			this.isSelected(this.id() === id)
+		}, this, actions.CONVERSATION_SELECTED)
 	}
 }

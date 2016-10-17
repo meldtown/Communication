@@ -1,3 +1,4 @@
+import * as actions from '../actions'
 import * as generator from '../../db'
 import * as ko from 'knockout'
 import assert from 'assert'
@@ -45,5 +46,26 @@ describe('Conversation', () => {
 
 	it('should have isSelected prop', () => {
 		assert.equal(ko.isObservable(model.isSelected), true)
+	})
+
+	it(`should react to ${actions.CONVERSATION_SELECTED} event`, () => {
+		var conversationId = 1;
+
+		model.id(conversationId)
+
+		assert.equal(model.isSelected(), false)
+
+		dispatcher.notifySubscribers(conversationId, actions.CONVERSATION_SELECTED)
+
+		assert.equal(model.isSelected(), true)
+	})
+
+	it(`should react to ${actions.CONVERSATION_SELECTED} event only if has same id`, () => {
+		model.id(2)
+		model.isSelected(true)
+
+		dispatcher.notifySubscribers(1, actions.CONVERSATION_SELECTED)
+
+		assert.equal(model.isSelected(), false)
 	})
 })
