@@ -5,8 +5,11 @@ export default class Conversation {
 		if (!ko.isSubscribable(dispatcher)) {
 			throw new Error('ko.subscribable is required')
 		}
+
 		this.dispatcher = dispatcher
 		this.id = ko.observable(id)
 		this.lastMessage = ko.observable(lastMessage)
+
+		this.isSelected = ko.observable(false)
 	}
 }

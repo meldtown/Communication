@@ -42,4 +42,8 @@ describe('Conversation', () => {
 	it('should have dispatcher prop', () => {
 		assert.equal(ko.isSubscribable(model.dispatcher), true)
 	})
+
+	it('should have isSelected prop', () => {
+		assert.equal(ko.isObservable(model.isSelected), true)
+	})
 })
