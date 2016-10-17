@@ -24,7 +24,7 @@ const MESSAGE_TYPES = [
 const generateNumberBetween = (min, max) => faker.random.number(max - min) + min
 const generateWorkTime = () => `${generateNumberBetween(11, 20)}:${faker.random.arrayElement(['00', '30'])}`
 const generateDummyImage = (width, height, backgroundColor, color, text) => `https://dummyimage.com/${width}x${height}/${backgroundColor}/${color}.png&text=${text}`
-const generateRecentDate = () => faker.date.recent(300).toString()
+const generateRecentDate = () => faker.date.recent(300).toISOString()
 const generateLanguage = () => faker.random.arrayElement(['ru', 'en', 'ua'])
 
 export const generateStandardMessage = (id, conversationId) => ({

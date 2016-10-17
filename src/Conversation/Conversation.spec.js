@@ -1,3 +1,4 @@
+import * as generator from '../../db'
 import * as ko from 'knockout'
 import assert from 'assert'
 import Conversation from './Conversation'
@@ -21,5 +22,11 @@ describe('Conversation', () => {
 
 	it('should have lastMessage prop', () => {
 		assert.equal(ko.isObservable(model.lastMessage), true)
+	})
+
+	it('should take constructor params', () => {
+		let data = {id: 1, lastMessage: generator.generateStandardMessage(1, 1)}
+		let model = new Conversation(data)
+		assert.deepEqual(ko.toJS(model), data)
 	})
 })
