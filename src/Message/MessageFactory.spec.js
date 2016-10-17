@@ -29,7 +29,7 @@ describe('MessageFactory', () => {
 		it(`should create ${types.INVITE} message`, () => {
 			data.type = types.INVITE
 			data.time = '23:04'
-			data.time = 'Wallstreet st 5'
+			data.address = 'Wallstreet st 5'
 			let expected = new InviteMessage(data)
 			let actual = MessageFactory.create(data)
 			assert.deepEqual(ko.toJS(actual), ko.toJS(expected))
@@ -52,6 +52,18 @@ describe('MessageFactory', () => {
 		it('should return null in all other cases', () => {
 			let data = {type: 'UNKNOWN', id: 1, date: '2015-04-24T23:04:59', conversationId: 1, text: 'Hello World'}
 			assert.equal(MessageFactory.create(data), null)
+		})
+
+		it('should map array', () => {
+			let items = [
+				Object.assign({}, data, {type: types.STANDARD}),
+				Object.assign({}, data, {type: types.INVITE, time: '23:50', address: 'Ukraine, Kiev'})
+			]
+
+			let models = items.map(MessageFactory.create)
+
+			assert.deepEqual(Object.assign({}, ko.toJS(models[0]), {type: types.STANDARD}), items[0])
+			assert.deepEqual(Object.assign({}, ko.toJS(models[1]), {type: types.INVITE}), items[1])
 		})
 
 	})
