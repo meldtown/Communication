@@ -27,7 +27,7 @@ const generateDummyImage = (width, height, backgroundColor, color, text) => `htt
 const generateRecentDate = () => faker.date.recent(300)
 const generateLanguage = () => faker.random.arrayElement(['ru', 'en', 'ua'])
 
-const generateStandardMessage = (id, conversationId) => ({
+export const generateStandardMessage = (id, conversationId) => ({
 	id,
 	conversationId,
 	type: STANDARD_MESSAGE,
@@ -35,7 +35,7 @@ const generateStandardMessage = (id, conversationId) => ({
 	text: faker.hacker.phrase()
 })
 
-const generateInviteMessage = (id, conversationId) => ({
+export const generateInviteMessage = (id, conversationId) => ({
 	id,
 	conversationId,
 	type: INVITE_MESSAGE,
@@ -45,7 +45,7 @@ const generateInviteMessage = (id, conversationId) => ({
 	address: faker.address.streetAddress()
 })
 
-const generateDeclineMessage = (id, conversationId) => ({
+export const generateDeclineMessage = (id, conversationId) => ({
 	id,
 	conversationId,
 	type: DECLINE_MESSAGE,
@@ -68,7 +68,7 @@ const generateVacancy = () => {
 	}
 }
 
-const generateOfferMessage = (id, conversationId) => ({
+export const generateOfferMessage = (id, conversationId) => ({
 	id,
 	conversationId,
 	type: OFFER_MESSAGE,
@@ -77,7 +77,7 @@ const generateOfferMessage = (id, conversationId) => ({
 	vacancy: generateVacancy()
 })
 
-const generateResponseMessage = (id, conversationId) => ({
+export const generateResponseMessage = (id, conversationId) => ({
 	id,
 	conversationId,
 	type: RESPONSE_MESSAGE,
