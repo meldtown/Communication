@@ -8,4 +8,8 @@ describe('AbstractTemplateView', () => {
 		assert.equal(model instanceof AbstractTemplateView, true)
 		assert.equal(model instanceof AbstractTemplate, true)
 	})
+
+	it('should have create static method', () => {
+		// TODO: implement me
+	})
 })
