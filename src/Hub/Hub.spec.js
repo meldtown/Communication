@@ -45,6 +45,5 @@ describe('Hub', () => {
 			assert.equal(model.numericB(), 1)
 			done()
 		})
-
 	})
 })
