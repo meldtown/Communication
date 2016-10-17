@@ -1,14 +1,27 @@
-// import * as types from './types'
+import * as types from './types'
+import * as generator from '../../db'
 import * as ko from 'knockout'
+import $ from 'jquery'
 import assert from 'assert'
 import MessageList from './MessageList'
+import jQueryMockAjax from 'jquery-mockjax'
+
+const api = 'http://sample.com'
+const mockjax = jQueryMockAjax($, window)
+$.mockjaxSettings.logging = 0
 
 describe('MessageList', () => {
 	let model
 
+	before(() => {
+		global.api = api
+	})
+
 	beforeEach(() => {
 		model = new MessageList()
 	})
+
+	afterEach(() => mockjax.clear())
 
 	it('should be instantiable', () => {
 		assert.equal(model instanceof MessageList, true)
@@ -24,9 +37,27 @@ describe('MessageList', () => {
 	})
 
 	it('should map fetched messages', () => {
-		// let data = [
-		// 	{type: types.STANDARD, id: 1, date: '2015-04-24T23:04:59', conversationId: 1, text: 'Hello World'},
-		// 	{type: types.INVITE,  id: 1, date: '2015-04-24T23:04:59', conversationId: 1, text: 'Hello World'}
-		// ]
+		let conversationId = 1
+		let responseText = [
+			generator.generateStandardMessage(1, conversationId),
+			generator.generateInviteMessage(2, conversationId),
+			generator.generateDeclineMessage(3, conversationId),
+			generator.generateOfferMessage(4, conversationId),
+			generator.generateResponseMessage(5, conversationId)
+		]
+
+		mockjax({
+			url: `${api}/messages`,
+			data: {conversationId},
+			responseText
+		})
+
+		return model.fetch(conversationId).then(() => {
+			assert.deepEqual(Object.assign({}, ko.toJS(model.messages()[0]), {type: types.STANDARD}), responseText[0])
+			assert.deepEqual(Object.assign({}, ko.toJS(model.messages()[1]), {type: types.INVITE}), responseText[1])
+			assert.deepEqual(Object.assign({}, ko.toJS(model.messages()[2]), {type: types.DECLINE}), responseText[2])
+			assert.deepEqual(Object.assign({}, ko.toJS(model.messages()[3]), {type: types.OFFER}), responseText[3])
+			assert.deepEqual(Object.assign({}, ko.toJS(model.messages()[4]), {type: types.RESPONSE}), responseText[4])
+		})
 	})
 })
