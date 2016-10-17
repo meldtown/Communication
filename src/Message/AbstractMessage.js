@@ -1,7 +1,7 @@
 import * as ko from 'knockout'
 
 export default class AbstractMessage {
-	constructor({id, date, conversationId, text} = {id: 0, date: '', conversationId: 0, text: ''}) {
+	constructor({id, date, conversationId, text} = {}) {
 		this.id = ko.observable(id)
 		this.date = ko.observable(date)
 		this.conversationId = ko.observable(conversationId)
