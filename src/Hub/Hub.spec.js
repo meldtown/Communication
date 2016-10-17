@@ -35,7 +35,7 @@ describe('Hub', () => {
 
 	it('should set both values to zero on error catch while fetching', done => {
 		mockjax({
-			url: 'https://jsonplaceholder.typicode.com/users',
+			url: `${api}/conversations`,
 			status: 500
 		})
 
