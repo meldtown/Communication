@@ -1,6 +1,8 @@
 import * as ko from 'knockout'
 import assert from 'assert'
 import InviteTemplateForm from './InviteTemplateForm'
+import AbstractTemplateForm from './AbstractTemplateForm'
+import AbstractTemplate from '../AbstractTemplate'
 
 describe('InviteTemplateForm', () => {
 	let model
@@ -11,6 +13,8 @@ describe('InviteTemplateForm', () => {
 
 	it('should be instantiable', () => {
 		assert.equal(model instanceof InviteTemplateForm, true)
+		assert.equal(model instanceof AbstractTemplateForm, true)
+		assert.equal(model instanceof AbstractTemplate, true)
 	})
 
 	it('should have time', () => {
