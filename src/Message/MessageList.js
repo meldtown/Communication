@@ -10,5 +10,6 @@ export default class MessageList {
 	fetch(conversationId) {
 		return $.getJSON(`${api}/messages`, {conversationId})
 			.then(messages => this.messages(messages.map(MessageFactory.create)))
+			.fail(() => this.messages([]))
 	}
 }
