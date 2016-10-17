@@ -37,4 +37,12 @@ describe('AbstractMessage', () => {
 		assert.equal(ko.isObservable(model.text), true)
 		assert.equal(model.text(), 'text')
 	})
+
+	it('should accept data into constructor', () => {
+		let data = {id: 1, date: '2015-04-24T23:04:59', conversationId: 1, text: 'Hello World'}
+		let model = new AbstractMessage(data)
+		assert.deepEqual(ko.toJS(model), data)
+	})
+
+	
 })

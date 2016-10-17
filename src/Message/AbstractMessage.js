@@ -1,10 +1,10 @@
 import * as ko from 'knockout'
 
 export default class AbstractMessage {
-	constructor() {
-		this.id = ko.observable()
-		this.date = ko.observable()
-		this.conversationId = ko.observable()
-		this.text = ko.observable()
+	constructor({id, date, conversationId, text} = {id: 0, date: '', conversationId: 0, text: ''}) {
+		this.id = ko.observable(id)
+		this.date = ko.observable(date)
+		this.conversationId = ko.observable(conversationId)
+		this.text = ko.observable(text)
 	}
 }
