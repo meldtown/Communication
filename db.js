@@ -25,6 +25,7 @@ const generateNumberBetween = (min, max) => faker.random.number(max - min) + min
 const generateWorkTime = () => `${generateNumberBetween(11, 20)}:${faker.random.arrayElement(['00', '30'])}`
 const generateDummyImage = (width, height, backgroundColor, color, text) => `https://dummyimage.com/${width}x${height}/${backgroundColor}/${color}.png&text=${text}`
 const generateRecentDate = () => faker.date.recent(300)
+const generateLanguage = () => faker.random.arrayElement(['ru', 'en', 'ua'])
 
 const generateStandardMessage = (id, conversationId) => ({
 	id,
@@ -41,8 +42,7 @@ const generateInviteMessage = (id, conversationId) => ({
 	date: generateRecentDate(),
 	text: faker.hacker.phrase(),
 	time: generateWorkTime(),
-	address: faker.address.streetAddress(),
-	phone: faker.phone.phoneNumber()
+	address: faker.address.streetAddress()
 })
 
 const generateDeclineMessage = (id, conversationId) => ({
@@ -68,7 +68,7 @@ const generateVacancy = () => {
 	}
 }
 
-const generateSuggestMessage = (id, conversationId) => ({
+const generateOfferMessage = (id, conversationId) => ({
 	id,
 	conversationId,
 	type: OFFER_MESSAGE,
@@ -94,7 +94,7 @@ const generateMessage = (id, conversationId) => {
 		case DECLINE_MESSAGE:
 			return generateDeclineMessage(id, conversationId)
 		case OFFER_MESSAGE:
-			return generateSuggestMessage(id, conversationId)
+			return generateOfferMessage(id, conversationId)
 		case RESPONSE_MESSAGE:
 			return generateResponseMessage(id, conversationId)
 		default:
@@ -134,15 +134,65 @@ const generateConversations = messages => {
 	}
 	return conversations
 }
+
+const generateStandardTemplate = id => {
+	const {type, text} = generateStandardMessage(id, 0)
+
+	return {id, type, text, title: faker.random.word(), language: generateLanguage() }
+}
+
+const generateInviteTemplate = id => {
+	const {type, text, time, address } = generateInviteMessage(id, 0)
+
+	return {id, type, text, time, address, title: faker.random.word(), language: generateLanguage() }
+}
+
+const generateDeclineTemplate = id => {
+	const {type, text} = generateDeclineMessage(id, 0)
+	return {id, type, text, title: faker.random.word(), language: generateLanguage() }
+}
+
+const generateOfferTemplate = id => {
+	const {type, text} = generateOfferMessage(id, 0)
+
+	return {id, type, text, title: faker.random.word(), language: generateLanguage() }
+}
+
+const generateTemplate = id => {
+	let type = faker.random.arrayElement(MESSAGE_TYPES.filter(type => type !== RESPONSE_MESSAGE))
+	switch (type) {
+		case INVITE_MESSAGE:
+			return generateInviteTemplate(id)
+		case DECLINE_MESSAGE:
+			return generateDeclineTemplate(id)
+		case OFFER_MESSAGE:
+			return generateOfferTemplate(id)
+		default:
+			return generateStandardTemplate(id)
+	}
+}
+
+const generateTemplates = () => {
+	let templates = []
+	let numberOfTemplates = generateNumberBetween(3, 10)
+
+	for(let id = 1; id <= numberOfTemplates; id++) {
+		templates.push(generateTemplate(id))
+	}
+
+	return templates
+}
 // </editor-fold>
 
 if (require.main === module) {
 	let messages = generateMessages()
 	let conversations = generateConversations(messages)
+	let templates = generateTemplates()
 
 	let db = {
 		conversations,
-		messages
+		messages,
+		templates
 	}
 
 	let json = JSON.stringify(db, null, 4)
