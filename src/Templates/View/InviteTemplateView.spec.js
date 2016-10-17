@@ -1,6 +1,7 @@
 import assert from 'assert'
 import InviteTemplateView from './InviteTemplateView'
 import AbstractTemplate from '../AbstractTemplate'
+import AbstractTemplateView from './AbstractTemplateView'
 import * as ko from 'knockout'
 
 describe('InviteTemplateView', () => {
@@ -9,6 +10,7 @@ describe('InviteTemplateView', () => {
 		let model
 		model = new InviteTemplateView()
 		assert.equal(model instanceof InviteTemplateView, true)
+		assert.equal(model instanceof AbstractTemplateView, true)
 		assert.equal(model instanceof AbstractTemplate, true)
 	})
 

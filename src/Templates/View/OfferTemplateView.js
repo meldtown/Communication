@@ -1,6 +1,6 @@
-import AbstractTemplate from '../AbstractTemplate'
+import AbstractTemplateView from './AbstractTemplateView'
 
-export default class OfferTemplateView extends AbstractTemplate {
+export default class OfferTemplateView extends AbstractTemplateView {
 	constructor() {
 		super()
 	}

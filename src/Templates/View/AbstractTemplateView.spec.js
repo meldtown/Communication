@@ -1,12 +1,10 @@
 import assert from 'assert'
-import DeclineTemplateView from './DeclineTemplateView'
-import AbstractTemplate from '../AbstractTemplate'
 import AbstractTemplateView from './AbstractTemplateView'
+import AbstractTemplate from '../AbstractTemplate'
 
-describe('DeclineTemplateView', () => {
+describe('AbstractTemplateView', () => {
 	it('should be instantiable', () => {
-		let model = new DeclineTemplateView()
-		assert.equal(model instanceof DeclineTemplateView, true)
+		let model = new AbstractTemplateView()
 		assert.equal(model instanceof AbstractTemplateView, true)
 		assert.equal(model instanceof AbstractTemplate, true)
 	})
