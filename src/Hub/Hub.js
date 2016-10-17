@@ -3,13 +3,13 @@ import * as ko from 'knockout'
 import './Hub.scss'
 import '../bindingHandlers/hasFocus'
 import Conversation from '../Conversation/ConversationList'
-import MessageList from '../Message/MessageList'
+//import MessageList from '../Message/MessageList'
 
 export default class Hub {
 	constructor() {
 		this.conversations = ko.observableArray()
 		this.selectedConversation = ko.observable()
-		this.messageList = new MessageList(this)
+		//this.messageList = new MessageList(this)
 
 		this.a = ko.observable()
 		this.b = ko.observable()
@@ -19,7 +19,7 @@ export default class Hub {
 		this.sum = ko.computed(() => this.numericA() + this.numericB())
 
 		this.fetchConversations()
-		this.selectedConversation.subscribe(newConversation => this.messageList.fetchMessages(newConversation.id))
+		//this.selectedConversation.subscribe(newConversation => this.messageList.fetchMessages(newConversation.id))
 	}
 
 	fetchConversations() {
@@ -28,7 +28,7 @@ export default class Hub {
 				let items = conversations.map(conversation => new Conversation(this, conversation))
 				this.conversations(items)
 				this.selectedConversation(items[0])
-				this.messageList.fetchMessages(items[0].id)
+				//this.messageList.fetchMessages(items[0].id)
 			})
 	}
 
