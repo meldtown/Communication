@@ -15,7 +15,12 @@ export default class ConversationList {
 
 	fetch() {
 		return $.getJSON(`${api}/conversations`)
-			.then(conversations => this.conversations(conversations.map(data => new Conversation(this.dispatcher, data))))
+			.then(conversations => {
+				this.conversations(conversations.map(data => new Conversation(this.dispatcher, data)))
+				if (conversations.length > 0) {
+					this.conversations()[0].select()
+				}
+			})
 			.fail(() => this.conversations([]))
 	}
 }

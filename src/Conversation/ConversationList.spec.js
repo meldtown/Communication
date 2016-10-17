@@ -84,4 +84,33 @@ describe('ConversationList', () => {
 			done()
 		})
 	})
+
+	it('should select first available conversation after fetch', () => {
+		let responseText = [
+			generator.generateConversation(1, [generator.generateStandardMessage(1, 1)]),
+			generator.generateConversation(2, [generator.generateDeclineMessage(1, 2)])
+		]
+
+		mockjax({
+			url: `${api}/conversations`,
+			responseText
+		})
+
+		return model.fetch().then(() => {
+			assert.equal(model.conversations()[0].isSelected(), true)
+		})
+	})
+
+	it('should handle empty conversation list', () => {
+		let responseText = []
+
+		mockjax({
+			url: `${api}/conversations`,
+			responseText
+		})
+
+		return model.fetch().then(() => {
+			assert.equal(model.conversations().length, 0)
+		})
+	})
 })
