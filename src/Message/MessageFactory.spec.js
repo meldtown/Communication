@@ -6,6 +6,7 @@ import StandardMessage from './StandardMessage'
 import InviteMessage from './InviteMessage'
 import DeclineMessage from './DeclineMessage'
 import OfferMessage from './OfferMessage'
+import ResponseMessage from './ResponseMessage'
 
 describe('MessageFactory', () => {
 	it('should have static create method', () => {
@@ -45,6 +46,13 @@ describe('MessageFactory', () => {
 		it(`should create ${types.OFFER} message`, () => {
 			data.type = types.OFFER
 			let expected = new OfferMessage(data)
+			let actual = MessageFactory.create(data)
+			assert.deepEqual(ko.toJS(actual), ko.toJS(expected))
+		})
+
+		it(`should create ${types.RESPONSE} message`, () => {
+			data.type = types.RESPONSE
+			let expected = new ResponseMessage(data)
 			let actual = MessageFactory.create(data)
 			assert.deepEqual(ko.toJS(actual), ko.toJS(expected))
 		})

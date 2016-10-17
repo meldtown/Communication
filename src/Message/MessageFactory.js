@@ -3,6 +3,7 @@ import StandardMessage from './StandardMessage'
 import InviteMessage from './InviteMessage'
 import DeclineMessage from './DeclineMessage'
 import OfferMessage from './OfferMessage'
+import ResponseMessage from './ResponseMessage'
 
 export default class MessageFactory {
 	static create(data = {}) {
@@ -16,6 +17,8 @@ export default class MessageFactory {
 				return new DeclineMessage(data)
 			case types.OFFER:
 				return new OfferMessage(data)
+			case types.RESPONSE:
+				return new ResponseMessage(data)
 			default:
 				return null
 		}
