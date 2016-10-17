@@ -1,6 +1,6 @@
 import assert from 'assert'
 import OfferTemplateView from './OfferTemplateView'
-import AbstractTemplate from './AbstractTemplate'
+import AbstractTemplate from '../AbstractTemplate'
 
 describe('OfferTemplateView', () => {
 	it('should be instantiable', () => {

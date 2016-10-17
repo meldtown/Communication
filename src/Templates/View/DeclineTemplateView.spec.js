@@ -1,6 +1,6 @@
 import assert from 'assert'
 import DeclineTemplateView from './DeclineTemplateView'
-import AbstractTemplate from './AbstractTemplate'
+import AbstractTemplate from '../AbstractTemplate'
 
 describe('DeclineTemplateView', () => {
 	it('should be instantiable', () => {

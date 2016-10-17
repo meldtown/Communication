@@ -1,6 +1,6 @@
 import assert from 'assert'
 import InviteTemplateView from './InviteTemplateView'
-import AbstractTemplate from './AbstractTemplate'
+import AbstractTemplate from '../AbstractTemplate'
 import * as ko from 'knockout'
 
 describe('InviteTemplateView', () => {
