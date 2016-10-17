@@ -102,7 +102,7 @@ const generateMessage = (id, conversationId) => {
 	}
 }
 
-const generateConversation = (id, messages) => {
+export const generateConversation = (id, messages) => {
 	let lastMessage = messages
 		.filter(message => message.conversationId === id)
 		.sort((left, right) => new Date(left.date) - new Date(right.date))[0]
@@ -110,7 +110,6 @@ const generateConversation = (id, messages) => {
 	return {
 		id,
 		fullName: faker.name.findName(),
-		date: lastMessage.date,
 		message: lastMessage
 	}
 }
