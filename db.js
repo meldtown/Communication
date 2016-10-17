@@ -1,20 +1,21 @@
+import * as messageTypes from './src/Message/types'
 import faker from 'faker'
 import fs from 'fs'
 
 // <editor-fold desc="Constants">
 const NUMBER_OF_CONVERSATIONS = 5
 
-const STANDARD_MESSAGE = 'standard'
-const INVITE_MESSAGE = 'invite'
-const DECLINE_MESSAGE = 'decline'
-const SUGGEST_MESSAGE = 'suggest'
-const RESPONSE_MESSAGE = 'response'
+const STANDARD_MESSAGE = messageTypes.STANDARD
+const INVITE_MESSAGE = messageTypes.INVITE
+const DECLINE_MESSAGE = messageTypes.DECLINE
+const OFFER_MESSAGE = messageTypes.OFFER
+const RESPONSE_MESSAGE = messageTypes.RESPONSE
 
 const MESSAGE_TYPES = [
 	STANDARD_MESSAGE,
 	INVITE_MESSAGE,
 	DECLINE_MESSAGE,
-	SUGGEST_MESSAGE,
+	OFFER_MESSAGE,
 	RESPONSE_MESSAGE
 ]
 // </editor-fold>
@@ -70,7 +71,7 @@ const generateVacancy = () => {
 const generateSuggestMessage = (id, conversationId) => ({
 	id,
 	conversationId,
-	type: SUGGEST_MESSAGE,
+	type: OFFER_MESSAGE,
 	date: generateRecentDate(),
 	text: faker.hacker.phrase(),
 	vacancy: generateVacancy()
@@ -92,7 +93,7 @@ const generateMessage = (id, conversationId) => {
 			return generateInviteMessage(id, conversationId)
 		case DECLINE_MESSAGE:
 			return generateDeclineMessage(id, conversationId)
-		case SUGGEST_MESSAGE:
+		case OFFER_MESSAGE:
 			return generateSuggestMessage(id, conversationId)
 		case RESPONSE_MESSAGE:
 			return generateResponseMessage(id, conversationId)
@@ -135,16 +136,18 @@ const generateConversations = messages => {
 }
 // </editor-fold>
 
-let messages = generateMessages()
-let conversations = generateConversations(messages)
+if (require.main === module) {
+	let messages = generateMessages()
+	let conversations = generateConversations(messages)
 
-let db = {
-	conversations,
-	messages
+	let db = {
+		conversations,
+		messages
+	}
+
+	let json = JSON.stringify(db, null, 4)
+
+	fs.writeFileSync('db.json', json)
+
+	console.log(json) // eslint-disable-line no-console
 }
-
-let json = JSON.stringify(db, null, 4)
-
-fs.writeFileSync('db.json', json)
-
-console.log(json) // eslint-disable-line no-console
