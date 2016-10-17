@@ -68,4 +68,24 @@ describe('Conversation', () => {
 
 		assert.equal(model.isSelected(), false)
 	})
+
+	it('should have select method', () => {
+		assert.equal(typeof model.select === 'function', true)
+
+		let item1 = new Conversation(dispatcher, {id: 1})
+		let item2 = new Conversation(dispatcher, {id: 2})
+
+		assert.equal(item1.isSelected(), false)
+		assert.equal(item2.isSelected(), false)
+
+		item1.select()
+
+		assert.equal(item1.isSelected(), true)
+		assert.equal(item2.isSelected(), false)
+
+		item2.select()
+
+		assert.equal(item1.isSelected(), false)
+		assert.equal(item2.isSelected(), true)
+	})
 })

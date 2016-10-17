@@ -17,4 +17,9 @@ export default class Conversation {
 			this.isSelected(this.id() === id)
 		}, this, actions.CONVERSATION_SELECTED)
 	}
+
+	select() {
+		this.dispatcher.notifySubscribers(this.id(), actions.CONVERSATION_SELECTED)
+	}
+
 }
