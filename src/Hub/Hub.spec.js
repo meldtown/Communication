@@ -4,6 +4,7 @@ import assert from 'assert'
 import Hub from './Hub'
 import jQueryMockAjax from 'jquery-mockjax'
 import ConversationList from '../Conversation/ConversationList'
+import MessageList from '../Message/MessageList'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
@@ -40,5 +41,9 @@ describe('Hub', () => {
 
 	it('should have conversations', () => {
 		assert.equal(model.conversations instanceof ConversationList, true)
+	})
+
+	it('should have messages', () => {
+		assert.equal(model.messages instanceof MessageList, true)
 	})
 })

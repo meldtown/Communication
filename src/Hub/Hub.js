@@ -2,6 +2,7 @@ import * as ko from 'knockout'
 import './Hub.scss'
 import '../bindingHandlers/hasFocus'
 import ConversationList from '../Conversation/ConversationList'
+import MessageList from '../Message/MessageList'
 
 export default class Hub {
 	constructor(dispatcher) {
@@ -11,5 +12,6 @@ export default class Hub {
 
 		this.dispatcher = dispatcher
 		this.conversations = new ConversationList(dispatcher)
+		this.messages = new MessageList()
 	}
 }
