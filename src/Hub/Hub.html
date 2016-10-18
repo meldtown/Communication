@@ -3,6 +3,29 @@
 	<tr>
 		<td valign="top">
 			<div data-bind="with: conversations">
+				<div>
+					<span data-bind="if: isActiveSelected">
+						<span>Active</span>
+					</span>
+					<span data-bind="ifnot: isActiveSelected">
+						<a href="#" data-bind="click: selectActive">Active</a>
+					</span>
+
+					<span data-bind="if: isArchiveSelected">
+						<span>Archive</span>
+					</span>
+					<span data-bind="ifnot: isArchiveSelected">
+						<a href="#" data-bind="click: selectArchive">Archive</a>
+					</span>
+
+					<span data-bind="if: isBlockedSelected">
+						<span>Blocked</span>
+					</span>
+					<span data-bind="ifnot: isBlockedSelected">
+						<a href="#" data-bind="click: selectBlocked">Blocked</a>
+					</span>
+				</div>
+
 				<div data-bind="template: {name: 'Conversation', foreach: conversations}"></div>
 			</div>
 		</td>

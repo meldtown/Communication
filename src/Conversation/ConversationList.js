@@ -42,13 +42,16 @@ export default class ConversationList {
 
 	selectActive() {
 		this.selectedType(types.ACTIVE_CONVERSATION)
+		return this.fetch()
 	}
 
 	selectArchive() {
 		this.selectedType(types.ARCHIVED_CONVERSATION)
+		return this.fetch()
 	}
 
 	selectBlocked() {
 		this.selectedType(types.BLOCKED_CONVERSATION)
+		return this.fetch()
 	}
 }
