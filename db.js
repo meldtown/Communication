@@ -141,9 +141,9 @@ export const generateStandardTemplate = id => {
 }
 
 export const generateInviteTemplate = id => {
-	const {type, text, time, address } = generateInviteMessage(id, 0)
+	const {type, text, inviteDate, addressId } = generateInviteMessage(id, 0)
 
-	return {id, type, text, time, address, title: faker.random.word(), language: generateLanguage() }
+	return {id, type, text, inviteDate, addressId, title: faker.random.word(), language: generateLanguage() }
 }
 
 export const generateDeclineTemplate = id => {

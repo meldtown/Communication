@@ -1,8 +1,4 @@
 import AbstractTemplateView from './AbstractTemplateView'
 
-export default class StandardTemplateView extends AbstractTemplateView {
-	constructor() {
-		super()
-	}
-}
+export default class StandardTemplateView extends AbstractTemplateView {}
 

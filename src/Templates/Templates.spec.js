@@ -1,59 +1,149 @@
 import assert from 'assert'
 import Templates from './Templates'
+import * as ko from 'knockout'
+import * as types from '../types'
+import * as generator from '../../db'
+import $ from 'jquery'
+import jQueryMockAjax from 'jquery-mockjax'
+import StandardTemplateView from './View/StandardTemplateView'
+
+const api = 'http://sample.com'
+const mockjax = jQueryMockAjax($, window)
+$.mockjaxSettings.logging = 0
+
 
 describe('Templates', () => {
 	let model
 
+	before(() => {
+		global.api = api
+	})
+
 	beforeEach(() => {
 		model = new Templates()
 	})
+
+	afterEach(() => mockjax.clear())
 
 	it('should be instantiable', () => {
 		assert.equal(model instanceof Templates, true)
 	})
 
 	it('should have templates observable array', () => {
-		// TODO: implement me
+		assert.equal(ko.isObservable(model.templates), true)
+		assert.equal(typeof model.templates.push, 'function')
 	})
 
 	it('should have fetch method which loads items into array', () => {
-		// TODO: implement me
+		let responseText = [
+			generator.generateStandardTemplate(1),
+			generator.generateInviteTemplate(4),
+			generator.generateDeclineTemplate(5),
+			generator.generateOfferTemplate(6)
+		]
+
+		mockjax({
+			url: `${api}/templates`,
+			responseText
+		})
+
+		return model.fetch().then(() => {
+			assert.equal(model.templates().length, 4)
+			assert.deepEqual(Object.assign({}, ko.toJS(model.templates()[0]), {type: types.STANDARD}), responseText[0])
+			assert.deepEqual(Object.assign({}, ko.toJS(model.templates()[1]), {type: types.INVITE}), responseText[1])
+			assert.deepEqual(Object.assign({}, ko.toJS(model.templates()[2]), {type: types.DECLINE}), responseText[2])
+			assert.deepEqual(Object.assign({}, ko.toJS(model.templates()[3]), {type: types.OFFER}), responseText[3])
+		})
+	})
+
+	it('should have observable selectedTab', () => {
+		assert.equal(ko.isObservable(model.selectedTab), true)
 	})
 
 	it('should have isStandardTabSelected comp', () => {
-		// TODO: implement me
+		assert.equal(ko.isComputed(model.isStandardTabSelected), true)
+
+		model.selectStandardTab()
+		assert.equal(model.isStandardTabSelected(), true)
+
+		model.selectOfferTab()
+		assert.equal(model.isStandardTabSelected(), false)
 	})
 
 	it('should have isInviteTabSelected comp', () => {
-		// TODO: implement me
+		assert.equal(ko.isComputed(model.isInviteTabSelected), true)
+
+		model.selectInviteTab()
+		assert.equal(model.isInviteTabSelected(), true)
+
+		model.selectOfferTab()
+		assert.equal(model.isInviteTabSelected(), false)
 	})
 
 	it('should have isDeclineTabSelected comp', () => {
-		// TODO: implement me
+		assert.equal(ko.isComputed(model.isDeclineTabSelected), true)
+
+		model.selectDeclineTab()
+		assert.equal(model.isDeclineTabSelected(), true)
+
+		model.selectOfferTab()
+		assert.equal(model.isDeclineTabSelected(), false)
 	})
 
 	it('should have isOfferTabSelected comp', () => {
-		// TODO: implement me
+		assert.equal(ko.isComputed(model.isOfferTabSelected), true)
+
+		model.selectOfferTab()
+		assert.equal(model.isOfferTabSelected(), true)
+
+		model.selectStandardTab()
+		assert.equal(model.isOfferTabSelected(), false)
 	})
 
 	it('should have selectStandardTab method', () => {
-		// TODO: implement me
+		assert.equal(typeof model.selectStandardTab, 'function')
+
+		model.selectStandardTab()
+		assert.equal(model.selectedTab(), types.STANDARD)
 	})
 
 	it('should have selectInviteTab method', () => {
-		// TODO: implement me
+		assert.equal(typeof model.selectInviteTab, 'function')
+
+		model.selectInviteTab()
+		assert.equal(model.selectedTab(), types.INVITE)
 	})
 
 	it('should have selectDeclineTab method', () => {
-		// TODO: implement me
+		assert.equal(typeof model.selectDeclineTab, 'function')
+
+		model.selectDeclineTab()
+		assert.equal(model.selectedTab(), types.DECLINE)
 	})
 
 	it('should have selectOfferTab method', () => {
-		// TODO: implement me
+		assert.equal(typeof model.selectOfferTab, 'function')
+
+		model.selectOfferTab()
+		assert.equal(model.selectedTab(), types.OFFER)
 	})
 
 	it('should set selectedTab to standard after fetch', () => {
-		// TODO: implement me
+		let responseText = [
+			generator.generateStandardTemplate(1),
+			generator.generateInviteTemplate(4),
+			generator.generateDeclineTemplate(5),
+			generator.generateOfferTemplate(6)
+		]
+
+		mockjax({
+			url: `${api}/templates`,
+			responseText
+		})
+
+		return model.fetch().then(() => {
+			assert.equal(model.selectedTab(), types.STANDARD)
+		})
 	})
 
 	it('should have isRussianLanguageSelected comp', () => {
@@ -105,5 +195,24 @@ describe('Templates', () => {
 
 		})
 	})
+
+	it('should have selectedTemplate comp', () => {
+		// TODO: x4 for each type
+	})
+
+	describe('selectedTemplate', () => {
+		it('should change when some template fires select event', () => {
+
+		})
+	})
+
+	it('should have standard form prop', () => {
+		// TODO: x4 for each type
+		// model.standardForm = new StandardForm()
+	})
+
+
+
+
 
 })

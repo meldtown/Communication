@@ -4,7 +4,7 @@ import StandardMessageForm from './StandardMessageForm'
 import AbstractMessageForm from './AbstractMessageForm'
 import $ from 'jquery'
 import jQueryMockAjax from 'jquery-mockjax'
-import * as types from '../types'
+import * as types from '../../types'
 import * as actions from '../../actions'
 import StandardMessage from '../StandardMessage'
 
