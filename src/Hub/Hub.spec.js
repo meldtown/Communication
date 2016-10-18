@@ -60,12 +60,12 @@ describe('Hub', () => {
 	it('should call fetch on conversations and messages while fetching data', () => {
 		let messages1 = [
 			generator.generateStandardMessage(1, 1),
-			generator.generateResponseMessage(2, 1)
+			generator.generateApplyMessage(2, 1)
 		]
 
 		let messages2 = [
 			generator.generateStandardMessage(3, 2),
-			generator.generateResponseMessage(4, 2)
+			generator.generateApplyMessage(4, 2)
 		]
 
 		let conversation1 = generator.generateConversation(1, messages1)

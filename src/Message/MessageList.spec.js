@@ -9,7 +9,7 @@ import DeclineMessage from '../Message/DeclineMessage'
 import OfferMessage from '../Message/OfferMessage'
 import StandardMessage from '../Message/StandardMessage'
 import InviteMessage from '../Message/InviteMessage'
-import ResponseMessage from '../Message/ResponseMessage'
+import ApplyMessage from './ApplyMessage'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
@@ -66,7 +66,7 @@ describe('MessageList', () => {
 			generator.generateInviteMessage(2, conversationId),
 			generator.generateDeclineMessage(3, conversationId),
 			generator.generateOfferMessage(4, conversationId),
-			generator.generateResponseMessage(5, conversationId)
+			generator.generateApplyMessage(5, conversationId)
 		]
 
 		mockjax({
@@ -82,7 +82,7 @@ describe('MessageList', () => {
 			assert.ok(messages[1] instanceof InviteMessage)
 			assert.ok(messages[2] instanceof DeclineMessage)
 			assert.ok(messages[3] instanceof OfferMessage)
-			assert.ok(messages[4] instanceof ResponseMessage)
+			assert.ok(messages[4] instanceof ApplyMessage)
 		})
 	})
 

@@ -9,14 +9,14 @@ const STANDARD_MESSAGE = messageTypes.STANDARD
 const INVITE_MESSAGE = messageTypes.INVITE
 const DECLINE_MESSAGE = messageTypes.DECLINE
 const OFFER_MESSAGE = messageTypes.OFFER
-const RESPONSE_MESSAGE = messageTypes.RESPONSE
+const APPLY_MESSAGE = messageTypes.APPLY
 
 const MESSAGE_TYPES = [
 	STANDARD_MESSAGE,
 	INVITE_MESSAGE,
 	DECLINE_MESSAGE,
 	OFFER_MESSAGE,
-	RESPONSE_MESSAGE
+	APPLY_MESSAGE
 ]
 // </editor-fold>
 
@@ -77,10 +77,10 @@ export const generateOfferMessage = (id, conversationId, vacancies = []) => ({
 	vacancy: vacancies.length > 0 ? faker.random.arrayElement(vacancies) : generateVacancy()
 })
 
-export const generateResponseMessage = (id, conversationId) => ({
+export const generateApplyMessage = (id, conversationId) => ({
 	id,
 	conversationId,
-	type: RESPONSE_MESSAGE,
+	type: APPLY_MESSAGE,
 	date: generateRecentDate(),
 	text: faker.hacker.phrase(),
 	avatar: faker.image.avatar()
@@ -95,8 +95,8 @@ const generateMessage = (id, conversationId, vacancies) => {
 			return generateDeclineMessage(id, conversationId)
 		case OFFER_MESSAGE:
 			return generateOfferMessage(id, conversationId, vacancies)
-		case RESPONSE_MESSAGE:
-			return generateResponseMessage(id, conversationId)
+		case APPLY_MESSAGE:
+			return generateApplyMessage(id, conversationId)
 		default:
 			return generateStandardMessage(id, conversationId)
 	}
@@ -158,7 +158,7 @@ export const generateOfferTemplate = id => {
 }
 
 const generateTemplate = id => {
-	let type = faker.random.arrayElement(MESSAGE_TYPES.filter(type => type !== RESPONSE_MESSAGE))
+	let type = faker.random.arrayElement(MESSAGE_TYPES.filter(type => type !== APPLY_MESSAGE))
 	switch (type) {
 		case INVITE_MESSAGE:
 			return generateInviteTemplate(id)
