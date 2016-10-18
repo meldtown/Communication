@@ -124,4 +124,28 @@ describe('Hub', () => {
 	it('should have isOfferFormSelected prop', () => {
 		assert.equal(ko.isObservable(model.isOfferFormSelected), true)
 	})
+
+	it('should have selectStandardForm method', () => {
+		assert.equal(typeof model.selectStandardForm, 'function')
+		model.selectStandardForm()
+		assert.equal(model.isStandardFormSelected(), true)
+	})
+
+	it('should have selectInviteForm method', () => {
+		assert.equal(typeof model.selectInviteForm, 'function')
+		model.selectInviteForm()
+		assert.equal(model.isInviteFormSelected(), true)
+	})
+
+	it('should have selectDeclineForm method', () => {
+		assert.equal(typeof model.selectDeclineForm, 'function')
+		model.selectDeclineForm()
+		assert.equal(model.isDeclineFormSelected(), true)
+	})
+
+	it('should have selectOfferForm method', () => {
+		assert.equal(typeof model.selectOfferForm, 'function')
+		model.selectOfferForm()
+		assert.equal(model.isOfferFormSelected(), true)
+	})
 })

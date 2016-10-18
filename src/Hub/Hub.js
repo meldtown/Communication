@@ -39,4 +39,20 @@ export default class Hub {
 	fetch() {
 		return this.conversations.fetch()
 	}
+
+	selectStandardForm() {
+		this.selectedForm(StandardMessageForm)
+	}
+
+	selectInviteForm() {
+		this.selectedForm(InviteMessageForm)
+	}
+
+	selectDeclineForm() {
+		this.selectedForm(DeclineMessageForm)
+	}
+
+	selectOfferForm() {
+		this.selectedForm(OfferMessageForm)
+	}
 }
