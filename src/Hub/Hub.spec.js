@@ -108,4 +108,20 @@ describe('Hub', () => {
 	it('should have offer message form', () => {
 		assert.equal(model.offerMessageForm instanceof OfferMessageForm, true)
 	})
+
+	it('should have isStandardFormSelected prop', () => {
+		assert.equal(ko.isObservable(model.isStandardFormSelected), true)
+	})
+
+	it('should have isInviteFormSelected prop', () => {
+		assert.equal(ko.isObservable(model.isInviteFormSelected), true)
+	})
+
+	it('should have isDeclineFormSelected prop', () => {
+		assert.equal(ko.isObservable(model.isDeclineFormSelected), true)
+	})
+
+	it('should have isOfferFormSelected prop', () => {
+		assert.equal(ko.isObservable(model.isOfferFormSelected), true)
+	})
 })

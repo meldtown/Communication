@@ -24,6 +24,13 @@ export default class Hub {
 		this.declineMessageForm = new DeclineMessageForm()
 		this.offerMessageForm = new OfferMessageForm()
 
+		this.selectedForm = ko.observable(StandardMessageForm)
+
+		this.isStandardFormSelected = ko.computed(() => this.selectedForm() === StandardMessageForm)
+		this.isInviteFormSelected = ko.computed(() => this.selectedForm() === InviteMessageForm)
+		this.isDeclineFormSelected = ko.computed(() => this.selectedForm() === DeclineMessageForm)
+		this.isOfferFormSelected = ko.computed(() => this.selectedForm() === OfferMessageForm)
+
 		dispatcher.subscribe(conversationId => {
 			this.messages.fetch(conversationId)
 		}, this, actions.CONVERSATION_SELECTED)
