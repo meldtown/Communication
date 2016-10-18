@@ -1,4 +1,4 @@
-import * as types from './types'
+import * as types from '../types'
 import StandardMessage from './StandardMessage'
 import InviteMessage from './InviteMessage'
 import DeclineMessage from './DeclineMessage'

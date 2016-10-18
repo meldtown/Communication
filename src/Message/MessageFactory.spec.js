@@ -1,5 +1,5 @@
 import * as ko from 'knockout'
-import * as types from './types'
+import * as types from '../types'
 import assert from 'assert'
 import MessageFactory from './MessageFactory'
 import StandardMessage from './StandardMessage'
