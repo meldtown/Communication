@@ -200,6 +200,48 @@ describe('Conversation', () => {
 		})
 	})
 
+	it('should have activate method', () => {
+		assert.equal(typeof model.activate, 'function')
+	})
+
+	it('should call backend to activate conversation', () => {
+		let conversationId = 1
+
+		model.id(conversationId)
+		model.type(constants.BLOCKED_CONVERSATION)
+		assert.equal(model.type(), constants.BLOCKED_CONVERSATION)
+
+		mockjax({
+			type: 'PUT',
+			url: `${api}/conversations/${conversationId}`,
+			data: {type: constants.ACTIVE_CONVERSATION}
+		})
+
+		return model.activate().then(() => {
+			assert.equal(model.type(), constants.ACTIVE_CONVERSATION)
+		})
+	})
+
+	it(`should fire ${constants.CONVERSATION_ACTIVATED} event`, () => {
+		let conversationId = 1
+		let counter = 0
+
+		dispatcher.subscribe(() => {
+			counter = counter + 1
+		}, null, constants.CONVERSATION_ACTIVATED)
+
+		model.id(conversationId)
+
+		mockjax({
+			type: 'PUT',
+			url: `${api}/conversations/${conversationId}`
+		})
+
+		return model.activate().then(() => {
+			assert.equal(counter, 1)
+		})
+	})
+
 	it('should have isActive prop', () => {
 		assert.ok(ko.isObservable(model.isActive))
 		model.type(constants.ACTIVE_CONVERSATION)

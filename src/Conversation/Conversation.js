@@ -54,4 +54,16 @@ export default class Conversation {
 			return data
 		})
 	}
+
+	activate() {
+		return $.ajax({
+			type: 'PUT',
+			url: `${api}/conversations/${this.id()}`,
+			data: {type: constants.ACTIVE_CONVERSATION}
+		}).then(data => {
+			this.type(constants.ACTIVE_CONVERSATION)
+			this.dispatcher.notifySubscribers(this, constants.CONVERSATION_ACTIVATED)
+			return data
+		})
+	}
 }
