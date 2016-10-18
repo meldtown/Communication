@@ -48,4 +48,8 @@ describe('AbstractMessageForm', () => {
 		dispatcher.notifySubscribers(conversationId, actions.CONVERSATION_SELECTED)
 		assert.equal(model.text(), '')
 	})
+
+	it('should have template prop', () => {
+		assert.ok(ko.isObservable(model.template))
+	})
 })

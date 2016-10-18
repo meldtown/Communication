@@ -32,6 +32,8 @@
 		<td valign="top">
 			<div data-bind="template: {name: 'MessageList', data: messages}"></div>
 
+			<hr/>
+
 			<div>
 				<span data-bind="if: isStandardFormSelected">
 					<span>Standard</span>
@@ -60,6 +62,10 @@
 				<span data-bind="ifnot: isOfferFormSelected">
 					<a href="#" data-bind="click: selectOfferForm">Offer</a>
 				</span>
+			</div>
+
+			<div data-bind="with: selectedForm">
+				<div data-bind="template: template"></div>
 			</div>
 
 		</td>

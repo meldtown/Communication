@@ -5,6 +5,11 @@ import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'
 
 export default class StandardMessageForm extends AbstractMessageForm {
+	constructor(dispatcher) {
+		super(dispatcher)
+		this.template('StandardMessageForm')
+	}
+
 	save() {
 		if (!this.conversationId()) {
 			throw new Error('conversationId is required')

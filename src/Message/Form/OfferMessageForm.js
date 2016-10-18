@@ -8,7 +8,7 @@ import MessageFactory from '../MessageFactory'
 export default class OfferMessageForm extends AbstractMessageForm {
 	constructor(dispatcher) {
 		super(dispatcher)
-
+		this.template('OfferMessageForm')
 		this.vacancyId = ko.observable()
 	}
 
