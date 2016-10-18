@@ -10,7 +10,7 @@ export default class AbstractMessage {
 		this.text = ko.observable(text)
 		this.isRead = ko.observable(isRead)
 
-		this.ago = ko.computed(() => moment.duration(moment() - moment(this.date())).humanize(true))
+		this.ago = ko.computed(() => moment(this.date()).fromNow().toString())
 		this.formattedDate = ko.computed(() => moment(this.date()).format('LL'))
 		this.formattedTime = ko.computed(() => moment(this.date()).format('HH:mm'))
 	}

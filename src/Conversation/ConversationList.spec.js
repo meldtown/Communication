@@ -63,7 +63,9 @@ describe('ConversationList', () => {
 			for (let i = 0; i < responseText.length; i++) {
 				let conversation = model.conversations()[i]
 				assert.equal(conversation.id(), responseText[i].id)
-				assert.deepEqual(conversation.lastMessage(), responseText[i].lastMessage)
+				// noinspection JSUnusedLocalSymbols
+				var {ago, formattedDate, formattedTime, isJobsearcher, ...actual} = ko.toJS(conversation.lastMessage());
+				assert.deepEqual({...actual, type: responseText[i].lastMessage.type}, responseText[i].lastMessage)
 			}
 		})
 	})

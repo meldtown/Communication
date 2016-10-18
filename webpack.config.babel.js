@@ -19,7 +19,7 @@ const plugins = [
 ]
 
 export default (app) => ({
-	devtool: isProduction ? 'source-map' : 'eval',
+	devtool: isProduction ? 'source-map' : 'inline-source-map',
 	entry: {
 		hub: './entry/hub.js',
 		templates: './entry/templates.js'

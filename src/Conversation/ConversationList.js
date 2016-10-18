@@ -29,13 +29,15 @@ export default class ConversationList {
 		}
 
 		return $.getJSON(`${api}/conversations`, request)
-			.then(conversations => {
+			.done(conversations => {
 				this.conversations(conversations.map(data => new Conversation(this.dispatcher, data)))
 				if (conversations.length > 0) {
 					this.conversations()[0].select()
 				}
 			})
-			.fail(() => this.conversations([]))
+			.fail(() => {
+				this.conversations([])
+			})
 	}
 
 	selectActive() {

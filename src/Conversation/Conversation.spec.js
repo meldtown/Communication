@@ -271,4 +271,11 @@ describe('Conversation', () => {
 		model = new Conversation(dispatcher, {lastMessage: generator.generateStandardMessage(1, 1)})
 		assert.ok(model.lastMessage() instanceof StandardMessage)
 	})
+
+	it('should have fullName prop', () => {
+		assert.ok(ko.isObservable(model.fullName))
+
+		model = new Conversation(dispatcher, {fullName: 'sample'})
+		assert.equal(model.fullName(), 'sample')
+	})
 })

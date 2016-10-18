@@ -55,7 +55,7 @@ describe('AbstractMessage', () => {
 		assert.ok(ko.isComputed(model.ago))
 
 		let yesterday = moment().subtract(1, 'day').format()
-		let expected = moment.duration(moment() - moment(yesterday)).humanize(true)
+		let expected = moment(yesterday).fromNow()
 
 		model.date(yesterday)
 

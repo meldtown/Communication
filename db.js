@@ -123,7 +123,8 @@ export const generateConversation = (id, messages) => {
 		unreadMessagesCount,
 		type: faker.random.arrayElement(CONVERSATION_TYPES),
 		fullName: faker.name.findName(),
-		message: lastMessage
+		avatar: faker.image.avatar(),
+		lastMessage: lastMessage
 	}
 }
 

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"npm run start:db\" \"npm run start:templates\"",
+    "start": "concurrently \"npm run start:db\" \"npm run start:hub\"",
     "start:hub": "webpack-dev-server --env hub",
     "start:templates": "webpack-dev-server --env templates",
     "start:db": "json-server --watch db.json --port 8181",
