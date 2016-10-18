@@ -149,7 +149,6 @@ describe('ConversationList', () => {
 		let archiveConversation = generator.generateConversation(1, [generator.generateStandardMessage(1, 1)])
 		archiveConversation.type = types.ARCHIVED_CONVERSATION
 
-
 		model.selectArchive()
 
 		mockjax({
@@ -160,6 +159,26 @@ describe('ConversationList', () => {
 
 		return model.fetch().then(() => {
 			assert.equal(model.conversations().length, 1)
+		})
+	})
+
+	it('should have term prop', () => {
+		assert.ok(ko.isObservable(model.term))
+	})
+
+	it('should use term if not empty in fetch', () => {
+		let term = 'php'
+
+		model.term(term)
+
+		mockjax({
+			url: `${api}/conversations`,
+			data: {type: types.ACTIVE_CONVERSATION, q: term},
+			responseText: []
+		})
+
+		return model.fetch().then(() => {
+			assert.equal(model.conversations().length, 0)
 		})
 	})
 })

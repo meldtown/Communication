@@ -13,6 +13,7 @@ export default class ConversationList {
 		this.dispatcher = dispatcher
 		this.conversations = ko.observableArray()
 
+		this.term = ko.observable()
 		this.selectedType = ko.observable(types.ACTIVE_CONVERSATION)
 
 		this.isActiveSelected = ko.computed(() => this.selectedType() === types.ACTIVE_CONVERSATION)
@@ -21,7 +22,13 @@ export default class ConversationList {
 	}
 
 	fetch() {
-		return $.getJSON(`${api}/conversations`, {type: this.selectedType()})
+		let request = {type: this.selectedType()}
+
+		if (this.term()) {
+			request.q = this.term()
+		}
+
+		return $.getJSON(`${api}/conversations`, request)
 			.then(conversations => {
 				this.conversations(conversations.map(data => new Conversation(this.dispatcher, data)))
 				if (conversations.length > 0) {
