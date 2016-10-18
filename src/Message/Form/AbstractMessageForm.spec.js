@@ -1,4 +1,4 @@
-import * as actions from '../../actions'
+import * as actions from '../../constants'
 import * as ko from 'knockout'
 import assert from 'assert'
 import AbstractMessageForm from './AbstractMessageForm'

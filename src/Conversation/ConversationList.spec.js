@@ -1,4 +1,4 @@
-import * as types from '../types'
+import * as types from '../constants'
 import * as generator from '../../db'
 import * as ko from 'knockout'
 import $ from 'jquery'

@@ -2,7 +2,7 @@ import * as ko from 'knockout'
 import $ from 'jquery'
 import './Conversation.scss'
 import Conversation from './Conversation'
-import * as types from '../types'
+import * as types from '../constants'
 
 export default class ConversationList {
 	constructor(dispatcher) {

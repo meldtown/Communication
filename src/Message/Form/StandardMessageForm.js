@@ -1,5 +1,5 @@
-import * as actions from '../../actions'
-import * as types from '../../types'
+import * as actions from '../../constants'
+import * as types from '../../constants'
 import $ from 'jquery'
 import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'

@@ -1,5 +1,5 @@
 import * as generator from '../../db'
-import * as actions from '../actions'
+import * as actions from '../constants'
 import * as ko from 'knockout'
 import $ from 'jquery'
 import assert from 'assert'

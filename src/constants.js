@@ -1,3 +1,6 @@
+export const CONVERSATION_SELECTED = 'CONVERSATION_SELECTED'
+export const NEW_MESSAGE = 'NEW_MESSAGE'
+
 export const STANDARD_MESSAGE = 'standard'
 export const INVITE_MESSAGE = 'invite'
 export const DECLINE_MESSAGE = 'decline'

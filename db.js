@@ -1,4 +1,4 @@
-import * as types from './src/types'
+import * as types from './src/constants'
 import faker from 'faker'
 import fs from 'fs'
 

@@ -1,8 +1,8 @@
 import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'
 import $ from 'jquery'
-import * as types from '../../types'
-import * as actions from '../../actions'
+import * as types from '../../constants'
+import * as actions from '../../constants'
 
 export default class DeclineMessageForm extends AbstractMessageForm {
 	save() {

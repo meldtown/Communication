@@ -5,8 +5,8 @@ import assert from 'assert'
 import InviteMessageForm from './InviteMessageForm'
 import InviteMessage from '../InviteMessage'
 import AbstractMessageForm from './AbstractMessageForm'
-import * as types from '../../types'
-import * as actions from '../../actions'
+import * as types from '../../constants'
+import * as actions from '../../constants'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
