@@ -17,8 +17,8 @@ describe('InviteTemplateForm', () => {
 		assert.equal(model instanceof AbstractTemplate, true)
 	})
 
-	it('should have time', () => {
-		assert.equal(ko.isObservable(model.time), true)
+	it('should have inviteDate', () => {
+		assert.equal(ko.isObservable(model.inviteDate), true)
 	})
 
 	it('should have address', () => {

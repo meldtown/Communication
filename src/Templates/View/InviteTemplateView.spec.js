@@ -21,7 +21,7 @@ describe('InviteTemplateView', () => {
 		assert.equal(ko.isObservable(model.address), true)
 	})
 
-	it('should have time', () => {
-		assert.equal(ko.isObservable(model.time), true)
+	it('should have inviteDate', () => {
+		assert.equal(ko.isObservable(model.inviteDate), true)
 	})
 })

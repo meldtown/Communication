@@ -65,7 +65,11 @@ describe('MessageFactory', () => {
 		it('should map array', () => {
 			let items = [
 				Object.assign({}, data, {type: types.STANDARD}),
-				Object.assign({}, data, {type: types.INVITE, time: '23:50', address: 'Ukraine, Kiev'})
+				Object.assign({}, data, {
+					type: types.INVITE,
+					inviteDate: '2015-04-24T23:04:59',
+					address: 'Ukraine, Kiev'
+				})
 			]
 
 			let models = items.map(MessageFactory.create)
