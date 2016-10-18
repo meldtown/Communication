@@ -148,4 +148,8 @@ describe('Hub', () => {
 		model.selectOfferForm()
 		assert.equal(model.isOfferFormSelected(), true)
 	})
+
+	it('should have standard form selected by default', () => {
+		assert.ok(model.isStandardFormSelected())
+	})
 })

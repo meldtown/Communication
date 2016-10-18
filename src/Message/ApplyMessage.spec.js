@@ -37,4 +37,8 @@ describe('ApplyMessage', () => {
 		var {ago, formattedDate, formattedTime, template, ...actual} = ko.toJS(model)
 		assert.deepEqual(actual, data)
 	})
+
+	it('should have template prop been set in constructor', () => {
+		assert.equal(model.template(), 'ApplyMessage')
+	})
 })

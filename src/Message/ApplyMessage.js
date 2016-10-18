@@ -5,5 +5,6 @@ export default class ApplyMessage extends AbstractMessage {
 		super(data)
 		let {avatar} = data
 		this.avatar = ko.observable(avatar)
+		this.template('ApplyMessage')
 	}
 }

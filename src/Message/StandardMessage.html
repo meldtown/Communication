@@ -1,0 +1,31 @@
+<table data-bind="css: {muted: isRead}">
+	<caption data-bind="text: formattedDate" class="muted"></caption>
+	<tbody>
+	<tr>
+		<!-- ko ifnot: isJobsearcher -->
+		<td>
+			<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+		</td>
+		<!-- /ko -->
+		<!-- ko if: isJobsearcher -->
+		<td>
+			<small data-bind="text: formattedTime" class="muted"></small>
+		</td>
+		<!-- /ko -->
+		<td>
+			<div data-bind="text: text"></div>
+		</td>
+		<!-- ko if: isJobsearcher -->
+		<td>
+			<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+		</td>
+		<!-- /ko -->
+		<!-- ko ifnot: isJobsearcher -->
+		<td>
+			<small data-bind="text: formattedTime" class="muted"></small>
+		</td>
+		<!-- /ko -->
+	</tr>
+	</tbody>
+</table>
+

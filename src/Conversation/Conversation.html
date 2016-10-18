@@ -7,6 +7,9 @@
 		<td>
 			<div>
 				<b data-bind="text: fullName"></b>
+				<span data-bind="if: unreadMessagesCount">
+					(<span data-bind="text: unreadMessagesCount"></span>)
+				</span>
 			</div>
 			<div data-bind="with: lastMessage">
 				<div style="text-align: right">

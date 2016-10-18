@@ -31,6 +31,37 @@
 		</td>
 		<td valign="top">
 			<div data-bind="template: {name: 'MessageList', data: messages}"></div>
+
+			<div>
+				<span data-bind="if: isStandardFormSelected">
+					<span>Standard</span>
+				</span>
+				<span data-bind="ifnot: isStandardFormSelected">
+					<a href="#" data-bind="click: selectStandardForm">Standard</a>
+				</span>
+
+				<span data-bind="if: isInviteFormSelected">
+					<span>Invite</span>
+				</span>
+				<span data-bind="ifnot: isInviteFormSelected">
+					<a href="#" data-bind="click: selectInviteForm">Invite</a>
+				</span>
+
+				<span data-bind="if: isDeclineFormSelected">
+					<span>Decline</span>
+				</span>
+				<span data-bind="ifnot: isDeclineFormSelected">
+					<a href="#" data-bind="click: selectDeclineForm">Decline</a>
+				</span>
+
+				<span data-bind="if: isOfferFormSelected">
+					<span>Offer</span>
+				</span>
+				<span data-bind="ifnot: isOfferFormSelected">
+					<a href="#" data-bind="click: selectOfferForm">Offer</a>
+				</span>
+			</div>
+
 		</td>
 	</tr>
 	</tbody>
