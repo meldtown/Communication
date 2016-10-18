@@ -8,6 +8,7 @@ import jQueryMockAjax from 'jquery-mockjax'
 import ConversationList from '../Conversation/ConversationList'
 import MessageList from '../Message/MessageList'
 import StandardMessageForm from '../Message/Form/StandardMessageForm'
+import InviteMessageForm from '../Message/Form/InviteMessageForm'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
@@ -93,4 +94,10 @@ describe('Hub', () => {
 	it('should have standard message form', () => {
 		assert.equal(model.standardMessageForm instanceof StandardMessageForm, true)
 	})
+
+	it('should have invite message form', () => {
+		assert.equal(model.inviteMessageForm instanceof InviteMessageForm, true)
+	})
+
+
 })

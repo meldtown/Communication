@@ -5,6 +5,7 @@ import '../bindingHandlers/hasFocus'
 import ConversationList from '../Conversation/ConversationList'
 import MessageList from '../Message/MessageList'
 import StandardMessageForm from '../Message/Form/StandardMessageForm'
+import InviteMessageForm from '../Message/Form/InviteMessageForm'
 
 export default class Hub {
 	constructor(dispatcher) {
@@ -17,6 +18,7 @@ export default class Hub {
 		this.messages = new MessageList()
 
 		this.standardMessageForm = new StandardMessageForm()
+		this.inviteMessageForm = new InviteMessageForm()
 
 		dispatcher.subscribe(conversationId => {
 			this.messages.fetch(conversationId)
