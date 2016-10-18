@@ -120,8 +120,9 @@ describe('Conversation', () => {
 	})
 
 	it('should call backend to block conversation', () => {
-		let conversationId = model.id()
+		let conversationId = 1
 
+		model.id(conversationId)
 		model.type(constants.ACTIVE_CONVERSATION)
 		assert.equal(model.type(), constants.ACTIVE_CONVERSATION)
 
@@ -133,6 +134,28 @@ describe('Conversation', () => {
 
 		return model.block().then(() => {
 			assert.equal(model.type(), constants.BLOCKED_CONVERSATION)
+		})
+	})
+
+	it('should have archive method', () => {
+		assert.equal(typeof model.archive, 'function')
+	})
+
+	it('should call backend to archive conversation', () => {
+		let conversationId = 1
+
+		model.id(conversationId)
+		model.type(constants.ACTIVE_CONVERSATION)
+		assert.equal(model.type(), constants.ACTIVE_CONVERSATION)
+
+		mockjax({
+			type: 'PUT',
+			url: `${api}/conversations/${conversationId}`,
+			data: {type: constants.ARCHIVED_CONVERSATION}
+		})
+
+		return model.archive().then(() => {
+			assert.equal(model.type(), constants.ARCHIVED_CONVERSATION)
 		})
 	})
 })

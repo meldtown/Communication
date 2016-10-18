@@ -36,4 +36,14 @@ export default class Conversation {
 		})
 	}
 
+	archive() {
+		return $.ajax({
+			type: 'PUT',
+			url: `${api}/conversations/${this.id()}`,
+			data: {type: constants.ARCHIVED_CONVERSATION}
+		}).then(data => {
+			this.type(constants.ARCHIVED_CONVERSATION)
+			return data
+		})
+	}
 }
