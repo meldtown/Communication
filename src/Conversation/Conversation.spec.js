@@ -27,11 +27,16 @@ describe('Conversation', () => {
 		assert.equal(ko.isObservable(model.lastMessage), true)
 	})
 
+	it('should have avatar prop', () => {
+		assert.equal(ko.isObservable(model.avatar), true)
+	})
+
 	it('should take constructor params', () => {
-		let data = {id: 1, lastMessage: generator.generateStandardMessage(1, 1)}
+		let data = {id: 1, avatar: 'http:/placehold.it/50x50', lastMessage: generator.generateStandardMessage(1, 1)}
 		let model = new Conversation(dispatcher, data)
 		var actual = ko.toJS(model);
 		assert.equal(actual.id, data.id)
+		assert.equal(actual.avatar, data.avatar)
 		assert.deepEqual(actual.vacancy, data.vacancy)
 	})
 
