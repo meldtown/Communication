@@ -1,24 +1,24 @@
-import * as types from '../types'
+import * as types from '../constants'
 import StandardMessage from './StandardMessage'
 import InviteMessage from './InviteMessage'
 import DeclineMessage from './DeclineMessage'
 import OfferMessage from './OfferMessage'
-import ResponseMessage from './ResponseMessage'
+import ApplyMessage from './ApplyMessage'
 
 export default class MessageFactory {
 	static create(data = {}) {
 		let {type} = data
 		switch (type) {
-			case types.STANDARD:
+			case types.STANDARD_MESSAGE:
 				return new StandardMessage(data)
-			case types.INVITE:
+			case types.INVITE_MESSAGE:
 				return new InviteMessage(data)
-			case types.DECLINE:
+			case types.DECLINE_MESSAGE:
 				return new DeclineMessage(data)
-			case types.OFFER:
+			case types.OFFER_MESSAGE:
 				return new OfferMessage(data)
-			case types.RESPONSE:
-				return new ResponseMessage(data)
+			case types.APPLY_MESSAGE:
+				return new ApplyMessage(data)
 			default:
 				return null
 		}

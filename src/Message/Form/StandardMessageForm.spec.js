@@ -4,8 +4,8 @@ import StandardMessageForm from './StandardMessageForm'
 import AbstractMessageForm from './AbstractMessageForm'
 import $ from 'jquery'
 import jQueryMockAjax from 'jquery-mockjax'
-import * as types from '../../types'
-import * as actions from '../../actions'
+import * as types from '../../constants'
+import * as actions from '../../constants'
 import StandardMessage from '../StandardMessage'
 
 const api = 'http://sample.com'
@@ -13,6 +13,9 @@ const mockjax = jQueryMockAjax($, window)
 $.mockjaxSettings.logging = 0
 
 describe('StandardMessageForm', () => {
+	const conversationId = 1
+	const text = 'Hello World'
+
 	let model
 	let dispatcher
 
@@ -40,18 +43,19 @@ describe('StandardMessageForm', () => {
 		assert.throws(() => model.save(), Error)
 	})
 
-	it(`should call api on save`, () => {
-		let conversationId = 1
-		let text = 'Hello World'
-
+	const arrangeForSaveTest = () => {
 		model.conversationId(conversationId)
 		model.text(text)
 
 		mockjax({
 			type: 'post',
 			url: `${api}/messages`,
-			responseText: {conversationId, text, id: 1, type: types.STANDARD, date: (new Date()).toISOString()}
+			responseText: {conversationId, text, id: 1, type: types.STANDARD_MESSAGE, date: (new Date()).toISOString()}
 		})
+	}
+
+	it(`should call api on save`, () => {
+		arrangeForSaveTest()
 
 		return model.save().then(message => {
 			assert.equal(message instanceof StandardMessage, true)
@@ -62,17 +66,7 @@ describe('StandardMessageForm', () => {
 	})
 
 	it('should reset form on successful save', () => {
-		let conversationId = 1
-		let text = 'Hello World'
-
-		model.conversationId(conversationId)
-		model.text(text)
-
-		mockjax({
-			type: 'post',
-			url: `${api}/messages`,
-			responseText: {conversationId, text, id: 1, type: types.STANDARD, date: (new Date()).toISOString()}
-		})
+		arrangeForSaveTest()
 
 		return model.save().then(() => {
 			assert.equal(model.text(), '')
@@ -86,17 +80,7 @@ describe('StandardMessageForm', () => {
 			counter = counter + 1
 		}, null, actions.NEW_MESSAGE)
 
-		let conversationId = 1
-		let text = 'Hello World'
-
-		model.conversationId(conversationId)
-		model.text(text)
-
-		mockjax({
-			type: 'post',
-			url: `${api}/messages`,
-			responseText: {conversationId, text, id: 1, type: types.STANDARD, date: (new Date()).toISOString()}
-		})
+		arrangeForSaveTest()
 
 		return model.save().then(() => {
 			assert.equal(counter, 1)

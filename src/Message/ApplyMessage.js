@@ -1,6 +1,6 @@
 import AbstractMessage from './AbstractMessage'
 import * as ko from 'knockout'
-export default class ResponseMessage extends AbstractMessage {
+export default class ApplyMessage extends AbstractMessage {
 	constructor(data = {}) {
 		super(data)
 		let {avatar} = data

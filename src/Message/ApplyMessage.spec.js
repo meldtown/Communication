@@ -1,17 +1,17 @@
 import assert from 'assert'
 import * as ko from 'knockout'
-import ResponseMessage from './ResponseMessage'
+import ApplyMessage from './ApplyMessage'
 import AbstractMessage from './AbstractMessage'
 
 
-describe('ResponseMessage', () => {
+describe('ApplyMessage', () => {
 	let model
 	beforeEach(() => {
-		model = new ResponseMessage()
+		model = new ApplyMessage()
 	})
 
 	it('should be instantiable', () => {
-		assert.equal(model instanceof ResponseMessage, true)
+		assert.equal(model instanceof ApplyMessage, true)
 	})
 
 	it('should be extend AbstractMessage', () => {
@@ -31,7 +31,7 @@ describe('ResponseMessage', () => {
 			text: 'Hello World',
 			avatar: 'http://placehold.it/90x90'
 		}
-		let model = new ResponseMessage(data)
+		let model = new ApplyMessage(data)
 		assert.deepEqual(ko.toJS(model), data)
 	})
 })

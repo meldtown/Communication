@@ -1,5 +1,5 @@
-import * as actions from '../../actions'
-import * as types from '../../types'
+import * as actions from '../../constants'
+import * as types from '../../constants'
 import $ from 'jquery'
 import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'
@@ -11,7 +11,7 @@ export default class StandardMessageForm extends AbstractMessageForm {
 		}
 
 		return $.post(`${api}/messages`, {
-			type: types.STANDARD,
+			type: types.STANDARD_MESSAGE,
 			conversationId: this.conversationId(),
 			text: this.text()
 		}).then(data => {
