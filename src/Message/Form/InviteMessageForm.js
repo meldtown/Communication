@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import * as ko from 'knockout'
 import * as actions from '../../actions'
-import * as types from '../types'
+import * as types from '../../types'
 import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'
 

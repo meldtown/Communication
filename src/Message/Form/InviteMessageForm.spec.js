@@ -5,7 +5,7 @@ import assert from 'assert'
 import InviteMessageForm from './InviteMessageForm'
 import InviteMessage from '../InviteMessage'
 import AbstractMessageForm from './AbstractMessageForm'
-import * as types from '../types'
+import * as types from '../../types'
 import * as actions from '../../actions'
 
 const api = 'http://sample.com'
