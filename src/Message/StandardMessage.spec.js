@@ -39,4 +39,8 @@ describe('StandardMessage', () => {
 		model.multiUser(1)
 		assert.equal(model.isJobsearcher(), false)
 	})
+
+	it('should have template prop been set in constructor', () => {
+		assert.equal(model.template(), 'StandardMessage')
+	})
 })

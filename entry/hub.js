@@ -9,7 +9,7 @@ export const init = () => {
 	const root = document.getElementById('hub')
 	root.innerHTML = require('../src/Hub/Hub.html')
 	helpers.injectTemplate('Conversation', require('../src/Conversation/Conversation.html'))
-	// helpers.injectTemplate('MessageListItemStandard', require('../src/Message/MessageListItemStandard.html'))
+	helpers.injectTemplate('MessageList', require('../src/Message/MessageList.html'))
 	// helpers.injectTemplate('MessageListItemInvite', require('../src/Message/MessageListItemInvite.html'))
 	// helpers.injectTemplate('MessageListItemDecline', require('../src/Message/MessageListItemDecline.html'))
 	// helpers.injectTemplate('MessageListItemResponse', require('../src/Message/MessageListItemResponse.html'))

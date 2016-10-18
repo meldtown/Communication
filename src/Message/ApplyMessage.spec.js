@@ -34,7 +34,7 @@ describe('ApplyMessage', () => {
 		}
 		let model = new ApplyMessage(data)
 		// noinspection JSUnusedLocalSymbols
-		var {ago, formattedDate, formattedTime, ...actual} = ko.toJS(model)
+		var {ago, formattedDate, formattedTime, template, ...actual} = ko.toJS(model)
 		assert.deepEqual(actual, data)
 	})
 })
