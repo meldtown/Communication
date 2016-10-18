@@ -26,10 +26,10 @@ export default class Hub {
 
 		this.selectedForm = ko.observable(StandardMessageForm)
 
-		this.isStandardFormSelected = ko.computed(() => this.selectedForm() === StandardMessageForm)
-		this.isInviteFormSelected = ko.computed(() => this.selectedForm() === InviteMessageForm)
-		this.isDeclineFormSelected = ko.computed(() => this.selectedForm() === DeclineMessageForm)
-		this.isOfferFormSelected = ko.computed(() => this.selectedForm() === OfferMessageForm)
+		this.isStandardFormSelected = ko.computed(() => this.selectedForm() === this.standardMessageForm)
+		this.isInviteFormSelected = ko.computed(() => this.selectedForm() === this.inviteMessageForm)
+		this.isDeclineFormSelected = ko.computed(() => this.selectedForm() === this.declineMessageForm)
+		this.isOfferFormSelected = ko.computed(() => this.selectedForm() === this.offerMessageForm)
 
 		dispatcher.subscribe(conversationId => {
 			this.messages.conversationId(conversationId)
@@ -42,18 +42,18 @@ export default class Hub {
 	}
 
 	selectStandardForm() {
-		this.selectedForm(StandardMessageForm)
+		this.selectedForm(this.standardMessageForm)
 	}
 
 	selectInviteForm() {
-		this.selectedForm(InviteMessageForm)
+		this.selectedForm(this.inviteMessageForm)
 	}
 
 	selectDeclineForm() {
-		this.selectedForm(DeclineMessageForm)
+		this.selectedForm(this.declineMessageForm)
 	}
 
 	selectOfferForm() {
-		this.selectedForm(OfferMessageForm)
+		this.selectedForm(this.offerMessageForm)
 	}
 }
