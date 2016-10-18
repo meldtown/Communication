@@ -5,6 +5,7 @@ import assert from 'assert'
 import Conversation from './Conversation'
 import $ from 'jquery'
 import jQueryMockAjax from 'jquery-mockjax'
+import StandardMessage from '../Message/StandardMessage'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
@@ -137,6 +138,26 @@ describe('Conversation', () => {
 		})
 	})
 
+	it(`should fire ${constants.CONVERSATION_BLOCKED} event`, () => {
+		let conversationId = 1
+		let counter = 0
+
+		dispatcher.subscribe(() => {
+			counter = counter + 1
+		}, null, constants.CONVERSATION_BLOCKED)
+
+		model.id(conversationId)
+
+		mockjax({
+			type: 'PUT',
+			url: `${api}/conversations/${conversationId}`
+		})
+
+		return model.block().then(() => {
+			assert.equal(counter, 1)
+		})
+	})
+
 	it('should have archive method', () => {
 		assert.equal(typeof model.archive, 'function')
 	})
@@ -157,5 +178,55 @@ describe('Conversation', () => {
 		return model.archive().then(() => {
 			assert.equal(model.type(), constants.ARCHIVED_CONVERSATION)
 		})
+	})
+
+	it(`should fire ${constants.CONVERSATION_ARCHIVED} event`, () => {
+		let conversationId = 1
+		let counter = 0
+
+		dispatcher.subscribe(() => {
+			counter = counter + 1
+		}, null, constants.CONVERSATION_ARCHIVED)
+
+		model.id(conversationId)
+
+		mockjax({
+			type: 'PUT',
+			url: `${api}/conversations/${conversationId}`
+		})
+
+		return model.archive().then(() => {
+			assert.equal(counter, 1)
+		})
+	})
+
+	it('should have isActive prop', () => {
+		assert.ok(ko.isObservable(model.isActive))
+		model.type(constants.ACTIVE_CONVERSATION)
+		assert.equal(model.isActive(), true)
+	})
+
+	it('should have isArchived prop', () => {
+		assert.ok(ko.isObservable(model.isArchived))
+		model.type(constants.ARCHIVED_CONVERSATION)
+		assert.equal(model.isArchived(), true)
+	})
+
+	it('should have isBlocked prop', () => {
+		assert.ok(ko.isObservable(model.isBlocked))
+		model.type(constants.BLOCKED_CONVERSATION)
+		assert.equal(model.isBlocked(), true)
+	})
+
+	it('should have unread messages counter', () => {
+		assert.ok(ko.isObservable(model.unreadMessagesCount))
+
+		model = new Conversation(dispatcher, {unreadMessagesCount: 5})
+		assert.equal(model.unreadMessagesCount(), 5)
+	})
+
+	it('should map last message', () => {
+		model = new Conversation(dispatcher, {lastMessage: generator.generateStandardMessage(1, 1)})
+		assert.ok(model.lastMessage() instanceof StandardMessage)
 	})
 })

@@ -114,12 +114,13 @@ const generateMessage = (id, conversationId, vacancies) => {
 }
 
 export const generateConversation = (id, messages) => {
-	let lastMessage = messages
-		.filter(message => message.conversationId === id)
-		.sort((left, right) => new Date(left.date) - new Date(right.date))[0]
+	let conversationMessages = messages.filter(message => message.conversationId === id)
+	let lastMessage = conversationMessages.sort((left, right) => new Date(left.date) - new Date(right.date))[0]
+	let unreadMessagesCount = conversationMessages.filter(message => !message.isRead).length
 
 	return {
 		id,
+		unreadMessagesCount,
 		type: faker.random.arrayElement(CONVERSATION_TYPES),
 		fullName: faker.name.findName(),
 		message: lastMessage
