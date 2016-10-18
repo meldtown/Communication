@@ -1,7 +1,9 @@
+import * as ko from 'knockout'
 import $ from 'jquery'
 import assert from 'assert'
 import Hub from './Hub'
 import jQueryMockAjax from 'jquery-mockjax'
+import ConversationList from '../Conversation/ConversationList'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
@@ -9,41 +11,34 @@ $.mockjaxSettings.logging = 0
 
 
 describe('Hub', () => {
+	let model
+	let dispatcher
+
 	before(() => {
 		global.api = api
 	})
+
+	beforeEach(() => {
+		dispatcher = new ko.subscribable()
+		model = new Hub(dispatcher)
+	})
+
 	afterEach(() => mockjax.clear())
 
-	it('should have default 0 for a', () => {
-		let model = new Hub()
-		assert.equal(model.numericA(), 0)
+	it('should be instantiable', () => {
+		assert.equal(model instanceof Hub, true)
 	})
 
-	it('can mock ajax', done => {
-		mockjax({
-			url: `${api}/conversations`,
-			responseText: [1, 2, 3, 4]
-		})
-
-		let model = new Hub()
-		model.fetch().then(() => {
-			assert.equal(model.numericA(), 2)
-			assert.equal(model.numericB(), 2)
-			done()
-		})
+	it('should throw an error if dispatcher not given', () => {
+		// noinspection JSCheckFunctionSignatures
+		assert.throws(() => new Hub(), Error)
 	})
 
-	it('should set both values to zero on error catch while fetching', done => {
-		mockjax({
-			url: `${api}/conversations`,
-			status: 500
-		})
+	it('should have dispatcher prop', () => {
+		assert.equal(ko.isSubscribable(model.dispatcher), true)
+	})
 
-		let model = new Hub()
-		model.fetch().always(() => {
-			assert.equal(model.numericA(), 1)
-			assert.equal(model.numericB(), 1)
-			done()
-		})
+	it('should have conversations', () => {
+		assert.equal(model.conversations instanceof ConversationList, true)
 	})
 })
