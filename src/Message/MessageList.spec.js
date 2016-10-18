@@ -1,3 +1,4 @@
+import * as actions from '../actions'
 import * as types from './types'
 import * as generator from '../../db'
 import * as ko from 'knockout'
@@ -5,6 +6,7 @@ import $ from 'jquery'
 import assert from 'assert'
 import MessageList from './MessageList'
 import jQueryMockAjax from 'jquery-mockjax'
+import DeclineMessage from '../Message/DeclineMessage'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
@@ -101,5 +103,22 @@ describe('MessageList', () => {
 			assert.equal(model.messages().length, 0)
 			done()
 		})
+	})
+
+	it(`should handle ${actions.NEW_MESSAGE} event`, () => {
+		let model1 = new MessageList(dispatcher)
+		let model2 = new MessageList(dispatcher)
+
+		model1.conversationId(1)
+		model2.conversationId(2)
+
+		assert.equal(model1.messages().length, 0)
+		assert.equal(model2.messages().length, 0)
+
+		let message = new DeclineMessage(generator.generateDeclineMessage(5, 2))
+		dispatcher.notifySubscribers(message, actions.NEW_MESSAGE)
+
+		assert.equal(model1.messages().length, 0)
+		assert.equal(model2.messages().length, 1)
 	})
 })

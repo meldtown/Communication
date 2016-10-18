@@ -1,3 +1,4 @@
+import * as actions from '../actions'
 import * as ko from 'knockout'
 import $ from 'jquery'
 import MessageFactory from './MessageFactory'
@@ -12,6 +13,13 @@ export default class MessageList {
 
 		this.conversationId = ko.observable()
 		this.messages = ko.observableArray()
+
+		dispatcher.subscribe(message => {
+			console.log(message)
+			if (message.conversationId() === this.conversationId()) {
+				this.messages.push(message)
+			}
+		}, this, actions.NEW_MESSAGE)
 	}
 
 	fetch() {
