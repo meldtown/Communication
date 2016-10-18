@@ -36,5 +36,7 @@ describe('StandardMessage', () => {
 		assert.ok(ko.isObservable(model.isJobsearcher))
 		model.multiUser(0)
 		assert.equal(model.isJobsearcher(), true)
+		model.multiUser(1)
+		assert.equal(model.isJobsearcher(), false)
 	})
 })
