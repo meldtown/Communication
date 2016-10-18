@@ -1,3 +1,4 @@
+import * as types from '../types'
 import * as generator from '../../db'
 import * as ko from 'knockout'
 import $ from 'jquery'
@@ -111,6 +112,54 @@ describe('ConversationList', () => {
 
 		return model.fetch().then(() => {
 			assert.equal(model.conversations().length, 0)
+		})
+	})
+
+	it('should have isActiveSelected prop', () => {
+		assert.ok(ko.isObservable(model.isActiveSelected))
+	})
+
+	it('should have isArchiveSelected prop', () => {
+		assert.ok(ko.isObservable(model.isArchiveSelected))
+	})
+
+	it('should have isBlockedSelected prop', () => {
+		assert.ok(ko.isObservable(model.isBlockedSelected))
+	})
+
+	it('should have selectActive method', () => {
+		assert.equal(typeof model.selectActive, 'function')
+		model.selectActive()
+		assert.ok(model.isActiveSelected())
+	})
+
+	it('should have selectArchive method', () => {
+		assert.equal(typeof model.selectArchive, 'function')
+		model.selectArchive()
+		assert.ok(model.isArchiveSelected())
+	})
+
+	it('should have selectBlocked method', () => {
+		assert.equal(typeof model.selectBlocked, 'function')
+		model.selectBlocked()
+		assert.ok(model.isBlockedSelected())
+	})
+
+	it('should use selected type in fetch', () => {
+		let archiveConversation = generator.generateConversation(1, [generator.generateStandardMessage(1, 1)])
+		archiveConversation.type = types.ARCHIVED_CONVERSATION
+
+
+		model.selectArchive()
+
+		mockjax({
+			url: `${api}/conversations`,
+			data: {type: types.ARCHIVED_CONVERSATION},
+			responseText: [archiveConversation]
+		})
+
+		return model.fetch().then(() => {
+			assert.equal(model.conversations().length, 1)
 		})
 	})
 })

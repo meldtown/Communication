@@ -1,22 +1,22 @@
-import * as messageTypes from './src/types'
+import * as types from './src/types'
 import faker from 'faker'
 import fs from 'fs'
 
 // <editor-fold desc="Constants">
-const NUMBER_OF_CONVERSATIONS = 5
-
-const STANDARD_MESSAGE = messageTypes.STANDARD_MESSAGE
-const INVITE_MESSAGE = messageTypes.INVITE_MESSAGE
-const DECLINE_MESSAGE = messageTypes.DECLINE_MESSAGE
-const OFFER_MESSAGE = messageTypes.OFFER_MESSAGE
-const APPLY_MESSAGE = messageTypes.APPLY_MESSAGE
+const NUMBER_OF_CONVERSATIONS = 20
 
 const MESSAGE_TYPES = [
-	STANDARD_MESSAGE,
-	INVITE_MESSAGE,
-	DECLINE_MESSAGE,
-	OFFER_MESSAGE,
-	APPLY_MESSAGE
+	types.STANDARD_MESSAGE,
+	types.INVITE_MESSAGE,
+	types.DECLINE_MESSAGE,
+	types.OFFER_MESSAGE,
+	types.APPLY_MESSAGE
+]
+
+const CONVERSATION_TYPES = [
+	types.ACTIVE_CONVERSATION,
+	types.ARCHIVED_CONVERSATION,
+	types.BLOCKED_CONVERSATION
 ]
 // </editor-fold>
 
@@ -30,7 +30,7 @@ const generateLanguage = () => faker.random.arrayElement(['ru', 'en', 'ua'])
 export const generateStandardMessage = (id, conversationId) => ({
 	id,
 	conversationId,
-	type: STANDARD_MESSAGE,
+	type: types.STANDARD_MESSAGE,
 	date: generateRecentDate(),
 	text: faker.hacker.phrase(),
 	avatar: faker.image.avatar(),
@@ -40,7 +40,7 @@ export const generateStandardMessage = (id, conversationId) => ({
 export const generateInviteMessage = (id, conversationId) => ({
 	id,
 	conversationId,
-	type: INVITE_MESSAGE,
+	type: types.INVITE_MESSAGE,
 	date: generateRecentDate(),
 	text: faker.hacker.phrase(),
 	inviteDate: generateWorkTime(),
@@ -50,7 +50,7 @@ export const generateInviteMessage = (id, conversationId) => ({
 export const generateDeclineMessage = (id, conversationId) => ({
 	id,
 	conversationId,
-	type: DECLINE_MESSAGE,
+	type: types.DECLINE_MESSAGE,
 	date: generateRecentDate(),
 	text: faker.hacker.phrase()
 })
@@ -73,7 +73,7 @@ const generateVacancy = () => {
 export const generateOfferMessage = (id, conversationId, vacancies = []) => ({
 	id,
 	conversationId,
-	type: OFFER_MESSAGE,
+	type: types.OFFER_MESSAGE,
 	date: generateRecentDate(),
 	text: faker.hacker.phrase(),
 	vacancy: vacancies.length > 0 ? faker.random.arrayElement(vacancies) : generateVacancy()
@@ -82,7 +82,7 @@ export const generateOfferMessage = (id, conversationId, vacancies = []) => ({
 export const generateApplyMessage = (id, conversationId) => ({
 	id,
 	conversationId,
-	type: APPLY_MESSAGE,
+	type: types.APPLY_MESSAGE,
 	date: generateRecentDate(),
 	text: faker.hacker.phrase(),
 	avatar: faker.image.avatar()
@@ -91,13 +91,13 @@ export const generateApplyMessage = (id, conversationId) => ({
 const generateMessage = (id, conversationId, vacancies) => {
 	var type = faker.random.arrayElement(MESSAGE_TYPES)
 	switch (type) {
-		case INVITE_MESSAGE:
+		case types.INVITE_MESSAGE:
 			return generateInviteMessage(id, conversationId)
-		case DECLINE_MESSAGE:
+		case types.DECLINE_MESSAGE:
 			return generateDeclineMessage(id, conversationId)
-		case OFFER_MESSAGE:
+		case types.OFFER_MESSAGE:
 			return generateOfferMessage(id, conversationId, vacancies)
-		case APPLY_MESSAGE:
+		case types.APPLY_MESSAGE:
 			return generateApplyMessage(id, conversationId)
 		default:
 			return generateStandardMessage(id, conversationId)
@@ -111,6 +111,7 @@ export const generateConversation = (id, messages) => {
 
 	return {
 		id,
+		type: faker.random.arrayElement(CONVERSATION_TYPES),
 		fullName: faker.name.findName(),
 		message: lastMessage
 	}
@@ -160,13 +161,13 @@ export const generateOfferTemplate = id => {
 }
 
 const generateTemplate = id => {
-	let type = faker.random.arrayElement(MESSAGE_TYPES.filter(type => type !== APPLY_MESSAGE))
+	let type = faker.random.arrayElement(MESSAGE_TYPES.filter(type => type !== types.APPLY_MESSAGE))
 	switch (type) {
-		case INVITE_MESSAGE:
+		case types.INVITE_MESSAGE:
 			return generateInviteTemplate(id)
-		case DECLINE_MESSAGE:
+		case types.DECLINE_MESSAGE:
 			return generateDeclineTemplate(id)
-		case OFFER_MESSAGE:
+		case types.OFFER_MESSAGE:
 			return generateOfferTemplate(id)
 		default:
 			return generateStandardTemplate(id)
