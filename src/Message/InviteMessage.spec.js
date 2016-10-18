@@ -37,6 +37,8 @@ describe('InviteMessage', () => {
 			isRead: false
 		}
 		let model = new InviteMessage(data)
-		assert.deepEqual(ko.toJS(model), data)
+		// noinspection JSUnusedLocalSymbols
+		var {ago, ...actual} = ko.toJS(model)
+		assert.deepEqual(actual, data)
 	})
 })

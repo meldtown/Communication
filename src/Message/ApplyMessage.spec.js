@@ -33,6 +33,8 @@ describe('ApplyMessage', () => {
 			isRead: false
 		}
 		let model = new ApplyMessage(data)
-		assert.deepEqual(ko.toJS(model), data)
+		// noinspection JSUnusedLocalSymbols
+		var {ago, ...actual} = ko.toJS(model)
+		assert.deepEqual(actual, data)
 	})
 })
