@@ -68,18 +68,14 @@ const generateVacancy = () => {
 	}
 }
 
-export const generateOfferMessage = (id, conversationId, vacancies = []) => {
-	let vacancy = vacancies.length > 0 ? faker.random.arrayElement(vacancies) : generateVacancy()
-	return {
-		id,
-		conversationId,
-		type: OFFER_MESSAGE,
-		date: generateRecentDate(),
-		text: faker.hacker.phrase(),
-		vacancyId: vacancy.id,
-		vacancy
-	}
-}
+export const generateOfferMessage = (id, conversationId, vacancies = []) => ({
+	id,
+	conversationId,
+	type: OFFER_MESSAGE,
+	date: generateRecentDate(),
+	text: faker.hacker.phrase(),
+	vacancy: vacancies.length > 0 ? faker.random.arrayElement(vacancies) : generateVacancy()
+})
 
 export const generateResponseMessage = (id, conversationId) => ({
 	id,
@@ -146,8 +142,6 @@ export const generateStandardTemplate = id => {
 
 export const generateInviteTemplate = id => {
 	const {type, text, time, address } = generateInviteMessage(id, 0)
-const generateInviteTemplate = id => {
-	const {type, text, time, address} = generateInviteMessage(id, 0)
 
 	return {id, type, text, time, address, title: faker.random.word(), language: generateLanguage()}
 }
