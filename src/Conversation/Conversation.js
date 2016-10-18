@@ -31,39 +31,27 @@ export default class Conversation {
 		this.dispatcher.notifySubscribers(this.id(), constants.CONVERSATION_SELECTED)
 	}
 
-	block() {
+	_changeType(targetType, eventToFire) {
 		return $.ajax({
 			type: 'put',
 			url: `${api}/conversations/${this.id()}`,
-			data: {type: constants.BLOCKED_CONVERSATION}
+			data: {type: targetType}
 		}).then(data => {
-			this.dispatcher.notifySubscribers(this, constants.CONVERSATION_BLOCKED)
-			this.type(constants.BLOCKED_CONVERSATION)
+			this.dispatcher.notifySubscribers(this, eventToFire)
+			this.type(targetType)
 			return data
 		})
+	}
+
+	block() {
+		return this._changeType(constants.BLOCKED_CONVERSATION, constants.CONVERSATION_BLOCKED)
 	}
 
 	archive() {
-		return $.ajax({
-			type: 'PUT',
-			url: `${api}/conversations/${this.id()}`,
-			data: {type: constants.ARCHIVED_CONVERSATION}
-		}).then(data => {
-			this.type(constants.ARCHIVED_CONVERSATION)
-			this.dispatcher.notifySubscribers(this, constants.CONVERSATION_ARCHIVED)
-			return data
-		})
+		return this._changeType(constants.ARCHIVED_CONVERSATION, constants.CONVERSATION_ARCHIVED)
 	}
 
 	activate() {
-		return $.ajax({
-			type: 'PUT',
-			url: `${api}/conversations/${this.id()}`,
-			data: {type: constants.ACTIVE_CONVERSATION}
-		}).then(data => {
-			this.type(constants.ACTIVE_CONVERSATION)
-			this.dispatcher.notifySubscribers(this, constants.CONVERSATION_ACTIVATED)
-			return data
-		})
+		return this._changeType(constants.ACTIVE_CONVERSATION, constants.CONVERSATION_ACTIVATED)
 	}
 }
