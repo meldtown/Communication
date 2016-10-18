@@ -38,11 +38,15 @@ describe('AbstractMessage', () => {
 		assert.equal(model.text(), 'text')
 	})
 
+	it('should have isRead prop', () => {
+		assert.equal(ko.isObservable(model.isRead), true)
+	})
+
 	it('should accept data into constructor', () => {
-		let data = {id: 1, date: '2015-04-24T23:04:59', conversationId: 1, text: 'Hello World'}
+		let data = {id: 1, date: '2015-04-24T23:04:59', conversationId: 1, text: 'Hello World', isRead: true}
 		let model = new AbstractMessage(data)
 		assert.deepEqual(ko.toJS(model), data)
 	})
 
-	
+
 })

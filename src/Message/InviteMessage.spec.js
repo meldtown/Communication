@@ -33,7 +33,8 @@ describe('InviteMessage', () => {
 			conversationId: 1,
 			text: 'Hello World',
 			inviteDate: '2015-04-12T23:05',
-			addressId: 1
+			addressId: 1,
+			isRead: false
 		}
 		let model = new InviteMessage(data)
 		assert.deepEqual(ko.toJS(model), data)

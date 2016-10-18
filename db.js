@@ -34,7 +34,8 @@ export const generateStandardMessage = (id, conversationId) => ({
 	date: generateRecentDate(),
 	text: faker.hacker.phrase(),
 	avatar: faker.image.avatar(),
-	multiUser: generateNumberBetween(0, 1)
+	multiUser: generateNumberBetween(0, 1),
+	isRead: faker.random.boolean()
 })
 
 export const generateInviteMessage = (id, conversationId) => ({
@@ -44,7 +45,8 @@ export const generateInviteMessage = (id, conversationId) => ({
 	date: generateRecentDate(),
 	text: faker.hacker.phrase(),
 	inviteDate: generateWorkTime(),
-	addressId: generateNumberBetween(1, 50)
+	addressId: generateNumberBetween(1, 50),
+	isRead: faker.random.boolean()
 })
 
 export const generateDeclineMessage = (id, conversationId) => ({
@@ -52,7 +54,8 @@ export const generateDeclineMessage = (id, conversationId) => ({
 	conversationId,
 	type: types.DECLINE_MESSAGE,
 	date: generateRecentDate(),
-	text: faker.hacker.phrase()
+	text: faker.hacker.phrase(),
+	isRead: faker.random.boolean()
 })
 
 const generateVacancy = () => {
@@ -70,14 +73,19 @@ const generateVacancy = () => {
 	}
 }
 
-export const generateOfferMessage = (id, conversationId, vacancies = []) => ({
-	id,
-	conversationId,
-	type: types.OFFER_MESSAGE,
-	date: generateRecentDate(),
-	text: faker.hacker.phrase(),
-	vacancy: vacancies.length > 0 ? faker.random.arrayElement(vacancies) : generateVacancy()
-})
+export const generateOfferMessage = (id, conversationId, vacancies = []) => {
+	let vacancy = vacancies.length > 0 ? faker.random.arrayElement(vacancies) : generateVacancy()
+	return {
+		id,
+		conversationId,
+		type: types.OFFER_MESSAGE,
+		date: generateRecentDate(),
+		text: faker.hacker.phrase(),
+		vacancyId: vacancy.id,
+		vacancy: vacancy,
+		isRead: faker.random.boolean()
+	}
+}
 
 export const generateApplyMessage = (id, conversationId) => ({
 	id,
@@ -85,7 +93,8 @@ export const generateApplyMessage = (id, conversationId) => ({
 	type: types.APPLY_MESSAGE,
 	date: generateRecentDate(),
 	text: faker.hacker.phrase(),
-	avatar: faker.image.avatar()
+	avatar: faker.image.avatar(),
+	isRead: faker.random.boolean()
 })
 
 const generateMessage = (id, conversationId, vacancies) => {

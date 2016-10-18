@@ -29,7 +29,8 @@ describe('ApplyMessage', () => {
 			date: '2015-04-24T23:04:59',
 			conversationId: 1,
 			text: 'Hello World',
-			avatar: 'http://placehold.it/90x90'
+			avatar: 'http://placehold.it/90x90',
+			isRead: false
 		}
 		let model = new ApplyMessage(data)
 		assert.deepEqual(ko.toJS(model), data)
