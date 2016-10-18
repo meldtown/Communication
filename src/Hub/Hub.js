@@ -19,10 +19,10 @@ export default class Hub {
 		this.conversations = new ConversationList(dispatcher)
 		this.messages = new MessageList()
 
-		this.standardMessageForm = new StandardMessageForm()
-		this.inviteMessageForm = new InviteMessageForm()
-		this.declineMessageForm = new DeclineMessageForm()
-		this.offerMessageForm = new OfferMessageForm()
+		this.standardMessageForm = new StandardMessageForm(dispatcher)
+		this.inviteMessageForm = new InviteMessageForm(dispatcher)
+		this.declineMessageForm = new DeclineMessageForm(dispatcher)
+		this.offerMessageForm = new OfferMessageForm(dispatcher)
 
 		this.selectedForm = ko.observable(StandardMessageForm)
 

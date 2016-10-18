@@ -5,9 +5,11 @@ import AbstractMessageForm from './AbstractMessageForm'
 
 describe('InviteMessageForm', () => {
 	let model
+	let dispatcher
 
 	beforeEach(() => {
-		model = new InviteMessageForm()
+		dispatcher = new ko.subscribable()
+		model = new InviteMessageForm(dispatcher)
 	})
 
 	it('should be instantiable', () => {
