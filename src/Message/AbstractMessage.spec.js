@@ -47,11 +47,11 @@ describe('AbstractMessage', () => {
 		let data = {id: 1, date: '2015-04-24T23:04:59', conversationId: 1, text: 'Hello World', isRead: true}
 		let model = new AbstractMessage(data)
 		// noinspection JSUnusedLocalSymbols
-		let {ago, ...actual} = ko.toJS(model)
+		let {ago, formattedDate, formattedTime, ...actual} = ko.toJS(model)
 		assert.deepEqual(actual, data)
 	})
 
-	it('should have ago prop', () => {
+	it('should have ago comp', () => {
 		assert.ok(ko.isComputed(model.ago))
 
 		let yesterday = moment().subtract(1, 'day').format()
@@ -60,5 +60,25 @@ describe('AbstractMessage', () => {
 		model.date(yesterday)
 
 		assert.equal(model.ago(), expected)
+	})
+
+	it('should have formatted date comp', () => {
+		assert.ok(ko.isComputed(model.formattedDate))
+
+		let date = '2015-01-01T23:23:23'
+
+		model.date(date)
+
+		assert.equal(model.formattedDate(), moment(date).format('LL'))
+	})
+
+	it('should have formatted time comp', () => {
+		assert.ok(ko.isComputed(model.formattedTime))
+
+		let date = '2015-01-01T23:23:23'
+
+		model.date(date)
+
+		assert.equal(model.formattedTime(), moment(date).format('HH:mm'))
 	})
 })
