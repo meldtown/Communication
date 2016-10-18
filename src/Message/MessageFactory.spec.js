@@ -71,8 +71,8 @@ describe('MessageFactory', () => {
 
 			let models = items.map(MessageFactory.create)
 
-			assert.deepEqual(Object.assign({}, ko.toJS(models[0]), {type: types.STANDARD}), items[0])
-			assert.deepEqual(Object.assign({}, ko.toJS(models[1]), {type: types.INVITE}), items[1])
+			assert.ok(models[0] instanceof StandardMessage)
+			assert.ok(models[1] instanceof InviteMessage)
 		})
 
 	})

@@ -31,4 +31,10 @@ describe('StandardMessage', () => {
 		let model = new StandardMessage({multiUser})
 		assert.equal(model.multiUser(), multiUser)
 	})
+
+	it('should have isJobsearcher comp', () => {
+		assert.ok(ko.isObservable(model.isJobsearcher))
+		model.multiUser(0)
+		assert.equal(model.isJobsearcher(), true)
+	})
 })

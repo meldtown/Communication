@@ -7,5 +7,7 @@ export default class StandardMessage extends AbstractMessage {
 		let {avatar, multiUser} = data
 		this.avatar = ko.observable(avatar)
 		this.multiUser = ko.observable(multiUser)
+
+		this.isJobsearcher = ko.computed(() => this.multiUser() === 0)
 	}
 }
