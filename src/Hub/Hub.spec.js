@@ -86,11 +86,11 @@ describe('Hub', () => {
 		let counter = 0
 		let conversationId = 5
 
-		model.messages.fetch = conversationId => counter = counter + conversationId
+		model.messages.fetch = () => counter = counter + 1
 
 		dispatcher.notifySubscribers(conversationId, actions.CONVERSATION_SELECTED)
 
-		assert.equal(counter, 5)
+		assert.equal(counter, 1)
 	})
 
 	it('should have standard message form', () => {

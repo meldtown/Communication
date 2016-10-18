@@ -1,3 +1,4 @@
+import * as actions from '../../actions'
 import * as ko from 'knockout'
 
 export default class AbstractMessageForm {
@@ -7,6 +8,14 @@ export default class AbstractMessageForm {
 		}
 
 		this.dispatcher = dispatcher
+		this.conversationId = ko.observable()
 		this.text = ko.observable()
+
+		dispatcher.subscribe(conversationId => {
+			this.conversationId(conversationId)
+			if (this.reset) {
+				this.reset()
+			}
+		}, this, actions.CONVERSATION_SELECTED)
 	}
 }

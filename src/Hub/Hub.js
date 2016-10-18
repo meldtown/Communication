@@ -17,7 +17,7 @@ export default class Hub {
 
 		this.dispatcher = dispatcher
 		this.conversations = new ConversationList(dispatcher)
-		this.messages = new MessageList()
+		this.messages = new MessageList(dispatcher)
 
 		this.standardMessageForm = new StandardMessageForm(dispatcher)
 		this.inviteMessageForm = new InviteMessageForm(dispatcher)
@@ -32,7 +32,8 @@ export default class Hub {
 		this.isOfferFormSelected = ko.computed(() => this.selectedForm() === OfferMessageForm)
 
 		dispatcher.subscribe(conversationId => {
-			this.messages.fetch(conversationId)
+			this.messages.conversationId(conversationId)
+			this.messages.fetch()
 		}, this, actions.CONVERSATION_SELECTED)
 	}
 

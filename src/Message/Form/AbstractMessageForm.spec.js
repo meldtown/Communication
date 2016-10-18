@@ -1,3 +1,4 @@
+import * as actions from '../../actions'
 import * as ko from 'knockout'
 import assert from 'assert'
 import AbstractMessageForm from './AbstractMessageForm'
@@ -28,5 +29,23 @@ describe('AbstractMessageForm', () => {
 		model.text('text')
 		assert.equal(ko.isObservable(model.text), true)
 		assert.equal(model.text(), 'text')
+	})
+
+	it('should have conversationId prop', () => {
+		assert.equal(ko.isObservable(model.conversationId), true)
+	})
+
+	it(`should handle ${actions.CONVERSATION_SELECTED} event`, () => {
+		let conversationId = 1
+		dispatcher.notifySubscribers(conversationId, actions.CONVERSATION_SELECTED)
+		assert.equal(model.conversationId(), conversationId)
+	})
+
+	it(`should call reset method if any on ${actions.CONVERSATION_SELECTED} event`, () => {
+		model.text('Hello')
+		model.reset = () => model.text('')
+		let conversationId = 1
+		dispatcher.notifySubscribers(conversationId, actions.CONVERSATION_SELECTED)
+		assert.equal(model.text(), '')
 	})
 })
