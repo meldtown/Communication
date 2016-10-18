@@ -9,6 +9,7 @@ import ConversationList from '../Conversation/ConversationList'
 import MessageList from '../Message/MessageList'
 import StandardMessageForm from '../Message/Form/StandardMessageForm'
 import InviteMessageForm from '../Message/Form/InviteMessageForm'
+import DeclineMessageForm from '../Message/Form/DeclineMessageForm'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
@@ -99,5 +100,7 @@ describe('Hub', () => {
 		assert.equal(model.inviteMessageForm instanceof InviteMessageForm, true)
 	})
 
-
+	it('should have decline message form', () => {
+		assert.equal(model.declineMessageForm instanceof DeclineMessageForm, true)
+	})
 })
