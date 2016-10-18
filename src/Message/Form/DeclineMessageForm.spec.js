@@ -12,6 +12,9 @@ const mockjax = jQueryMockAjax($, window)
 $.mockjaxSettings.logging = 0
 
 describe('DeclineMessageForm', () => {
+	const conversationId = 1
+	const text = 'Hello World'
+
 	let model
 	let dispatcher
 
@@ -38,10 +41,7 @@ describe('DeclineMessageForm', () => {
 		assert.throws(() => model.save(), Error)
 	})
 
-	it(`should call api on save`, () => {
-		let conversationId = 1
-		let text = 'Hello World'
-
+	const arrangeForSaveTest = () => {
 		model.conversationId(conversationId)
 		model.text(text)
 
@@ -50,6 +50,10 @@ describe('DeclineMessageForm', () => {
 			url: `${api}/messages`,
 			responseText: {conversationId, text, id: 1, type: types.DECLINE, date: (new Date()).toISOString()}
 		})
+	}
+
+	it(`should call api on save`, () => {
+		arrangeForSaveTest()
 
 		return model.save().then(message => {
 			assert.equal(message instanceof DeclineMessage, true)
@@ -60,17 +64,7 @@ describe('DeclineMessageForm', () => {
 	})
 
 	it('should reset form on successful save', () => {
-		let conversationId = 1
-		let text = 'Hello World'
-
-		model.conversationId(conversationId)
-		model.text(text)
-
-		mockjax({
-			type: 'post',
-			url: `${api}/messages`,
-			responseText: {conversationId, text, id: 1, type: types.DECLINE, date: (new Date()).toISOString()}
-		})
+		arrangeForSaveTest()
 
 		return model.save().then(() => {
 			assert.equal(model.text(), '')
@@ -84,17 +78,7 @@ describe('DeclineMessageForm', () => {
 			counter = counter + 1
 		}, null, actions.NEW_MESSAGE)
 
-		let conversationId = 1
-		let text = 'Hello World'
-
-		model.conversationId(conversationId)
-		model.text(text)
-
-		mockjax({
-			type: 'post',
-			url: `${api}/messages`,
-			responseText: {conversationId, text, id: 1, type: types.DECLINE, date: (new Date()).toISOString()}
-		})
+		arrangeForSaveTest()
 
 		return model.save().then(() => {
 			assert.equal(counter, 1)

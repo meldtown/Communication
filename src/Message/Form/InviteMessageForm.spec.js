@@ -13,6 +13,11 @@ const mockjax = jQueryMockAjax($, window)
 $.mockjaxSettings.logging = 0
 
 describe('InviteMessageForm', () => {
+	const conversationId = 1
+	const text = 'Hello World'
+	const inviteDate = (new Date()).toISOString()
+	const addressId = 1
+
 	let model
 	let dispatcher
 
@@ -48,12 +53,7 @@ describe('InviteMessageForm', () => {
 		assert.throws(() => model.save(), Error)
 	})
 
-	it(`should call api on save`, () => {
-		let conversationId = 1
-		let text = 'Hello World'
-		let inviteDate = (new Date()).toISOString()
-		let addressId = 1
-
+	const arrangeForSaveTest = () => {
 		model.conversationId(conversationId)
 		model.text(text)
 		model.inviteDate(inviteDate)
@@ -72,6 +72,10 @@ describe('InviteMessageForm', () => {
 				date: (new Date()).toISOString()
 			}
 		})
+	}
+
+	it(`should call api on save`, () => {
+		arrangeForSaveTest()
 
 		return model.save().then(message => {
 			assert.equal(message instanceof InviteMessage, true)
@@ -84,29 +88,7 @@ describe('InviteMessageForm', () => {
 	})
 
 	it('should reset form on successful save', () => {
-		let conversationId = 1
-		let text = 'Hello World'
-		let inviteDate = (new Date()).toISOString()
-		let addressId = 1
-
-		model.conversationId(conversationId)
-		model.text(text)
-		model.inviteDate(inviteDate)
-		model.addressId(addressId)
-
-		mockjax({
-			type: 'post',
-			url: `${api}/messages`,
-			responseText: {
-				conversationId,
-				text,
-				inviteDate,
-				addressId,
-				id: 1,
-				type: types.INVITE,
-				date: (new Date()).toISOString()
-			}
-		})
+		arrangeForSaveTest()
 
 		return model.save().then(() => {
 			assert.equal(model.text(), '')
@@ -122,29 +104,7 @@ describe('InviteMessageForm', () => {
 			counter = counter + 1
 		}, null, actions.NEW_MESSAGE)
 
-		let conversationId = 1
-		let text = 'Hello World'
-		let inviteDate = (new Date()).toISOString()
-		let addressId = 1
-
-		model.conversationId(conversationId)
-		model.text(text)
-		model.inviteDate(inviteDate)
-		model.addressId(addressId)
-
-		mockjax({
-			type: 'post',
-			url: `${api}/messages`,
-			responseText: {
-				conversationId,
-				text,
-				inviteDate,
-				addressId,
-				id: 1,
-				type: types.INVITE,
-				date: (new Date()).toISOString()
-			}
-		})
+		arrangeForSaveTest()
 
 		return model.save().then(() => {
 			assert.equal(counter, 1)

@@ -12,6 +12,10 @@ const mockjax = jQueryMockAjax($, window)
 $.mockjaxSettings.logging = 0
 
 describe('OfferMessageForm', () => {
+	const conversationId = 1
+	const text = 'Hello World'
+	const vacancyId = 1
+
 	let model
 	let dispatcher
 
@@ -42,11 +46,7 @@ describe('OfferMessageForm', () => {
 		assert.throws(() => model.save(), Error)
 	})
 
-	it(`should call api on save`, () => {
-		let conversationId = 1
-		let text = 'Hello World'
-		let vacancyId = 1
-
+	const arrangeForSaveTest = () => {
 		model.conversationId(conversationId)
 		model.text(text)
 		model.vacancyId(vacancyId)
@@ -63,6 +63,10 @@ describe('OfferMessageForm', () => {
 				date: (new Date()).toISOString()
 			}
 		})
+	}
+
+	it(`should call api on save`, () => {
+		arrangeForSaveTest()
 
 		return model.save().then(message => {
 			assert.equal(message instanceof OfferMessage, true)
@@ -74,26 +78,7 @@ describe('OfferMessageForm', () => {
 	})
 
 	it('should reset form on successful save', () => {
-		let conversationId = 1
-		let text = 'Hello World'
-		let vacancyId = 1
-
-		model.conversationId(conversationId)
-		model.text(text)
-		model.vacancyId(vacancyId)
-
-		mockjax({
-			type: 'post',
-			url: `${api}/messages`,
-			responseText: {
-				conversationId,
-				text,
-				vacancyId,
-				id: 1,
-				type: types.OFFER,
-				date: (new Date()).toISOString()
-			}
-		})
+		arrangeForSaveTest()
 
 		return model.save().then(() => {
 			assert.equal(model.text(), '')
@@ -108,26 +93,7 @@ describe('OfferMessageForm', () => {
 			counter = counter + 1
 		}, null, actions.NEW_MESSAGE)
 
-		let conversationId = 1
-		let text = 'Hello World'
-		let vacancyId = 1
-
-		model.conversationId(conversationId)
-		model.text(text)
-		model.vacancyId(vacancyId)
-
-		mockjax({
-			type: 'post',
-			url: `${api}/messages`,
-			responseText: {
-				conversationId,
-				text,
-				vacancyId,
-				id: 1,
-				type: types.OFFER,
-				date: (new Date()).toISOString()
-			}
-		})
+		arrangeForSaveTest()
 
 		return model.save().then(() => {
 			assert.equal(counter, 1)
