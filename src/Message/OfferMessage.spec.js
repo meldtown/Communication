@@ -14,7 +14,7 @@ describe('OfferMessage', () => {
 		assert.equal(model instanceof AbstractMessage, true)
 	})
 
-	it('should have vacancy', () => {
-		assert.equal(ko.isObservable(model.vacancy), true)
+	it('should have vacancyId', () => {
+		assert.equal(ko.isObservable(model.vacancyId), true)
 	})
 })

@@ -68,14 +68,18 @@ const generateVacancy = () => {
 	}
 }
 
-export const generateOfferMessage = (id, conversationId, vacancies = []) => ({
-	id,
-	conversationId,
-	type: OFFER_MESSAGE,
-	date: generateRecentDate(),
-	text: faker.hacker.phrase(),
-	vacancy: vacancies.length > 0 ? faker.random.arrayElement(vacancies) : generateVacancy()
-})
+export const generateOfferMessage = (id, conversationId, vacancies = []) => {
+	let vacancy = vacancies.length > 0 ? faker.random.arrayElement(vacancies) : generateVacancy()
+	return {
+		id,
+		conversationId,
+		type: OFFER_MESSAGE,
+		date: generateRecentDate(),
+		text: faker.hacker.phrase(),
+		vacancyId: vacancy.id,
+		vacancy
+	}
+}
 
 export const generateResponseMessage = (id, conversationId) => ({
 	id,
@@ -137,24 +141,26 @@ const generateConversations = messages => {
 export const generateStandardTemplate = id => {
 	const {type, text} = generateStandardMessage(id, 0)
 
-	return {id, type, text, title: faker.random.word(), language: generateLanguage() }
+	return {id, type, text, title: faker.random.word(), language: generateLanguage()}
 }
 
 export const generateInviteTemplate = id => {
 	const {type, text, time, address } = generateInviteMessage(id, 0)
+const generateInviteTemplate = id => {
+	const {type, text, time, address} = generateInviteMessage(id, 0)
 
-	return {id, type, text, time, address, title: faker.random.word(), language: generateLanguage() }
+	return {id, type, text, time, address, title: faker.random.word(), language: generateLanguage()}
 }
 
 export const generateDeclineTemplate = id => {
 	const {type, text} = generateDeclineMessage(id, 0)
-	return {id, type, text, title: faker.random.word(), language: generateLanguage() }
+	return {id, type, text, title: faker.random.word(), language: generateLanguage()}
 }
 
 export const generateOfferTemplate = id => {
 	const {type, text} = generateOfferMessage(id, 0)
 
-	return {id, type, text, title: faker.random.word(), language: generateLanguage() }
+	return {id, type, text, title: faker.random.word(), language: generateLanguage()}
 }
 
 const generateTemplate = id => {
@@ -175,7 +181,7 @@ const generateTemplates = () => {
 	let templates = []
 	let numberOfTemplates = generateNumberBetween(3, 10)
 
-	for(let id = 1; id <= numberOfTemplates; id++) {
+	for (let id = 1; id <= numberOfTemplates; id++) {
 		templates.push(generateTemplate(id))
 	}
 
