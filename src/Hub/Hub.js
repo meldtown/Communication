@@ -7,6 +7,7 @@ import MessageList from '../Message/MessageList'
 import StandardMessageForm from '../Message/Form/StandardMessageForm'
 import InviteMessageForm from '../Message/Form/InviteMessageForm'
 import DeclineMessageForm from '../Message/Form/DeclineMessageForm'
+import OfferMessageForm from '../Message/Form/OfferMessageForm'
 
 export default class Hub {
 	constructor(dispatcher) {
@@ -21,6 +22,7 @@ export default class Hub {
 		this.standardMessageForm = new StandardMessageForm()
 		this.inviteMessageForm = new InviteMessageForm()
 		this.declineMessageForm = new DeclineMessageForm()
+		this.offerMessageForm = new OfferMessageForm()
 
 		dispatcher.subscribe(conversationId => {
 			this.messages.fetch(conversationId)
