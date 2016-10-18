@@ -1,11 +1,10 @@
 import assert from 'assert'
 import Templates from './Templates'
 import * as ko from 'knockout'
-import * as types from '../types'
+import * as types from '../constants'
 import * as generator from '../../db'
 import $ from 'jquery'
 import jQueryMockAjax from 'jquery-mockjax'
-import StandardTemplateView from './View/StandardTemplateView'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
@@ -49,10 +48,10 @@ describe('Templates', () => {
 
 		return model.fetch().then(() => {
 			assert.equal(model.templates().length, 4)
-			assert.deepEqual(Object.assign({}, ko.toJS(model.templates()[0]), {type: types.STANDARD}), responseText[0])
-			assert.deepEqual(Object.assign({}, ko.toJS(model.templates()[1]), {type: types.INVITE}), responseText[1])
-			assert.deepEqual(Object.assign({}, ko.toJS(model.templates()[2]), {type: types.DECLINE}), responseText[2])
-			assert.deepEqual(Object.assign({}, ko.toJS(model.templates()[3]), {type: types.OFFER}), responseText[3])
+			assert.deepEqual(Object.assign({}, ko.toJS(model.templates()[0]), {type: types.STANDARD_MESSAGE}), responseText[0])
+			assert.deepEqual(Object.assign({}, ko.toJS(model.templates()[1]), {type: types.INVITE_MESSAGE}), responseText[1])
+			assert.deepEqual(Object.assign({}, ko.toJS(model.templates()[2]), {type: types.DECLINE_MESSAGE}), responseText[2])
+			assert.deepEqual(Object.assign({}, ko.toJS(model.templates()[3]), {type: types.OFFER_MESSAGE}), responseText[3])
 		})
 	})
 
@@ -104,28 +103,28 @@ describe('Templates', () => {
 		assert.equal(typeof model.selectStandardTab, 'function')
 
 		model.selectStandardTab()
-		assert.equal(model.selectedTab(), types.STANDARD)
+		assert.equal(model.selectedTab(), types.STANDARD_MESSAGE)
 	})
 
 	it('should have selectInviteTab method', () => {
 		assert.equal(typeof model.selectInviteTab, 'function')
 
 		model.selectInviteTab()
-		assert.equal(model.selectedTab(), types.INVITE)
+		assert.equal(model.selectedTab(), types.INVITE_MESSAGE)
 	})
 
 	it('should have selectDeclineTab method', () => {
 		assert.equal(typeof model.selectDeclineTab, 'function')
 
 		model.selectDeclineTab()
-		assert.equal(model.selectedTab(), types.DECLINE)
+		assert.equal(model.selectedTab(), types.DECLINE_MESSAGE)
 	})
 
 	it('should have selectOfferTab method', () => {
 		assert.equal(typeof model.selectOfferTab, 'function')
 
 		model.selectOfferTab()
-		assert.equal(model.selectedTab(), types.OFFER)
+		assert.equal(model.selectedTab(), types.OFFER_MESSAGE)
 	})
 
 	it('should set selectedTab to standard after fetch', () => {
@@ -142,7 +141,7 @@ describe('Templates', () => {
 		})
 
 		return model.fetch().then(() => {
-			assert.equal(model.selectedTab(), types.STANDARD)
+			assert.equal(model.selectedTab(), types.STANDARD_MESSAGE)
 		})
 	})
 
