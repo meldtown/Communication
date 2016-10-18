@@ -1,4 +1,4 @@
-import * as messageTypes from './src/Message/types'
+import * as messageTypes from './src/types'
 import faker from 'faker'
 import fs from 'fs'
 
@@ -134,24 +134,24 @@ const generateConversations = messages => {
 	return conversations
 }
 
-const generateStandardTemplate = id => {
+export const generateStandardTemplate = id => {
 	const {type, text} = generateStandardMessage(id, 0)
 
 	return {id, type, text, title: faker.random.word(), language: generateLanguage() }
 }
 
-const generateInviteTemplate = id => {
+export const generateInviteTemplate = id => {
 	const {type, text, time, address } = generateInviteMessage(id, 0)
 
 	return {id, type, text, time, address, title: faker.random.word(), language: generateLanguage() }
 }
 
-const generateDeclineTemplate = id => {
+export const generateDeclineTemplate = id => {
 	const {type, text} = generateDeclineMessage(id, 0)
 	return {id, type, text, title: faker.random.word(), language: generateLanguage() }
 }
 
-const generateOfferTemplate = id => {
+export const generateOfferTemplate = id => {
 	const {type, text} = generateOfferMessage(id, 0)
 
 	return {id, type, text, title: faker.random.word(), language: generateLanguage() }
