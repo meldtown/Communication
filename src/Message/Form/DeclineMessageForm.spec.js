@@ -48,7 +48,7 @@ describe('DeclineMessageForm', () => {
 		mockjax({
 			type: 'post',
 			url: `${api}/messages`,
-			responseText: {conversationId, text, id: 1, type: types.DECLINE, date: (new Date()).toISOString()}
+			responseText: {conversationId, text, id: 1, type: types.DECLINE_MESSAGE, date: (new Date()).toISOString()}
 		})
 	}
 

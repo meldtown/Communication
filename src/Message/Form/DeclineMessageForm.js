@@ -11,7 +11,7 @@ export default class DeclineMessageForm extends AbstractMessageForm {
 		}
 
 		return $.post(`${api}/messages`, {
-			type: types.DECLINE,
+			type: types.DECLINE_MESSAGE,
 			conversationId: this.conversationId(),
 			text: this.text()
 		}).then(data => {

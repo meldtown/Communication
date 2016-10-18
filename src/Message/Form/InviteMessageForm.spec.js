@@ -68,7 +68,7 @@ describe('InviteMessageForm', () => {
 				inviteDate,
 				addressId,
 				id: 1,
-				type: types.INVITE,
+				type: types.INVITE_MESSAGE,
 				date: (new Date()).toISOString()
 			}
 		})

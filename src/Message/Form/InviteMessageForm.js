@@ -18,7 +18,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		}
 
 		return $.post(`${api}/messages`, {
-			type: types.INVITE,
+			type: types.INVITE_MESSAGE,
 			conversationId: this.conversationId(),
 			text: this.text(),
 			inviteDate: this.inviteDate(),

@@ -18,7 +18,7 @@ export default class OfferMessageForm extends AbstractMessageForm {
 		}
 
 		return $.post(`${api}/messages`, {
-			type: types.OFFER,
+			type: types.OFFER_MESSAGE,
 			conversationId: this.conversationId(),
 			text: this.text(),
 			vacancyId: this.vacancyId()

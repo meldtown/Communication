@@ -11,7 +11,7 @@ export default class StandardMessageForm extends AbstractMessageForm {
 		}
 
 		return $.post(`${api}/messages`, {
-			type: types.STANDARD,
+			type: types.STANDARD_MESSAGE,
 			conversationId: this.conversationId(),
 			text: this.text()
 		}).then(data => {

@@ -50,7 +50,7 @@ describe('StandardMessageForm', () => {
 		mockjax({
 			type: 'post',
 			url: `${api}/messages`,
-			responseText: {conversationId, text, id: 1, type: types.STANDARD, date: (new Date()).toISOString()}
+			responseText: {conversationId, text, id: 1, type: types.STANDARD_MESSAGE, date: (new Date()).toISOString()}
 		})
 	}
 

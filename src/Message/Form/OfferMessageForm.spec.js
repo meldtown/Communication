@@ -59,7 +59,7 @@ describe('OfferMessageForm', () => {
 				text,
 				vacancyId,
 				id: 1,
-				type: types.OFFER,
+				type: types.OFFER_MESSAGE,
 				date: (new Date()).toISOString()
 			}
 		})

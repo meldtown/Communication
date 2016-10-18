@@ -21,15 +21,15 @@ describe('MessageFactory', () => {
 			data = {id: 1, date: '2015-04-24T23:04:59', conversationId: 1, text: 'Hello World'}
 		})
 
-		it(`should create ${types.STANDARD} message`, () => {
-			data.type = types.STANDARD
+		it(`should create ${types.STANDARD_MESSAGE} message`, () => {
+			data.type = types.STANDARD_MESSAGE
 			let expected = new StandardMessage(data)
 			let actual = MessageFactory.create(data)
 			assert.deepEqual(ko.toJS(actual), ko.toJS(expected))
 		})
 
-		it(`should create ${types.INVITE} message`, () => {
-			data.type = types.INVITE
+		it(`should create ${types.INVITE_MESSAGE} message`, () => {
+			data.type = types.INVITE_MESSAGE
 			data.time = '23:04'
 			data.address = 'Wallstreet st 5'
 			let expected = new InviteMessage(data)
@@ -37,22 +37,22 @@ describe('MessageFactory', () => {
 			assert.deepEqual(ko.toJS(actual), ko.toJS(expected))
 		})
 
-		it(`should create ${types.DECLINE} message`, () => {
-			data.type = types.DECLINE
+		it(`should create ${types.DECLINE_MESSAGE} message`, () => {
+			data.type = types.DECLINE_MESSAGE
 			let expected = new DeclineMessage(data)
 			let actual = MessageFactory.create(data)
 			assert.deepEqual(ko.toJS(actual), ko.toJS(expected))
 		})
 
-		it(`should create ${types.OFFER} message`, () => {
-			data.type = types.OFFER
+		it(`should create ${types.OFFER_MESSAGE} message`, () => {
+			data.type = types.OFFER_MESSAGE
 			let expected = new OfferMessage(data)
 			let actual = MessageFactory.create(data)
 			assert.deepEqual(ko.toJS(actual), ko.toJS(expected))
 		})
 
-		it(`should create ${types.APPLY} message`, () => {
-			data.type = types.APPLY
+		it(`should create ${types.APPLY_MESSAGE} message`, () => {
+			data.type = types.APPLY_MESSAGE
 			let expected = new ApplyMessage(data)
 			let actual = MessageFactory.create(data)
 			assert.deepEqual(ko.toJS(actual), ko.toJS(expected))

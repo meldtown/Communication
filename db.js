@@ -5,11 +5,11 @@ import fs from 'fs'
 // <editor-fold desc="Constants">
 const NUMBER_OF_CONVERSATIONS = 5
 
-const STANDARD_MESSAGE = messageTypes.STANDARD
-const INVITE_MESSAGE = messageTypes.INVITE
-const DECLINE_MESSAGE = messageTypes.DECLINE
-const OFFER_MESSAGE = messageTypes.OFFER
-const APPLY_MESSAGE = messageTypes.APPLY
+const STANDARD_MESSAGE = messageTypes.STANDARD_MESSAGE
+const INVITE_MESSAGE = messageTypes.INVITE_MESSAGE
+const DECLINE_MESSAGE = messageTypes.DECLINE_MESSAGE
+const OFFER_MESSAGE = messageTypes.OFFER_MESSAGE
+const APPLY_MESSAGE = messageTypes.APPLY_MESSAGE
 
 const MESSAGE_TYPES = [
 	STANDARD_MESSAGE,
