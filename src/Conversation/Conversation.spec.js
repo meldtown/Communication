@@ -1,17 +1,29 @@
-import * as actions from '../constants'
+import * as constants from '../constants'
 import * as generator from '../../db'
 import * as ko from 'knockout'
 import assert from 'assert'
 import Conversation from './Conversation'
+import $ from 'jquery'
+import jQueryMockAjax from 'jquery-mockjax'
+
+const api = 'http://sample.com'
+const mockjax = jQueryMockAjax($, window)
+$.mockjaxSettings.logging = 0
 
 describe('Conversation', () => {
 	let model
 	let dispatcher
 
+	before(() => {
+		global.api = api
+	})
+
 	beforeEach(() => {
 		dispatcher = new ko.subscribable()
 		model = new Conversation(dispatcher)
 	})
+
+	afterEach(() => mockjax.clear())
 
 	it('should be instantiable', () => {
 		assert.equal(model instanceof Conversation, true)
@@ -53,23 +65,23 @@ describe('Conversation', () => {
 		assert.equal(ko.isObservable(model.isSelected), true)
 	})
 
-	it(`should react to ${actions.CONVERSATION_SELECTED} event`, () => {
+	it(`should react to ${constants.CONVERSATION_SELECTED} event`, () => {
 		var conversationId = 1;
 
 		model.id(conversationId)
 
 		assert.equal(model.isSelected(), false)
 
-		dispatcher.notifySubscribers(conversationId, actions.CONVERSATION_SELECTED)
+		dispatcher.notifySubscribers(conversationId, constants.CONVERSATION_SELECTED)
 
 		assert.equal(model.isSelected(), true)
 	})
 
-	it(`should react to ${actions.CONVERSATION_SELECTED} event only if has same id`, () => {
+	it(`should react to ${constants.CONVERSATION_SELECTED} event only if has same id`, () => {
 		model.id(2)
 		model.isSelected(true)
 
-		dispatcher.notifySubscribers(1, actions.CONVERSATION_SELECTED)
+		dispatcher.notifySubscribers(1, constants.CONVERSATION_SELECTED)
 
 		assert.equal(model.isSelected(), false)
 	})
@@ -92,5 +104,35 @@ describe('Conversation', () => {
 
 		assert.equal(item1.isSelected(), false)
 		assert.equal(item2.isSelected(), true)
+	})
+
+	it('should have type prop', () => {
+		assert.ok(ko.isObservable(model.type))
+	})
+
+	it('should accept type as constructor argument', () => {
+		let model = new Conversation(dispatcher, {type: constants.BLOCKED_CONVERSATION})
+		assert.equal(model.type(), constants.BLOCKED_CONVERSATION)
+	})
+
+	it('should have block method', () => {
+		assert.equal(typeof model.block, 'function')
+	})
+
+	it('should call backend to block conversation', () => {
+		let conversationId = model.id()
+
+		model.type(constants.ACTIVE_CONVERSATION)
+		assert.equal(model.type(), constants.ACTIVE_CONVERSATION)
+
+		mockjax({
+			type: 'PUT',
+			url: `${api}/conversations/${conversationId}`,
+			data: {type: constants.BLOCKED_CONVERSATION}
+		})
+
+		return model.block().then(() => {
+			assert.equal(model.type(), constants.BLOCKED_CONVERSATION)
+		})
 	})
 })
