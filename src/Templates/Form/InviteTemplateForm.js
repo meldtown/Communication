@@ -5,7 +5,7 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 	constructor() {
 		super()
 		this.inviteDate = ko.observable()
-		this.address = ko.observable()
+		this.addressId = ko.observable()
 	}
 }
 

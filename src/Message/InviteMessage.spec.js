@@ -22,8 +22,8 @@ describe('InviteMessage', () => {
 		assert.equal(ko.isObservable(model.inviteDate), true)
 	})
 
-	it('should have address', () => {
-		assert.equal(ko.isObservable(model.address), true)
+	it('should have addressId', () => {
+		assert.equal(ko.isObservable(model.addressId), true)
 	})
 
 	it('should accept data into constructor', () => {
@@ -33,7 +33,7 @@ describe('InviteMessage', () => {
 			conversationId: 1,
 			text: 'Hello World',
 			inviteDate: '2015-04-12T23:05',
-			address: 'Wallstreet str 5'
+			addressId: 1
 		}
 		let model = new InviteMessage(data)
 		assert.deepEqual(ko.toJS(model), data)

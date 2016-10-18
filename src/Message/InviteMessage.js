@@ -3,8 +3,8 @@ import * as ko from 'knockout'
 export default class InviteMessage extends AbstractMessage {
 	constructor(data = {}) {
 		super(data)
-		let {inviteDate, address} = data
+		let {inviteDate, addressId} = data
 		this.inviteDate = ko.observable(inviteDate)
-		this.address = ko.observable(address)
+		this.addressId = ko.observable(addressId)
 	}
 }

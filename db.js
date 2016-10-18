@@ -42,7 +42,7 @@ export const generateInviteMessage = (id, conversationId) => ({
 	date: generateRecentDate(),
 	text: faker.hacker.phrase(),
 	inviteDate: generateWorkTime(),
-	address: faker.address.streetAddress()
+	addressId: generateNumberBetween(1, 50)
 })
 
 export const generateDeclineMessage = (id, conversationId) => ({

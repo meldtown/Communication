@@ -5,6 +5,6 @@ export default class InviteMessageForm extends AbstractMessageForm {
 	constructor(dispatcher) {
 		super(dispatcher)
 		this.inviteDate = ko.observable()
-		this.address = ko.observable()
+		this.addressId = ko.observable()
 	}
 }

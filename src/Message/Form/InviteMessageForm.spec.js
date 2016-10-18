@@ -21,7 +21,7 @@ describe('InviteMessageForm', () => {
 		assert.equal(ko.isObservable(model.inviteDate), true)
 	})
 
-	it('should have address', () => {
-		assert.equal(ko.isObservable(model.address), true)
+	it('should have addressId', () => {
+		assert.equal(ko.isObservable(model.addressId), true)
 	})
 })

@@ -68,7 +68,7 @@ describe('MessageFactory', () => {
 				Object.assign({}, data, {
 					type: types.INVITE,
 					inviteDate: '2015-04-24T23:04:59',
-					address: 'Ukraine, Kiev'
+					addressId: 1
 				})
 			]
 
