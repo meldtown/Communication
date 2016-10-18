@@ -7,6 +7,7 @@ import InviteMessage from './InviteMessage'
 import DeclineMessage from './DeclineMessage'
 import OfferMessage from './OfferMessage'
 import ApplyMessage from './ApplyMessage'
+import * as generator from '../../db'
 
 describe('MessageFactory', () => {
 	it('should have static create method', () => {
@@ -64,12 +65,8 @@ describe('MessageFactory', () => {
 
 		it('should map array', () => {
 			let items = [
-				Object.assign({}, data, {type: types.STANDARD}),
-				Object.assign({}, data, {
-					type: types.INVITE,
-					inviteDate: '2015-04-24T23:04:59',
-					addressId: 1
-				})
+				generator.generateStandardMessage(1, 1),
+				generator.generateInviteMessage(2, 1)
 			]
 
 			let models = items.map(MessageFactory.create)

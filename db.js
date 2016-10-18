@@ -32,7 +32,9 @@ export const generateStandardMessage = (id, conversationId) => ({
 	conversationId,
 	type: STANDARD_MESSAGE,
 	date: generateRecentDate(),
-	text: faker.hacker.phrase()
+	text: faker.hacker.phrase(),
+	avatar: faker.image.avatar(),
+	multiUser: generateNumberBetween(0, 1)
 })
 
 export const generateInviteMessage = (id, conversationId) => ({
