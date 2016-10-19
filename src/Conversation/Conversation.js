@@ -4,7 +4,7 @@ import $ from 'jquery'
 import MessageFactory from '../Message/MessageFactory'
 
 export default class Conversation {
-	constructor(dispatcher, {id, avatar, lastMessage, type, unreadMessagesCount, fullName, vacancyIds, hasInvites, hasDeclines, hasOffers} = {}) {
+	constructor(dispatcher, {id, avatar, lastMessage, type, unreadMessagesCount, fullName, vacancyIds, hasInvites, hasDeclines, hasOffers, fromCvdb, fromApply} = {}) {
 		if (!ko.isSubscribable(dispatcher)) {
 			throw new Error('ko.subscribable is required')
 		}
@@ -20,6 +20,9 @@ export default class Conversation {
 		this.hasInvites = ko.observable(hasInvites)
 		this.hasDeclines = ko.observable(hasDeclines)
 		this.hasOffers = ko.observable(hasOffers)
+		this.fromCvdb = ko.observable(fromCvdb)
+		this.fromApply = ko.observable(fromApply)
+
 
 		this.isSelected = ko.observable(false)
 

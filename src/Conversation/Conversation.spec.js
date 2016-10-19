@@ -318,4 +318,16 @@ describe('Conversation', () => {
 		model = new Conversation(dispatcher, {hasOffers: true})
 		assert.ok(model.hasOffers())
 	})
+
+	it('should have fromCvdb prop', () => {
+		assert.ok(ko.isObservable(model.fromCvdb))
+		model = new Conversation(dispatcher, {fromCvdb: true})
+		assert.ok(model.fromCvdb())
+	})
+
+	it('should have fromApply prop', () => {
+		assert.ok(ko.isObservable(model.fromApply))
+		model = new Conversation(dispatcher, {fromApply: true})
+		assert.ok(model.fromApply())
+	})
 })
