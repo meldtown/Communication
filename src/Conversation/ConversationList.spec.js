@@ -324,8 +324,8 @@ describe('ConversationList', () => {
 
 		it('should do nothing if non of filters checked', () => {
 			model.conversations([
-				new Conversation(dispatcher, {hasInvites: true, hasDeclines: false}),
-				new Conversation(dispatcher, {hasInvites: false, hasDeclines: true})
+				new Conversation(dispatcher, {hasInvites: true, hasDeclines: false, fromCvdb: true}),
+				new Conversation(dispatcher, {hasInvites: false, hasDeclines: true, fromApply: true})
 			])
 
 			assert.equal(model.filteredConversations().length, 2)
