@@ -362,5 +362,74 @@ describe('Templates', () => {
 		// model.standardForm = new StandardForm()
 	})
 
-
+	// it('should have isSelected prop', () => {
+	// 	model.isSelected(true)
+	// 	assert.equal(ko.isObservable(model.isSelected), true)
+	// 	assert.equal(model.isSelected(), true)
+	// })
+	//
+	// it('should have dispatcher prop and accept it as first constructor argument', () => {
+	// 	assert.equal(ko.isSubscribable(model.dispatcher), true)
+	// })
+	//
+	// it(`should react to ${actions.TEMPLATE_SELECTED} event`, () => {
+	// 	model.id = 1
+	// 	assert.equal(model.isSelected(), false)
+	//
+	// 	dispatcher.notifySubscribers(1, actions.TEMPLATE_SELECTED)
+	//
+	// 	assert.equal(model.isSelected(), true)
+	// })
+	//
+	// it(`should react to ${actions.TEMPLATE_SELECTED} event only if has same id`, () => {
+	// 	model.id = 2
+	// 	model.isSelected(true)
+	//
+	// 	dispatcher.notifySubscribers(1, actions.TEMPLATE_SELECTED)
+	//
+	// 	assert.equal(model.isSelected(), false)
+	// })
+	//
+	// it('should set language as russian by default if nothing passed to fromJs', () => {
+	// 	let data = {id: 1}
+	// 	let model = new StandardMessageTemplate(dispatcher, data)
+	// 	assert.equal(model.language(), 'ru')
+	// })
+	//
+	// it('should accept only ru, en and ua as language', () => {
+	// 	let data = {language: 'acme'}
+	// 	let model = new StandardMessageTemplate(dispatcher, data)
+	// 	assert.equal(model.language(), 'ru')
+	// })
+	//
+	// it('should throw an error if dispatcher not given', () => {
+	// 	// noinspection JSCheckFunctionSignatures
+	// 	assert.throws(() => new StandardMessageTemplate(), Error)
+	// })
+	//
+	// it('should still return default type even if type was changed by hands', () => {
+	// 	model.type = 'invite'
+	// 	var data = model.toJs()
+	// 	assert.equal(data.type, 'standard')
+	// })
+	//
+	// it('should have select method', () => {
+	// 	assert.equal(typeof model.select === 'function', true)
+	//
+	// 	let item1 = new StandardMessageTemplate(dispatcher, {id: 1})
+	// 	let item2 = new StandardMessageTemplate(dispatcher, {id: 2})
+	//
+	// 	assert.equal(item1.isSelected(), false)
+	// 	assert.equal(item2.isSelected(), false)
+	//
+	// 	item1.select()
+	//
+	// 	assert.equal(item1.isSelected(), true)
+	// 	assert.equal(item2.isSelected(), false)
+	//
+	// 	item2.select()
+	//
+	// 	assert.equal(item1.isSelected(), false)
+	// 	assert.equal(item2.isSelected(), true)
+	// })
 })
