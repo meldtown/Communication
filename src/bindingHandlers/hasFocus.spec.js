@@ -10,17 +10,17 @@ describe('hasFocus', () => {
 	})
 
 	it('should track hasFocus observable', () => {
-		function Dummy() {
+		function Model() {
 			this.hasFocus = ko.observable(false)
 		}
 
-		var dummy = new Dummy()
+		let model = new Model()
 
-		document.body.innerHTML = `<input data-bind="hasFocus: hasFocus">`
-		ko.applyBindings(dummy)
+		document.body.innerHTML = `<div id="hasFocus"><input data-bind="hasFocus: hasFocus"></div>`
+		ko.applyBindings(model, document.querySelector('#hasFocus'))
 
-		document.querySelector('input').focus()
-		assert.equal(dummy.hasFocus(), true)
+		document.querySelector('#hasFocus input').focus()
+		assert.equal(model.hasFocus(), true)
 	})
 })
 
