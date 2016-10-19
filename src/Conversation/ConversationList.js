@@ -27,6 +27,10 @@ export default class ConversationList {
 		this.periodFrom = ko.observable()
 		this.weekAgo = ko.computed(() => moment().subtract(1, 'week').format())
 		this.monthAgo = ko.computed(() => moment().subtract(1, 'month').format())
+		this.periodFromInputFormatted = ko.computed({
+			read: () => this.periodFrom() ? moment(this.periodFrom()).format('YYYY-MM-DD') : '',
+			write: date => this.periodFrom(date)
+		})
 
 		this.isActiveSelected = ko.computed(() => this.selectedType() === types.ACTIVE_CONVERSATION)
 		this.isArchiveSelected = ko.computed(() => this.selectedType() === types.ARCHIVED_CONVERSATION)

@@ -257,6 +257,17 @@ describe('ConversationList', () => {
 		assert.ok(ko.isObservable(model.periodFrom))
 	})
 
+	it('should have periodFromInputFormatted writeable computed', () => {
+		assert.ok(ko.isComputed(model.periodFromInputFormatted))
+		assert.equal(model.periodFromInputFormatted(), '')
+
+		model.periodFrom(moment())
+		assert.equal(model.periodFromInputFormatted(), moment().format('YYYY-MM-DD'))
+
+		model.periodFromInputFormatted(moment().format('YYYY-MM-DD'))
+		assert.equal(model.periodFrom(), moment().format('YYYY-MM-DD'))
+	})
+
 	it('should have weekAgo prop', () => {
 		assert.ok(ko.isObservable(model.weekAgo))
 		assert.equal(model.weekAgo(), moment().subtract(1, 'week').format())
