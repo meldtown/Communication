@@ -26,6 +26,10 @@
 					</span>
 				</div>
 
+				<div>
+					<input placeholder="filter..." type="text" data-bind="value: term, enterPress: fetch">
+				</div>
+
 				<div data-bind="template: {name: 'Conversation', foreach: conversations}"></div>
 			</div>
 		</td>
