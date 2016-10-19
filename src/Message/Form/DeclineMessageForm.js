@@ -5,6 +5,11 @@ import * as types from '../../constants'
 import * as actions from '../../constants'
 
 export default class DeclineMessageForm extends AbstractMessageForm {
+	constructor(dispatcher) {
+		super(dispatcher)
+		this.template('DeclineMessageForm')
+	}
+
 	save() {
 		if (!this.conversationId()) {
 			throw new Error('conversationId is required')

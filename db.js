@@ -34,7 +34,8 @@ export const generateStandardMessage = (id, conversationId) => ({
 	date: generateRecentDate(),
 	text: faker.hacker.phrase(),
 	avatar: faker.image.avatar(),
-	multiUser: generateNumberBetween(0, 1)
+	multiUser: generateNumberBetween(0, 1),
+	isRead: faker.random.boolean()
 })
 
 export const generateInviteMessage = (id, conversationId) => ({
@@ -44,7 +45,8 @@ export const generateInviteMessage = (id, conversationId) => ({
 	date: generateRecentDate(),
 	text: faker.hacker.phrase(),
 	inviteDate: generateWorkTime(),
-	addressId: generateNumberBetween(1, 50)
+	addressId: generateNumberBetween(1, 50),
+	isRead: faker.random.boolean()
 })
 
 export const generateDeclineMessage = (id, conversationId) => ({
@@ -52,13 +54,15 @@ export const generateDeclineMessage = (id, conversationId) => ({
 	conversationId,
 	type: types.DECLINE_MESSAGE,
 	date: generateRecentDate(),
-	text: faker.hacker.phrase()
+	text: faker.hacker.phrase(),
+	isRead: faker.random.boolean()
 })
 
 const generateVacancy = () => {
 	let companyName = faker.company.companyName()
 	let color = faker.internet.color(255, 255, 255)
 	return {
+		id: generateNumberBetween(1000, 2000),
 		companyName,
 		vacancyName: faker.name.jobTitle(),
 		salary: faker.random.arrayElement([null, 1000, 5000, 10000]),
@@ -70,23 +74,35 @@ const generateVacancy = () => {
 	}
 }
 
-export const generateOfferMessage = (id, conversationId, vacancies = []) => ({
-	id,
-	conversationId,
-	type: types.OFFER_MESSAGE,
-	date: generateRecentDate(),
-	text: faker.hacker.phrase(),
-	vacancy: vacancies.length > 0 ? faker.random.arrayElement(vacancies) : generateVacancy()
-})
+export const generateOfferMessage = (id, conversationId, vacancies = []) => {
+	let vacancy = vacancies.length > 0 ? faker.random.arrayElement(vacancies) : generateVacancy()
+	return {
+		id,
+		conversationId,
+		type: types.OFFER_MESSAGE,
+		date: generateRecentDate(),
+		text: faker.hacker.phrase(),
+		vacancyId: vacancy.id,
+		vacancy: vacancy,
+		isRead: faker.random.boolean()
+	}
+}
 
-export const generateApplyMessage = (id, conversationId) => ({
-	id,
-	conversationId,
-	type: types.APPLY_MESSAGE,
-	date: generateRecentDate(),
-	text: faker.hacker.phrase(),
-	avatar: faker.image.avatar()
-})
+export const generateApplyMessage = (id, conversationId, vacancies = []) => {
+	let vacancy = vacancies.length > 0 ? faker.random.arrayElement(vacancies) : generateVacancy()
+	return {
+		id,
+		conversationId,
+		type: types.APPLY_MESSAGE,
+		date: generateRecentDate(),
+		text: faker.hacker.phrase(),
+		avatar: faker.image.avatar(),
+		isRead: faker.random.boolean(),
+		resumeId: generateNumberBetween(1, 3),
+		vacancyId: vacancy.id,
+		vacancy: vacancy
+	}
+}
 
 const generateMessage = (id, conversationId, vacancies) => {
 	var type = faker.random.arrayElement(MESSAGE_TYPES)
@@ -98,22 +114,24 @@ const generateMessage = (id, conversationId, vacancies) => {
 		case types.OFFER_MESSAGE:
 			return generateOfferMessage(id, conversationId, vacancies)
 		case types.APPLY_MESSAGE:
-			return generateApplyMessage(id, conversationId)
+			return generateApplyMessage(id, conversationId, vacancies)
 		default:
 			return generateStandardMessage(id, conversationId)
 	}
 }
 
 export const generateConversation = (id, messages) => {
-	let lastMessage = messages
-		.filter(message => message.conversationId === id)
-		.sort((left, right) => new Date(left.date) - new Date(right.date))[0]
+	let conversationMessages = messages.filter(message => message.conversationId === id)
+	let lastMessage = conversationMessages.sort((left, right) => new Date(left.date) - new Date(right.date))[0]
+	let unreadMessagesCount = conversationMessages.filter(message => !message.isRead).length
 
 	return {
 		id,
+		unreadMessagesCount,
 		type: faker.random.arrayElement(CONVERSATION_TYPES),
 		fullName: faker.name.findName(),
-		message: lastMessage
+		avatar: faker.image.avatar(),
+		lastMessage: lastMessage
 	}
 }
 

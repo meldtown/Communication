@@ -1,23 +1,101 @@
-<table cellpadding="5" cellspacing="0" border="1">
+<table cellpadding="5" cellspacing="0" border="1" width="100%">
 	<tbody>
 	<tr>
-		<td width="30%" valign="top">
-			<div data-bind="template: { name: 'ConversationSidebarPreview', foreach: conversations }"></div>
-		</td>
-		<td width="70%" valign="top">
-			<div data-bind="with: messageList">
-				<div data-bind="template: { name: 'MessageList', foreach: messages }"></div>
+		<td valign="top" width="240">
+			<div data-bind="with: conversations">
+				<div>
+					<span data-bind="if: isActiveSelected">
+						<span>Active</span>
+					</span>
+					<span data-bind="ifnot: isActiveSelected">
+						<a href="#" data-bind="click: selectActive">Active</a>
+					</span>
+
+					<span data-bind="if: isArchiveSelected">
+						<span>Archive</span>
+					</span>
+					<span data-bind="ifnot: isArchiveSelected">
+						<a href="#" data-bind="click: selectArchive">Archive</a>
+					</span>
+
+					<span data-bind="if: isBlockedSelected">
+						<span>Blocked</span>
+					</span>
+					<span data-bind="ifnot: isBlockedSelected">
+						<a href="#" data-bind="click: selectBlocked">Blocked</a>
+					</span>
+				</div>
+
+				<div>
+					<input placeholder="filter..." type="text" data-bind="value: term, enterPress: fetch">
+				</div>
+
+				<div data-bind="template: {name: 'Conversation', foreach: conversations}"></div>
 			</div>
+		</td>
+		<td valign="top">
+			<div style="text-align: right" data-bind="with: selectedConversation">
+				<span data-bind="if: isActive">
+					<span>Active</span>
+				</span>
+				<span data-bind="ifnot: isActive">
+					<a href="#" data-bind="click: activate">Active</a>
+				</span>
+
+				<span data-bind="if: isArchived">
+					<span>Archive</span>
+				</span>
+				<span data-bind="ifnot: isArchived">
+					<a href="#" data-bind="click: archive">Archive</a>
+				</span>
+
+				<span data-bind="if: isBlocked">
+					<span>Blocked</span>
+				</span>
+				<span data-bind="ifnot: isBlocked">
+					<a href="#" data-bind="click: block">Blocked</a>
+				</span>
+			</div>
+
+			<div data-bind="template: {name: 'MessageList', data: messages}"></div>
+
+			<hr/>
+
+			<div>
+				<span data-bind="if: isStandardFormSelected">
+					<span>Standard</span>
+				</span>
+				<span data-bind="ifnot: isStandardFormSelected">
+					<a href="#" data-bind="click: selectStandardForm">Standard</a>
+				</span>
+
+				<span data-bind="if: isInviteFormSelected">
+					<span>Invite</span>
+				</span>
+				<span data-bind="ifnot: isInviteFormSelected">
+					<a href="#" data-bind="click: selectInviteForm">Invite</a>
+				</span>
+
+				<span data-bind="if: isDeclineFormSelected">
+					<span>Decline</span>
+				</span>
+				<span data-bind="ifnot: isDeclineFormSelected">
+					<a href="#" data-bind="click: selectDeclineForm">Decline</a>
+				</span>
+
+				<span data-bind="if: isOfferFormSelected">
+					<span>Offer</span>
+				</span>
+				<span data-bind="ifnot: isOfferFormSelected">
+					<a href="#" data-bind="click: selectOfferForm">Offer</a>
+				</span>
+			</div>
+
+			<div data-bind="with: selectedForm">
+				<div data-bind="template: template"></div>
+			</div>
+
 		</td>
 	</tr>
 	</tbody>
 </table>
-<div>
-    <span data-bind="text: aHasFocus"></span>
-    <label for="a">a</label>
-    <input id="a" data-bind="value: a, valueUpdate: 'keyup', hasFocus: aHasFocus" />
-    <label for="b">b</label>
-    <input id="b" data-bind="value: b, valueUpdate: 'keyup'" />
-    <span data-bind="text: sum"></span>
-    <button data-bind="click: fetch">fetch</button>
-</div>

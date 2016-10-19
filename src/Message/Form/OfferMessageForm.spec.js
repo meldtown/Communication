@@ -99,4 +99,8 @@ describe('OfferMessageForm', () => {
 			assert.equal(counter, 1)
 		})
 	})
+
+	it('should have template been set in constructor', () => {
+		assert.equal(model.template(), 'OfferMessageForm')
+	})
 })

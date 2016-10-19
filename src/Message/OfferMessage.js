@@ -6,5 +6,6 @@ export default class OfferMessage extends AbstractMessage {
 		super(data)
 		let {vacancyId} = data
 		this.vacancyId = ko.observable(vacancyId)
+		this.template('OfferMessage')
 	}
 }

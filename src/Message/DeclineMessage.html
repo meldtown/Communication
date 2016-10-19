@@ -1,0 +1,20 @@
+<table data-bind="css: {muted: isRead}" style="background: rgba(255, 0, 0, .5);margin: 20px 0">
+
+	<thead>
+	<tr>
+		<td colspan="2">
+			<small>DECLINED <span data-bind="text: formattedDate" class="muted"></span></small>
+		</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			<div data-bind="text: text"></div>
+		</td>
+		<td>
+			<small data-bind="text: formattedTime" class="muted"></small>
+		</td>
+	</tr>
+	</tbody>
+</table>

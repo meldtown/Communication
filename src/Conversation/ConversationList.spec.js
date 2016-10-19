@@ -5,6 +5,7 @@ import $ from 'jquery'
 import assert from 'assert'
 import ConversationList from './ConversationList'
 import jQueryMockAjax from 'jquery-mockjax'
+import Conversation from './Conversation'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
@@ -63,7 +64,9 @@ describe('ConversationList', () => {
 			for (let i = 0; i < responseText.length; i++) {
 				let conversation = model.conversations()[i]
 				assert.equal(conversation.id(), responseText[i].id)
-				assert.deepEqual(conversation.lastMessage(), responseText[i].lastMessage)
+				// noinspection JSUnusedLocalSymbols
+				var {ago, formattedDate, formattedTime, isJobsearcher, template, ...actual} = ko.toJS(conversation.lastMessage());
+				assert.deepEqual({...actual, type: responseText[i].lastMessage.type}, responseText[i].lastMessage)
 			}
 		})
 	})
@@ -75,7 +78,7 @@ describe('ConversationList', () => {
 		})
 
 		model.conversations([
-			generator.generateConversation(1, [generator.generateStandardMessage(1, 1)])
+			new Conversation(dispatcher, generator.generateConversation(1, [generator.generateStandardMessage(1, 1)]))
 		])
 
 		assert.equal(model.conversations().length, 1)
@@ -129,20 +132,47 @@ describe('ConversationList', () => {
 
 	it('should have selectActive method', () => {
 		assert.equal(typeof model.selectActive, 'function')
-		model.selectActive()
-		assert.ok(model.isActiveSelected())
+
+		mockjax({
+			url: `${api}/conversations`,
+			data: {type: types.ACTIVE_CONVERSATION},
+			responseText: []
+		})
+
+		return model.selectActive().then(() => {
+			assert.equal(model.conversations().length, 0)
+			assert.ok(model.isActiveSelected())
+		})
 	})
 
 	it('should have selectArchive method', () => {
 		assert.equal(typeof model.selectArchive, 'function')
-		model.selectArchive()
-		assert.ok(model.isArchiveSelected())
+
+		mockjax({
+			url: `${api}/conversations`,
+			data: {type: types.ARCHIVED_CONVERSATION},
+			responseText: []
+		})
+
+		return model.selectArchive().then(() => {
+			assert.equal(model.conversations().length, 0)
+			assert.ok(model.isArchiveSelected())
+		})
 	})
 
 	it('should have selectBlocked method', () => {
 		assert.equal(typeof model.selectBlocked, 'function')
-		model.selectBlocked()
-		assert.ok(model.isBlockedSelected())
+
+		mockjax({
+			url: `${api}/conversations`,
+			data: {type: types.BLOCKED_CONVERSATION},
+			responseText: []
+		})
+
+		return model.selectBlocked().then(() => {
+			assert.equal(model.conversations().length, 0)
+			assert.ok(model.isBlockedSelected())
+		})
 	})
 
 	it('should use selected type in fetch', () => {
@@ -159,6 +189,18 @@ describe('ConversationList', () => {
 
 		return model.fetch().then(() => {
 			assert.equal(model.conversations().length, 1)
+		})
+	})
+
+	it('should call fetch on selected type change', () => {
+		mockjax({
+			url: `${api}/conversations`,
+			data: {type: types.ARCHIVED_CONVERSATION},
+			responseText: []
+		})
+
+		return model.selectArchive().then(() => {
+			assert.equal(model.conversations().length, 0)
 		})
 	})
 
@@ -180,5 +222,13 @@ describe('ConversationList', () => {
 		return model.fetch().then(() => {
 			assert.equal(model.conversations().length, 0)
 		})
+	})
+
+	it('should have empty conversation array at start', () => {
+		assert.equal(model.conversations().length, 0)
+	})
+
+	it('should have selectedConversation comp', () => {
+		assert.ok(ko.isComputed(model.selectedConversation))
 	})
 })

@@ -1,17 +1,30 @@
-import * as actions from '../constants'
+import * as constants from '../constants'
 import * as generator from '../../db'
 import * as ko from 'knockout'
 import assert from 'assert'
 import Conversation from './Conversation'
+import $ from 'jquery'
+import jQueryMockAjax from 'jquery-mockjax'
+import StandardMessage from '../Message/StandardMessage'
+
+const api = 'http://sample.com'
+const mockjax = jQueryMockAjax($, window)
+$.mockjaxSettings.logging = 0
 
 describe('Conversation', () => {
 	let model
 	let dispatcher
 
+	before(() => {
+		global.api = api
+	})
+
 	beforeEach(() => {
 		dispatcher = new ko.subscribable()
 		model = new Conversation(dispatcher)
 	})
+
+	afterEach(() => mockjax.clear())
 
 	it('should be instantiable', () => {
 		assert.equal(model instanceof Conversation, true)
@@ -53,23 +66,23 @@ describe('Conversation', () => {
 		assert.equal(ko.isObservable(model.isSelected), true)
 	})
 
-	it(`should react to ${actions.CONVERSATION_SELECTED} event`, () => {
+	it(`should react to ${constants.CONVERSATION_SELECTED} event`, () => {
 		var conversationId = 1;
 
 		model.id(conversationId)
 
 		assert.equal(model.isSelected(), false)
 
-		dispatcher.notifySubscribers(conversationId, actions.CONVERSATION_SELECTED)
+		dispatcher.notifySubscribers(conversationId, constants.CONVERSATION_SELECTED)
 
 		assert.equal(model.isSelected(), true)
 	})
 
-	it(`should react to ${actions.CONVERSATION_SELECTED} event only if has same id`, () => {
+	it(`should react to ${constants.CONVERSATION_SELECTED} event only if has same id`, () => {
 		model.id(2)
 		model.isSelected(true)
 
-		dispatcher.notifySubscribers(1, actions.CONVERSATION_SELECTED)
+		dispatcher.notifySubscribers(1, constants.CONVERSATION_SELECTED)
 
 		assert.equal(model.isSelected(), false)
 	})
@@ -92,5 +105,183 @@ describe('Conversation', () => {
 
 		assert.equal(item1.isSelected(), false)
 		assert.equal(item2.isSelected(), true)
+	})
+
+	it('should have type prop', () => {
+		assert.ok(ko.isObservable(model.type))
+	})
+
+	it('should accept type as constructor argument', () => {
+		let model = new Conversation(dispatcher, {type: constants.BLOCKED_CONVERSATION})
+		assert.equal(model.type(), constants.BLOCKED_CONVERSATION)
+	})
+
+	it('should have block method', () => {
+		assert.equal(typeof model.block, 'function')
+	})
+
+	it('should call backend to block conversation', () => {
+		let conversationId = 1
+
+		model.id(conversationId)
+		model.type(constants.ACTIVE_CONVERSATION)
+		assert.equal(model.type(), constants.ACTIVE_CONVERSATION)
+
+		mockjax({
+			type: 'PUT',
+			url: `${api}/conversations/${conversationId}`,
+			data: {type: constants.BLOCKED_CONVERSATION}
+		})
+
+		return model.block().then(() => {
+			assert.equal(model.type(), constants.BLOCKED_CONVERSATION)
+		})
+	})
+
+	it(`should fire ${constants.CONVERSATION_BLOCKED} event`, () => {
+		let conversationId = 1
+		let counter = 0
+
+		dispatcher.subscribe(() => {
+			counter = counter + 1
+		}, null, constants.CONVERSATION_BLOCKED)
+
+		model.id(conversationId)
+
+		mockjax({
+			type: 'PUT',
+			url: `${api}/conversations/${conversationId}`
+		})
+
+		return model.block().then(() => {
+			assert.equal(counter, 1)
+		})
+	})
+
+	it('should have archive method', () => {
+		assert.equal(typeof model.archive, 'function')
+	})
+
+	it('should call backend to archive conversation', () => {
+		let conversationId = 1
+
+		model.id(conversationId)
+		model.type(constants.ACTIVE_CONVERSATION)
+		assert.equal(model.type(), constants.ACTIVE_CONVERSATION)
+
+		mockjax({
+			type: 'PUT',
+			url: `${api}/conversations/${conversationId}`,
+			data: {type: constants.ARCHIVED_CONVERSATION}
+		})
+
+		return model.archive().then(() => {
+			assert.equal(model.type(), constants.ARCHIVED_CONVERSATION)
+		})
+	})
+
+	it(`should fire ${constants.CONVERSATION_ARCHIVED} event`, () => {
+		let conversationId = 1
+		let counter = 0
+
+		dispatcher.subscribe(() => {
+			counter = counter + 1
+		}, null, constants.CONVERSATION_ARCHIVED)
+
+		model.id(conversationId)
+
+		mockjax({
+			type: 'PUT',
+			url: `${api}/conversations/${conversationId}`
+		})
+
+		return model.archive().then(() => {
+			assert.equal(counter, 1)
+		})
+	})
+
+	it('should have activate method', () => {
+		assert.equal(typeof model.activate, 'function')
+	})
+
+	it('should call backend to activate conversation', () => {
+		let conversationId = 1
+
+		model.id(conversationId)
+		model.type(constants.BLOCKED_CONVERSATION)
+		assert.equal(model.type(), constants.BLOCKED_CONVERSATION)
+
+		mockjax({
+			type: 'PUT',
+			url: `${api}/conversations/${conversationId}`,
+			data: {type: constants.ACTIVE_CONVERSATION}
+		})
+
+		return model.activate().then(() => {
+			assert.equal(model.type(), constants.ACTIVE_CONVERSATION)
+		})
+	})
+
+	it(`should fire ${constants.CONVERSATION_ACTIVATED} event`, () => {
+		let conversationId = 1
+		let counter = 0
+
+		dispatcher.subscribe(() => {
+			counter = counter + 1
+		}, null, constants.CONVERSATION_ACTIVATED)
+
+		model.id(conversationId)
+
+		mockjax({
+			type: 'PUT',
+			url: `${api}/conversations/${conversationId}`
+		})
+
+		return model.activate().then(() => {
+			assert.equal(counter, 1)
+		})
+	})
+
+	it('should have isActive prop', () => {
+		assert.ok(ko.isObservable(model.isActive))
+		model.type(constants.ACTIVE_CONVERSATION)
+		assert.equal(model.isActive(), true)
+	})
+
+	it('should have isArchived prop', () => {
+		assert.ok(ko.isObservable(model.isArchived))
+		model.type(constants.ARCHIVED_CONVERSATION)
+		assert.equal(model.isArchived(), true)
+	})
+
+	it('should have isBlocked prop', () => {
+		assert.ok(ko.isObservable(model.isBlocked))
+		model.type(constants.BLOCKED_CONVERSATION)
+		assert.equal(model.isBlocked(), true)
+	})
+
+	it('should have unread messages counter', () => {
+		assert.ok(ko.isObservable(model.unreadMessagesCount))
+
+		model = new Conversation(dispatcher, {unreadMessagesCount: 5})
+		assert.equal(model.unreadMessagesCount(), 5)
+	})
+
+	it('should map last message', () => {
+		model = new Conversation(dispatcher, {lastMessage: generator.generateStandardMessage(1, 1)})
+		assert.ok(model.lastMessage() instanceof StandardMessage)
+	})
+
+	it('should have fullName prop', () => {
+		assert.ok(ko.isObservable(model.fullName))
+
+		model = new Conversation(dispatcher, {fullName: 'sample'})
+		assert.equal(model.fullName(), 'sample')
+	})
+
+	it('should have lastMessageTemplate comp', () => {
+		assert.ok(ko.isComputed(model.lastMessageTemplate))
+		model = new Conversation(dispatcher, {lastMessage: generator.generateStandardMessage(1, 1)})
+		assert.equal(model.lastMessageTemplate(), 'StandardMessagePreview')
 	})
 })

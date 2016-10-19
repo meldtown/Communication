@@ -11,6 +11,7 @@ import StandardMessageForm from '../Message/Form/StandardMessageForm'
 import InviteMessageForm from '../Message/Form/InviteMessageForm'
 import DeclineMessageForm from '../Message/Form/DeclineMessageForm'
 import OfferMessageForm from '../Message/Form/OfferMessageForm'
+import Conversation from '../Conversation/Conversation'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
@@ -86,6 +87,7 @@ describe('Hub', () => {
 		let counter = 0
 		let conversationId = 5
 
+		model.conversations.conversations([new Conversation(dispatcher, generator.generateConversation(conversationId, []))])
 		model.messages.fetch = () => counter = counter + 1
 
 		dispatcher.notifySubscribers(conversationId, actions.CONVERSATION_SELECTED)
@@ -147,5 +149,19 @@ describe('Hub', () => {
 		assert.equal(typeof model.selectOfferForm, 'function')
 		model.selectOfferForm()
 		assert.equal(model.isOfferFormSelected(), true)
+	})
+
+	it('should have standard form selected by default', () => {
+		assert.ok(model.isStandardFormSelected())
+	})
+
+	it('should have selectedConversation comp', () => {
+		assert.ok(ko.isComputed(model.selectedConversation))
+
+		let conversation = new Conversation(dispatcher, generator.generateConversation(1, []))
+		conversation.select()
+		model.conversations.conversations([conversation])
+
+		assert.equal(model.selectedConversation().id(), 1)
 	})
 })

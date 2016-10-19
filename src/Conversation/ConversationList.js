@@ -19,6 +19,8 @@ export default class ConversationList {
 		this.isActiveSelected = ko.computed(() => this.selectedType() === types.ACTIVE_CONVERSATION)
 		this.isArchiveSelected = ko.computed(() => this.selectedType() === types.ARCHIVED_CONVERSATION)
 		this.isBlockedSelected = ko.computed(() => this.selectedType() === types.BLOCKED_CONVERSATION)
+
+		this.selectedConversation = ko.computed(() => this.conversations().filter(conversation => conversation.isSelected())[0])
 	}
 
 	fetch() {
@@ -29,24 +31,29 @@ export default class ConversationList {
 		}
 
 		return $.getJSON(`${api}/conversations`, request)
-			.then(conversations => {
+			.done(conversations => {
 				this.conversations(conversations.map(data => new Conversation(this.dispatcher, data)))
 				if (conversations.length > 0) {
 					this.conversations()[0].select()
 				}
 			})
-			.fail(() => this.conversations([]))
+			.fail(() => {
+				this.conversations([])
+			})
 	}
 
 	selectActive() {
 		this.selectedType(types.ACTIVE_CONVERSATION)
+		return this.fetch()
 	}
 
 	selectArchive() {
 		this.selectedType(types.ARCHIVED_CONVERSATION)
+		return this.fetch()
 	}
 
 	selectBlocked() {
 		this.selectedType(types.BLOCKED_CONVERSATION)
+		return this.fetch()
 	}
 }

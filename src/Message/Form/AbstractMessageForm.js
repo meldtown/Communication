@@ -10,6 +10,7 @@ export default class AbstractMessageForm {
 		this.dispatcher = dispatcher
 		this.conversationId = ko.observable()
 		this.text = ko.observable()
+		this.template = ko.observable()
 
 		dispatcher.subscribe(conversationId => {
 			this.conversationId(conversationId)

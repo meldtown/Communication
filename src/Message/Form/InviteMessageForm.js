@@ -8,6 +8,7 @@ import MessageFactory from '../MessageFactory'
 export default class InviteMessageForm extends AbstractMessageForm {
 	constructor(dispatcher) {
 		super(dispatcher)
+		this.template('InviteMessageForm')
 		this.inviteDate = ko.observable()
 		this.addressId = ko.observable()
 	}

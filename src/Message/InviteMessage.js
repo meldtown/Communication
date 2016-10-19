@@ -6,5 +6,6 @@ export default class InviteMessage extends AbstractMessage {
 		let {inviteDate, addressId} = data
 		this.inviteDate = ko.observable(inviteDate)
 		this.addressId = ko.observable(addressId)
+		this.template('InviteMessage')
 	}
 }

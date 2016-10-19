@@ -2,6 +2,7 @@ import * as actions from '../constants'
 import * as ko from 'knockout'
 import './Hub.scss'
 import '../bindingHandlers/hasFocus'
+import '../bindingHandlers/enterPress'
 import ConversationList from '../Conversation/ConversationList'
 import MessageList from '../Message/MessageList'
 import StandardMessageForm from '../Message/Form/StandardMessageForm'
@@ -24,12 +25,14 @@ export default class Hub {
 		this.declineMessageForm = new DeclineMessageForm(dispatcher)
 		this.offerMessageForm = new OfferMessageForm(dispatcher)
 
-		this.selectedForm = ko.observable(StandardMessageForm)
+		this.selectedForm = ko.observable(this.standardMessageForm)
 
 		this.isStandardFormSelected = ko.computed(() => this.selectedForm() === this.standardMessageForm)
 		this.isInviteFormSelected = ko.computed(() => this.selectedForm() === this.inviteMessageForm)
 		this.isDeclineFormSelected = ko.computed(() => this.selectedForm() === this.declineMessageForm)
 		this.isOfferFormSelected = ko.computed(() => this.selectedForm() === this.offerMessageForm)
+
+		this.selectedConversation = ko.computed(() => this.conversations.selectedConversation())
 
 		dispatcher.subscribe(conversationId => {
 			this.messages.conversationId(conversationId)

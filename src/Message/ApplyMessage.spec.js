@@ -18,10 +18,6 @@ describe('ApplyMessage', () => {
 		assert.equal(model instanceof AbstractMessage, true)
 	})
 
-	it('should have avatar', () => {
-		assert.equal(ko.isObservable(model.avatar), true)
-	})
-
 
 	it('should accept data into constructor', () => {
 		let data = {
@@ -29,9 +25,25 @@ describe('ApplyMessage', () => {
 			date: '2015-04-24T23:04:59',
 			conversationId: 1,
 			text: 'Hello World',
-			avatar: 'http://placehold.it/90x90'
+			vacancyId: 1,
+			resumeId: 1,
+			isRead: false
 		}
 		let model = new ApplyMessage(data)
-		assert.deepEqual(ko.toJS(model), data)
+		// noinspection JSUnusedLocalSymbols
+		var {ago, formattedDate, formattedTime, template, ...actual} = ko.toJS(model)
+		assert.deepEqual(actual, data)
+	})
+
+	it('should have template prop been set in constructor', () => {
+		assert.equal(model.template(), 'ApplyMessage')
+	})
+
+	it('should have vacancyId prop', () => {
+		assert.ok(ko.isObservable(model.vacancyId))
+	})
+
+	it('should have resumeId prop', () => {
+		assert.ok(ko.isObservable(model.resumeId))
 	})
 })

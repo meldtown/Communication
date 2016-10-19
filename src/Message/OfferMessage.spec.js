@@ -17,4 +17,8 @@ describe('OfferMessage', () => {
 	it('should have vacancyId', () => {
 		assert.equal(ko.isObservable(model.vacancyId), true)
 	})
+
+	it('should have template prop been set in constructor', () => {
+		assert.equal(model.template(), 'OfferMessage')
+	})
 })
