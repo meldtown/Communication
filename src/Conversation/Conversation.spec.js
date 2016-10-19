@@ -284,4 +284,38 @@ describe('Conversation', () => {
 		model = new Conversation(dispatcher, {lastMessage: generator.generateStandardMessage(1, 1)})
 		assert.equal(model.lastMessageTemplate(), 'StandardMessagePreview')
 	})
+
+	it('should have vacancyIds array for filtering', () => {
+		assert.ok(ko.isObservable(model.vacancyIds))
+		assert.equal(typeof model.vacancyIds.push, 'function')
+	})
+
+	it('should by default set vacancyIds to empty array', () => {
+		assert.equal(model.vacancyIds().length, 0)
+	})
+
+	it('should set vacancyIds from constructor', () => {
+		var vacancyIds = [1, 2];
+		model = new Conversation(dispatcher, {vacancyIds})
+		assert.equal(model.vacancyIds().length, 2)
+		assert.deepEqual(model.vacancyIds(), vacancyIds)
+	})
+
+	it('should have hasInvites prop', () => {
+		assert.ok(ko.isObservable(model.hasInvites))
+		model = new Conversation(dispatcher, {hasInvites: true})
+		assert.ok(model.hasInvites())
+	})
+
+	it('should have hasDeclines prop', () => {
+		assert.ok(ko.isObservable(model.hasDeclines))
+		model = new Conversation(dispatcher, {hasDeclines: true})
+		assert.ok(model.hasDeclines())
+	})
+
+	it('should have hasOffers prop', () => {
+		assert.ok(ko.isObservable(model.hasOffers))
+		model = new Conversation(dispatcher, {hasOffers: true})
+		assert.ok(model.hasOffers())
+	})
 })

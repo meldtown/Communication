@@ -128,7 +128,7 @@ export const generateConversation = (id, messages) => {
 	let vacancyIds = conversationMessages
 		.filter(m => m.type === types.APPLY_MESSAGE)
 		.map(m => m.vacancyId)
-		.reduce(helpers.uniqueReducer)
+		.reduce(helpers.uniqueReducer, [])
 
 	return {
 		id,
@@ -137,6 +137,9 @@ export const generateConversation = (id, messages) => {
 		fullName: faker.name.findName(),
 		avatar: faker.image.avatar(),
 		lastMessage: lastMessage,
+		hasInvites: conversationMessages.some(m => m.type === types.INVITE_MESSAGE),
+		hasDeclines: conversationMessages.some(m => m.type === types.DECLINE_MESSAGE),
+		hasOffers: conversationMessages.some(m => m.type === types.OFFER_MESSAGE),
 		vacancyIds
 	}
 }
