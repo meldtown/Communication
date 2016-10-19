@@ -62,6 +62,7 @@ const generateVacancy = () => {
 	let companyName = faker.company.companyName()
 	let color = faker.internet.color(255, 255, 255)
 	return {
+		id: generateNumberBetween(1000, 2000),
 		companyName,
 		vacancyName: faker.name.jobTitle(),
 		salary: faker.random.arrayElement([null, 1000, 5000, 10000]),
