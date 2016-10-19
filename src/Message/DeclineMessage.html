@@ -1,5 +1,12 @@
-<table data-bind="css: {muted: isRead}">
-	<caption style="color: red">DECLINED <span data-bind="text: formattedDate" class="muted"></span></caption>
+<table data-bind="css: {muted: isRead}" style="background: rgba(255, 0, 0, .5);margin: 20px 0">
+
+	<thead>
+	<tr>
+		<td colspan="2">
+			<small>DECLINED <span data-bind="text: formattedDate" class="muted"></span></small>
+		</td>
+	</tr>
+	</thead>
 	<tbody>
 	<tr>
 		<td>

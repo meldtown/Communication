@@ -3,8 +3,9 @@ import * as ko from 'knockout'
 export default class ApplyMessage extends AbstractMessage {
 	constructor(data = {}) {
 		super(data)
-		let {avatar} = data
-		this.avatar = ko.observable(avatar)
+		let {vacancyId, resumeId} = data
+		this.vacancyId = ko.observable(vacancyId)
+		this.resumeId = ko.observable(resumeId)
 		this.template('ApplyMessage')
 	}
 }

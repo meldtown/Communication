@@ -87,15 +87,21 @@ export const generateOfferMessage = (id, conversationId, vacancies = []) => {
 	}
 }
 
-export const generateApplyMessage = (id, conversationId) => ({
-	id,
-	conversationId,
-	type: types.APPLY_MESSAGE,
-	date: generateRecentDate(),
-	text: faker.hacker.phrase(),
-	avatar: faker.image.avatar(),
-	isRead: faker.random.boolean()
-})
+export const generateApplyMessage = (id, conversationId, vacancies = []) => {
+	let vacancy = vacancies.length > 0 ? faker.random.arrayElement(vacancies) : generateVacancy()
+	return {
+		id,
+		conversationId,
+		type: types.APPLY_MESSAGE,
+		date: generateRecentDate(),
+		text: faker.hacker.phrase(),
+		avatar: faker.image.avatar(),
+		isRead: faker.random.boolean(),
+		resumeId: generateNumberBetween(1, 3),
+		vacancyId: vacancy.id,
+		vacancy: vacancy
+	}
+}
 
 const generateMessage = (id, conversationId, vacancies) => {
 	var type = faker.random.arrayElement(MESSAGE_TYPES)
@@ -107,7 +113,7 @@ const generateMessage = (id, conversationId, vacancies) => {
 		case types.OFFER_MESSAGE:
 			return generateOfferMessage(id, conversationId, vacancies)
 		case types.APPLY_MESSAGE:
-			return generateApplyMessage(id, conversationId)
+			return generateApplyMessage(id, conversationId, vacancies)
 		default:
 			return generateStandardMessage(id, conversationId)
 	}
