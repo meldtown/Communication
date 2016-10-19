@@ -336,6 +336,9 @@ describe('ConversationList', () => {
 			model.hasDeclinesSelected(true)
 			model.hasOffersSelected(true)
 
+			model.fromCvdbSelected(true)
+			model.fromApplySelected(true)
+
 			mockjax({
 				url: `${api}/conversations`,
 				responseText: []
@@ -345,6 +348,9 @@ describe('ConversationList', () => {
 				assert.equal(model.hasInvitesSelected(), false)
 				assert.equal(model.hasDeclinesSelected(), false)
 				assert.equal(model.hasOffersSelected(), false)
+
+				assert.equal(model.fromCvdbSelected(), false)
+				assert.equal(model.fromApplySelected(), false)
 			})
 		})
 	})

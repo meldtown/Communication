@@ -65,6 +65,9 @@ export default class ConversationList {
 				this.hasDeclinesSelected(false)
 				this.hasOffersSelected(false)
 
+				this.fromCvdbSelected(false)
+				this.fromApplySelected(false)
+
 				this.conversations(conversations.map(data => new Conversation(this.dispatcher, data)))
 			})
 			.fail(() => {
