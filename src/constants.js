@@ -10,3 +10,7 @@ export const APPLY_MESSAGE = 'apply'
 export const ACTIVE_CONVERSATION = 'active'
 export const ARCHIVED_CONVERSATION = 'archive'
 export const BLOCKED_CONVERSATION = 'blocked'
+
+export const RU = 'ru'
+export const UA = 'ua'
+export const EN = 'en'

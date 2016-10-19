@@ -5,6 +5,11 @@ import * as types from '../constants'
 import * as generator from '../../db'
 import $ from 'jquery'
 import jQueryMockAjax from 'jquery-mockjax'
+import StandardTemplateView from './View/StandardTemplateView'
+import InviteTemplateView from './View/InviteTemplateView'
+import DeclineMessage from './View/DeclineTemplateView'
+import DeclineTemplateView from './View/OfferTemplateView'
+import TemplateFactory from './TemplateFactory'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
@@ -103,28 +108,28 @@ describe('Templates', () => {
 		assert.equal(typeof model.selectStandardTab, 'function')
 
 		model.selectStandardTab()
-		assert.equal(model.selectedTab(), types.STANDARD_MESSAGE)
+		assert.ok(model.isStandardTabSelected())
 	})
 
 	it('should have selectInviteTab method', () => {
 		assert.equal(typeof model.selectInviteTab, 'function')
 
 		model.selectInviteTab()
-		assert.equal(model.selectedTab(), types.INVITE_MESSAGE)
+		assert.equal(model.selectedTab(), InviteTemplateView)
 	})
 
 	it('should have selectDeclineTab method', () => {
 		assert.equal(typeof model.selectDeclineTab, 'function')
 
 		model.selectDeclineTab()
-		assert.equal(model.selectedTab(), types.DECLINE_MESSAGE)
+		assert.equal(model.selectedTab(), DeclineMessage)
 	})
 
 	it('should have selectOfferTab method', () => {
 		assert.equal(typeof model.selectOfferTab, 'function')
 
 		model.selectOfferTab()
-		assert.equal(model.selectedTab(), types.OFFER_MESSAGE)
+		assert.equal(model.selectedTab(), DeclineTemplateView)
 	})
 
 	it('should set selectedTab to standard after fetch', () => {
@@ -141,62 +146,209 @@ describe('Templates', () => {
 		})
 
 		return model.fetch().then(() => {
-			assert.equal(model.selectedTab(), types.STANDARD_MESSAGE)
+			assert.equal(model.selectedTab(), StandardTemplateView)
 		})
 	})
 
-	it('should have isRussianLanguageSelected comp', () => {
-
+	it('should have default selectedTab', () => {
+		assert.equal(model.selectedTab(), StandardTemplateView)
 	})
 
-	it('should have isUkrainianLanguageSelected comp', () => {
 
+	it('should have isRussianLanguageSelected observable', () => {
+		assert.equal(ko.isObservable(model.isRussianLanguageSelected), true)
 	})
 
-	it('should have isEnglishLanguageSelected comp', () => {
-
+	it('should have isUkrainianLanguageSelected observable', () => {
+		assert.equal(ko.isObservable(model.isUkrainianLanguageSelected), true)
 	})
 
-	it('should have selectRussianLanguage method', () => {
-
+	it('should have isEnglishLanguageSelected observable', () => {
+		assert.equal(ko.isObservable(model.isEnglishLanguageSelected), true)
 	})
 
-	it('should have selectUkrainianLanguage method', () => {
-
+	it('should have unselected languages after loading', () => {
+		assert.equal(model.isRussianLanguageSelected(), false)
+		assert.equal(model.isUkrainianLanguageSelected(), false)
+		assert.equal(model.isEnglishLanguageSelected(), false)
 	})
 
-	it('should have selectEnglishLanguage method', () => {
+	it('should have toggleRussianLanguage method', () => {
+		assert.equal(typeof model.toggleRussianLanguage, 'function')
+
+		model.toggleRussianLanguage()
+		assert.equal(model.isRussianLanguageSelected(), true)
+
+		model.toggleRussianLanguage()
+		assert.equal(model.isRussianLanguageSelected(), false)
+	})
+
+	it('should have toggleUkrainianLanguage method', () => {
+		assert.equal(typeof model.toggleUkrainianLanguage, 'function')
+
+		model.toggleUkrainianLanguage()
+		assert.equal(model.isUkrainianLanguageSelected(), true)
+
+		model.toggleUkrainianLanguage()
+		assert.equal(model.isUkrainianLanguageSelected(), false)
+	})
+
+	it('should have toggleEnglishLanguage method', () => {
+		assert.equal(typeof model.toggleEnglishLanguage, 'function')
+
+		model.toggleEnglishLanguage()
+		assert.equal(model.isEnglishLanguageSelected(), true)
+
+		model.toggleEnglishLanguage()
+		assert.equal(model.isEnglishLanguageSelected(), false)
 
 	})
 
 	it('should have filter prop', () => {
-
+		assert.equal(ko.isObservable(model.filter), true)
 	})
 
 	it('should have filteredTemplates com', () => {
-
+		assert.equal(ko.isComputed(model.filteredTemplates), true)
 	})
 
 	describe('filteredTemplates', () => {
-		it('should respect selected tab', () => {
 
+		let templates = [
+			generator.generateInviteTemplate(4),
+			generator.generateOfferTemplate(12),
+			generator.generateOfferTemplate(33),
+			generator.generateDeclineTemplate(666),
+			generator.generateStandardTemplate(1),
+			generator.generateDeclineTemplate(5),
+			generator.generateDeclineTemplate(555),
+			generator.generateStandardTemplate(9),
+			generator.generateDeclineTemplate(17),
+			generator.generateDeclineTemplate(444),
+			generator.generateOfferTemplate(6),
+			generator.generateOfferTemplate(56),
+			generator.generateOfferTemplate(57),
+			generator.generateOfferTemplate(78),
+			generator.generateStandardTemplate(123)
+		]
+		templates = templates.map(template => TemplateFactory.create(template))
+		beforeEach(() => {
+			model.templates(templates)
 		})
 
-		it('should respect selected language', () => {
+		it('should have filteredTemplates com', () => {
+			assert.ok(ko.isComputed(model.filteredTemplates))
+		})
 
+		it('should gracefuly handle undefined selected tab', () => {
+			model.selectedTab(undefined)
+			model.templates([TemplateFactory.create(generator.generateStandardTemplate(1))])
+			assert.equal(model.filteredTemplates().length, 1)
+		})
+
+		it('should respect selected tab', () => {
+			assert.equal(model.filteredTemplates().length, 3)
+			assert.ok(model.filteredTemplates()[0] instanceof model.selectedTab())
+			assert.ok(model.filteredTemplates()[1] instanceof model.selectedTab())
+			assert.ok(model.filteredTemplates()[2] instanceof model.selectedTab())
+			model.selectOfferTab()
+			assert.ok(model.filteredTemplates()[0] instanceof model.selectedTab())
+			assert.ok(model.filteredTemplates()[1] instanceof model.selectedTab())
+			assert.ok(model.filteredTemplates()[2] instanceof model.selectedTab())
+			assert.ok(model.filteredTemplates()[3] instanceof model.selectedTab())
+			assert.ok(model.filteredTemplates()[4] instanceof model.selectedTab())
+			assert.ok(model.filteredTemplates()[5] instanceof model.selectedTab())
+		})
+
+
+		it('should respect selected language', () => {
+			templates = [,
+				TemplateFactory.create({id: 1, type: "standard", title: "Yeah", text: "Success", language: "ru"}),
+				TemplateFactory.create({id: 2, type: "standard", title: "Java", text: "Great !!!", language: "ua"}),
+				TemplateFactory.create({id: 3, type: "standard", title: "Hello", text: "Great !!!", language: "en"}),
+			]
+			model.templates(templates)
+			model.toggleRussianLanguage()
+			assert.equal(model.filteredTemplates().length, 1)
+			assert.equal(model.filteredTemplates()[0].language(), types.RU)
+			model.toggleEnglishLanguage()
+			assert.equal(model.filteredTemplates().length, 2)
+			assert.equal(model.filteredTemplates()[0].language(), types.RU)
+			assert.equal(model.filteredTemplates()[1].language(), types.EN)
+			model.toggleUkrainianLanguage()
+			assert.equal(model.filteredTemplates().length, 3)
+			assert.equal(model.filteredTemplates()[0].language(), types.RU)
+			assert.equal(model.filteredTemplates()[1].language(), types.UA)
+			assert.equal(model.filteredTemplates()[2].language(), types.EN)
+			model.toggleRussianLanguage()
+			model.toggleUkrainianLanguage()
+			model.toggleEnglishLanguage()
+			assert.equal(model.filteredTemplates().length, 3)
+			assert.equal(model.filteredTemplates()[0].language(), types.RU)
+			assert.equal(model.filteredTemplates()[1].language(), types.UA)
+			assert.equal(model.filteredTemplates()[2].language(), types.EN)
+		})
+
+		it('should call all filters', () => {
+			let tpl1 = TemplateFactory.create(generator.generateStandardTemplate(1))
+			tpl1.language(types.RU)
+			tpl1.title('Ruby')
+
+			let tpl2 = TemplateFactory.create(generator.generateDeclineTemplate(2))
+			tpl2.language(types.EN)
+
+			model.templates([tpl1, tpl2])
+
+			model.toggleEnglishLanguage()
+			model.selectDeclineTab()
+			assert.equal(model.filteredTemplates().length, 1)
+			model.filter('Python')
+			assert.equal(model.filteredTemplates().length, 0)
+			model.filter('')
+			assert.equal(model.filteredTemplates().length, 1)
 		})
 
 		it('should filter by text in title', () => {
+			let tpl1 = TemplateFactory.create(generator.generateStandardTemplate(1))
+			let tpl2 = TemplateFactory.create(generator.generateStandardTemplate(2))
+			let tpl3 = TemplateFactory.create(generator.generateStandardTemplate(3))
+			model.templates([tpl1, tpl2, tpl3])
+			assert.equal(model.templates().length, 3)
 
+			tpl1.title('Javascript')
+			tpl2.title('Ruby')
+			tpl3.title('Java')
+
+			assert.equal(model.filteredTemplates().length, 3)
+
+			model.filter('Java')
+			assert.equal(model.filteredTemplates().length, 2)
 		})
 
 		it('should filter by text in text', () => {
+			let tpl1 = TemplateFactory.create(generator.generateStandardTemplate(1))
+			let tpl2 = TemplateFactory.create(generator.generateStandardTemplate(2))
+			let tpl3 = TemplateFactory.create(generator.generateStandardTemplate(3))
+			model.templates([tpl1, tpl2, tpl3])
+			assert.equal(model.templates().length, 3)
 
+			tpl1.title('Javascript')
+			tpl2.title('Ruby')
+			tpl3.title('Java')
+
+			tpl1.text('Hello world')
+			tpl2.text('Hello Javatron')
+			tpl3.text('Hello universe')
+
+			assert.equal(model.filteredTemplates().length, 3)
+
+			model.filter('Java')
+			assert.equal(model.filteredTemplates().length, 3)
 		})
 	})
 
-	it('should have selectedTemplate comp', () => {
-		// TODO: x4 for each type
+	it('should have selectedStandardTemplate comp', () => {
+		assert.equal(ko)
 	})
 
 	describe('selectedTemplate', () => {
@@ -209,9 +361,6 @@ describe('Templates', () => {
 		// TODO: x4 for each type
 		// model.standardForm = new StandardForm()
 	})
-
-
-
 
 
 })
