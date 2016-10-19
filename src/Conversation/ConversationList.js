@@ -36,6 +36,12 @@ export default class ConversationList {
 						|| this.hasOffersSelected() && conversation.hasOffers()
 				})
 		})
+
+		this.filteredConversations.subscribe(conversations => {
+			if (conversations && conversations.length > 0) {
+				conversations[0].select()
+			}
+		})
 	}
 
 	fetch() {
@@ -47,13 +53,11 @@ export default class ConversationList {
 
 		return $.getJSON(`${api}/conversations`, request)
 			.done(conversations => {
-				this.conversations(conversations.map(data => new Conversation(this.dispatcher, data)))
-				if (conversations.length > 0) {
-					this.conversations()[0].select()
-				}
 				this.hasInvitesSelected(false)
 				this.hasDeclinesSelected(false)
 				this.hasOffersSelected(false)
+
+				this.conversations(conversations.map(data => new Conversation(this.dispatcher, data)))
 			})
 			.fail(() => {
 				this.conversations([])

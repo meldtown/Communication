@@ -89,7 +89,7 @@ describe('ConversationList', () => {
 		})
 	})
 
-	it('should select first available conversation after fetch', () => {
+	it('should select first available conversation after filteredTemplates changed', () => {
 		let responseText = [
 			generator.generateConversation(1, [generator.generateStandardMessage(1, 1)]),
 			generator.generateConversation(2, [generator.generateDeclineMessage(1, 2)])
