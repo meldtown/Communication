@@ -164,4 +164,8 @@ describe('Hub', () => {
 
 		assert.equal(model.selectedConversation().id(), 1)
 	})
+
+	it('should reset messages to empty array if there is no conversations', () => {
+		// TODO: can not reproduce via code
+	})
 })
