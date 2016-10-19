@@ -20,6 +20,9 @@ export default class ConversationList {
 		this.hasDeclinesSelected = ko.observable()
 		this.hasOffersSelected = ko.observable()
 
+		this.fromCvdbSelected = ko.observable()
+		this.fromApplySelected = ko.observable()
+
 		this.isActiveSelected = ko.computed(() => this.selectedType() === types.ACTIVE_CONVERSATION)
 		this.isArchiveSelected = ko.computed(() => this.selectedType() === types.ARCHIVED_CONVERSATION)
 		this.isBlockedSelected = ko.computed(() => this.selectedType() === types.BLOCKED_CONVERSATION)
@@ -34,6 +37,11 @@ export default class ConversationList {
 					return this.hasInvitesSelected() && conversation.hasInvites()
 						|| this.hasDeclinesSelected() && conversation.hasDeclines()
 						|| this.hasOffersSelected() && conversation.hasOffers()
+				})
+				.filter(conversation => {
+					if (!this.fromCvdbSelected() && !this.fromApplySelected()) return true
+					return this.fromCvdbSelected() && conversation.fromCvdb()
+						|| this.fromApplySelected() && conversation.fromApply()
 				})
 		})
 

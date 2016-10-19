@@ -244,6 +244,14 @@ describe('ConversationList', () => {
 		assert.ok(ko.isObservable(model.hasOffersSelected))
 	})
 
+	it('should have fromCvdbSelected prop', () => {
+		assert.ok(ko.isObservable(model.fromCvdbSelected))
+	})
+
+	it('should have fromApplySelected prop', () => {
+		assert.ok(ko.isObservable(model.fromApplySelected))
+	})
+
 	describe('filteredConversations', () => {
 
 		it('should have filteredConversations computed', () => {
@@ -280,14 +288,36 @@ describe('ConversationList', () => {
 			assert.ok(model.filteredConversations()[0].hasOffers())
 		})
 
+		it('should respect fromCvdbSelected filter', () => {
+			model.conversations([
+				new Conversation(dispatcher, {fromCvdb: false}),
+				new Conversation(dispatcher, {fromCvdb: true})
+			])
+			model.fromCvdbSelected(true)
+			assert.equal(model.filteredConversations().length, 1)
+			assert.ok(model.filteredConversations()[0].fromCvdb())
+		})
+
+		it('should respect fromApplySelected filter', () => {
+			model.conversations([
+				new Conversation(dispatcher, {fromApply: false}),
+				new Conversation(dispatcher, {fromApply: true})
+			])
+			model.fromApplySelected(true)
+			assert.equal(model.filteredConversations().length, 1)
+			assert.ok(model.filteredConversations()[0].fromApply())
+		})
+
 		it('should chain filters', () => {
 			model.conversations([
-				new Conversation(dispatcher, {hasInvites: true, hasDeclines: false}),
-				new Conversation(dispatcher, {hasInvites: false, hasDeclines: true})
+				new Conversation(dispatcher, {hasInvites: true, hasDeclines: false, fromApply: true}),
+				new Conversation(dispatcher, {hasInvites: false, hasDeclines: true, fromApply: true}),
+				new Conversation(dispatcher, {hasInvites: true, hasDeclines: true, fromApply: false})
 			])
 
 			model.hasInvitesSelected(true)
 			model.hasDeclinesSelected(true)
+			model.fromApplySelected(true)
 
 			assert.equal(model.filteredConversations().length, 2)
 		})
