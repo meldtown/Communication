@@ -16,11 +16,22 @@ export default class ConversationList {
 		this.term = ko.observable()
 		this.selectedType = ko.observable(types.ACTIVE_CONVERSATION)
 
+		this.hasInvitesSelected = ko.observable()
+		this.hasDeclinesSelected = ko.observable()
+		this.hasOffersSelected = ko.observable()
+
 		this.isActiveSelected = ko.computed(() => this.selectedType() === types.ACTIVE_CONVERSATION)
 		this.isArchiveSelected = ko.computed(() => this.selectedType() === types.ARCHIVED_CONVERSATION)
 		this.isBlockedSelected = ko.computed(() => this.selectedType() === types.BLOCKED_CONVERSATION)
 
 		this.selectedConversation = ko.computed(() => this.conversations().filter(conversation => conversation.isSelected())[0])
+
+		this.filteredConversations = ko.computed(() => {
+			return this.conversations()
+				.filter(conversation => !this.hasInvitesSelected() || conversation.hasInvites())
+				.filter(conversation => !this.hasDeclinesSelected() || conversation.hasDeclines())
+				.filter(conversation => !this.hasOffersSelected() || conversation.hasOffers())
+		})
 	}
 
 	fetch() {
