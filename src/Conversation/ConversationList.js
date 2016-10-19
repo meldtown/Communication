@@ -28,9 +28,11 @@ export default class ConversationList {
 
 		this.filteredConversations = ko.computed(() => {
 			return this.conversations()
-				.filter(conversation => !this.hasInvitesSelected() || conversation.hasInvites())
-				.filter(conversation => !this.hasDeclinesSelected() || conversation.hasDeclines())
-				.filter(conversation => !this.hasOffersSelected() || conversation.hasOffers())
+				.filter(conversation => {
+					return this.hasInvitesSelected() && conversation.hasInvites()
+						|| this.hasDeclinesSelected() && conversation.hasDeclines()
+						|| this.hasOffersSelected() && conversation.hasOffers()
+				})
 		})
 	}
 

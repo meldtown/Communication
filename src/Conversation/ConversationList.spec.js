@@ -244,49 +244,52 @@ describe('ConversationList', () => {
 		assert.ok(ko.isObservable(model.hasOffersSelected))
 	})
 
-	it('should have filteredConversations computed', () => {
-		assert.ok(ko.isComputed(model.filteredConversations))
-	})
+	describe('filteredConversations', () => {
 
-	it('should respect hasInvitesSelected filter', () => {
-		model.conversations([
-			new Conversation(dispatcher, {hasInvites: false}),
-			new Conversation(dispatcher, {hasInvites: true})
-		])
-		model.hasInvitesSelected(true)
-		assert.equal(model.filteredConversations().length, 1)
-		assert.ok(model.filteredConversations()[0].hasInvites())
-	})
+		it('should have filteredConversations computed', () => {
+			assert.ok(ko.isComputed(model.filteredConversations))
+		})
 
-	it('should respect hasDeclinesSelected filter', () => {
-		model.conversations([
-			new Conversation(dispatcher, {hasDeclines: false}),
-			new Conversation(dispatcher, {hasDeclines: true})
-		])
-		model.hasDeclinesSelected(true)
-		assert.equal(model.filteredConversations().length, 1)
-		assert.ok(model.filteredConversations()[0].hasDeclines())
-	})
+		it('should respect hasInvitesSelected filter', () => {
+			model.conversations([
+				new Conversation(dispatcher, {hasInvites: false}),
+				new Conversation(dispatcher, {hasInvites: true})
+			])
+			model.hasInvitesSelected(true)
+			assert.equal(model.filteredConversations().length, 1)
+			assert.ok(model.filteredConversations()[0].hasInvites())
+		})
 
-	it('should respect hasOffersSelected filter', () => {
-		model.conversations([
-			new Conversation(dispatcher, {hasOffers: false}),
-			new Conversation(dispatcher, {hasOffers: true})
-		])
-		model.hasOffersSelected(true)
-		assert.equal(model.filteredConversations().length, 1)
-		assert.ok(model.filteredConversations()[0].hasOffers())
-	})
+		it('should respect hasDeclinesSelected filter', () => {
+			model.conversations([
+				new Conversation(dispatcher, {hasDeclines: false}),
+				new Conversation(dispatcher, {hasDeclines: true})
+			])
+			model.hasDeclinesSelected(true)
+			assert.equal(model.filteredConversations().length, 1)
+			assert.ok(model.filteredConversations()[0].hasDeclines())
+		})
 
-	it('should chain filters', () => {
-		model.conversations([
-			new Conversation(dispatcher, {hasInvites: true, hasDeclines: false}),
-			new Conversation(dispatcher, {hasInvites: false, hasDeclines: true})
-		])
+		it('should respect hasOffersSelected filter', () => {
+			model.conversations([
+				new Conversation(dispatcher, {hasOffers: false}),
+				new Conversation(dispatcher, {hasOffers: true})
+			])
+			model.hasOffersSelected(true)
+			assert.equal(model.filteredConversations().length, 1)
+			assert.ok(model.filteredConversations()[0].hasOffers())
+		})
 
-		model.hasInvitesSelected(true)
-		model.hasDeclinesSelected(true)
+		it('should chain filters', () => {
+			model.conversations([
+				new Conversation(dispatcher, {hasInvites: true, hasDeclines: false}),
+				new Conversation(dispatcher, {hasInvites: false, hasDeclines: true})
+			])
 
-		// assert.equal(model.filteredConversations().length, 2)
+			model.hasInvitesSelected(true)
+			model.hasDeclinesSelected(true)
+
+			assert.equal(model.filteredConversations().length, 2)
+		})
 	})
 })
