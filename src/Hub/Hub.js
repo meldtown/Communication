@@ -31,6 +31,8 @@ export default class Hub {
 		this.isDeclineFormSelected = ko.computed(() => this.selectedForm() === this.declineMessageForm)
 		this.isOfferFormSelected = ko.computed(() => this.selectedForm() === this.offerMessageForm)
 
+		this.selectedConversation = ko.computed(() => this.conversations.selectedConversation())
+
 		dispatcher.subscribe(conversationId => {
 			this.messages.conversationId(conversationId)
 			this.messages.fetch()

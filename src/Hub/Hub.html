@@ -30,6 +30,29 @@
 			</div>
 		</td>
 		<td valign="top">
+			<div style="text-align: right" data-bind="with: selectedConversation">
+				<span data-bind="if: isActive">
+					<span>Active</span>
+				</span>
+				<span data-bind="ifnot: isActive">
+					<a href="#" data-bind="click: activate">Active</a>
+				</span>
+
+				<span data-bind="if: isArchived">
+					<span>Archive</span>
+				</span>
+				<span data-bind="ifnot: isArchived">
+					<a href="#" data-bind="click: archive">Archive</a>
+				</span>
+
+				<span data-bind="if: isBlocked">
+					<span>Blocked</span>
+				</span>
+				<span data-bind="ifnot: isBlocked">
+					<a href="#" data-bind="click: block">Blocked</a>
+				</span>
+			</div>
+
 			<div data-bind="template: {name: 'MessageList', data: messages}"></div>
 
 			<hr/>

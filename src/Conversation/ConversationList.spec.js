@@ -5,6 +5,7 @@ import $ from 'jquery'
 import assert from 'assert'
 import ConversationList from './ConversationList'
 import jQueryMockAjax from 'jquery-mockjax'
+import Conversation from './Conversation'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
@@ -77,7 +78,7 @@ describe('ConversationList', () => {
 		})
 
 		model.conversations([
-			generator.generateConversation(1, [generator.generateStandardMessage(1, 1)])
+			new Conversation(dispatcher, generator.generateConversation(1, [generator.generateStandardMessage(1, 1)]))
 		])
 
 		assert.equal(model.conversations().length, 1)
@@ -221,5 +222,13 @@ describe('ConversationList', () => {
 		return model.fetch().then(() => {
 			assert.equal(model.conversations().length, 0)
 		})
+	})
+
+	it('should have empty conversation array at start', () => {
+		assert.equal(model.conversations().length, 0)
+	})
+
+	it('should have selectedConversation comp', () => {
+		assert.ok(ko.isComputed(model.selectedConversation))
 	})
 })

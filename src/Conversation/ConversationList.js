@@ -19,6 +19,8 @@ export default class ConversationList {
 		this.isActiveSelected = ko.computed(() => this.selectedType() === types.ACTIVE_CONVERSATION)
 		this.isArchiveSelected = ko.computed(() => this.selectedType() === types.ARCHIVED_CONVERSATION)
 		this.isBlockedSelected = ko.computed(() => this.selectedType() === types.BLOCKED_CONVERSATION)
+
+		this.selectedConversation = ko.computed(() => this.conversations().filter(conversation => conversation.isSelected())[0])
 	}
 
 	fetch() {
