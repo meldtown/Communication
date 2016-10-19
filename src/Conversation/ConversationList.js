@@ -51,6 +51,9 @@ export default class ConversationList {
 				if (conversations.length > 0) {
 					this.conversations()[0].select()
 				}
+				this.hasInvitesSelected(false)
+				this.hasDeclinesSelected(false)
+				this.hasOffersSelected(false)
 			})
 			.fail(() => {
 				this.conversations([])

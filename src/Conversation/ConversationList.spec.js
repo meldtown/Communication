@@ -300,5 +300,22 @@ describe('ConversationList', () => {
 
 			assert.equal(model.filteredConversations().length, 2)
 		})
+
+		it('should reset filters on fetch', () => {
+			model.hasInvitesSelected(true)
+			model.hasDeclinesSelected(true)
+			model.hasOffersSelected(true)
+
+			mockjax({
+				url: `${api}/conversations`,
+				responseText: []
+			})
+
+			return model.fetch().then(() => {
+				assert.equal(model.hasInvitesSelected(), false)
+				assert.equal(model.hasDeclinesSelected(), false)
+				assert.equal(model.hasOffersSelected(), false)
+			})
+		})
 	})
 })
