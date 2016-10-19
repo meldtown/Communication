@@ -22,6 +22,12 @@ export const init = () => {
 	helpers.injectTemplate('DeclineMessageForm', require('../src/Message/Form/DeclineMessageForm.html'))
 	helpers.injectTemplate('OfferMessageForm', require('../src/Message/Form/OfferMessageForm.html'))
 
+	helpers.injectTemplate('StandardMessagePreview', require('../src/Message/StandardMessagePreview.html'))
+	helpers.injectTemplate('InviteMessagePreview', require('../src/Message/InviteMessagePreview.html'))
+	helpers.injectTemplate('DeclineMessagePreview', require('../src/Message/DeclineMessagePreview.html'))
+	helpers.injectTemplate('OfferMessagePreview', require('../src/Message/OfferMessagePreview.html'))
+	helpers.injectTemplate('ApplyMessagePreview', require('../src/Message/ApplyMessagePreview.html'))
+
 	model.fetch()
 	ko.applyBindings(model, root)
 	window['model'] = model

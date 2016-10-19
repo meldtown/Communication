@@ -278,4 +278,10 @@ describe('Conversation', () => {
 		model = new Conversation(dispatcher, {fullName: 'sample'})
 		assert.equal(model.fullName(), 'sample')
 	})
+
+	it('should have lastMessageTemplate comp', () => {
+		assert.ok(ko.isComputed(model.lastMessageTemplate))
+		model = new Conversation(dispatcher, {lastMessage: generator.generateStandardMessage(1, 1)})
+		assert.equal(model.lastMessageTemplate(), 'StandardMessagePreview')
+	})
 })

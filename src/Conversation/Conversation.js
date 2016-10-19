@@ -23,6 +23,12 @@ export default class Conversation {
 		this.isArchived = ko.computed(() => this.type() === constants.ARCHIVED_CONVERSATION)
 		this.isBlocked = ko.computed(() => this.type() === constants.BLOCKED_CONVERSATION)
 
+		this.lastMessageTemplate = ko.computed(() => {
+			return this.lastMessage()
+				? `${this.lastMessage().template()}Preview`
+				: null
+		})
+
 		dispatcher.subscribe(id => {
 			this.isSelected(this.id() === id)
 		}, this, constants.CONVERSATION_SELECTED)
