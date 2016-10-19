@@ -18,7 +18,8 @@ export default class StandardMessageForm extends AbstractMessageForm {
 		return $.post(`${api}/messages`, {
 			type: types.STANDARD_MESSAGE,
 			conversationId: this.conversationId(),
-			text: this.text()
+			text: this.text(),
+			avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/digitalmaverick/128.jpg'
 		}).then(data => {
 			if (this.reset) {
 				this.reset()
