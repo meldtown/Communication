@@ -3,6 +3,7 @@ import $ from 'jquery'
 import './Conversation.scss'
 import Conversation from './Conversation'
 import * as types from '../constants'
+import moment from 'moment'
 
 export default class ConversationList {
 	constructor(dispatcher) {
@@ -23,6 +24,10 @@ export default class ConversationList {
 		this.fromCvdbSelected = ko.observable()
 		this.fromApplySelected = ko.observable()
 
+		this.periodFrom = ko.observable()
+		this.weekAgo = ko.computed(() => moment().subtract(1, 'week').format())
+		this.monthAgo = ko.computed(() => moment().subtract(1, 'month').format())
+
 		this.isActiveSelected = ko.computed(() => this.selectedType() === types.ACTIVE_CONVERSATION)
 		this.isArchiveSelected = ko.computed(() => this.selectedType() === types.ARCHIVED_CONVERSATION)
 		this.isBlockedSelected = ko.computed(() => this.selectedType() === types.BLOCKED_CONVERSATION)
@@ -42,6 +47,10 @@ export default class ConversationList {
 					if (!this.fromCvdbSelected() && !this.fromApplySelected()) return true
 					return this.fromCvdbSelected() && conversation.fromCvdb()
 						|| this.fromApplySelected() && conversation.fromApply()
+				})
+				.filter(conversation => {
+					if (!this.periodFrom()) return true
+					return moment(conversation.lastMessage().date()).isAfter(this.periodFrom())
 				})
 		})
 

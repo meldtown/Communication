@@ -6,6 +6,7 @@ import assert from 'assert'
 import ConversationList from './ConversationList'
 import jQueryMockAjax from 'jquery-mockjax'
 import Conversation from './Conversation'
+import moment from 'moment'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
@@ -252,6 +253,20 @@ describe('ConversationList', () => {
 		assert.ok(ko.isObservable(model.fromApplySelected))
 	})
 
+	it('should have periodFrom prop', () => {
+		assert.ok(ko.isObservable(model.periodFrom))
+	})
+
+	it('should have weekAgo prop', () => {
+		assert.ok(ko.isObservable(model.weekAgo))
+		assert.equal(model.weekAgo(), moment().subtract(1, 'week').format())
+	})
+
+	it('should have monthAgo prop', () => {
+		assert.ok(ko.isObservable(model.monthAgo))
+		assert.equal(model.monthAgo(), moment().subtract(1, 'month').format())
+	})
+
 	describe('filteredConversations', () => {
 
 		it('should have filteredConversations computed', () => {
@@ -306,6 +321,25 @@ describe('ConversationList', () => {
 			model.fromApplySelected(true)
 			assert.equal(model.filteredConversations().length, 1)
 			assert.ok(model.filteredConversations()[0].fromApply())
+		})
+
+		it('should respect periodFrom filter', () => {
+			model.conversations([
+				new Conversation(dispatcher, {
+					lastMessage: {
+						type: types.STANDARD_MESSAGE,
+						date: moment().subtract(2, 'days').format()
+					}
+				}),
+				new Conversation(dispatcher, {
+					lastMessage: {
+						type: types.STANDARD_MESSAGE,
+						date: moment().subtract(10, 'days').format()
+					}
+				})
+			])
+			model.periodFrom(moment().subtract(5, 'days').format())
+			assert.equal(model.filteredConversations().length, 1)
 		})
 
 		it('should chain filters', () => {

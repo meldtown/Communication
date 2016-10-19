@@ -63,6 +63,21 @@
 				</div>
 				<hr>
 				<div>
+					<div>
+						<label>
+							<input name="period" type="radio" data-bind="value: weekAgo, checked: periodFrom">
+							<span>past week</span>
+						</label>
+					</div>
+					<div>
+						<label>
+							<input name="period" type="radio" data-bind="value: monthAgo, checked: periodFrom">
+							<span>past month</span>
+						</label>
+					</div>
+				</div>
+				<hr>
+				<div>
 					<input placeholder="filter..." type="text" data-bind="value: term, enterPress: fetch">
 				</div>
 
