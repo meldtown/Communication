@@ -1,4 +1,5 @@
 import * as types from './src/constants'
+import * as helpers from './src/helpers'
 import faker from 'faker'
 import fs from 'fs'
 
@@ -124,6 +125,10 @@ export const generateConversation = (id, messages) => {
 	let conversationMessages = messages.filter(message => message.conversationId === id)
 	let lastMessage = conversationMessages.sort((left, right) => new Date(left.date) - new Date(right.date))[0]
 	let unreadMessagesCount = conversationMessages.filter(message => !message.isRead).length
+	let vacancyIds = conversationMessages
+		.filter(m => m.type === types.APPLY_MESSAGE)
+		.map(m => m.vacancyId)
+		.reduce(helpers.uniqueReducer)
 
 	return {
 		id,
@@ -131,7 +136,8 @@ export const generateConversation = (id, messages) => {
 		type: faker.random.arrayElement(CONVERSATION_TYPES),
 		fullName: faker.name.findName(),
 		avatar: faker.image.avatar(),
-		lastMessage: lastMessage
+		lastMessage: lastMessage,
+		vacancyIds
 	}
 }
 
