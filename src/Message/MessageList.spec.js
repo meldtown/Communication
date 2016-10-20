@@ -125,4 +125,14 @@ describe('MessageList', () => {
 		assert.equal(model1.messages().length, 0)
 		assert.equal(model2.messages().length, 1)
 	})
+
+	it('should have hasMessages computed', () => {
+		assert.ok(ko.isComputed(model.hasMessages))
+
+		assert.equal(model.hasMessages(), false)
+
+		model.messages([new StandardMessage(generator.generateStandardMessage(1, 1))])
+
+		assert.equal(model.hasMessages(), true)
+	})
 })

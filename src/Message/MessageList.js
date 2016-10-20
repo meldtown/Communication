@@ -14,6 +14,8 @@ export default class MessageList {
 		this.conversationId = ko.observable()
 		this.messages = ko.observableArray()
 
+		this.hasMessages = ko.computed(() => this.messages() && this.messages().length > 0)
+
 		dispatcher.subscribe(message => {
 			if (message.conversationId() === this.conversationId()) {
 				this.messages.push(message)
