@@ -1,5 +1,4 @@
 import path from 'path'
-import DefinePlugin from 'webpack/lib/DefinePlugin'
 import LoaderOptionsPlugin from 'webpack/lib/LoaderOptionsPlugin'
 import ProvidePlugin from 'webpack/lib/ProvidePlugin'
 import CommonsChunkPlugin from 'webpack/lib/optimize/CommonsChunkPlugin'
@@ -45,9 +44,10 @@ export default (app) => ({
 	},
 	plugins: isProduction
 		? plugins.concat([new ExtractTextPlugin('[name].css')])
-		: plugins.concat([new DefinePlugin({api: '"http://localhost:8181"'}), new HotModuleReplacementPlugin()]),
+		: plugins.concat([new HotModuleReplacementPlugin()]),
 	devServer: {
 		hot: true,
+		host: '0.0.0.0',
 		historyApiFallback: {
 			rewrites: [
 				{from: /.*/, to: `/entry/${app}.html`}
