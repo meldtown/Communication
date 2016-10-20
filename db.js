@@ -59,7 +59,7 @@ export const generateDeclineMessage = (id, conversationId) => ({
 	isRead: faker.random.boolean()
 })
 
-const generateVacancy = () => {
+export const generateVacancy = () => {
 	let companyName = faker.company.companyName()
 	let color = faker.internet.color(255, 255, 255)
 	return {

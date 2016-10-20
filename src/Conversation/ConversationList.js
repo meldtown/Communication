@@ -37,13 +37,28 @@ export default class ConversationList {
 		this.isArchiveSelected = ko.computed(() => this.selectedType() === types.ARCHIVED_CONVERSATION)
 		this.isBlockedSelected = ko.computed(() => this.selectedType() === types.BLOCKED_CONVERSATION)
 
-		this.selectedConversation = ko.computed(() => this.conversations().filter(conversation => conversation.isSelected())[0])
+		this.selectedConversation = ko.computed(() => (this.conversations() || []).filter(conversation => conversation.isSelected())[0])
 
 		this.hasTerm = ko.computed(() => this.term() && this.term().length > 0)
 		this.hasConversations = ko.computed(() => this.conversations() && this.conversations().length > 0)
 
-		this.filteredConversations = ko.computed(() => {
+		this.vacancies = ko.computed(() => {
+			if (!this.conversations()) return []
+
 			return this.conversations()
+				.map(conversation => conversation.vacancies())
+				.reduce((result, vacancies) => result.concat(vacancies), [])
+				.reduce((result, vacancy) => {
+					if (!result.some(item => item.id === vacancy.id)) {
+						result.push(vacancy)
+					}
+
+					return result
+				}, [])
+		})
+
+		this.filteredConversations = ko.computed(() => {
+			return (this.conversations() || [])
 				.filter(conversation => {
 					if (!this.hasInvitesSelected() && !this.hasDeclinesSelected() && !this.hasOffersSelected()) return true
 

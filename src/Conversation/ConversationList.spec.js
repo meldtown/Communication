@@ -423,4 +423,37 @@ describe('ConversationList', () => {
 			})
 		})
 	})
+
+	describe('vacancies', () => {
+		it('should have vacancies computed', () => {
+			assert.ok(ko.isComputed(model.vacancies))
+			assert.equal(model.vacancies().length, 0)
+			var vacancy = generator.generateVacancy();
+			model.conversations([new Conversation(dispatcher, {vacancies: [vacancy]})])
+			assert.equal(model.vacancies().length, 1)
+			assert.equal(model.vacancies()[0].id, vacancy.id)
+		})
+
+		it('should handle undefined conversations', () => {
+			model.conversations(undefined)
+			assert.equal(model.vacancies().length, 0)
+		})
+
+		it('should reduce unique vacancies', () => {
+			let vacancy1 = generator.generateVacancy()
+			vacancy1.id = 1
+
+			let vacancy2 = generator.generateVacancy()
+			vacancy2.id = 2
+
+			let conversation1 = new Conversation(dispatcher, {vacancies: [vacancy1, vacancy2]})
+			let conversation2 = new Conversation(dispatcher, {vacancies: [vacancy1]})
+
+			model.conversations([conversation1, conversation2])
+
+			assert.equal(model.vacancies().length, 2)
+		})
+
+
+	})
 })
