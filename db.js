@@ -126,10 +126,11 @@ export const generateConversation = (id, messages) => {
 	let lastMessage = conversationMessages.sort((left, right) => new Date(left.date) - new Date(right.date))[0]
 	let unreadMessagesCount = conversationMessages.filter(message => !message.isRead).length
 	let fromCvdb = faker.random.boolean()
-	let vacancyIds = conversationMessages
+	let vacancies = conversationMessages
 		.filter(m => m.type === types.APPLY_MESSAGE)
 		.map(m => m.vacancyId)
 		.reduce(helpers.uniqueReducer, [])
+		.map(id => conversationMessages.filter(m => m.type === types.APPLY_MESSAGE && m.vacancyId === id)[0].vacancy)
 
 
 	return {
@@ -144,7 +145,7 @@ export const generateConversation = (id, messages) => {
 		hasOffers: conversationMessages.some(m => m.type === types.OFFER_MESSAGE),
 		fromCvdb: fromCvdb,
 		fromApply: !fromCvdb,
-		vacancyIds
+		vacancies
 	}
 }
 

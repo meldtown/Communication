@@ -285,20 +285,20 @@ describe('Conversation', () => {
 		assert.equal(model.lastMessageTemplate(), 'StandardMessagePreview')
 	})
 
-	it('should have vacancyIds array for filtering', () => {
-		assert.ok(ko.isObservable(model.vacancyIds))
-		assert.equal(typeof model.vacancyIds.push, 'function')
+	it('should have vacancies array for filtering', () => {
+		assert.ok(ko.isObservable(model.vacancies))
+		assert.equal(typeof model.vacancies.push, 'function')
 	})
 
-	it('should by default set vacancyIds to empty array', () => {
-		assert.equal(model.vacancyIds().length, 0)
+	it('should by default set vacancies to empty array', () => {
+		assert.equal(model.vacancies().length, 0)
 	})
 
-	it('should set vacancyIds from constructor', () => {
-		var vacancyIds = [1, 2];
-		model = new Conversation(dispatcher, {vacancyIds})
-		assert.equal(model.vacancyIds().length, 2)
-		assert.deepEqual(model.vacancyIds(), vacancyIds)
+	it('should set vacancies from constructor', () => {
+		var vacancies = [1, 2];
+		model = new Conversation(dispatcher, {vacancies})
+		assert.equal(model.vacancies().length, 2)
+		assert.deepEqual(model.vacancies(), vacancies)
 	})
 
 	it('should have hasInvites prop', () => {
