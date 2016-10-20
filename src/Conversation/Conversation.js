@@ -1,6 +1,6 @@
 import * as constants from '../constants'
 import * as ko from 'knockout'
-import $ from 'jquery'
+import axios from 'axios'
 import MessageFactory from '../Message/MessageFactory'
 
 export default class Conversation {
@@ -46,11 +46,7 @@ export default class Conversation {
 	}
 
 	_changeType(targetType, eventToFire) {
-		return $.ajax({
-			type: 'put',
-			url: `${api}/conversations/${this.id()}`,
-			data: {type: targetType}
-		}).then(data => {
+		return axios.put(`${api}/conversations/${this.id()}`, {type: targetType}).then(data => {
 			this.dispatcher.notifySubscribers(this, eventToFire)
 			this.type(targetType)
 			return data

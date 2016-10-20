@@ -3,15 +3,14 @@ import * as generator from '../../db'
 import * as ko from 'knockout'
 import assert from 'assert'
 import Conversation from './Conversation'
-import $ from 'jquery'
-import jQueryMockAjax from 'jquery-mockjax'
+import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
 import StandardMessage from '../Message/StandardMessage'
 
 const api = 'http://sample.com'
-const mockjax = jQueryMockAjax($, window)
-$.mockjaxSettings.logging = 0
 
 describe('Conversation', () => {
+	let mock
 	let model
 	let dispatcher
 
@@ -20,11 +19,10 @@ describe('Conversation', () => {
 	})
 
 	beforeEach(() => {
+		mock = new MockAdapter(axios)
 		dispatcher = new ko.subscribable()
 		model = new Conversation(dispatcher)
 	})
-
-	afterEach(() => mockjax.clear())
 
 	it('should be instantiable', () => {
 		assert.equal(model instanceof Conversation, true)
@@ -127,11 +125,7 @@ describe('Conversation', () => {
 		model.type(constants.ACTIVE_CONVERSATION)
 		assert.equal(model.type(), constants.ACTIVE_CONVERSATION)
 
-		mockjax({
-			type: 'PUT',
-			url: `${api}/conversations/${conversationId}`,
-			data: {type: constants.BLOCKED_CONVERSATION}
-		})
+		mock.onPut(`${api}/conversations/${conversationId}`, {type: constants.BLOCKED_CONVERSATION}).reply(200)
 
 		return model.block().then(() => {
 			assert.equal(model.type(), constants.BLOCKED_CONVERSATION)
@@ -148,10 +142,7 @@ describe('Conversation', () => {
 
 		model.id(conversationId)
 
-		mockjax({
-			type: 'PUT',
-			url: `${api}/conversations/${conversationId}`
-		})
+		mock.onPut(`${api}/conversations/${conversationId}`, {type: constants.BLOCKED_CONVERSATION}).reply(200)
 
 		return model.block().then(() => {
 			assert.equal(counter, 1)
@@ -169,11 +160,7 @@ describe('Conversation', () => {
 		model.type(constants.ACTIVE_CONVERSATION)
 		assert.equal(model.type(), constants.ACTIVE_CONVERSATION)
 
-		mockjax({
-			type: 'PUT',
-			url: `${api}/conversations/${conversationId}`,
-			data: {type: constants.ARCHIVED_CONVERSATION}
-		})
+		mock.onPut(`${api}/conversations/${conversationId}`, {type: constants.ARCHIVED_CONVERSATION}).reply(200)
 
 		return model.archive().then(() => {
 			assert.equal(model.type(), constants.ARCHIVED_CONVERSATION)
@@ -190,10 +177,7 @@ describe('Conversation', () => {
 
 		model.id(conversationId)
 
-		mockjax({
-			type: 'PUT',
-			url: `${api}/conversations/${conversationId}`
-		})
+		mock.onPut(`${api}/conversations/${conversationId}`, {type: constants.ARCHIVED_CONVERSATION}).reply(200)
 
 		return model.archive().then(() => {
 			assert.equal(counter, 1)
@@ -211,11 +195,7 @@ describe('Conversation', () => {
 		model.type(constants.BLOCKED_CONVERSATION)
 		assert.equal(model.type(), constants.BLOCKED_CONVERSATION)
 
-		mockjax({
-			type: 'PUT',
-			url: `${api}/conversations/${conversationId}`,
-			data: {type: constants.ACTIVE_CONVERSATION}
-		})
+		mock.onPut(`${api}/conversations/${conversationId}`, {type: constants.ACTIVE_CONVERSATION}).reply(200)
 
 		return model.activate().then(() => {
 			assert.equal(model.type(), constants.ACTIVE_CONVERSATION)
@@ -232,10 +212,7 @@ describe('Conversation', () => {
 
 		model.id(conversationId)
 
-		mockjax({
-			type: 'PUT',
-			url: `${api}/conversations/${conversationId}`
-		})
+		mock.onPut(`${api}/conversations/${conversationId}`, {type: constants.ACTIVE_CONVERSATION}).reply(200)
 
 		return model.activate().then(() => {
 			assert.equal(counter, 1)
