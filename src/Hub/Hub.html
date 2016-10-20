@@ -73,7 +73,12 @@
 					</span>
 				</div>
 				<hr>
-				<div data-bind="template: {name: 'Conversation', foreach: filteredConversations}"></div>
+				<div data-bind="if: hasConversations">
+					<div data-bind="template: {name: 'Conversation', foreach: filteredConversations}"></div>
+				</div>
+				<div data-bind="ifnot: hasConversations">
+					Nothing here
+				</div>
 			</div>
 		</td>
 		<td valign="top">

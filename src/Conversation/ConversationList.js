@@ -40,6 +40,7 @@ export default class ConversationList {
 		this.selectedConversation = ko.computed(() => this.conversations().filter(conversation => conversation.isSelected())[0])
 
 		this.hasTerm = ko.computed(() => this.term() && this.term().length > 0)
+		this.hasConversations = ko.computed(() => this.conversations() && this.conversations().length > 0)
 
 		this.filteredConversations = ko.computed(() => {
 			return this.conversations()

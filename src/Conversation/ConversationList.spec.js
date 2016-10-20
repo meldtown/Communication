@@ -36,6 +36,10 @@ describe('ConversationList', () => {
 		assert.equal(typeof model.conversations.push, 'function')
 	})
 
+	it('should have hasConversations computed', () => {
+		assert.ok(ko.isComputed(model.hasConversations))
+	})
+
 	it('should throw an error if dispatcher not given', () => {
 		// noinspection JSCheckFunctionSignatures
 		assert.throws(() => new Conversation(), Error)
