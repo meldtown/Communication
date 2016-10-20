@@ -86,7 +86,7 @@ describe('MessageList', () => {
 
 		model.conversationId(conversationId)
 
-		mock.onGet(`${api}/messages`, {conversationId}).reply(500, 'error')
+		mock.onGet(`${api}/messages`).reply(500, 'error')
 
 		model.messages([
 			generator.generateStandardMessage(1, 1)

@@ -1,9 +1,12 @@
+import './Accordion.scss'
 import * as ko from 'knockout'
 import MessageList from '../Message/MessageList'
 import StandardMessageForm from '../Message/Form/StandardMessageForm'
 import InviteMessageForm from '../Message/Form/InviteMessageForm'
 import DeclineMessageForm from '../Message/Form/DeclineMessageForm'
 import OfferMessageForm from '../Message/Form/OfferMessageForm'
+import Conversation from '../Conversation/Conversation'
+import axios from 'axios'
 
 export default class Accordion {
 	constructor(dispatcher, conversationId) {
@@ -17,7 +20,10 @@ export default class Accordion {
 
 		this.dispatcher = dispatcher
 		this.conversationId = ko.observable(conversationId)
+		this.conversation = ko.observable(new Conversation(dispatcher))
 		this.messages = new MessageList(dispatcher)
+
+		this.messages.conversationId(conversationId)
 
 		this.standardMessageForm = new StandardMessageForm(dispatcher)
 		this.inviteMessageForm = new InviteMessageForm(dispatcher)
@@ -48,6 +54,15 @@ export default class Accordion {
 
 	fetch() {
 		return this.messages.fetch()
+	}
+
+	fetchConversation() {
+		return axios.get(`${api}/conversations/${this.conversationId()}`)
+			.then(response => {
+				let conversation = new Conversation(this.dispatcher, response.data)
+				this.conversation(conversation)
+				return conversation
+			})
 	}
 
 	selectStandardForm() {

@@ -9,6 +9,7 @@ import StandardMessageForm from '../Message/Form/StandardMessageForm'
 import InviteMessageForm from '../Message/Form/InviteMessageForm'
 import DeclineMessageForm from '../Message/Form/DeclineMessageForm'
 import OfferMessageForm from '../Message/Form/OfferMessageForm'
+import Conversation from '../Conversation/Conversation'
 
 const api = 'http://sample.com'
 
@@ -148,5 +149,20 @@ describe('Accordion', () => {
 
 	it('should have standard form selected by default', () => {
 		assert.ok(model.isStandardFormSelected())
+	})
+
+	it('should have conversation prop', () => {
+		assert.ok(ko.isObservable(model.conversation))
+		assert.ok(model.conversation() instanceof Conversation)
+	})
+
+	it('should have fetchConversation method', () => {
+		assert.equal(typeof model.fetchConversation, 'function')
+
+		mock.onGet(`${api}/conversations/${conversationId}`).reply(200, generator.generateConversation(conversationId, [generator.generateStandardMessage(1, conversationId)]))
+
+		model.fetchConversation().then(conversation => {
+			assert.ok(conversation instanceof Conversation)
+		})
 	})
 })
