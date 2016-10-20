@@ -4,13 +4,15 @@ import AbstractTemplate from './AbstractTemplate'
 
 describe('AbstractTemplate', () => {
 	let model
+	let dispatcher
 
 	beforeEach(() => {
-		model = new AbstractTemplate()
+		dispatcher = new ko.subscribable()
+		model = new AbstractTemplate(dispatcher)
 	})
 
 	it('should be instantiable', () => {
-		let model = new AbstractTemplate()
+		let model = new AbstractTemplate(dispatcher)
 		assert.equal(model instanceof AbstractTemplate, true)
 	})
 
@@ -40,8 +42,9 @@ describe('AbstractTemplate', () => {
 
 	it('should accept data into constructor', () => {
 		let data = {id: 1, language: 'ru', text: 'Hello World', title: 'title'}
-		let model = new AbstractTemplate(data)
-		assert.deepEqual(ko.toJS(model), data)
+		let model = new AbstractTemplate(dispatcher, data)
+		let {isSelected} = ko.toJS(model)
+		assert.deepEqual(ko.toJS(model), {dispatcher, isSelected, ...ko.toJS(model)})
 	})
 
 

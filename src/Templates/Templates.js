@@ -9,7 +9,12 @@ import DeclineTemplateView from '../Templates/View/DeclineTemplateView'
 import OfferTemplateView from '../Templates/View/OfferTemplateView'
 
 export default class Templates {
-	constructor() {
+	constructor(dispatcher) {
+		if (!ko.isSubscribable(dispatcher)) {
+			throw new Error('ko.subscribable is required')
+		}
+
+		this.dispatcher = dispatcher
 		this.templates = ko.observableArray()
 		this.selectedTab = ko.observable(StandardTemplateView)
 		this.isStandardTabSelected = ko.computed(() => this.selectedTab() === StandardTemplateView)
@@ -39,13 +44,15 @@ export default class Templates {
 					return template.title().indexOf(str) !== -1 || template.text().indexOf(str) !== -1
 				})
 		})
+
+		this.selectedStandardTemplate = ko.observable()
 	}
 
 	fetch() {
 		return $.getJSON(`${api}/templates`)
 			.then(templates => {
 				this.selectedTab(StandardTemplateView)
-					return this.templates(templates.map(TemplateFactory.create))
+				return this.templates(templates.map(TemplateFactory.create.bind(this, this.dispatcher)))
 				}
 			)
 	}

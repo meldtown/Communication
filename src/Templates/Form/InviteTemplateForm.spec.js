@@ -6,9 +6,10 @@ import AbstractTemplate from '../AbstractTemplate'
 
 describe('InviteTemplateForm', () => {
 	let model
-
+	let dispatcher
 	beforeEach(() => {
-		model = new InviteTemplateForm()
+		dispatcher = new ko.subscribable()
+		model = new InviteTemplateForm(dispatcher)
 	})
 
 	it('should be instantiable', () => {

@@ -6,9 +6,11 @@ import * as ko from 'knockout'
 
 describe('InviteTemplateView', () => {
 	let model
+	let dispatcher
 
 	beforeEach(() => {
-		model = new InviteTemplateView()
+		dispatcher = new ko.subscribable()
+		model = new InviteTemplateView(dispatcher)
 	})
 
 	it('should be instantiable', () => {
