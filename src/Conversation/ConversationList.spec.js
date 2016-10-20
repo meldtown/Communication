@@ -1,18 +1,17 @@
 import * as types from '../constants'
 import * as generator from '../../db'
 import * as ko from 'knockout'
-import $ from 'jquery'
+import axios from 'axios'
 import assert from 'assert'
 import ConversationList from './ConversationList'
-import jQueryMockAjax from 'jquery-mockjax'
+import MockAdapter from 'axios-mock-adapter'
 import Conversation from './Conversation'
 import moment from 'moment'
 
 const api = 'http://sample.com'
-const mockjax = jQueryMockAjax($, window)
-$.mockjaxSettings.logging = 0
 
 describe('ConversationList', () => {
+	let mock
 	let model
 	let dispatcher
 
@@ -21,11 +20,11 @@ describe('ConversationList', () => {
 	})
 
 	beforeEach(() => {
+		mock = new MockAdapter(axios)
 		dispatcher = new ko.subscribable()
 		model = new ConversationList(dispatcher)
 	})
 
-	afterEach(() => mockjax.clear())
 
 	it('should be instantiable', () => {
 		assert.equal(model instanceof ConversationList, true)
@@ -59,10 +58,7 @@ describe('ConversationList', () => {
 			generator.generateConversation(2, [generator.generateDeclineMessage(1, 2)])
 		]
 
-		mockjax({
-			url: `${api}/conversations`,
-			responseText
-		})
+		mock.onGet(`${api}/conversations`).reply(200, responseText)
 
 		return model.fetch().then(() => {
 			assert.equal(model.conversations().length, responseText.length)
@@ -77,10 +73,7 @@ describe('ConversationList', () => {
 	})
 
 	it('should reset conversations on error', done => {
-		mockjax({
-			url: `${api}/conversations`,
-			status: 500
-		})
+		mock.onGet(`${api}/conversations`).reply(500)
 
 		model.conversations([
 			new Conversation(dispatcher, generator.generateConversation(1, [generator.generateStandardMessage(1, 1)]))
@@ -88,7 +81,7 @@ describe('ConversationList', () => {
 
 		assert.equal(model.conversations().length, 1)
 
-		model.fetch().always(() => {
+		model.fetch().then(() => {
 			assert.equal(model.conversations().length, 0)
 			done()
 		})
@@ -100,10 +93,7 @@ describe('ConversationList', () => {
 			generator.generateConversation(2, [generator.generateDeclineMessage(1, 2)])
 		]
 
-		mockjax({
-			url: `${api}/conversations`,
-			responseText
-		})
+		mock.onGet(`${api}/conversations`).reply(200, responseText)
 
 		return model.fetch().then(() => {
 			assert.equal(model.conversations()[0].isSelected(), true)
@@ -113,10 +103,7 @@ describe('ConversationList', () => {
 	it('should handle empty conversation list', () => {
 		let responseText = []
 
-		mockjax({
-			url: `${api}/conversations`,
-			responseText
-		})
+		mock.onGet(`${api}/conversations`).reply(200, responseText)
 
 		return model.fetch().then(() => {
 			assert.equal(model.conversations().length, 0)
@@ -138,10 +125,10 @@ describe('ConversationList', () => {
 	it('should have selectActive method', () => {
 		assert.equal(typeof model.selectActive, 'function')
 
-		mockjax({
-			url: `${api}/conversations`,
-			data: {type: types.ACTIVE_CONVERSATION},
-			responseText: []
+		mock.onGet(`${api}/conversations`).reply(config => {
+			if (config.params.type === types.ACTIVE_CONVERSATION) {
+				return [200, []]
+			}
 		})
 
 		return model.selectActive().then(() => {
@@ -153,10 +140,10 @@ describe('ConversationList', () => {
 	it('should have selectArchive method', () => {
 		assert.equal(typeof model.selectArchive, 'function')
 
-		mockjax({
-			url: `${api}/conversations`,
-			data: {type: types.ARCHIVED_CONVERSATION},
-			responseText: []
+		mock.onGet(`${api}/conversations`).reply(config => {
+			if (config.params.type === types.ARCHIVED_CONVERSATION) {
+				return [200, []]
+			}
 		})
 
 		return model.selectArchive().then(() => {
@@ -168,10 +155,10 @@ describe('ConversationList', () => {
 	it('should have selectBlocked method', () => {
 		assert.equal(typeof model.selectBlocked, 'function')
 
-		mockjax({
-			url: `${api}/conversations`,
-			data: {type: types.BLOCKED_CONVERSATION},
-			responseText: []
+		mock.onGet(`${api}/conversations`).reply(config => {
+			if (config.params.type === types.BLOCKED_CONVERSATION) {
+				return [200, []]
+			}
 		})
 
 		return model.selectBlocked().then(() => {
@@ -186,10 +173,10 @@ describe('ConversationList', () => {
 
 		model.selectArchive()
 
-		mockjax({
-			url: `${api}/conversations`,
-			data: {type: types.ARCHIVED_CONVERSATION},
-			responseText: [archiveConversation]
+		mock.onGet(`${api}/conversations`).reply(config => {
+			if (config.params.type === types.ARCHIVED_CONVERSATION) {
+				return [200, [archiveConversation]]
+			}
 		})
 
 		return model.fetch().then(() => {
@@ -198,10 +185,10 @@ describe('ConversationList', () => {
 	})
 
 	it('should call fetch on selected type change', () => {
-		mockjax({
-			url: `${api}/conversations`,
-			data: {type: types.ARCHIVED_CONVERSATION},
-			responseText: []
+		mock.onGet(`${api}/conversations`).reply(config => {
+			if (config.params.type === types.ARCHIVED_CONVERSATION) {
+				return [200, []]
+			}
 		})
 
 		return model.selectArchive().then(() => {
@@ -238,10 +225,10 @@ describe('ConversationList', () => {
 
 		model.term(term)
 
-		mockjax({
-			url: `${api}/conversations`,
-			data: {type: types.ACTIVE_CONVERSATION, q: term},
-			responseText: []
+		mock.onGet(`${api}/conversations`).reply(config => {
+			if (config.params.type === types.ACTIVE_CONVERSATION && config.params.q === term) {
+				return [200, []]
+			}
 		})
 
 		return model.fetch().then(() => {
@@ -443,10 +430,8 @@ describe('ConversationList', () => {
 			model.fromCvdbSelected(true)
 			model.fromApplySelected(true)
 
-			mockjax({
-				url: `${api}/conversations`,
-				responseText: []
-			})
+
+			mock.onGet(`${api}/conversations`).reply(200, [])
 
 			return model.fetch().then(() => {
 				assert.equal(model.hasInvitesSelected(), false)
@@ -497,5 +482,22 @@ describe('ConversationList', () => {
 
 			assert.equal(model.hasVacancies(), true)
 		})
+	})
+
+	it('should unreadMessagesCount comp', () => {
+		assert.ok(ko.isComputed(model.unreadMessagesCount))
+		assert.equal(model.unreadMessagesCount(), 0)
+
+		let message1 = {...generator.generateStandardMessage(1, 1), isRead: false}
+		let conversation1 = new Conversation(dispatcher, generator.generateConversation(1, [message1]))
+		conversation1.unreadMessagesCount(1)
+
+		let message2 = {...generator.generateStandardMessage(1, 2), isRead: true}
+		let conversation2 = new Conversation(dispatcher, generator.generateConversation(2, [message2]))
+		conversation2.unreadMessagesCount(0)
+
+		model.conversations([conversation1, conversation2])
+
+		assert.equal(model.unreadMessagesCount(), 1)
 	})
 })

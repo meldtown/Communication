@@ -1,5 +1,5 @@
 import * as ko from 'knockout'
-import $ from 'jquery'
+import axios from 'axios'
 import './Conversation.scss'
 import Conversation from './Conversation'
 import * as types from '../constants'
@@ -59,6 +59,8 @@ export default class ConversationList {
 
 		this.hasVacancies = ko.computed(() => this.vacancies().length > 0)
 
+		this.unreadMessagesCount = ko.computed(() => (this.conversations() || []).map(c => c.unreadMessagesCount()).filter(c => c).reduce((a, b) => a + b, 0))
+
 		this.vacancyId = ko.observable()
 
 		this.filteredConversations = ko.computed(() => {
@@ -99,8 +101,8 @@ export default class ConversationList {
 			request.q = this.term()
 		}
 
-		return $.getJSON(`${api}/conversations`, request)
-			.done(conversations => {
+		return axios.get(`${api}/conversations`, {params: request})
+			.then(response => {
 				this.hasInvitesSelected(false)
 				this.hasDeclinesSelected(false)
 				this.hasOffersSelected(false)
@@ -108,9 +110,9 @@ export default class ConversationList {
 				this.fromCvdbSelected(false)
 				this.fromApplySelected(false)
 
-				this.conversations(conversations.map(data => new Conversation(this.dispatcher, data)))
+				this.conversations(response.data.map(data => new Conversation(this.dispatcher, data)))
 			})
-			.fail(() => {
+			.catch(() => {
 				this.conversations([])
 			})
 	}

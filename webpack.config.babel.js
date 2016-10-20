@@ -24,7 +24,8 @@ export default (app) => ({
 	entry: {
 		employer_hub: './entry/employer_hub.js',
 		jobsearcher_hub: './entry/jobsearcher_hub.js',
-		templates: './entry/templates.js'
+		templates: './entry/templates.js',
+		accordion: './entry/accordion.js'
 	},
 	output: {
 		path: path.join(__dirname, 'dist'),

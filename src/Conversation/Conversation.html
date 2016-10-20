@@ -16,7 +16,9 @@
 					<small data-bind="text: ago"></small>
 				</div>
 			</div>
-			<div data-bind="template: { name: lastMessageTemplate, data: lastMessage }"></div>
+			<div data-bind="if: lastMessage">
+				<div data-bind="template: { name: lastMessageTemplate, data: lastMessage }"></div>
+			</div>
 		</td>
 	</tr>
 	</tbody>

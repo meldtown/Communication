@@ -13,6 +13,11 @@ export const APPLY_MESSAGE = 'apply'
 export const ACTIVE_CONVERSATION = 'active'
 export const ARCHIVED_CONVERSATION = 'archive'
 export const BLOCKED_CONVERSATION = 'blocked'
+export const CONVERSATION_TYPES = [
+	ACTIVE_CONVERSATION,
+	ARCHIVED_CONVERSATION,
+	BLOCKED_CONVERSATION
+]
 
 export const TEMPLATE_SELECTED = 'template selected'
 

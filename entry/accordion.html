@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
+	<title>hub</title>
+	<link rel="stylesheet" href="/dist/accordion.css">
+</head>
+<body>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td valign="top" width="50%">
+			<div id="accordion"></div>
+		</td>
+		<td valign="top">
+			<div id="header"></div>
+		</td>
+	</tr>
+</table>
+
+<script src="/dist/commons.js"></script>
+<script src="/dist/accordion.js"></script>
+<script>
+	// noinspection JSUnusedLocalSymbols
+	var api = `${window.location.protocol}//${window.location.hostname}:8181`
+	var conversationId = 1
+</script>
+<script>accordion.init(conversationId)</script>
+</body>
+</html>
