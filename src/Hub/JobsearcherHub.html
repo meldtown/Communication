@@ -1,1 +1,112 @@
-Jobsearcher hub
+<table cellpadding="5" cellspacing="0" border="1" width="100%">
+	<tbody>
+	<tr>
+		<td valign="top" width="240">
+			<div data-bind="with: conversations">
+				<div>
+					<span data-bind="if: isActiveSelected">
+						<span>Active</span>
+					</span>
+					<span data-bind="ifnot: isActiveSelected">
+						<a href="#" data-bind="click: selectActive">Active</a>
+					</span>
+
+					<span data-bind="if: isArchiveSelected">
+						<span>Archive</span>
+					</span>
+					<span data-bind="ifnot: isArchiveSelected">
+						<a href="#" data-bind="click: selectArchive">Archive</a>
+					</span>
+
+					<span data-bind="if: isBlockedSelected">
+						<span>Blocked</span>
+					</span>
+					<span data-bind="ifnot: isBlockedSelected">
+						<a href="#" data-bind="click: selectBlocked">Blocked</a>
+					</span>
+				</div>
+
+				<div>
+					<label style="display: none" for="vacancyId">vacancy</label>
+					<select id="vacancyId" data-bind="options: vacancies, optionsText: 'vacancyName', optionsValue: 'id', value: vacancyId, optionsCaption: 'vacancy...', enable: hasVacancies"></select>
+				</div>
+
+				<div>
+					<label>
+						<input type="checkbox" data-bind="checked: hasInvitesSelected">
+						<span>invites</span>
+					</label>
+					<label>
+						<input type="checkbox" data-bind="checked: hasDeclinesSelected">
+						<span>declines</span>
+					</label>
+					<label>
+						<input type="checkbox" data-bind="checked: hasOffersSelected">
+						<span>offers</span>
+					</label>
+				</div>
+				<hr>
+				<div>
+					<div>
+						<input placeholder="from..." type="date" data-bind="value: periodFromInputFormatted">
+					</div>
+					<label>
+						<input name="period" type="radio" data-bind="value: weekAgo, checked: periodFrom">
+						<span>week</span>
+					</label>
+					<label>
+						<input name="period" type="radio" data-bind="value: monthAgo, checked: periodFrom">
+						<span>month</span>
+					</label>
+				</div>
+				<hr>
+				<div>
+					<input placeholder="filter..." type="text" data-bind="value: term, enterPress: fetch">
+					<span data-bind="if: hasTerm">
+						<a href="#" data-bind="click: clearTerm">clear</a>
+					</span>
+				</div>
+				<hr>
+				<div data-bind="if: hasConversations">
+					<div data-bind="template: {name: 'Conversation', foreach: filteredConversations}"></div>
+				</div>
+				<div data-bind="ifnot: hasConversations">
+					Nothing here
+				</div>
+			</div>
+		</td>
+		<td valign="top">
+			<div style="text-align: right" data-bind="with: selectedConversation">
+				<span data-bind="if: isActive">
+					<span>Active</span>
+				</span>
+				<span data-bind="ifnot: isActive">
+					<a href="#" data-bind="click: activate">Active</a>
+				</span>
+
+				<span data-bind="if: isArchived">
+					<span>Archive</span>
+				</span>
+				<span data-bind="ifnot: isArchived">
+					<a href="#" data-bind="click: archive">Archive</a>
+				</span>
+
+				<span data-bind="if: isBlocked">
+					<span>Blocked</span>
+				</span>
+				<span data-bind="ifnot: isBlocked">
+					<a href="#" data-bind="click: block">Blocked</a>
+				</span>
+			</div>
+
+			<div data-bind="template: {name: 'MessageList', data: messages}"></div>
+
+			<hr/>
+
+			<div data-bind="with: standardMessageForm">
+				<div data-bind="template: template"></div>
+			</div>
+		</td>
+	</tr>
+	</tbody>
+</table>

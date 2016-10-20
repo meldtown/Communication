@@ -1,5 +1,6 @@
 import * as actions from '../constants'
 import * as ko from 'knockout'
+import './JobsearcherHub.scss'
 import MessageList from '../Message/MessageList'
 import ConversationList from '../Conversation/ConversationList'
 import StandardMessageForm from '../Message/Form/StandardMessageForm'

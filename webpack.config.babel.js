@@ -21,6 +21,7 @@ export default (app) => ({
 	devtool: isProduction ? 'source-map' : 'inline-source-map',
 	entry: {
 		employer_hub: './entry/employer_hub.js',
+		jobsearcher_hub: './entry/jobsearcher_hub.js',
 		templates: './entry/templates.js'
 	},
 	output: {

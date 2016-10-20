@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"npm run start:db\" \"npm run start:employer_hub\"",
+    "start": "concurrently \"npm run start:db\" \"npm run start:jobsearcher_hub\"",
     "start:employer_hub": "webpack-dev-server --env employer_hub",
+    "start:jobsearcher_hub": "webpack-dev-server --env jobsearcher_hub",
     "start:templates": "webpack-dev-server --env templates",
     "start:db": "json-server --watch db.json --host 0.0.0.0 --port 8181",
     "dist": "webpack -p",
