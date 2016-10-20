@@ -3,12 +3,14 @@ import LoaderOptionsPlugin from 'webpack/lib/LoaderOptionsPlugin'
 import ProvidePlugin from 'webpack/lib/ProvidePlugin'
 import CommonsChunkPlugin from 'webpack/lib/optimize/CommonsChunkPlugin'
 import HotModuleReplacementPlugin from 'webpack/lib/HotModuleReplacementPlugin'
+import ContextReplacementPlugin from 'webpack/lib/ContextReplacementPlugin'
 import autoprefixer from 'autoprefixer'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 const isProduction = 'production' === (process.env.NODE_ENV = process.argv.indexOf('-p') === -1 ? 'development' : 'production')
 
 const plugins = [
+	new ContextReplacementPlugin(/moment[\\\/]locale/, /^\.\/(ru|uk)$/),
 	new LoaderOptionsPlugin({options: {context: __dirname, postcss: [autoprefixer]}}),
 	new CommonsChunkPlugin('commons'),
 	new ProvidePlugin({
