@@ -165,7 +165,19 @@ describe('Hub', () => {
 		assert.equal(model.selectedConversation().id(), 1)
 	})
 
-	it('should reset messages to empty array if there is no conversations', () => {
-		// TODO: can not reproduce via code
+	it('should reset messages and conversationId if there is no conversations', () => {
+		// Arrange
+		let conversationId = 1
+		let conversation = new Conversation(dispatcher, generator.generateConversation(conversationId, []))
+		model.conversations.conversations([conversation])
+		model.messages.conversationId(conversationId)
+		model.messages.messages([conversation.lastMessage])
+
+		// Act
+		model.conversations.conversations([])
+
+		// Assert
+		assert.equal(model.messages.conversationId(), null)
+		assert.equal(model.messages.messages().length, 0)
 	})
 })

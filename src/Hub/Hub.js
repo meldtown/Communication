@@ -38,6 +38,13 @@ export default class Hub {
 			this.messages.conversationId(conversationId)
 			this.messages.fetch()
 		}, this, actions.CONVERSATION_SELECTED)
+
+		this.conversations.hasConversations.subscribe(hasConversations => {
+			if (!hasConversations) {
+				this.messages.conversationId(null)
+				this.messages.messages([])
+			}
+		})
 	}
 
 	fetch() {
