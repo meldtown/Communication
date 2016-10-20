@@ -3,7 +3,7 @@ import * as actions from '../constants'
 import * as ko from 'knockout'
 import $ from 'jquery'
 import assert from 'assert'
-import Hub from './Hub'
+import EmployerHub from './EmployerHub'
 import jQueryMockAjax from 'jquery-mockjax'
 import ConversationList from '../Conversation/ConversationList'
 import MessageList from '../Message/MessageList'
@@ -18,7 +18,7 @@ const mockjax = jQueryMockAjax($, window)
 $.mockjaxSettings.logging = 0
 
 
-describe('Hub', () => {
+describe('EmployerHub', () => {
 	let model
 	let dispatcher
 
@@ -28,18 +28,18 @@ describe('Hub', () => {
 
 	beforeEach(() => {
 		dispatcher = new ko.subscribable()
-		model = new Hub(dispatcher)
+		model = new EmployerHub(dispatcher)
 	})
 
 	afterEach(() => mockjax.clear())
 
 	it('should be instantiable', () => {
-		assert.equal(model instanceof Hub, true)
+		assert.equal(model instanceof EmployerHub, true)
 	})
 
 	it('should throw an error if dispatcher not given', () => {
 		// noinspection JSCheckFunctionSignatures
-		assert.throws(() => new Hub(), Error)
+		assert.throws(() => new EmployerHub(), Error)
 	})
 
 	it('should have dispatcher prop', () => {

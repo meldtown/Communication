@@ -1,6 +1,6 @@
 import * as actions from '../constants'
 import * as ko from 'knockout'
-import './Hub.scss'
+import './EmployerHub.scss'
 import '../bindingHandlers/hasFocus'
 import '../bindingHandlers/enterPress'
 import ConversationList from '../Conversation/ConversationList'
@@ -10,7 +10,7 @@ import InviteMessageForm from '../Message/Form/InviteMessageForm'
 import DeclineMessageForm from '../Message/Form/DeclineMessageForm'
 import OfferMessageForm from '../Message/Form/OfferMessageForm'
 
-export default class Hub {
+export default class EmployerHub {
 	constructor(dispatcher) {
 		if (!ko.isSubscribable(dispatcher)) {
 			throw new Error('ko.subscribable is required')
