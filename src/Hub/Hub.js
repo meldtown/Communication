@@ -42,6 +42,10 @@ export default class Hub {
 		this.conversations.hasConversations.subscribe(hasConversations => {
 			if (!hasConversations) {
 				this.messages.conversationId(null)
+				this.standardMessageForm.conversationId(null)
+				this.inviteMessageForm.conversationId(null)
+				this.declineMessageForm.conversationId(null)
+				this.offerMessageForm.conversationId(null)
 				this.messages.messages([])
 			}
 		})

@@ -171,6 +171,10 @@ describe('Hub', () => {
 		let conversation = new Conversation(dispatcher, generator.generateConversation(conversationId, []))
 		model.conversations.conversations([conversation])
 		model.messages.conversationId(conversationId)
+		model.standardMessageForm.conversationId(conversationId)
+		model.inviteMessageForm.conversationId(conversationId)
+		model.declineMessageForm.conversationId(conversationId)
+		model.offerMessageForm.conversationId(conversationId)
 		model.messages.messages([conversation.lastMessage])
 
 		// Act
@@ -178,6 +182,10 @@ describe('Hub', () => {
 
 		// Assert
 		assert.equal(model.messages.conversationId(), null)
+		assert.equal(model.standardMessageForm.conversationId(), null)
+		assert.equal(model.inviteMessageForm.conversationId(), null)
+		assert.equal(model.declineMessageForm.conversationId(), null)
+		assert.equal(model.offerMessageForm.conversationId(), null)
 		assert.equal(model.messages.messages().length, 0)
 	})
 })
