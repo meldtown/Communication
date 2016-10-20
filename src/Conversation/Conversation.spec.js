@@ -47,7 +47,7 @@ describe('Conversation', () => {
 	it('should take constructor params', () => {
 		let data = {id: 1, avatar: 'http:/placehold.it/50x50', lastMessage: generator.generateStandardMessage(1, 1)}
 		let model = new Conversation(dispatcher, data)
-		var actual = ko.toJS(model);
+		var actual = ko.toJS(model)
 		assert.equal(actual.id, data.id)
 		assert.equal(actual.avatar, data.avatar)
 		assert.deepEqual(actual.vacancy, data.vacancy)
@@ -67,7 +67,7 @@ describe('Conversation', () => {
 	})
 
 	it(`should react to ${constants.CONVERSATION_SELECTED} event`, () => {
-		var conversationId = 1;
+		var conversationId = 1
 
 		model.id(conversationId)
 
@@ -295,7 +295,7 @@ describe('Conversation', () => {
 	})
 
 	it('should set vacancies from constructor', () => {
-		var vacancies = [1, 2];
+		var vacancies = [1, 2]
 		model = new Conversation(dispatcher, {vacancies})
 		assert.equal(model.vacancies().length, 2)
 		assert.deepEqual(model.vacancies(), vacancies)

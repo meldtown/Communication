@@ -66,7 +66,7 @@ describe('ConversationList', () => {
 				let conversation = model.conversations()[i]
 				assert.equal(conversation.id(), responseText[i].id)
 				// noinspection JSUnusedLocalSymbols
-				var {ago, formattedDate, formattedTime, isJobsearcher, template, ...actual} = ko.toJS(conversation.lastMessage());
+				var {ago, formattedDate, formattedTime, isJobsearcher, template, ...actual} = ko.toJS(conversation.lastMessage()) // eslint-disable-line no-unused-vars
 				assert.deepEqual({...actual, type: responseText[i].lastMessage.type}, responseText[i].lastMessage)
 			}
 		})

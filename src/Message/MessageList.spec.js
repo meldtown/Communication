@@ -10,6 +10,7 @@ import OfferMessage from '../Message/OfferMessage'
 import StandardMessage from '../Message/StandardMessage'
 import InviteMessage from '../Message/InviteMessage'
 import ApplyMessage from './ApplyMessage'
+import Conversation from '../Conversation/Conversation'
 
 const api = 'http://sample.com'
 

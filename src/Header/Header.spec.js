@@ -2,20 +2,16 @@ import * as ko from 'knockout'
 import assert from 'assert'
 import Header from './Header'
 import ConversationList from '../Conversation/ConversationList'
-import axios from 'axios'
-import MockAdapter from 'axios-mock-adapter'
 
 const api = 'http://sample.com'
 
 describe('Header', () => {
-	let mock
 	let model
 	let dispatcher
 
 	before(() => global.api = api)
 
 	beforeEach(() => {
-		mock = new MockAdapter(axios)
 		dispatcher = new ko.subscribable()
 		model = new Header(dispatcher)
 	})

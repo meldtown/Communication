@@ -5,8 +5,7 @@ import assert from 'assert'
 import InviteMessageForm from './InviteMessageForm'
 import InviteMessage from '../InviteMessage'
 import AbstractMessageForm from './AbstractMessageForm'
-import * as types from '../../constants'
-import * as actions from '../../constants'
+import * as constants from '../../constants'
 
 const api = 'http://sample.com'
 
@@ -63,7 +62,7 @@ describe('InviteMessageForm', () => {
 			inviteDate,
 			addressId,
 			id: 1,
-			type: types.INVITE_MESSAGE,
+			type: constants.INVITE_MESSAGE,
 			date: (new Date()).toISOString()
 		})
 	}
@@ -91,12 +90,12 @@ describe('InviteMessageForm', () => {
 		})
 	})
 
-	it(`should fire ${actions.NEW_MESSAGE} on successful save`, () => {
+	it(`should fire ${constants.NEW_MESSAGE} on successful save`, () => {
 		let counter = 0
 
 		dispatcher.subscribe(() => {
 			counter = counter + 1
-		}, null, actions.NEW_MESSAGE)
+		}, null, constants.NEW_MESSAGE)
 
 		arrangeForSaveTest()
 

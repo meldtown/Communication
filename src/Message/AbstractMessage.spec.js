@@ -47,7 +47,7 @@ describe('AbstractMessage', () => {
 		let data = {id: 1, date: '2015-04-24T23:04:59', conversationId: 1, text: 'Hello World', isRead: true}
 		let model = new AbstractMessage(data)
 		// noinspection JSUnusedLocalSymbols
-		let {ago, formattedDate, formattedTime, template, ...actual} = ko.toJS(model)
+		let {ago, formattedDate, formattedTime, template, ...actual} = ko.toJS(model) // eslint-disable-line no-unused-vars
 		assert.deepEqual(actual, data)
 	})
 
