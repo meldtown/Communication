@@ -14,7 +14,6 @@ export default class AbstractTemplate {
 		this.dispatcher = dispatcher
 
 		dispatcher.subscribe(template => {
-			console.log(`sub this ${this.id()} === ${template.id()}`)
 			if (this.constructor === template.constructor) {
 				this.isSelected(this.id() === template.id())
 			}
