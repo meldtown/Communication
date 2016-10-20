@@ -1,6 +1,6 @@
 import * as actions from '../constants'
 import * as ko from 'knockout'
-import $ from 'jquery'
+import axios from 'axios'
 import MessageFactory from './MessageFactory'
 
 export default class MessageList {
@@ -14,6 +14,8 @@ export default class MessageList {
 		this.conversationId = ko.observable()
 		this.messages = ko.observableArray()
 
+		this.hasMessages = ko.computed(() => this.messages() && this.messages().length > 0)
+
 		dispatcher.subscribe(message => {
 			if (message.conversationId() === this.conversationId()) {
 				this.messages.push(message)
@@ -22,8 +24,8 @@ export default class MessageList {
 	}
 
 	fetch() {
-		return $.getJSON(`${api}/messages`, {conversationId: this.conversationId()})
-			.then(messages => this.messages(messages.map(MessageFactory.create)))
-			.fail(() => this.messages([]))
+		return axios.get(`${api}/messages`, {conversationId: this.conversationId()})
+			.then(response => this.messages(response.data.map(MessageFactory.create)))
+			.catch(() => this.messages([]))
 	}
 }

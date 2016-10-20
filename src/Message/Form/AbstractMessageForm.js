@@ -12,6 +12,8 @@ export default class AbstractMessageForm {
 		this.text = ko.observable()
 		this.template = ko.observable()
 
+		this.hasConversationId = ko.computed(() => this.conversationId() ? true : false)
+
 		dispatcher.subscribe(conversationId => {
 			this.conversationId(conversationId)
 			if (this.reset) {

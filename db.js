@@ -1,4 +1,5 @@
 import * as types from './src/constants'
+import * as helpers from './src/helpers'
 import faker from 'faker'
 import fs from 'fs'
 
@@ -58,7 +59,7 @@ export const generateDeclineMessage = (id, conversationId) => ({
 	isRead: faker.random.boolean()
 })
 
-const generateVacancy = () => {
+export const generateVacancy = () => {
 	let companyName = faker.company.companyName()
 	let color = faker.internet.color(255, 255, 255)
 	return {
@@ -124,6 +125,13 @@ export const generateConversation = (id, messages) => {
 	let conversationMessages = messages.filter(message => message.conversationId === id)
 	let lastMessage = conversationMessages.sort((left, right) => new Date(left.date) - new Date(right.date))[0]
 	let unreadMessagesCount = conversationMessages.filter(message => !message.isRead).length
+	let fromCvdb = faker.random.boolean()
+	let vacancies = conversationMessages
+		.filter(m => m.type === types.APPLY_MESSAGE)
+		.map(m => m.vacancyId)
+		.reduce(helpers.uniqueReducer, [])
+		.map(id => conversationMessages.filter(m => m.type === types.APPLY_MESSAGE && m.vacancyId === id)[0].vacancy)
+
 
 	return {
 		id,
@@ -131,7 +139,13 @@ export const generateConversation = (id, messages) => {
 		type: faker.random.arrayElement(CONVERSATION_TYPES),
 		fullName: faker.name.findName(),
 		avatar: faker.image.avatar(),
-		lastMessage: lastMessage
+		lastMessage: lastMessage,
+		hasInvites: conversationMessages.some(m => m.type === types.INVITE_MESSAGE),
+		hasDeclines: conversationMessages.some(m => m.type === types.DECLINE_MESSAGE),
+		hasOffers: conversationMessages.some(m => m.type === types.OFFER_MESSAGE),
+		fromCvdb: fromCvdb,
+		fromApply: !fromCvdb,
+		vacancies
 	}
 }
 

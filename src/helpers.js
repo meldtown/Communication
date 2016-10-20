@@ -5,3 +5,12 @@ export const injectTemplate = (name, template) => {
 	script.text = template
 	document.body.appendChild(script)
 }
+
+export const uniqueReducer = (result = [], item) => {
+	if (result.indexOf(item) === -1) {
+		result.push(item)
+	}
+	return result
+}
+
+

@@ -1,24 +1,20 @@
-import * as generator from '../../db'
 import * as actions from '../constants'
+import * as generator from '../../db'
 import * as ko from 'knockout'
-import $ from 'jquery'
 import assert from 'assert'
-import Hub from './Hub'
+import JobsearcherHub from './JobsearcherHub'
+import $ from 'jquery'
 import jQueryMockAjax from 'jquery-mockjax'
-import ConversationList from '../Conversation/ConversationList'
 import MessageList from '../Message/MessageList'
-import StandardMessageForm from '../Message/Form/StandardMessageForm'
-import InviteMessageForm from '../Message/Form/InviteMessageForm'
-import DeclineMessageForm from '../Message/Form/DeclineMessageForm'
-import OfferMessageForm from '../Message/Form/OfferMessageForm'
+import ConversationList from '../Conversation/ConversationList'
 import Conversation from '../Conversation/Conversation'
+import StandardMessageForm from '../Message/Form/StandardMessageForm'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
 $.mockjaxSettings.logging = 0
 
-
-describe('Hub', () => {
+describe('JobsearcherHub', () => {
 	let model
 	let dispatcher
 
@@ -28,18 +24,18 @@ describe('Hub', () => {
 
 	beforeEach(() => {
 		dispatcher = new ko.subscribable()
-		model = new Hub(dispatcher)
+		model = new JobsearcherHub(dispatcher)
 	})
 
 	afterEach(() => mockjax.clear())
 
 	it('should be instantiable', () => {
-		assert.equal(model instanceof Hub, true)
+		assert.equal(model instanceof JobsearcherHub, true)
 	})
 
 	it('should throw an error if dispatcher not given', () => {
 		// noinspection JSCheckFunctionSignatures
-		assert.throws(() => new Hub(), Error)
+		assert.throws(() => new JobsearcherHub(), Error)
 	})
 
 	it('should have dispatcher prop', () => {
@@ -99,62 +95,6 @@ describe('Hub', () => {
 		assert.equal(model.standardMessageForm instanceof StandardMessageForm, true)
 	})
 
-	it('should have invite message form', () => {
-		assert.equal(model.inviteMessageForm instanceof InviteMessageForm, true)
-	})
-
-	it('should have decline message form', () => {
-		assert.equal(model.declineMessageForm instanceof DeclineMessageForm, true)
-	})
-
-	it('should have offer message form', () => {
-		assert.equal(model.offerMessageForm instanceof OfferMessageForm, true)
-	})
-
-	it('should have isStandardFormSelected prop', () => {
-		assert.equal(ko.isObservable(model.isStandardFormSelected), true)
-	})
-
-	it('should have isInviteFormSelected prop', () => {
-		assert.equal(ko.isObservable(model.isInviteFormSelected), true)
-	})
-
-	it('should have isDeclineFormSelected prop', () => {
-		assert.equal(ko.isObservable(model.isDeclineFormSelected), true)
-	})
-
-	it('should have isOfferFormSelected prop', () => {
-		assert.equal(ko.isObservable(model.isOfferFormSelected), true)
-	})
-
-	it('should have selectStandardForm method', () => {
-		assert.equal(typeof model.selectStandardForm, 'function')
-		model.selectStandardForm()
-		assert.equal(model.isStandardFormSelected(), true)
-	})
-
-	it('should have selectInviteForm method', () => {
-		assert.equal(typeof model.selectInviteForm, 'function')
-		model.selectInviteForm()
-		assert.equal(model.isInviteFormSelected(), true)
-	})
-
-	it('should have selectDeclineForm method', () => {
-		assert.equal(typeof model.selectDeclineForm, 'function')
-		model.selectDeclineForm()
-		assert.equal(model.isDeclineFormSelected(), true)
-	})
-
-	it('should have selectOfferForm method', () => {
-		assert.equal(typeof model.selectOfferForm, 'function')
-		model.selectOfferForm()
-		assert.equal(model.isOfferFormSelected(), true)
-	})
-
-	it('should have standard form selected by default', () => {
-		assert.ok(model.isStandardFormSelected())
-	})
-
 	it('should have selectedConversation comp', () => {
 		assert.ok(ko.isComputed(model.selectedConversation))
 
@@ -163,5 +103,23 @@ describe('Hub', () => {
 		model.conversations.conversations([conversation])
 
 		assert.equal(model.selectedConversation().id(), 1)
+	})
+
+	it('should reset messages and conversationId if there is no conversations', () => {
+		// Arrange
+		let conversationId = 1
+		let conversation = new Conversation(dispatcher, generator.generateConversation(conversationId, []))
+		model.conversations.conversations([conversation])
+		model.messages.conversationId(conversationId)
+		model.standardMessageForm.conversationId(conversationId)
+		model.messages.messages([conversation.lastMessage])
+
+		// Act
+		model.conversations.conversations([])
+
+		// Assert
+		assert.equal(model.messages.conversationId(), null)
+		assert.equal(model.standardMessageForm.conversationId(), null)
+		assert.equal(model.messages.messages().length, 0)
 	})
 })

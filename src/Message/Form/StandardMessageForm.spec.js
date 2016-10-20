@@ -2,15 +2,13 @@ import * as ko from 'knockout'
 import assert from 'assert'
 import StandardMessageForm from './StandardMessageForm'
 import AbstractMessageForm from './AbstractMessageForm'
-import $ from 'jquery'
-import jQueryMockAjax from 'jquery-mockjax'
+import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
 import * as types from '../../constants'
 import * as actions from '../../constants'
 import StandardMessage from '../StandardMessage'
 
 const api = 'http://sample.com'
-const mockjax = jQueryMockAjax($, window)
-$.mockjaxSettings.logging = 0
 
 describe('StandardMessageForm', () => {
 	const conversationId = 1
@@ -18,17 +16,17 @@ describe('StandardMessageForm', () => {
 
 	let model
 	let dispatcher
+	let mock
 
 	before(() => {
 		global.api = api
 	})
 
 	beforeEach(() => {
+		mock = new MockAdapter(axios)
 		dispatcher = new ko.subscribable()
 		model = new StandardMessageForm(dispatcher)
 	})
-
-	afterEach(() => mockjax.clear())
 
 	it('should be instantiable', () => {
 		assert.equal(model instanceof StandardMessageForm, true)
@@ -47,10 +45,12 @@ describe('StandardMessageForm', () => {
 		model.conversationId(conversationId)
 		model.text(text)
 
-		mockjax({
-			type: 'post',
-			url: `${api}/messages`,
-			responseText: {conversationId, text, id: 1, type: types.STANDARD_MESSAGE, date: (new Date()).toISOString()}
+		mock.onPost(`${api}/messages`).reply(200, {
+			conversationId,
+			text,
+			id: 1,
+			type: types.STANDARD_MESSAGE,
+			date: (new Date()).toISOString()
 		})
 	}
 

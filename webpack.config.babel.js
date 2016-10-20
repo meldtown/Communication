@@ -1,15 +1,16 @@
 import path from 'path'
-import DefinePlugin from 'webpack/lib/DefinePlugin'
 import LoaderOptionsPlugin from 'webpack/lib/LoaderOptionsPlugin'
 import ProvidePlugin from 'webpack/lib/ProvidePlugin'
 import CommonsChunkPlugin from 'webpack/lib/optimize/CommonsChunkPlugin'
 import HotModuleReplacementPlugin from 'webpack/lib/HotModuleReplacementPlugin'
+import ContextReplacementPlugin from 'webpack/lib/ContextReplacementPlugin'
 import autoprefixer from 'autoprefixer'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 const isProduction = 'production' === (process.env.NODE_ENV = process.argv.indexOf('-p') === -1 ? 'development' : 'production')
 
 const plugins = [
+	new ContextReplacementPlugin(/moment[\\\/]locale/, /^\.\/(ru|uk)$/),
 	new LoaderOptionsPlugin({options: {context: __dirname, postcss: [autoprefixer]}}),
 	new CommonsChunkPlugin('commons'),
 	new ProvidePlugin({
@@ -21,7 +22,8 @@ const plugins = [
 export default (app) => ({
 	devtool: isProduction ? 'source-map' : 'inline-source-map',
 	entry: {
-		hub: './entry/hub.js',
+		employer_hub: './entry/employer_hub.js',
+		jobsearcher_hub: './entry/jobsearcher_hub.js',
 		templates: './entry/templates.js'
 	},
 	output: {
@@ -45,9 +47,10 @@ export default (app) => ({
 	},
 	plugins: isProduction
 		? plugins.concat([new ExtractTextPlugin('[name].css')])
-		: plugins.concat([new DefinePlugin({api: '"http://localhost:8181"'}), new HotModuleReplacementPlugin()]),
+		: plugins.concat([new HotModuleReplacementPlugin()]),
 	devServer: {
 		hot: true,
+		host: '0.0.0.0',
 		historyApiFallback: {
 			rewrites: [
 				{from: /.*/, to: `/entry/${app}.html`}

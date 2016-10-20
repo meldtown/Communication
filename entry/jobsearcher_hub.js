@@ -1,13 +1,13 @@
 import * as ko from 'knockout'
 import * as helpers from '../src/helpers'
-import Hub from '../src/Hub/Hub'
+import JobsearcherHub from '../src/Hub/JobsearcherHub'
 
 export const dispatcher = new ko.subscribable()
-export const model = new Hub(dispatcher)
+export const model = new JobsearcherHub(dispatcher)
 
 export const init = () => {
-	const root = document.getElementById('hub')
-	root.innerHTML = require('../src/Hub/Hub.html')
+	const root = document.getElementById('jobsearcher_hub')
+	root.innerHTML = require('../src/Hub/JobsearcherHub.html')
 	helpers.injectTemplate('Conversation', require('../src/Conversation/Conversation.html'))
 	helpers.injectTemplate('MessageList', require('../src/Message/MessageList.html'))
 

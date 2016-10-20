@@ -27,10 +27,52 @@
 				</div>
 
 				<div>
-					<input placeholder="filter..." type="text" data-bind="value: term, enterPress: fetch">
+					<label style="display: none" for="vacancyId">vacancy</label>
+					<select id="vacancyId" data-bind="options: vacancies, optionsText: 'vacancyName', optionsValue: 'id', value: vacancyId, optionsCaption: 'vacancy...', enable: hasVacancies"></select>
 				</div>
 
-				<div data-bind="template: {name: 'Conversation', foreach: conversations}"></div>
+				<div>
+					<label>
+						<input type="checkbox" data-bind="checked: hasInvitesSelected">
+						<span>invites</span>
+					</label>
+					<label>
+						<input type="checkbox" data-bind="checked: hasDeclinesSelected">
+						<span>declines</span>
+					</label>
+					<label>
+						<input type="checkbox" data-bind="checked: hasOffersSelected">
+						<span>offers</span>
+					</label>
+				</div>
+				<hr>
+				<div>
+					<div>
+						<input placeholder="from..." type="date" data-bind="value: periodFromInputFormatted">
+					</div>
+					<label>
+						<input name="period" type="radio" data-bind="value: weekAgo, checked: periodFrom">
+						<span>week</span>
+					</label>
+					<label>
+						<input name="period" type="radio" data-bind="value: monthAgo, checked: periodFrom">
+						<span>month</span>
+					</label>
+				</div>
+				<hr>
+				<div>
+					<input placeholder="filter..." type="text" data-bind="value: term, enterPress: fetch">
+					<span data-bind="if: hasTerm">
+						<a href="#" data-bind="click: clearTerm">clear</a>
+					</span>
+				</div>
+				<hr>
+				<div data-bind="if: hasConversations">
+					<div data-bind="template: {name: 'Conversation', foreach: filteredConversations}"></div>
+				</div>
+				<div data-bind="ifnot: hasConversations">
+					Nothing here
+				</div>
 			</div>
 		</td>
 		<td valign="top">
@@ -61,40 +103,9 @@
 
 			<hr/>
 
-			<div>
-				<span data-bind="if: isStandardFormSelected">
-					<span>Standard</span>
-				</span>
-				<span data-bind="ifnot: isStandardFormSelected">
-					<a href="#" data-bind="click: selectStandardForm">Standard</a>
-				</span>
-
-				<span data-bind="if: isInviteFormSelected">
-					<span>Invite</span>
-				</span>
-				<span data-bind="ifnot: isInviteFormSelected">
-					<a href="#" data-bind="click: selectInviteForm">Invite</a>
-				</span>
-
-				<span data-bind="if: isDeclineFormSelected">
-					<span>Decline</span>
-				</span>
-				<span data-bind="ifnot: isDeclineFormSelected">
-					<a href="#" data-bind="click: selectDeclineForm">Decline</a>
-				</span>
-
-				<span data-bind="if: isOfferFormSelected">
-					<span>Offer</span>
-				</span>
-				<span data-bind="ifnot: isOfferFormSelected">
-					<a href="#" data-bind="click: selectOfferForm">Offer</a>
-				</span>
-			</div>
-
-			<div data-bind="with: selectedForm">
+			<div data-bind="with: standardMessageForm">
 				<div data-bind="template: template"></div>
 			</div>
-
 		</td>
 	</tr>
 	</tbody>

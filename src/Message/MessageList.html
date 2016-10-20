@@ -1,3 +1,9 @@
-<div data-bind="foreach: messages">
-	<div data-bind="template: template"></div>
+<div data-bind="if: hasMessages">
+	<div data-bind="foreach: messages">
+		<div data-bind="template: template"></div>
+	</div>
 </div>
+<div data-bind="ifnot: hasMessages">
+	Nothing here
+</div>
+

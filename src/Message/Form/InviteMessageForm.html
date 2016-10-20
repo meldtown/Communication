@@ -1,6 +1,11 @@
-<input placeholder="inviteDate..." type="datetime" data-bind="value: inviteDate">
-<input placeholder="addressId..." type="number" data-bind="value: addressId">
+<input placeholder="inviteDate..." type="datetime" data-bind="value: inviteDate, enable: hasConversationId">
+<input placeholder="addressId..." type="number" data-bind="value: addressId, enable: hasConversationId">
 
-<textarea placeholder="invite..." data-bind="value: text"></textarea>
-<a href="#" data-bind="click: save">Send</a>
+<textarea placeholder="invite..." data-bind="value: text, enable: hasConversationId"></textarea>
+<div data-bind="if: hasConversationId">
+	<a href="#" data-bind="click: save">Send</a>
+</div>
+<div data-bind="ifnot: hasConversationId">
+	<span>Send</span>
+</div>
 

@@ -284,4 +284,50 @@ describe('Conversation', () => {
 		model = new Conversation(dispatcher, {lastMessage: generator.generateStandardMessage(1, 1)})
 		assert.equal(model.lastMessageTemplate(), 'StandardMessagePreview')
 	})
+
+	it('should have vacancies array for filtering', () => {
+		assert.ok(ko.isObservable(model.vacancies))
+		assert.equal(typeof model.vacancies.push, 'function')
+	})
+
+	it('should by default set vacancies to empty array', () => {
+		assert.equal(model.vacancies().length, 0)
+	})
+
+	it('should set vacancies from constructor', () => {
+		var vacancies = [1, 2];
+		model = new Conversation(dispatcher, {vacancies})
+		assert.equal(model.vacancies().length, 2)
+		assert.deepEqual(model.vacancies(), vacancies)
+	})
+
+	it('should have hasInvites prop', () => {
+		assert.ok(ko.isObservable(model.hasInvites))
+		model = new Conversation(dispatcher, {hasInvites: true})
+		assert.ok(model.hasInvites())
+	})
+
+	it('should have hasDeclines prop', () => {
+		assert.ok(ko.isObservable(model.hasDeclines))
+		model = new Conversation(dispatcher, {hasDeclines: true})
+		assert.ok(model.hasDeclines())
+	})
+
+	it('should have hasOffers prop', () => {
+		assert.ok(ko.isObservable(model.hasOffers))
+		model = new Conversation(dispatcher, {hasOffers: true})
+		assert.ok(model.hasOffers())
+	})
+
+	it('should have fromCvdb prop', () => {
+		assert.ok(ko.isObservable(model.fromCvdb))
+		model = new Conversation(dispatcher, {fromCvdb: true})
+		assert.ok(model.fromCvdb())
+	})
+
+	it('should have fromApply prop', () => {
+		assert.ok(ko.isObservable(model.fromApply))
+		model = new Conversation(dispatcher, {fromApply: true})
+		assert.ok(model.fromApply())
+	})
 })

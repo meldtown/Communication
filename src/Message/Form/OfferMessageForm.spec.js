@@ -4,12 +4,10 @@ import OfferMessageForm from './OfferMessageForm'
 import OfferMessage from '../OfferMessage'
 import * as types from '../../constants'
 import * as actions from '../../constants'
-import $ from 'jquery'
-import jQueryMockAjax from 'jquery-mockjax'
+import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
 
 const api = 'http://sample.com'
-const mockjax = jQueryMockAjax($, window)
-$.mockjaxSettings.logging = 0
 
 describe('OfferMessageForm', () => {
 	const conversationId = 1
@@ -18,17 +16,17 @@ describe('OfferMessageForm', () => {
 
 	let model
 	let dispatcher
+	let mock
 
 	before(() => {
 		global.api = api
 	})
 
 	beforeEach(() => {
+		mock = new MockAdapter(axios)
 		dispatcher = new ko.subscribable()
 		model = new OfferMessageForm(dispatcher)
 	})
-
-	afterEach(() => mockjax.clear())
 
 	it('should be instantiable', () => {
 		assert.equal(model instanceof OfferMessageForm, true)
@@ -51,17 +49,13 @@ describe('OfferMessageForm', () => {
 		model.text(text)
 		model.vacancyId(vacancyId)
 
-		mockjax({
-			type: 'post',
-			url: `${api}/messages`,
-			responseText: {
-				conversationId,
-				text,
-				vacancyId,
-				id: 1,
-				type: types.OFFER_MESSAGE,
-				date: (new Date()).toISOString()
-			}
+		mock.onPost(`${api}/messages`).reply(200, {
+			conversationId,
+			text,
+			vacancyId,
+			id: 1,
+			type: types.OFFER_MESSAGE,
+			date: (new Date()).toISOString()
 		})
 	}
 

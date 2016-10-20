@@ -1,10 +1,10 @@
 import * as actions from '../constants'
 import * as generator from '../../db'
 import * as ko from 'knockout'
-import $ from 'jquery'
+import axios from 'axios'
 import assert from 'assert'
 import MessageList from './MessageList'
-import jQueryMockAjax from 'jquery-mockjax'
+import MockAdapter from 'axios-mock-adapter'
 import DeclineMessage from '../Message/DeclineMessage'
 import OfferMessage from '../Message/OfferMessage'
 import StandardMessage from '../Message/StandardMessage'
@@ -12,10 +12,9 @@ import InviteMessage from '../Message/InviteMessage'
 import ApplyMessage from './ApplyMessage'
 
 const api = 'http://sample.com'
-const mockjax = jQueryMockAjax($, window)
-$.mockjaxSettings.logging = 0
 
 describe('MessageList', () => {
+	let mock
 	let model
 	let dispatcher
 
@@ -24,11 +23,11 @@ describe('MessageList', () => {
 	})
 
 	beforeEach(() => {
+		mock = new MockAdapter(axios)
 		dispatcher = new ko.subscribable()
 		model = new MessageList(dispatcher)
 	})
 
-	afterEach(() => mockjax.clear())
 
 	it('should be instantiable', () => {
 		assert.equal(model instanceof MessageList, true)
@@ -69,11 +68,7 @@ describe('MessageList', () => {
 			generator.generateApplyMessage(5, conversationId)
 		]
 
-		mockjax({
-			url: `${api}/messages`,
-			data: {conversationId},
-			responseText
-		})
+		mock.onGet(`${api}/messages`).reply(200, responseText)
 
 		return model.fetch().then(() => {
 			let messages = model.messages()
@@ -91,11 +86,7 @@ describe('MessageList', () => {
 
 		model.conversationId(conversationId)
 
-		mockjax({
-			url: `${api}/messages`,
-			data: {conversationId},
-			status: 500
-		})
+		mock.onGet(`${api}/messages`, {conversationId}).reply(500, 'error')
 
 		model.messages([
 			generator.generateStandardMessage(1, 1)
@@ -103,7 +94,7 @@ describe('MessageList', () => {
 
 		assert.equal(model.messages().length, 1)
 
-		model.fetch().always(() => {
+		model.fetch().then(() => {
 			assert.equal(model.messages().length, 0)
 			done()
 		})
@@ -124,5 +115,15 @@ describe('MessageList', () => {
 
 		assert.equal(model1.messages().length, 0)
 		assert.equal(model2.messages().length, 1)
+	})
+
+	it('should have hasMessages computed', () => {
+		assert.ok(ko.isComputed(model.hasMessages))
+
+		assert.equal(model.hasMessages(), false)
+
+		model.messages([new StandardMessage(generator.generateStandardMessage(1, 1))])
+
+		assert.equal(model.hasMessages(), true)
 	})
 })

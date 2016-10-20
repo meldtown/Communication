@@ -6,6 +6,7 @@ import assert from 'assert'
 import ConversationList from './ConversationList'
 import jQueryMockAjax from 'jquery-mockjax'
 import Conversation from './Conversation'
+import moment from 'moment'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
@@ -33,6 +34,10 @@ describe('ConversationList', () => {
 	it('should have conversations observable array', () => {
 		assert.equal(ko.isObservable(model.conversations), true)
 		assert.equal(typeof model.conversations.push, 'function')
+	})
+
+	it('should have hasConversations computed', () => {
+		assert.ok(ko.isComputed(model.hasConversations))
 	})
 
 	it('should throw an error if dispatcher not given', () => {
@@ -89,7 +94,7 @@ describe('ConversationList', () => {
 		})
 	})
 
-	it('should select first available conversation after fetch', () => {
+	it('should select first available conversation after filteredTemplates changed', () => {
 		let responseText = [
 			generator.generateConversation(1, [generator.generateStandardMessage(1, 1)]),
 			generator.generateConversation(2, [generator.generateDeclineMessage(1, 2)])
@@ -208,6 +213,26 @@ describe('ConversationList', () => {
 		assert.ok(ko.isObservable(model.term))
 	})
 
+	it('should have hasTerm comp', () => {
+		assert.ok(ko.isComputed(model.hasTerm))
+	})
+
+	it('should have clearTerm method', () => {
+		assert.equal(typeof model.clearTerm, 'function')
+		model.term('PHP')
+		model.clearTerm()
+		assert.equal(model.term(), '')
+	})
+
+	it('should call fetch on clearTerm call', () => {
+		let counter = 0
+		model.fetch = () => counter = counter + 1
+
+		model.clearTerm()
+
+		assert.equal(counter, 1)
+	})
+
 	it('should use term if not empty in fetch', () => {
 		let term = 'php'
 
@@ -230,5 +255,247 @@ describe('ConversationList', () => {
 
 	it('should have selectedConversation comp', () => {
 		assert.ok(ko.isComputed(model.selectedConversation))
+	})
+
+	it('should have hasInvitesSelected prop', () => {
+		assert.ok(ko.isObservable(model.hasInvitesSelected))
+	})
+
+	it('should have hasDeclinesSelected prop', () => {
+		assert.ok(ko.isObservable(model.hasDeclinesSelected))
+	})
+
+	it('should have hasOffersSelected prop', () => {
+		assert.ok(ko.isObservable(model.hasOffersSelected))
+	})
+
+	it('should have fromCvdbSelected prop', () => {
+		assert.ok(ko.isObservable(model.fromCvdbSelected))
+	})
+
+	it('should have fromApplySelected prop', () => {
+		assert.ok(ko.isObservable(model.fromApplySelected))
+	})
+
+	it('should have periodFrom prop', () => {
+		assert.ok(ko.isObservable(model.periodFrom))
+	})
+
+	it('should have periodFromInputFormatted writeable computed', () => {
+		assert.ok(ko.isComputed(model.periodFromInputFormatted))
+		assert.equal(model.periodFromInputFormatted(), '')
+
+		model.periodFrom(moment())
+		assert.equal(model.periodFromInputFormatted(), moment().format('YYYY-MM-DD'))
+
+		model.periodFromInputFormatted(moment().format('YYYY-MM-DD'))
+		assert.equal(model.periodFrom(), moment().format('YYYY-MM-DD'))
+	})
+
+	it('should have weekAgo prop', () => {
+		assert.ok(ko.isObservable(model.weekAgo))
+		assert.equal(model.weekAgo(), moment().subtract(1, 'week').format())
+	})
+
+	it('should have monthAgo prop', () => {
+		assert.ok(ko.isObservable(model.monthAgo))
+		assert.equal(model.monthAgo(), moment().subtract(1, 'month').format())
+	})
+
+	it('should have vacancyId prop', () => {
+		assert.ok(ko.isObservable(model.vacancyId))
+	})
+
+	describe('filteredConversations', () => {
+
+		it('should have filteredConversations computed', () => {
+			assert.ok(ko.isComputed(model.filteredConversations))
+		})
+
+		it('should respect hasInvitesSelected filter', () => {
+			model.conversations([
+				new Conversation(dispatcher, {hasInvites: false}),
+				new Conversation(dispatcher, {hasInvites: true})
+			])
+			model.hasInvitesSelected(true)
+			assert.equal(model.filteredConversations().length, 1)
+			assert.ok(model.filteredConversations()[0].hasInvites())
+		})
+
+		it('should respect hasDeclinesSelected filter', () => {
+			model.conversations([
+				new Conversation(dispatcher, {hasDeclines: false}),
+				new Conversation(dispatcher, {hasDeclines: true})
+			])
+			model.hasDeclinesSelected(true)
+			assert.equal(model.filteredConversations().length, 1)
+			assert.ok(model.filteredConversations()[0].hasDeclines())
+		})
+
+		it('should respect hasOffersSelected filter', () => {
+			model.conversations([
+				new Conversation(dispatcher, {hasOffers: false}),
+				new Conversation(dispatcher, {hasOffers: true})
+			])
+			model.hasOffersSelected(true)
+			assert.equal(model.filteredConversations().length, 1)
+			assert.ok(model.filteredConversations()[0].hasOffers())
+		})
+
+		it('should respect fromCvdbSelected filter', () => {
+			model.conversations([
+				new Conversation(dispatcher, {fromCvdb: false}),
+				new Conversation(dispatcher, {fromCvdb: true})
+			])
+			model.fromCvdbSelected(true)
+			assert.equal(model.filteredConversations().length, 1)
+			assert.ok(model.filteredConversations()[0].fromCvdb())
+		})
+
+		it('should respect fromApplySelected filter', () => {
+			model.conversations([
+				new Conversation(dispatcher, {fromApply: false}),
+				new Conversation(dispatcher, {fromApply: true})
+			])
+			model.fromApplySelected(true)
+			assert.equal(model.filteredConversations().length, 1)
+			assert.ok(model.filteredConversations()[0].fromApply())
+		})
+
+		it('should respect periodFrom filter', () => {
+			model.conversations([
+				new Conversation(dispatcher, {
+					lastMessage: {
+						type: types.STANDARD_MESSAGE,
+						date: moment().subtract(2, 'days').format()
+					}
+				}),
+				new Conversation(dispatcher, {
+					lastMessage: {
+						type: types.STANDARD_MESSAGE,
+						date: moment().subtract(10, 'days').format()
+					}
+				})
+			])
+			model.periodFrom(moment().subtract(5, 'days').format())
+			assert.equal(model.filteredConversations().length, 1)
+		})
+
+		it('should respect vacancyId filter', () => {
+			let vacancy1 = generator.generateVacancy()
+			vacancy1.id = 1
+
+			let vacancy2 = generator.generateVacancy()
+			vacancy2.id = 2
+
+			model.conversations([
+				new Conversation(dispatcher, {vacancies: [vacancy1]}),
+				new Conversation(dispatcher, {vacancies: [vacancy2]}),
+				new Conversation(dispatcher)
+			])
+			model.vacancyId(vacancy1.id)
+			assert.equal(model.filteredConversations().length, 1)
+			assert.ok(model.filteredConversations()[0].vacancies().some(v => v.id === vacancy1.id))
+		})
+
+		it('should chain filters', () => {
+			let vacancy = generator.generateVacancy()
+			vacancy.id = 1
+
+			model.conversations([
+				new Conversation(dispatcher, {
+					hasInvites: true,
+					hasDeclines: false,
+					fromApply: true,
+					vacancies: [vacancy]
+				}),
+				new Conversation(dispatcher, {
+					hasInvites: false,
+					hasDeclines: true,
+					fromApply: true,
+					vacancies: [vacancy]
+				}),
+				new Conversation(dispatcher, {hasInvites: true, hasDeclines: true, fromApply: false})
+			])
+
+			model.hasInvitesSelected(true)
+			model.hasDeclinesSelected(true)
+			model.fromApplySelected(true)
+			model.vacancyId(vacancy.id)
+
+			assert.equal(model.filteredConversations().length, 2)
+		})
+
+		it('should do nothing if non of filters checked', () => {
+			model.conversations([
+				new Conversation(dispatcher, {hasInvites: true, hasDeclines: false, fromCvdb: true}),
+				new Conversation(dispatcher, {hasInvites: false, hasDeclines: true, fromApply: true})
+			])
+
+			assert.equal(model.filteredConversations().length, 2)
+		})
+
+		it('should reset filters on fetch', () => {
+			model.hasInvitesSelected(true)
+			model.hasDeclinesSelected(true)
+			model.hasOffersSelected(true)
+
+			model.fromCvdbSelected(true)
+			model.fromApplySelected(true)
+
+			mockjax({
+				url: `${api}/conversations`,
+				responseText: []
+			})
+
+			return model.fetch().then(() => {
+				assert.equal(model.hasInvitesSelected(), false)
+				assert.equal(model.hasDeclinesSelected(), false)
+				assert.equal(model.hasOffersSelected(), false)
+
+				assert.equal(model.fromCvdbSelected(), false)
+				assert.equal(model.fromApplySelected(), false)
+			})
+		})
+	})
+
+	describe('vacancies', () => {
+		it('should have vacancies computed', () => {
+			assert.ok(ko.isComputed(model.vacancies))
+			assert.equal(model.vacancies().length, 0)
+			var vacancy = generator.generateVacancy()
+			model.conversations([new Conversation(dispatcher, {vacancies: [vacancy]})])
+			assert.equal(model.vacancies().length, 1)
+			assert.equal(model.vacancies()[0].id, vacancy.id)
+		})
+
+		it('should handle undefined conversations', () => {
+			model.conversations(undefined)
+			assert.equal(model.vacancies().length, 0)
+		})
+
+		it('should reduce unique vacancies', () => {
+			let vacancy1 = generator.generateVacancy()
+			vacancy1.id = 1
+
+			let vacancy2 = generator.generateVacancy()
+			vacancy2.id = 2
+
+			let conversation1 = new Conversation(dispatcher, {vacancies: [vacancy1, vacancy2]})
+			let conversation2 = new Conversation(dispatcher, {vacancies: [vacancy1]})
+
+			model.conversations([conversation1, conversation2])
+
+			assert.equal(model.vacancies().length, 2)
+		})
+
+		it('should have hasVacancies comp', () => {
+			assert.ok(ko.isComputed(model.hasVacancies))
+			assert.equal(model.hasVacancies(), false)
+
+			model.conversations([new Conversation(dispatcher, {vacancies: [generator.generateVacancy()]})])
+
+			assert.equal(model.hasVacancies(), true)
+		})
 	})
 })
