@@ -57,6 +57,8 @@ export default class ConversationList {
 				}, [])
 		})
 
+		this.hasVacancies = ko.computed(() => this.vacancies().length > 0)
+
 		this.vacancyId = ko.observable()
 
 		this.filteredConversations = ko.computed(() => {

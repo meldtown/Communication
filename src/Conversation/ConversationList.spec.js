@@ -463,7 +463,7 @@ describe('ConversationList', () => {
 		it('should have vacancies computed', () => {
 			assert.ok(ko.isComputed(model.vacancies))
 			assert.equal(model.vacancies().length, 0)
-			var vacancy = generator.generateVacancy();
+			var vacancy = generator.generateVacancy()
 			model.conversations([new Conversation(dispatcher, {vacancies: [vacancy]})])
 			assert.equal(model.vacancies().length, 1)
 			assert.equal(model.vacancies()[0].id, vacancy.id)
@@ -489,6 +489,13 @@ describe('ConversationList', () => {
 			assert.equal(model.vacancies().length, 2)
 		})
 
+		it('should have hasVacancies comp', () => {
+			assert.ok(ko.isComputed(model.hasVacancies))
+			assert.equal(model.hasVacancies(), false)
 
+			model.conversations([new Conversation(dispatcher, {vacancies: [generator.generateVacancy()]})])
+
+			assert.equal(model.hasVacancies(), true)
+		})
 	})
 })
