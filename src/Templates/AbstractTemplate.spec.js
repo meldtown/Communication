@@ -43,8 +43,7 @@ describe('AbstractTemplate', () => {
 	it('should accept data into constructor', () => {
 		let data = {id: 1, language: 'ru', text: 'Hello World', title: 'title'}
 		let model = new AbstractTemplate(dispatcher, data)
-		let {isSelected} = ko.toJS(model)
-		assert.deepEqual(ko.toJS(model), {dispatcher, isSelected, ...ko.toJS(model)})
+		assert.deepEqual(ko.toJS(model), {dispatcher, ...ko.toJS(model)})
 	})
 
 

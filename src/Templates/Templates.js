@@ -1,7 +1,7 @@
 import * as ko from 'knockout'
 import * as $ from 'jquery'
 import './Templates.scss'
-import * as types from '../constants'
+import * as constants from '../constants'
 import TemplateFactory from './TemplateFactory'
 import StandardTemplateView from '../Templates/View/StandardTemplateView'
 import InviteTemplateView from '../Templates/View/InviteTemplateView'
@@ -34,9 +34,9 @@ export default class Templates {
 			})
 				.filter(template => {
 					if (!this.isRussianLanguageSelected() && !this.isUkrainianLanguageSelected() && !this.isEnglishLanguageSelected()) return true
-					return ((template.language() === types.RU) && this.isRussianLanguageSelected()) ||
-						((template.language() === types.UA) && this.isUkrainianLanguageSelected()) ||
-						((template.language() === types.EN) && this.isEnglishLanguageSelected())
+					return ((template.language() === constants.RU) && this.isRussianLanguageSelected()) ||
+						((template.language() === constants.UA) && this.isUkrainianLanguageSelected()) ||
+						((template.language() === constants.EN) && this.isEnglishLanguageSelected())
 				})
 				.filter(template => {
 					if (!this.filter()) return true
@@ -45,7 +45,41 @@ export default class Templates {
 				})
 		})
 
+
 		this.selectedStandardTemplate = ko.observable()
+		this.selectedInviteTemplate = ko.observable()
+		this.selectedDeclineTemplate = ko.observable()
+		this.selectedOfferTemplate = ko.observable()
+
+		this.selectedTemplate = ko.computed(() => {
+			switch (this.selectedTab()) {
+				case StandardTemplateView:
+					return this.selectedStandardTemplate()
+				case InviteTemplateView:
+					return this.selectedInviteTemplate()
+				case DeclineTemplateView:
+					return this.selectedDeclineTemplate()
+				case OfferTemplateView:
+					return this.selectedOfferTemplate()
+				default:
+					return this.selectedStandardTemplate()
+			}
+		})
+
+		dispatcher.subscribe(template => {
+			switch (template.constructor) {
+				case StandardTemplateView:
+					this.selectedStandardTemplate(template)
+				case InviteTemplateView:
+					this.selectedInviteTemplate(template)
+				case DeclineTemplateView:
+					this.selectedDeclineTemplate(template)
+				case OfferTemplateView:
+					this.selectedOfferTemplate(template)
+				default:
+					this.selectedStandardTemplate(template)
+			}
+		}, this, constants.TEMPLATE_SELECTED)
 	}
 
 	fetch() {

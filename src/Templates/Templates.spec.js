@@ -11,6 +11,7 @@ import DeclineTemplateView from './View/DeclineTemplateView'
 import OfferTemplateView from './View/OfferTemplateView'
 import TemplateFactory from './TemplateFactory'
 import AbstractTemplate from './AbstractTemplate'
+import AbstractTemplateView from './View/AbstractTemplateView'
 
 const api = 'http://sample.com'
 const mockjax = jQueryMockAjax($, window)
@@ -226,28 +227,25 @@ describe('Templates', () => {
 
 	describe('filteredTemplates', () => {
 
-		let templates = [
-			generator.generateInviteTemplate(4),
-			generator.generateOfferTemplate(12),
-			generator.generateOfferTemplate(33),
-			generator.generateDeclineTemplate(666),
-			generator.generateStandardTemplate(1),
-			generator.generateDeclineTemplate(5),
-			generator.generateDeclineTemplate(555),
-			generator.generateStandardTemplate(9),
-			generator.generateDeclineTemplate(17),
-			generator.generateDeclineTemplate(444),
-			generator.generateOfferTemplate(6),
-			generator.generateOfferTemplate(56),
-			generator.generateOfferTemplate(57),
-			generator.generateOfferTemplate(78),
-			generator.generateStandardTemplate(123)
-		]
-
-		let dispatcher = new ko.subscribable()
-		templates = templates.map(template => TemplateFactory.create(dispatcher, template))
-
 		beforeEach(() => {
+			let templates = [
+				generator.generateInviteTemplate(4),
+				generator.generateOfferTemplate(12),
+				generator.generateOfferTemplate(33),
+				generator.generateDeclineTemplate(666),
+				generator.generateStandardTemplate(1),
+				generator.generateDeclineTemplate(5),
+				generator.generateDeclineTemplate(555),
+				generator.generateStandardTemplate(9),
+				generator.generateDeclineTemplate(17),
+				generator.generateDeclineTemplate(444),
+				generator.generateOfferTemplate(6),
+				generator.generateOfferTemplate(56),
+				generator.generateOfferTemplate(57),
+				generator.generateOfferTemplate(78),
+				generator.generateStandardTemplate(123)
+			]
+			templates = templates.map(template => TemplateFactory.create(dispatcher, template))
 			model.templates(templates)
 		})
 		it('should have filteredTemplates com', () => {
@@ -276,7 +274,7 @@ describe('Templates', () => {
 
 
 		it('should respect selected language', () => {
-			templates = [,
+			let templates = [,
 				TemplateFactory.create(dispatcher, {
 					id: 1,
 					type: "standard",
@@ -380,49 +378,79 @@ describe('Templates', () => {
 	})
 
 
-
 	describe('selectedTemplate', () => {
 
-		let dispatcher
-
-		let templates = [
-			generator.generateInviteTemplate(4),
-			generator.generateOfferTemplate(12),
-			generator.generateOfferTemplate(33),
-			generator.generateDeclineTemplate(666),
-			generator.generateStandardTemplate(1),
-			generator.generateDeclineTemplate(5),
-			generator.generateDeclineTemplate(555),
-			generator.generateStandardTemplate(9),
-			generator.generateDeclineTemplate(17),
-			generator.generateDeclineTemplate(444),
-			generator.generateOfferTemplate(6),
-			generator.generateOfferTemplate(56),
-			generator.generateOfferTemplate(57),
-			generator.generateOfferTemplate(78),
-			generator.generateStandardTemplate(123)
-		]
+		let templates
 
 		beforeEach(() => {
-			dispatcher = new ko.subscribable()
-		})
-
-		it('should change when some template fires select event', () => {
-
+			templates = [
+				generator.generateInviteTemplate(4),
+				generator.generateOfferTemplate(12),
+				generator.generateOfferTemplate(33),
+				generator.generateDeclineTemplate(666),
+				generator.generateStandardTemplate(1),
+				generator.generateDeclineTemplate(5),
+				generator.generateDeclineTemplate(555),
+				generator.generateStandardTemplate(9),
+				generator.generateDeclineTemplate(17),
+				generator.generateDeclineTemplate(444),
+				generator.generateOfferTemplate(6),
+				generator.generateOfferTemplate(56),
+				generator.generateOfferTemplate(57),
+				generator.generateOfferTemplate(78),
+				generator.generateStandardTemplate(123)
+			]
+			templates = templates.map(template => TemplateFactory.create(dispatcher, template))
+			model.templates(templates)
 		})
 
 		it('should have selectedStandardTemplate', () => {
-			model.templates(templates)
 			assert.equal(ko.isObservable(model.selectedStandardTemplate), true)
+
+			let stdTpl1 = model.templates()[4]
+			let stdTpl2 = model.templates()[7]
+			stdTpl1.select()
+			assert.equal(model.selectedStandardTemplate(), stdTpl1)
+			stdTpl2.select()
+			assert.equal(model.selectedStandardTemplate(), stdTpl2)
 		})
 
-		it('should have standard form prop', () => {
-			// TODO: x4 for each type
-			// model.standardForm = new StandardForm()
+		it('should have selectedInviteTemplate', () => {
+			assert.equal(ko.isObservable(model.selectedInviteTemplate), true)
+
+			let invTpl1 = model.templates()[0]
+			let stdTpl1 = model.templates()[4]
+			stdTpl1.select()
+			invTpl1.select()
+			assert.equal(model.selectedInviteTemplate(), invTpl1)
+			assert.equal(model.selectedStandardTemplate(), stdTpl1)
+		})
+
+
+		it('should have selectedDeclineTemplate', () => {
+			assert.equal(ko.isObservable(model.selectedDeclineTemplate), true)
+
+			let dclTpl = model.templates()[3]
+
+			dclTpl.select()
+			assert.equal(model.selectedDeclineTemplate(), dclTpl)
+		})
+
+		it('should have selectedOfferTemplate', () => {
+			assert.equal(ko.isObservable(model.selectedOfferTemplate), true)
+
+			let offTpl = model.templates()[11]
+			offTpl.select()
+			assert.equal(model.selectedOfferTemplate(), offTpl)
 		})
 
 		it('should have isSelected prop', () => {
-			let model = new AbstractTemplate(dispatcher, {id: 2, title: 'title', text: 'text', language: 'language'})
+			let model = new AbstractTemplateView(dispatcher, {
+				id: 2,
+				title: 'title',
+				text: 'text',
+				language: 'language'
+			})
 			model.isSelected(true)
 			assert.equal(ko.isObservable(model.isSelected), true)
 			assert.equal(model.isSelected(), true)
@@ -432,68 +460,36 @@ describe('Templates', () => {
 			let model = new AbstractTemplate(dispatcher, {id: 2, title: 'title', text: 'text', language: 'language'})
 			assert.equal(ko.isSubscribable(model.dispatcher), true)
 		})
-		//
-		// it(`should react to ${actions.TEMPLATE_SELECTED} event`, () => {
-		// 	model.id = 1
-		// 	assert.equal(model.isSelected(), false)
-		//
-		// 	dispatcher.notifySubscribers(1, actions.TEMPLATE_SELECTED)
-		//
-		// 	assert.equal(model.isSelected(), true)
-		// })
-		//
-		// it(`should react to ${actions.TEMPLATE_SELECTED} event only if has same id`, () => {
-		// 	model.id = 2
-		// 	model.isSelected(true)
-		//
-		// 	dispatcher.notifySubscribers(1, actions.TEMPLATE_SELECTED)
-		//
-		// 	assert.equal(model.isSelected(), false)
-		// })
-		//
 
-		//
 		it('should throw an error if dispatcher not given', () => {
 			assert.throws(() => new AbstractTemplate(), Error)
 		})
 
-		//
-		it('should have select method', () => {
-			let model = new AbstractTemplate(dispatcher, {id: 2, title: 'title', text: 'text', language: 'language'})
-			assert.equal(typeof model.select === 'function', true)
+		it('should have selectedTemplate com', () => {
+			assert.equal(ko.isComputed(model.selectedTemplate), true)
 
-			let stdTpl1 = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
-			let stdTpl2 = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(2))
-			let invTpl1 = TemplateFactory.create(dispatcher, generator.generateInviteTemplate(3))
-			let invTpl2 = TemplateFactory.create(dispatcher, generator.generateInviteTemplate(4))
-
-
-			assert.equal(stdTpl1.isSelected(), false)
-			assert.equal(stdTpl2.isSelected(), false)
-			assert.equal(invTpl1.isSelected(), false)
-			assert.equal(invTpl2.isSelected(), false)
-
+			let stdTpl1 = model.templates()[4]
+			let stdTpl2 = model.templates()[7]
+			let invTpl = model.templates()[0]
+			let dclTpl = model.templates()[3]
 			stdTpl1.select()
-
-			assert.equal(stdTpl1.isSelected(), true)
-			assert.equal(stdTpl2.isSelected(), false)
-			assert.equal(invTpl1.isSelected(), false)
-			assert.equal(invTpl2.isSelected(), false)
-
+			assert.equal(model.selectedTemplate(), stdTpl1)
 			stdTpl2.select()
-
-			assert.equal(stdTpl1.isSelected(), false)
-			assert.equal(stdTpl2.isSelected(), true)
-			assert.equal(invTpl1.isSelected(), false)
-			assert.equal(invTpl2.isSelected(), false)
-
-			invTpl1.select()
-			assert.equal(stdTpl1.isSelected(), false)
-			assert.equal(stdTpl2.isSelected(), true)
-			assert.equal(invTpl1.isSelected(), true)
-			assert.equal(invTpl2.isSelected(), false)
-
+			assert.equal(model.selectedTemplate(), stdTpl2)
+			invTpl.select()
+			assert.equal(model.selectedTemplate(), stdTpl2)
+			model.selectInviteTab()
+			assert.equal(model.selectedTemplate(), invTpl)
+			dclTpl.select()
+			model.selectDeclineTab()
+			assert.equal(model.selectedTemplate(), dclTpl)
 		})
+
+		it('should have standard form prop', () => {
+			// TODO: x4 for each type
+			// model.standardForm = new StandardForm()
+		})
+
 	})
 
 

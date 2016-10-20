@@ -1,5 +1,4 @@
 import * as ko from 'knockout'
-import * as actions from '../constants'
 
 export default class AbstractTemplate {
 	constructor(dispatcher, {id, title, text, language} = {}) {
@@ -10,18 +9,8 @@ export default class AbstractTemplate {
 		this.language = ko.observable(language)
 		this.text = ko.observable(text)
 		this.title = ko.observable(title)
-		this.isSelected = ko.observable(false)
 		this.dispatcher = dispatcher
 
-		dispatcher.subscribe(template => {
-			if (this.constructor === template.constructor) {
-				this.isSelected(this.id() === template.id())
-			}
-		}, this, actions.TEMPLATE_SELECTED)
-	}
-
-	select() {
-		this.dispatcher.notifySubscribers(this, actions.TEMPLATE_SELECTED)
 	}
 
 }
