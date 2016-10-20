@@ -209,6 +209,26 @@ describe('ConversationList', () => {
 		assert.ok(ko.isObservable(model.term))
 	})
 
+	it('should have hasTerm comp', () => {
+		assert.ok(ko.isComputed(model.hasTerm))
+	})
+
+	it('should have clearTerm method', () => {
+		assert.equal(typeof model.clearTerm, 'function')
+		model.term('PHP')
+		model.clearTerm()
+		assert.equal(model.term(), '')
+	})
+
+	it('should call fetch on clearTerm call', () => {
+		let counter = 0
+		model.fetch = () => counter = counter + 1
+
+		model.clearTerm()
+
+		assert.equal(counter, 1)
+	})
+
 	it('should use term if not empty in fetch', () => {
 		let term = 'php'
 

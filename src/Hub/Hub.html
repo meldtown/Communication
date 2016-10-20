@@ -68,6 +68,9 @@
 				<hr>
 				<div>
 					<input placeholder="filter..." type="text" data-bind="value: term, enterPress: fetch">
+					<span data-bind="if: hasTerm">
+						<a href="#" data-bind="click: clearTerm">clear</a>
+					</span>
 				</div>
 				<hr>
 				<div data-bind="template: {name: 'Conversation', foreach: filteredConversations}"></div>

@@ -25,6 +25,7 @@ export default class ConversationList {
 		this.fromApplySelected = ko.observable()
 
 		this.periodFrom = ko.observable()
+
 		this.weekAgo = ko.computed(() => moment().subtract(1, 'week').format())
 		this.monthAgo = ko.computed(() => moment().subtract(1, 'month').format())
 		this.periodFromInputFormatted = ko.computed({
@@ -37,6 +38,8 @@ export default class ConversationList {
 		this.isBlockedSelected = ko.computed(() => this.selectedType() === types.BLOCKED_CONVERSATION)
 
 		this.selectedConversation = ko.computed(() => this.conversations().filter(conversation => conversation.isSelected())[0])
+
+		this.hasTerm = ko.computed(() => this.term() && this.term().length > 0)
 
 		this.filteredConversations = ko.computed(() => {
 			return this.conversations()
@@ -101,5 +104,10 @@ export default class ConversationList {
 	selectBlocked() {
 		this.selectedType(types.BLOCKED_CONVERSATION)
 		return this.fetch()
+	}
+
+	clearTerm() {
+		this.term('')
+		this.fetch()
 	}
 }
