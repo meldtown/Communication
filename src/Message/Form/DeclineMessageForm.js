@@ -1,6 +1,6 @@
 import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'
-import $ from 'jquery'
+import axios from 'axios'
 import * as types from '../../constants'
 import * as actions from '../../constants'
 
@@ -15,16 +15,16 @@ export default class DeclineMessageForm extends AbstractMessageForm {
 			throw new Error('conversationId is required')
 		}
 
-		return $.post(`${api}/messages`, {
+		return axios.post(`${api}/messages`, {
 			type: types.DECLINE_MESSAGE,
 			conversationId: this.conversationId(),
 			text: this.text()
-		}).then(data => {
+		}).then(response => {
 			if (this.reset) {
 				this.reset()
 			}
 
-			let message = MessageFactory.create(data)
+			let message = MessageFactory.create(response.data)
 
 			this.dispatcher.notifySubscribers(message, actions.NEW_MESSAGE)
 

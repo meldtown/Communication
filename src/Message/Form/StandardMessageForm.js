@@ -1,6 +1,6 @@
 import * as actions from '../../constants'
 import * as types from '../../constants'
-import $ from 'jquery'
+import axios from 'axios'
 import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'
 
@@ -15,17 +15,17 @@ export default class StandardMessageForm extends AbstractMessageForm {
 			throw new Error('conversationId is required')
 		}
 
-		return $.post(`${api}/messages`, {
+		return axios.post(`${api}/messages`, {
 			type: types.STANDARD_MESSAGE,
 			conversationId: this.conversationId(),
 			text: this.text(),
 			avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/digitalmaverick/128.jpg'
-		}).then(data => {
+		}).then(response => {
 			if (this.reset) {
 				this.reset()
 			}
 
-			let message = MessageFactory.create(data)
+			let message = MessageFactory.create(response.data)
 
 			this.dispatcher.notifySubscribers(message, actions.NEW_MESSAGE)
 

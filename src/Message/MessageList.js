@@ -1,6 +1,6 @@
 import * as actions from '../constants'
 import * as ko from 'knockout'
-import $ from 'jquery'
+import axios from 'axios'
 import MessageFactory from './MessageFactory'
 
 export default class MessageList {
@@ -24,8 +24,8 @@ export default class MessageList {
 	}
 
 	fetch() {
-		return $.getJSON(`${api}/messages`, {conversationId: this.conversationId()})
-			.then(messages => this.messages(messages.map(MessageFactory.create)))
-			.fail(() => this.messages([]))
+		return axios.get(`${api}/messages`, {conversationId: this.conversationId()})
+			.then(response => this.messages(response.data.map(MessageFactory.create)))
+			.catch(() => this.messages([]))
 	}
 }

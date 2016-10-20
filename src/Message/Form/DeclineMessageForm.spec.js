@@ -4,12 +4,10 @@ import DeclineMessageForm from './DeclineMessageForm'
 import DeclineMessage from '../DeclineMessage'
 import * as types from '../../constants'
 import * as actions from '../../constants'
-import $ from 'jquery'
-import jQueryMockAjax from 'jquery-mockjax'
+import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
 
 const api = 'http://sample.com'
-const mockjax = jQueryMockAjax($, window)
-$.mockjaxSettings.logging = 0
 
 describe('DeclineMessageForm', () => {
 	const conversationId = 1
@@ -17,17 +15,19 @@ describe('DeclineMessageForm', () => {
 
 	let model
 	let dispatcher
+	let mock
 
 	before(() => {
 		global.api = api
 	})
 
 	beforeEach(() => {
+		mock = new MockAdapter(axios)
 		dispatcher = new ko.subscribable()
 		model = new DeclineMessageForm(dispatcher)
 	})
 
-	afterEach(() => mockjax.clear())
+	//afterEach(() => mockjax.clear())
 
 	it('should be instantiable', () => {
 		assert.equal(model instanceof DeclineMessageForm, true)
@@ -45,10 +45,12 @@ describe('DeclineMessageForm', () => {
 		model.conversationId(conversationId)
 		model.text(text)
 
-		mockjax({
-			type: 'post',
-			url: `${api}/messages`,
-			responseText: {conversationId, text, id: 1, type: types.DECLINE_MESSAGE, date: (new Date()).toISOString()}
+		mock.onPost(`${api}/messages`).reply(200, {
+			conversationId,
+			text,
+			id: 1,
+			type: types.DECLINE_MESSAGE,
+			date: (new Date()).toISOString()
 		})
 	}
 

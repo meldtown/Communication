@@ -1,5 +1,5 @@
-import $ from 'jquery'
-import jQueryMockAjax from 'jquery-mockjax'
+import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
 import * as ko from 'knockout'
 import assert from 'assert'
 import InviteMessageForm from './InviteMessageForm'
@@ -9,8 +9,6 @@ import * as types from '../../constants'
 import * as actions from '../../constants'
 
 const api = 'http://sample.com'
-const mockjax = jQueryMockAjax($, window)
-$.mockjaxSettings.logging = 0
 
 describe('InviteMessageForm', () => {
 	const conversationId = 1
@@ -20,17 +18,17 @@ describe('InviteMessageForm', () => {
 
 	let model
 	let dispatcher
+	let mock
 
 	before(() => {
 		global.api = api
 	})
 
 	beforeEach(() => {
+		mock = new MockAdapter(axios)
 		dispatcher = new ko.subscribable()
 		model = new InviteMessageForm(dispatcher)
 	})
-
-	afterEach(() => mockjax.clear())
 
 	it('should be instantiable', () => {
 		assert.equal(model instanceof InviteMessageForm, true)
@@ -59,18 +57,14 @@ describe('InviteMessageForm', () => {
 		model.inviteDate(inviteDate)
 		model.addressId(addressId)
 
-		mockjax({
-			type: 'post',
-			url: `${api}/messages`,
-			responseText: {
-				conversationId,
-				text,
-				inviteDate,
-				addressId,
-				id: 1,
-				type: types.INVITE_MESSAGE,
-				date: (new Date()).toISOString()
-			}
+		mock.onPost(`${api}/messages`).reply(200, {
+			conversationId,
+			text,
+			inviteDate,
+			addressId,
+			id: 1,
+			type: types.INVITE_MESSAGE,
+			date: (new Date()).toISOString()
 		})
 	}
 

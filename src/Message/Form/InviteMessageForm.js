@@ -1,4 +1,4 @@
-import $ from 'jquery'
+import axios from 'axios'
 import * as ko from 'knockout'
 import * as actions from '../../constants'
 import * as types from '../../constants'
@@ -18,18 +18,18 @@ export default class InviteMessageForm extends AbstractMessageForm {
 			throw new Error('conversationId is required')
 		}
 
-		return $.post(`${api}/messages`, {
+		return axios.post(`${api}/messages`, {
 			type: types.INVITE_MESSAGE,
 			conversationId: this.conversationId(),
 			text: this.text(),
 			inviteDate: this.inviteDate(),
 			addressId: this.addressId()
-		}).then(data => {
+		}).then(response => {
 			if (this.reset) {
 				this.reset()
 			}
 
-			let message = MessageFactory.create(data)
+			let message = MessageFactory.create(response.data)
 
 			this.dispatcher.notifySubscribers(message, actions.NEW_MESSAGE)
 

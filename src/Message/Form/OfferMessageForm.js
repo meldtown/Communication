@@ -1,5 +1,5 @@
 import * as ko from 'knockout'
-import $ from 'jquery'
+import axios from 'axios'
 import * as types from '../../constants'
 import * as actions from '../../constants'
 import AbstractMessageForm from './AbstractMessageForm'
@@ -17,17 +17,17 @@ export default class OfferMessageForm extends AbstractMessageForm {
 			throw new Error('conversationId is required')
 		}
 
-		return $.post(`${api}/messages`, {
+		return axios.post(`${api}/messages`, {
 			type: types.OFFER_MESSAGE,
 			conversationId: this.conversationId(),
 			text: this.text(),
 			vacancyId: this.vacancyId()
-		}).then(data => {
+		}).then(response => {
 			if (this.reset) {
 				this.reset()
 			}
 
-			let message = MessageFactory.create(data)
+			let message = MessageFactory.create(response.data)
 
 			this.dispatcher.notifySubscribers(message, actions.NEW_MESSAGE)
 
