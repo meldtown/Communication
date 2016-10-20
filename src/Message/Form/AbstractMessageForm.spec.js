@@ -52,4 +52,12 @@ describe('AbstractMessageForm', () => {
 	it('should have template prop', () => {
 		assert.ok(ko.isObservable(model.template))
 	})
+
+	it('should have hasConversationId comp', () => {
+		assert.ok(ko.isComputed(model.hasConversationId))
+
+		assert.equal(model.hasConversationId(), false)
+		model.conversationId(1)
+		assert.equal(model.hasConversationId(), true)
+	})
 })

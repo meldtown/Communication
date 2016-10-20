@@ -1,2 +1,7 @@
-<textarea placeholder="decline..." data-bind="value: text"></textarea>
-<a href="#" data-bind="click: save">Send</a>
+<textarea placeholder="decline..." data-bind="value: text, enable: hasConversationId"></textarea>
+<div data-bind="if: hasConversationId">
+	<a href="#" data-bind="click: save">Send</a>
+</div>
+<div data-bind="ifnot: hasConversationId">
+	<span>Send</span>
+</div>
