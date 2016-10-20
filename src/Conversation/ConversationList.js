@@ -57,6 +57,8 @@ export default class ConversationList {
 				}, [])
 		})
 
+		this.vacancyId = ko.observable()
+
 		this.filteredConversations = ko.computed(() => {
 			return (this.conversations() || [])
 				.filter(conversation => {
@@ -74,6 +76,10 @@ export default class ConversationList {
 				.filter(conversation => {
 					if (!this.periodFrom()) return true
 					return moment(conversation.lastMessage().date()).isAfter(this.periodFrom())
+				})
+				.filter(conversation => {
+					if (!this.vacancyId()) return true
+					return (conversation.vacancies() || []).some(v => v.id === this.vacancyId())
 				})
 		})
 

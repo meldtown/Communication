@@ -302,6 +302,10 @@ describe('ConversationList', () => {
 		assert.equal(model.monthAgo(), moment().subtract(1, 'month').format())
 	})
 
+	it('should have vacancyId prop', () => {
+		assert.ok(ko.isObservable(model.vacancyId))
+	})
+
 	describe('filteredConversations', () => {
 
 		it('should have filteredConversations computed', () => {
@@ -377,16 +381,47 @@ describe('ConversationList', () => {
 			assert.equal(model.filteredConversations().length, 1)
 		})
 
-		it('should chain filters', () => {
+		it('should respect vacancyId filter', () => {
+			let vacancy1 = generator.generateVacancy()
+			vacancy1.id = 1
+
+			let vacancy2 = generator.generateVacancy()
+			vacancy2.id = 2
+
 			model.conversations([
-				new Conversation(dispatcher, {hasInvites: true, hasDeclines: false, fromApply: true}),
-				new Conversation(dispatcher, {hasInvites: false, hasDeclines: true, fromApply: true}),
+				new Conversation(dispatcher, {vacancies: [vacancy1]}),
+				new Conversation(dispatcher, {vacancies: [vacancy2]}),
+				new Conversation(dispatcher)
+			])
+			model.vacancyId(vacancy1.id)
+			assert.equal(model.filteredConversations().length, 1)
+			assert.ok(model.filteredConversations()[0].vacancies().some(v => v.id === vacancy1.id))
+		})
+
+		it('should chain filters', () => {
+			let vacancy = generator.generateVacancy()
+			vacancy.id = 1
+
+			model.conversations([
+				new Conversation(dispatcher, {
+					hasInvites: true,
+					hasDeclines: false,
+					fromApply: true,
+					vacancies: [vacancy]
+				}),
+				new Conversation(dispatcher, {
+					hasInvites: false,
+					hasDeclines: true,
+					fromApply: true,
+					vacancies: [vacancy]
+				}),
 				new Conversation(dispatcher, {hasInvites: true, hasDeclines: true, fromApply: false})
 			])
 
 			model.hasInvitesSelected(true)
 			model.hasDeclinesSelected(true)
 			model.fromApplySelected(true)
+			model.vacancyId(vacancy.id)
 
 			assert.equal(model.filteredConversations().length, 2)
 		})
