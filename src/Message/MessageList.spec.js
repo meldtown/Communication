@@ -10,7 +10,6 @@ import OfferMessage from '../Message/OfferMessage'
 import StandardMessage from '../Message/StandardMessage'
 import InviteMessage from '../Message/InviteMessage'
 import ApplyMessage from './ApplyMessage'
-import Conversation from '../Conversation/Conversation'
 
 const api = 'http://sample.com'
 
@@ -36,7 +35,7 @@ describe('MessageList', () => {
 
 	it('should throw an error if dispatcher not given', () => {
 		// noinspection JSCheckFunctionSignatures
-		assert.throws(() => new Conversation(), Error)
+		assert.throws(() => new MessageList(), Error)
 	})
 
 	it('should have dispatcher prop', () => {
