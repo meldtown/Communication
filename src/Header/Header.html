@@ -1,0 +1,15 @@
+<h3>
+	Header
+	<span data-bind="with: conversations">
+		<span class="header new" data-bind="text: unreadMessagesCount"></span>
+	</span>
+</h3>
+
+<div data-bind="with: conversations">
+	<div data-bind="if: hasConversations">
+		<div data-bind="template: {name: 'Conversation', foreach: conversations}"></div>
+	</div>
+	<div data-bind="ifnot: hasConversations">
+		Nothing here
+	</div>
+</div>

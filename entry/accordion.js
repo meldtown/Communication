@@ -1,13 +1,19 @@
 import * as ko from 'knockout'
 import * as helpers from '../src/helpers'
 import Accordion from '../src/Accordion/Accordion'
+import Header from '../src/Header/Header'
 
 export const dispatcher = new ko.subscribable()
+export const header = new Header(dispatcher)
 
 export const init = conversationId => {
 	const model = new Accordion(dispatcher, conversationId)
 	const root = document.getElementById('accordion')
 	root.innerHTML = require('../src/Accordion/Accordion.html')
+
+	const headerEl = document.getElementById('header')
+	headerEl.innerHTML = require('../src/Header/Header.html')
+
 	helpers.injectTemplate('MessageList', require('../src/Message/MessageList.html'))
 	helpers.injectTemplate('Conversation', require('../src/Conversation/Conversation.html'))
 
@@ -30,6 +36,9 @@ export const init = conversationId => {
 
 	model.fetchConversation()
 	model.fetch()
+	header.fetch()
 	ko.applyBindings(model, root)
+	ko.applyBindings(header, headerEl)
 	window['model'] = model
+	window['header'] = header
 }

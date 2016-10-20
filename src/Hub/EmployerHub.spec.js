@@ -1,10 +1,10 @@
 import * as generator from '../../db'
 import * as actions from '../constants'
 import * as ko from 'knockout'
-import $ from 'jquery'
+import axios from 'axios'
 import assert from 'assert'
 import EmployerHub from './EmployerHub'
-import jQueryMockAjax from 'jquery-mockjax'
+import MockAdapter from 'axios-mock-adapter'
 import ConversationList from '../Conversation/ConversationList'
 import MessageList from '../Message/MessageList'
 import StandardMessageForm from '../Message/Form/StandardMessageForm'
@@ -14,11 +14,9 @@ import OfferMessageForm from '../Message/Form/OfferMessageForm'
 import Conversation from '../Conversation/Conversation'
 
 const api = 'http://sample.com'
-const mockjax = jQueryMockAjax($, window)
-$.mockjaxSettings.logging = 0
-
 
 describe('EmployerHub', () => {
+	let mock
 	let model
 	let dispatcher
 
@@ -27,11 +25,10 @@ describe('EmployerHub', () => {
 	})
 
 	beforeEach(() => {
+		mock = new MockAdapter(axios)
 		dispatcher = new ko.subscribable()
 		model = new EmployerHub(dispatcher)
 	})
-
-	afterEach(() => mockjax.clear())
 
 	it('should be instantiable', () => {
 		assert.equal(model instanceof EmployerHub, true)
@@ -72,10 +69,7 @@ describe('EmployerHub', () => {
 		let conversation1 = generator.generateConversation(1, messages1)
 		let conversation2 = generator.generateConversation(2, messages2)
 
-		mockjax({
-			url: `${api}/conversations`,
-			responseText: [conversation1, conversation2]
-		})
+		mock.onGet(`${api}/conversations`).reply(200, [conversation1, conversation2])
 
 		return model.fetch().then(() => {
 			assert.equal(model.conversations.conversations().length, 2)
