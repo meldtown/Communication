@@ -13,12 +13,6 @@ const MESSAGE_TYPES = [
 	types.OFFER_MESSAGE,
 	types.APPLY_MESSAGE
 ]
-
-const CONVERSATION_TYPES = [
-	types.ACTIVE_CONVERSATION,
-	types.ARCHIVED_CONVERSATION,
-	types.BLOCKED_CONVERSATION
-]
 // </editor-fold>
 
 // <editor-fold desc="Generators">
@@ -139,7 +133,7 @@ export const generateConversation = (id, messages) => {
 	return {
 		id,
 		unreadMessagesCount,
-		type: faker.random.arrayElement(CONVERSATION_TYPES),
+		type: faker.random.arrayElement(types.CONVERSATION_TYPES),
 		fullName: faker.name.findName(),
 		avatar: faker.image.avatar(),
 		lastMessage: lastMessage,
