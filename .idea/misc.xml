@@ -13,4 +13,7 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
+  <component name="ProjectResources">
+    <resource url="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd" location="" />
+  </component>
 </project>

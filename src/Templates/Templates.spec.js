@@ -3,8 +3,8 @@ import Templates from './Templates'
 import * as ko from 'knockout'
 import * as types from '../constants'
 import * as generator from '../../db'
-import $ from 'jquery'
-import jQueryMockAjax from 'jquery-mockjax'
+import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
 import StandardTemplateView from './View/StandardTemplateView'
 import InviteTemplateView from './View/InviteTemplateView'
 import DeclineTemplateView from './View/DeclineTemplateView'
@@ -14,11 +14,9 @@ import AbstractTemplate from './AbstractTemplate'
 import AbstractTemplateView from './View/AbstractTemplateView'
 
 const api = 'http://sample.com'
-const mockjax = jQueryMockAjax($, window)
-$.mockjaxSettings.logging = 0
-
 
 describe('Templates', () => {
+	let mock
 	let model
 	let dispatcher
 
@@ -27,11 +25,10 @@ describe('Templates', () => {
 	})
 
 	beforeEach(() => {
+		mock = new MockAdapter(axios)
 		dispatcher = new ko.subscribable()
 		model = new Templates(dispatcher)
 	})
-
-	afterEach(() => mockjax.clear())
 
 	it('should be instantiable', () => {
 		assert.equal(model instanceof Templates, true)
@@ -39,7 +36,7 @@ describe('Templates', () => {
 
 	it('should throw an error if dispatcher not given', () => {
 		// noinspection JSCheckFunctionSignatures
-		assert.throws(() => new Conversation(), Error)
+		assert.throws(() => new Templates(), Error)
 	})
 
 	it('should have dispatcher prop and accept it as first constructor argument of Templates', () => {
@@ -59,10 +56,7 @@ describe('Templates', () => {
 			generator.generateOfferTemplate(6)
 		]
 
-		mockjax({
-			url: `${api}/templates`,
-			responseText
-		})
+		mock.onGet(`${api}/templates`).reply(200, responseText)
 
 		return model.fetch().then(() => {
 			assert.equal(model.templates().length, 4)
@@ -153,10 +147,7 @@ describe('Templates', () => {
 			generator.generateOfferTemplate(6)
 		]
 
-		mockjax({
-			url: `${api}/templates`,
-			responseText
-		})
+		mock.onGet(`${api}/templates`).reply(200, responseText)
 
 		return model.fetch().then(() => {
 			assert.equal(model.selectedTab(), StandardTemplateView)
@@ -274,27 +265,27 @@ describe('Templates', () => {
 
 
 		it('should respect selected language', () => {
-			let templates = [,
+			let templates = [
 				TemplateFactory.create(dispatcher, {
 					id: 1,
-					type: "standard",
-					title: "Yeah",
-					text: "Success",
-					language: "ru"
+					type: 'standard',
+					title: 'Yeah',
+					text: 'Success',
+					language: 'ru'
 				}),
 				TemplateFactory.create(dispatcher, {
 					id: 2,
-					type: "standard",
-					title: "Java",
-					text: "Great !!!",
-					language: "ua"
+					type: 'standard',
+					title: 'Java',
+					text: 'Great !!!',
+					language: 'ua'
 				}),
 				TemplateFactory.create(dispatcher, {
 					id: 3,
-					type: "standard",
-					title: "Hello",
-					text: "Great !!!",
-					language: "en"
+					type: 'standard',
+					title: 'Hello',
+					text: 'Great !!!',
+					language: 'en'
 				}),
 			]
 			model.templates(templates)

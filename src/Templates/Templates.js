@@ -1,5 +1,5 @@
 import * as ko from 'knockout'
-import * as $ from 'jquery'
+import axios from 'axios'
 import './Templates.scss'
 import * as constants from '../constants'
 import TemplateFactory from './TemplateFactory'
@@ -87,12 +87,11 @@ export default class Templates {
 	}
 
 	fetch() {
-		return $.getJSON(`${api}/templates`)
-			.then(templates => {
+		return axios.get(`${api}/templates`)
+			.then(response => {
 				this.selectedTab(StandardTemplateView)
-				return this.templates(templates.map(TemplateFactory.create.bind(this, this.dispatcher)))
-				}
-			)
+				return this.templates(response.data.map(TemplateFactory.create.bind(this, this.dispatcher)))
+			})
 	}
 
 	selectStandardTab() {
