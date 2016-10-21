@@ -1,3 +1,4 @@
+import * as generator from '../../../db'
 import * as ko from 'knockout'
 import assert from 'assert'
 import OfferMessageForm from './OfferMessageForm'
@@ -98,12 +99,26 @@ describe('OfferMessageForm', () => {
 	})
 
 
-	it('should have vacancies observable array', () => {
-		assert.ok(ko.isObservable(model.vacancies))
-		assert.equal(typeof model.vacancies.push, 'function')
-	})
+	describe('vacancies', () => {
+		it('should have vacancies observable array', () => {
+			assert.ok(ko.isObservable(model.vacancies))
+			assert.equal(typeof model.vacancies.push, 'function')
+			assert.equal(model.vacancies().length, 0)
+		})
 
-	it('should have fetchVacancies method', () => {
-		assert.equal(typeof model.fetchVacancies, 'function')
+		it('should have fetchVacancies method', () => {
+			assert.equal(typeof model.fetchVacancies, 'function')
+
+			assert.equal(model.vacancies().length, 0)
+
+			mock.onGet(`${api}/vacancies`).reply(200, [
+				generator.generateVacancy(),
+				generator.generateVacancy()
+			])
+
+			return model.fetchVacancies().then(() => {
+				assert.equal(model.vacancies().length, 2)
+			})
+		})
 	})
 })

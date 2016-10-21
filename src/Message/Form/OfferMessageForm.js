@@ -9,7 +9,7 @@ export default class OfferMessageForm extends AbstractMessageForm {
 		super(dispatcher)
 		this.template('OfferMessageForm')
 		this.vacancyId = ko.observable()
-		this.vacancies = ko.observableArray()
+		this.vacancies = ko.observableArray([])
 	}
 
 	save() {
@@ -41,6 +41,7 @@ export default class OfferMessageForm extends AbstractMessageForm {
 	}
 
 	fetchVacancies() {
-
+		return axios.get(`${api}/vacancies`)
+			.then(response => this.vacancies(response.data))
 	}
 }
