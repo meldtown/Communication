@@ -36,6 +36,7 @@ export const init = conversationId => {
 
 	model.fetchConversation()
 	model.fetch()
+	model.offerMessageForm.fetchVacancies()
 	header.fetch()
 	ko.applyBindings(model, root)
 	ko.applyBindings(header, headerEl)

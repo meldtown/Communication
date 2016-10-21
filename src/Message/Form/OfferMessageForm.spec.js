@@ -106,6 +106,13 @@ describe('OfferMessageForm', () => {
 			assert.equal(model.vacancies().length, 0)
 		})
 
+		it('should have hasVacancies comp', () => {
+			assert.ok(ko.isComputed(model.hasVacancies))
+			assert.equal(model.hasVacancies(), false)
+			model.vacancies([generator.generateVacancy()])
+			assert.equal(model.hasVacancies(), true)
+		})
+
 		it('should have fetchVacancies method', () => {
 			assert.equal(typeof model.fetchVacancies, 'function')
 

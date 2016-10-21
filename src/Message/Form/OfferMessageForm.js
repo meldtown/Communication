@@ -10,6 +10,8 @@ export default class OfferMessageForm extends AbstractMessageForm {
 		this.template('OfferMessageForm')
 		this.vacancyId = ko.observable()
 		this.vacancies = ko.observableArray([])
+
+		this.hasVacancies = ko.computed(() => (this.vacancies() || []).length > 0)
 	}
 
 	save() {
