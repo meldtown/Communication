@@ -18,6 +18,10 @@ describe('AbstractTemplateView', () => {
 		assert.equal(model instanceof AbstractTemplate, true)
 	})
 
+	it('should extend AbstractTemplate class', () => {
+		assert.equal(Object.getPrototypeOf(model), AbstractTemplate)
+	})
+
 	it('should accept data into constuctor', () => {
 		let data = generator.generateStandardTemplate(1)
 		model = new AbstractTemplateView(dispatcher, data)

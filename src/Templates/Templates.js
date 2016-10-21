@@ -70,12 +70,16 @@ export default class Templates {
 			switch (template.constructor) {
 				case StandardTemplateView:
 					this.selectedStandardTemplate(template)
+					break
 				case InviteTemplateView:
 					this.selectedInviteTemplate(template)
+					break
 				case DeclineTemplateView:
 					this.selectedDeclineTemplate(template)
+					break
 				case OfferTemplateView:
 					this.selectedOfferTemplate(template)
+					break
 				default:
 					this.selectedStandardTemplate(template)
 			}
