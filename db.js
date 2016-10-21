@@ -39,16 +39,19 @@ export const generateStandardMessage = (id, conversationId) => ({
 	isRead: faker.random.boolean()
 })
 
-export const generateInviteMessage = (id, conversationId) => ({
-	id,
-	conversationId,
-	type: types.INVITE_MESSAGE,
-	date: generateRecentDate(),
-	text: faker.hacker.phrase(),
-	inviteDate: generateWorkTime(),
-	addressId: generateNumberBetween(1, 50),
-	isRead: faker.random.boolean()
-})
+export const generateInviteMessage = (id, conversationId, addresses = []) => {
+	return {
+		id,
+		conversationId,
+		type: types.INVITE_MESSAGE,
+		date: generateRecentDate(),
+		text: faker.hacker.phrase(),
+		inviteDate: generateWorkTime(),
+		address: addresses && addresses.length > 0 ? faker.random.arrayElement(addresses) : generateAddress(id),
+		addressId: generateNumberBetween(1, 50),
+		isRead: faker.random.boolean()
+	}
+}
 
 export const generateDeclineMessage = (id, conversationId) => ({
 	id,
@@ -105,11 +108,11 @@ export const generateApplyMessage = (id, conversationId, vacancies = []) => {
 	}
 }
 
-const generateMessage = (id, conversationId, vacancies) => {
+const generateMessage = (id, conversationId, vacancies, addresses) => {
 	var type = faker.random.arrayElement(MESSAGE_TYPES)
 	switch (type) {
 		case types.INVITE_MESSAGE:
-			return generateInviteMessage(id, conversationId)
+			return generateInviteMessage(id, conversationId, addresses)
 		case types.DECLINE_MESSAGE:
 			return generateDeclineMessage(id, conversationId)
 		case types.OFFER_MESSAGE:
@@ -149,13 +152,13 @@ export const generateConversation = (id, messages) => {
 	}
 }
 
-const generateMessages = vacancies => {
+const generateMessages = (vacancies, addresses) => {
 	let messageId = 1
 	let messages = []
 	for (let conversationId = 1; conversationId <= NUMBER_OF_CONVERSATIONS; conversationId++) {
 		let numberOfMessages = generateNumberBetween(1, 10)
 		for (let id = 1; id <= numberOfMessages; id++) {
-			messages.push(generateMessage(messageId++, conversationId, vacancies))
+			messages.push(generateMessage(messageId++, conversationId, vacancies, addresses))
 		}
 	}
 	return messages
@@ -251,11 +254,11 @@ const generateAddresses = () => {
 // </editor-fold>
 
 if (require.main === module) {
+	let addresses = generateAddresses()
 	let vacancies = generateVacancies()
-	let messages = generateMessages(vacancies)
+	let messages = generateMessages(vacancies, addresses)
 	let conversations = generateConversations(messages)
 	let templates = generateTemplates()
-	let addresses = generateAddresses()
 
 	let db = {
 		vacancies,
