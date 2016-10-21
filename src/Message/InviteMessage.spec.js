@@ -1,8 +1,10 @@
+import * as generator from '../../db'
 import assert from 'assert'
 import * as ko from 'knockout'
 import InviteMessage from './InviteMessage'
 import AbstractMessage from './AbstractMessage'
-
+import Address from '../Address/Address'
+import moment from 'moment'
 
 describe('InviteMessage', () => {
 	let model
@@ -26,7 +28,12 @@ describe('InviteMessage', () => {
 		assert.equal(ko.isObservable(model.addressId), true)
 	})
 
+	it('should have address prop', () => {
+		assert.ok(ko.isObservable(model.address))
+	})
+
 	it('should accept data into constructor', () => {
+		let address = generator.generateAddress(1)
 		let data = {
 			id: 1,
 			date: '2015-04-24T23:04:59',
@@ -34,15 +41,37 @@ describe('InviteMessage', () => {
 			text: 'Hello World',
 			inviteDate: '2015-04-12T23:05',
 			addressId: 1,
-			isRead: false
+			isRead: false,
+			address
 		}
 		let model = new InviteMessage(data)
 		// noinspection JSUnusedLocalSymbols
 		var {ago, formattedDate, formattedTime, template, ...actual} = ko.toJS(model) // eslint-disable-line no-unused-vars
 		assert.deepEqual(actual, data)
+		assert.ok(model.address() instanceof Address)
 	})
 
 	it('should have template prop been set in constructor', () => {
 		assert.equal(model.template(), 'InviteMessage')
+	})
+
+	it('should have formatted date comp', () => {
+		assert.ok(ko.isComputed(model.formattedDate))
+
+		let date = '2015-01-01T23:23:23'
+
+		model.date(date)
+
+		assert.equal(model.formattedDate(), moment(date).format('LL'))
+	})
+
+	it('should have formatted time comp', () => {
+		assert.ok(ko.isComputed(model.formattedTime))
+
+		let date = '2015-01-01T23:23:23'
+
+		model.date(date)
+
+		assert.equal(model.formattedTime(), moment(date).format('HH:mm'))
 	})
 })
