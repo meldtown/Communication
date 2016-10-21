@@ -12,7 +12,7 @@ export default class OfferMessageForm extends AbstractMessageForm {
 		this.vacancies = ko.observableArray([])
 
 		this.hasVacancies = ko.computed(() => (this.vacancies() || []).length > 0)
-		this.canBeSaved = ko.computed(() => this.conversationId() && this.vacancyId())
+		this.canBeSaved = ko.computed(() => this.conversationId() && this.vacancyId() && this.text())
 	}
 
 	save() {
