@@ -1,6 +1,6 @@
 import * as ko from 'knockout'
+import * as helpers from '../helpers'
 import moment from 'moment'
-
 
 export default class AbstractMessage {
 	constructor({id, date, conversationId, text, isRead} = {}) {
@@ -13,7 +13,7 @@ export default class AbstractMessage {
 		this.template = ko.observable()
 
 		this.ago = ko.computed(() => moment(this.date()).fromNow().toString())
-		this.formattedDate = ko.computed(() => moment(this.date()).format('LL'))
-		this.formattedTime = ko.computed(() => moment(this.date()).format('HH:mm'))
+		this.formattedDate = ko.computed(() => helpers.formattedDate(this.date()))
+		this.formattedTime = ko.computed(() => helpers.formattedTime(this.date()))
 	}
 }

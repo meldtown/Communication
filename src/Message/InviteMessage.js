@@ -1,7 +1,7 @@
 import AbstractMessage from './AbstractMessage'
 import * as ko from 'knockout'
 import Address from '../Address/Address'
-import moment from 'moment'
+import * as helpers from '../helpers'
 
 export default class InviteMessage extends AbstractMessage {
 	constructor(data = {}) {
@@ -12,7 +12,7 @@ export default class InviteMessage extends AbstractMessage {
 		this.address = ko.observable(new Address(address))
 		this.template('InviteMessage')
 
-		this.formattedDate = ko.computed(() => moment(this.date()).format('LL'))
-		this.formattedTime = ko.computed(() => moment(this.date()).format('HH:mm'))
+		this.formattedDate = ko.computed(() => helpers.formattedDate(this.date()))
+		this.formattedTime = ko.computed(() => helpers.formattedTime(this.date()))
 	}
 }
