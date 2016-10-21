@@ -6,6 +6,7 @@ import InviteMessageForm from './InviteMessageForm'
 import InviteMessage from '../InviteMessage'
 import AbstractMessageForm from './AbstractMessageForm'
 import * as constants from '../../constants'
+import * as generator from '../../../db'
 
 const api = 'http://sample.com'
 
@@ -106,5 +107,35 @@ describe('InviteMessageForm', () => {
 
 	it('should have template been set in constructor', () => {
 		assert.equal(model.template(), 'InviteMessageForm')
+	})
+
+	describe('addresses', () => {
+		it('should have addresses observable array', () => {
+			assert.ok(ko.isObservable(model.addresses))
+			assert.equal(typeof model.addresses.push, 'function')
+			assert.equal(model.addresses().length, 0)
+		})
+
+		it('should have hasAddresses comp', () => {
+			assert.ok(ko.isComputed(model.hasAddresses))
+			assert.equal(model.hasAddresses(), false)
+			model.addresses([generator.generateVacancy()])
+			assert.equal(model.hasAddresses(), true)
+		})
+
+		it('should have fetchAddresses method', () => {
+			assert.equal(typeof model.fetchAddresses, 'function')
+
+			assert.equal(model.addresses().length, 0)
+
+			mock.onGet(`${api}/addresses`).reply(200, [
+				generator.generateAddress(1),
+				generator.generateAddress(2)
+			])
+
+			return model.fetchAddresses().then(() => {
+				assert.equal(model.addresses().length, 2)
+			})
+		})
 	})
 })

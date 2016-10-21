@@ -10,6 +10,9 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.template('InviteMessageForm')
 		this.inviteDate = ko.observable()
 		this.addressId = ko.observable()
+		this.addresses = ko.observableArray([])
+
+		this.hasAddresses = ko.computed(() => (this.addresses() || []).length > 0)
 	}
 
 	save() {
@@ -40,5 +43,10 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.text('')
 		this.inviteDate('')
 		this.addressId(0)
+	}
+
+	fetchAddresses() {
+		return axios.get(`${api}/addresses`)
+			.then(response => this.addresses(response.data))
 	}
 }

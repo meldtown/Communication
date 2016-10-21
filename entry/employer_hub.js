@@ -30,6 +30,7 @@ export const init = () => {
 
 	model.fetch()
 	model.offerMessageForm.fetchVacancies()
+	model.inviteMessageForm.fetchAddresses()
 	ko.applyBindings(model, root)
 	window['model'] = model
 }
