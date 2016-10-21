@@ -134,4 +134,12 @@ describe('OfferMessageForm', () => {
 			})
 		})
 	})
+
+	it('should have canBeSaved computed', () => {
+		assert.ok(ko.isComputed(model.canBeSaved))
+		assert.ok(!model.canBeSaved())
+		model.conversationId(1)
+		model.vacancyId(1)
+		assert.ok(model.canBeSaved())
+	})
 })
