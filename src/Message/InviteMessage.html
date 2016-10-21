@@ -2,11 +2,30 @@
 	<tbody>
 	<tr>
 		<td>
-			<small>INVITED <span data-bind="text: formattedDate" class="muted"></span></small>
+			<small class="muted">
+				INVITED
+				<span data-bind="text: formattedDate"></span>
+				<span data-bind="text: formattedTime"></span>
+			</small>
 			<div data-bind="text: text"></div>
-		</td>
-		<td>
-			<small data-bind="text: formattedTime" class="muted"></small>
+			<fieldset>
+				<small>
+					<strong>date:</strong>
+					<span data-bind="text: formattedInviteDate"></span>
+					<strong>time:</strong>
+					<span data-bind="text: formattedInviteTime"></span>
+				</small>
+			</fieldset>
+			<fieldset data-bind="with: address">
+				<legend>address</legend>
+				<small>
+					<span data-bind="text: city"></span>, <span data-bind="text: street"></span>,
+					<span data-bind="text: houseNumber"></span>, <span data-bind="text: office"></span>
+				</small>
+				<div>
+					<small data-bind="text: description"></small>
+				</div>
+			</fieldset>
 		</td>
 	</tr>
 	</tbody>
