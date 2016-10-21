@@ -14,6 +14,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.addresses = ko.observableArray([])
 
 		this.hasAddresses = ko.computed(() => (this.addresses() || []).length > 0)
+		this.canBeSaved = ko.computed(() => this.conversationId() && this.addressId() && this.text())
 	}
 
 	save() {

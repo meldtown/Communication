@@ -139,5 +139,16 @@ describe('InviteMessageForm', () => {
 				assert.ok(model.addresses()[0] instanceof Address)
 			})
 		})
+
+		it('should have canBeSaved computed', () => {
+			assert.ok(ko.isComputed(model.canBeSaved))
+			assert.ok(!model.canBeSaved())
+			model.conversationId(1)
+			assert.ok(!model.canBeSaved())
+			model.addressId(1)
+			assert.ok(!model.canBeSaved())
+			model.text('Hello')
+			assert.ok(model.canBeSaved())
+		})
 	})
 })
