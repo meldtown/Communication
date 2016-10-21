@@ -32,8 +32,8 @@ describe('InviteMessage', () => {
 		assert.ok(ko.isObservable(model.address))
 	})
 
+
 	it('should accept data into constructor', () => {
-		let address = generator.generateAddress(1)
 		let data = {
 			id: 1,
 			date: '2015-04-24T23:04:59',
@@ -42,12 +42,17 @@ describe('InviteMessage', () => {
 			inviteDate: '2015-04-12T23:05',
 			addressId: 1,
 			isRead: false,
-			address
+			address: generator.generateAddress(1)
 		}
+
 		let model = new InviteMessage(data)
-		// noinspection JSUnusedLocalSymbols
-		var {ago, formattedDate, formattedTime, template, formattedInviteDate, formattedInviteTime, ...actual} = ko.toJS(model) // eslint-disable-line no-unused-vars
-		assert.deepEqual(actual, data)
+
+		// noinspection JSDuplicatedDeclaration, JSUnusedLocalSymbols
+		var {ago, formattedDate, formattedTime, template, formattedInviteDate, formattedInviteTime, address, ...actual} = ko.toJS(model) // eslint-disable-line no-unused-vars, no-redeclare
+		// noinspection JSDuplicatedDeclaration, JSUnusedLocalSymbols
+		var {address, ...expected} = data // eslint-disable-line no-unused-vars, no-redeclare
+
+		assert.deepEqual(actual, expected) // eslint-disable-line no-unused-vars
 		assert.ok(model.address() instanceof Address)
 	})
 

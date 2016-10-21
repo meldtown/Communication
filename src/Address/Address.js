@@ -9,5 +9,7 @@ export default class Address {
 		this.office = ko.observable(office)
 		this.description = ko.observable(description)
 		this.mapFile = ko.observable(mapFile)
+
+		this.optionText = ko.computed(() => `${this.street()} ${this.houseNumber()}, ${this.office()}`)
 	}
 }

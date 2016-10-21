@@ -34,6 +34,16 @@ describe('Address', () => {
 
 		model = new Address(data)
 
-		assert.deepEqual(ko.toJS(model), data)
+		// noinspection JSUnusedLocalSymbols
+		let {optionText, ...actual} = ko.toJS(model) // eslint-disable-line no-unused-vars
+		assert.deepEqual(actual, data)
+	})
+
+	it('should optionText prop', () => {
+		assert.ok(ko.isComputed(model.optionText))
+		model.street('street')
+		model.houseNumber('1')
+		model.office(1)
+		assert.equal(model.optionText(), 'street 1, 1')
 	})
 })
