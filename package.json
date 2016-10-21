@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"npm run start:db\" \"npm run start:accordion\"",
+    "start": "concurrently \"npm run start:db\" \"npm run start:accordion\" \"npm run start:employer_hub\" \"npm run start:jobsearcher_hub\"",
     "start:employer_hub": "webpack-dev-server --env employer_hub --port 8282",
     "start:jobsearcher_hub": "webpack-dev-server --env jobsearcher_hub --port 8383",
     "start:templates": "webpack-dev-server --env templates --port 8484",
