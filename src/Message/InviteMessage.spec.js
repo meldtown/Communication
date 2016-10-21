@@ -46,7 +46,7 @@ describe('InviteMessage', () => {
 		}
 		let model = new InviteMessage(data)
 		// noinspection JSUnusedLocalSymbols
-		var {ago, formattedDate, formattedTime, template, ...actual} = ko.toJS(model) // eslint-disable-line no-unused-vars
+		var {ago, formattedDate, formattedTime, template, formattedInviteDate, formattedInviteTime, ...actual} = ko.toJS(model) // eslint-disable-line no-unused-vars
 		assert.deepEqual(actual, data)
 		assert.ok(model.address() instanceof Address)
 	})
@@ -55,23 +55,23 @@ describe('InviteMessage', () => {
 		assert.equal(model.template(), 'InviteMessage')
 	})
 
-	it('should have formatted date comp', () => {
-		assert.ok(ko.isComputed(model.formattedDate))
+	it('should have formatted invite date comp', () => {
+		assert.ok(ko.isComputed(model.formattedInviteDate))
 
 		let date = '2015-01-01T23:23:23'
 
 		model.date(date)
 
-		assert.equal(model.formattedDate(), moment(date).format('LL'))
+		assert.equal(model.formattedInviteDate(), moment(date).format('LL'))
 	})
 
-	it('should have formatted time comp', () => {
-		assert.ok(ko.isComputed(model.formattedTime))
+	it('should have formatted invite time comp', () => {
+		assert.ok(ko.isComputed(model.formattedInviteTime))
 
 		let date = '2015-01-01T23:23:23'
 
 		model.date(date)
 
-		assert.equal(model.formattedTime(), moment(date).format('HH:mm'))
+		assert.equal(model.formattedInviteTime(), moment(date).format('HH:mm'))
 	})
 })
