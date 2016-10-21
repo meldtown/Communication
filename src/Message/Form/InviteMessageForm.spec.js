@@ -7,6 +7,7 @@ import InviteMessage from '../InviteMessage'
 import AbstractMessageForm from './AbstractMessageForm'
 import * as constants from '../../constants'
 import * as generator from '../../../db'
+import Address from '../../Address/Address'
 
 const api = 'http://sample.com'
 
@@ -135,6 +136,7 @@ describe('InviteMessageForm', () => {
 
 			return model.fetchAddresses().then(() => {
 				assert.equal(model.addresses().length, 2)
+				assert.ok(model.addresses()[0] instanceof Address)
 			})
 		})
 	})

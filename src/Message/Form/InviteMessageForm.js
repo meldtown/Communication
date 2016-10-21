@@ -3,6 +3,7 @@ import * as ko from 'knockout'
 import * as constants from '../../constants'
 import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'
+import Address from '../../Address/Address'
 
 export default class InviteMessageForm extends AbstractMessageForm {
 	constructor(dispatcher) {
@@ -47,6 +48,6 @@ export default class InviteMessageForm extends AbstractMessageForm {
 
 	fetchAddresses() {
 		return axios.get(`${api}/addresses`)
-			.then(response => this.addresses(response.data))
+			.then(response => this.addresses(response.data.map(item => new Address(item))))
 	}
 }
