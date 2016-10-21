@@ -244,7 +244,7 @@ if (require.main === module) {
 
 	let json = JSON.stringify(db, null, 4)
 
-	fs.writeFileSync('db.json', json)
+	fs.writeFileSync("db.json", json)
 
 	console.log(json)
 }
