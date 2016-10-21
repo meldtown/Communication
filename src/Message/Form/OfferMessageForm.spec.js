@@ -41,6 +41,12 @@ describe('OfferMessageForm', () => {
 	})
 
 	it('should not try save message without conversationId', () => {
+		model.vacancyId(1)
+		assert.throws(() => model.save(), Error)
+	})
+
+	it('should not try save message without vacancyId', () => {
+		model.conversationId(1)
 		assert.throws(() => model.save(), Error)
 	})
 

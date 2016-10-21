@@ -19,6 +19,10 @@ export default class OfferMessageForm extends AbstractMessageForm {
 			throw new Error('conversationId is required')
 		}
 
+		if (!this.vacancyId()) {
+			throw new Error('vacancyId is required')
+		}
+
 		return axios.post(`${api}/messages`, {
 			type: constants.OFFER_MESSAGE,
 			conversationId: this.conversationId(),
