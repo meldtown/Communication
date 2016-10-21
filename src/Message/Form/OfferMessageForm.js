@@ -9,6 +9,7 @@ export default class OfferMessageForm extends AbstractMessageForm {
 		super(dispatcher)
 		this.template('OfferMessageForm')
 		this.vacancyId = ko.observable()
+		this.vacancies = ko.observableArray()
 	}
 
 	save() {
@@ -37,5 +38,9 @@ export default class OfferMessageForm extends AbstractMessageForm {
 	reset() {
 		this.text('')
 		this.vacancyId(0)
+	}
+
+	fetchVacancies() {
+
 	}
 }

@@ -96,4 +96,14 @@ describe('OfferMessageForm', () => {
 	it('should have template been set in constructor', () => {
 		assert.equal(model.template(), 'OfferMessageForm')
 	})
+
+
+	it('should have vacancies observable array', () => {
+		assert.ok(ko.isObservable(model.vacancies))
+		assert.equal(typeof model.vacancies.push, 'function')
+	})
+
+	it('should have fetchVacancies method', () => {
+		assert.equal(typeof model.fetchVacancies, 'function')
+	})
 })
