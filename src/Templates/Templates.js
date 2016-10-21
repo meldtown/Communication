@@ -7,6 +7,10 @@ import StandardTemplateView from '../Templates/View/StandardTemplateView'
 import InviteTemplateView from '../Templates/View/InviteTemplateView'
 import DeclineTemplateView from '../Templates/View/DeclineTemplateView'
 import OfferTemplateView from '../Templates/View/OfferTemplateView'
+import StandardTemplateForm from '../Templates/Form/StandardTemplateForm'
+import InviteTemplateForm from '../Templates/Form/InviteTemplateForm'
+import DeclineTemplateForm from '../Templates/Form/DeclineTemplateForm'
+import OfferTemplateForm from '../Templates/Form/OfferTemplateForm'
 
 export default class Templates {
 	constructor(dispatcher) {
@@ -64,6 +68,9 @@ export default class Templates {
 			}
 		})
 
+		this.selectedTemplateForm = ko.observable(null)
+		this.isSelectedTemplateBeingEdited = ko.observable(false)
+
 		dispatcher.subscribe(template => {
 			switch (template.constructor) {
 				case StandardTemplateView:
@@ -118,5 +125,33 @@ export default class Templates {
 
 	toggleEnglishLanguage() {
 		this.isEnglishLanguageSelected(!this.isEnglishLanguageSelected())
+	}
+
+	edit() {
+		this.isSelectedTemplateBeingEdited(true)
+		// noinspection JSUnusedLocalSymbols
+		let {dispatcher, isSelected, ...selectedTemplateData} = ko.toJS(this.selectedTemplate()) // eslint-disable-line no-unused-vars
+		let form = null
+		switch (this.selectedTemplate().constructor) {
+			case StandardTemplateView:
+				form = new StandardTemplateForm(this.dispatcher, selectedTemplateData)
+				break
+			case InviteTemplateView:
+				form = new InviteTemplateForm(this.dispatcher, selectedTemplateData)
+				break
+			case DeclineTemplateView:
+				form = new DeclineTemplateForm(this.dispatcher, selectedTemplateData)
+				break
+			case OfferTemplateView:
+				form = new OfferTemplateForm(this.dispatcher, selectedTemplateData)
+				break
+		}
+
+		this.selectedTemplateForm(form)
+	}
+
+	cancel() {
+		this.isSelectedTemplateBeingEdited(false)
+		this.selectedTemplateForm(null)
 	}
 }

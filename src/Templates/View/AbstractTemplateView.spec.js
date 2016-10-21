@@ -18,7 +18,7 @@ describe('AbstractTemplateView', () => {
 		assert.equal(model instanceof AbstractTemplate, true)
 	})
 
-	it('should accept data into constuctor', () => {
+	it('should accept data into constructor', () => {
 		let data = generator.generateStandardTemplate(1)
 		model = new AbstractTemplateView(dispatcher, data)
 

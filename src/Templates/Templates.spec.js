@@ -483,4 +483,75 @@ describe('Templates', () => {
 		// TODO: x4 for each type
 		// model.standardForm = new StandardForm()
 	})
+
+	describe('editTemplate', () => {
+		let model
+		let dispatcher
+		beforeEach(() => {
+			dispatcher = new ko.subscribable()
+			let templates = [
+				generator.generateStandardTemplate(1),
+				generator.generateInviteTemplate(2),
+				generator.generateOfferTemplate(3),
+				generator.generateDeclineTemplate(4),
+			].map(template => TemplateFactory.create(dispatcher, template))
+			model = new Templates(dispatcher)
+			model.templates(templates)
+		})
+
+		it('should have isSelectedTemplateBeingEdited', () => {
+			assert.equal(ko.isObservable(model.isSelectedTemplateBeingEdited), true)
+		})
+
+		it('should isSelectedTemplateBeingEdited return false by default', () => {
+			assert.equal(model.isSelectedTemplateBeingEdited(), false)
+		})
+
+		it('should have selectedTemplateForm observable', () => {
+			assert.equal(ko.isObservable(model.selectedTemplateForm), true)
+		})
+
+		it('should have edit method', () => {
+			assert.equal(typeof model.edit, 'function')
+
+			let tplStd = model.templates()[0]
+			tplStd.select()
+			model.edit()
+			assert.equal(model.isSelectedTemplateBeingEdited(), true)
+		})
+		//
+		// it('should isSelectedTemplateBeingEdited and selectedTemplateForm have the same type', () => {
+		// 	assert.equal(model.selectedTemplateForm())
+		// })
+
+		it('should edit method set data from selectedTemplateView to selectedTemplateForm', () => {
+			let tplStd = model.templates()[0]
+			tplStd.select()
+			model.selectStandardTab()
+			model.edit()
+			let actual = ko.toJS(model.selectedTemplateForm())
+			// noinspection JSUnusedLocalSymbols
+			var {isSelected, ...expected} = ko.toJS(tplStd) // eslint-disable-line no-unused-vars
+
+			assert.deepEqual(actual, expected)
+		})
+
+		it('should have cancel method', () => {
+			assert.equal(typeof model.cancel, 'function')
+		})
+
+		it('should reset data in selectedTemplateForm after cancel', () => {
+			let tplStd = model.templates()[0]
+			tplStd.select()
+			model.selectStandardTab()
+			model.edit()
+			assert.equal(model.isSelectedTemplateBeingEdited(), true)
+
+			model.cancel()
+			assert.equal(model.isSelectedTemplateBeingEdited(), false)
+			assert.equal(model.selectedTemplateForm(), null)
+		})
+	})
+
+
 })
