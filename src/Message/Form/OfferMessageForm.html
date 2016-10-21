@@ -1,10 +1,11 @@
-<label for="vacancyId">vacancyId</label>
+<label for="vacancyId">vacancy</label>
 <select id="vacancyId" data-bind="options: vacancies, optionsText: 'vacancyName', optionsValue: 'id', value: vacancyId, optionsCaption: 'vacancy...', enable: hasVacancies"></select>
 <br>
-<textarea placeholder="offer..." data-bind="value: text, enable: hasConversationId"></textarea>
-<div data-bind="if: hasConversationId">
+<textarea placeholder="offer..." data-bind="value: text, valueUpdate: 'keyup', enable: hasConversationId"></textarea>
+<div data-bind="if: canBeSaved">
 	<a href="#" data-bind="click: save">Send</a>
 </div>
-<div data-bind="ifnot: hasConversationId">
+<div data-bind="ifnot: canBeSaved">
 	<span>Send</span>
+	<span class="muted">select vacancy and provide text</span>
 </div>
