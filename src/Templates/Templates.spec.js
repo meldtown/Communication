@@ -158,7 +158,6 @@ describe('Templates', () => {
 		assert.equal(model.selectedTab(), StandardTemplateView)
 	})
 
-
 	it('should have isRussianLanguageSelected observable', () => {
 		assert.equal(ko.isObservable(model.isRussianLanguageSelected), true)
 	})
@@ -217,7 +216,6 @@ describe('Templates', () => {
 	})
 
 	describe('filteredTemplates', () => {
-
 		beforeEach(() => {
 			let templates = [
 				generator.generateInviteTemplate(4),
@@ -239,6 +237,7 @@ describe('Templates', () => {
 			templates = templates.map(template => TemplateFactory.create(dispatcher, template))
 			model.templates(templates)
 		})
+
 		it('should have filteredTemplates com', () => {
 			assert.ok(ko.isComputed(model.filteredTemplates))
 		})
@@ -262,7 +261,6 @@ describe('Templates', () => {
 			assert.ok(model.filteredTemplates()[4] instanceof model.selectedTab())
 			assert.ok(model.filteredTemplates()[5] instanceof model.selectedTab())
 		})
-
 
 		it('should respect selected language', () => {
 			let templates = [
@@ -368,9 +366,7 @@ describe('Templates', () => {
 		})
 	})
 
-
 	describe('selectedTemplate', () => {
-
 		let templates
 
 		beforeEach(() => {
@@ -416,7 +412,6 @@ describe('Templates', () => {
 			assert.equal(model.selectedInviteTemplate(), invTpl1)
 			assert.equal(model.selectedStandardTemplate(), stdTpl1)
 		})
-
 
 		it('should have selectedDeclineTemplate', () => {
 			assert.equal(ko.isObservable(model.selectedDeclineTemplate), true)
@@ -476,12 +471,16 @@ describe('Templates', () => {
 			assert.equal(model.selectedTemplate(), dclTpl)
 		})
 
-		it('should have standard form prop', () => {
-			// TODO: x4 for each type
-			// model.standardForm = new StandardForm()
+		it('should return standardTemplate if selectedTab is not defined', () => {
+			let standard = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(2))
+			model.selectedStandardTemplate(standard)
+			model.selectedTab(false)
+			assert.ok(model.selectedTemplate() instanceof StandardTemplateView)
 		})
-
 	})
 
-
+	it('should have standard form prop', () => {
+		// TODO: x4 for each type
+		// model.standardForm = new StandardForm()
+	})
 })

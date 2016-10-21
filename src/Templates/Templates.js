@@ -61,8 +61,6 @@ export default class Templates {
 					return this.selectedDeclineTemplate()
 				case OfferTemplateView:
 					return this.selectedOfferTemplate()
-				default:
-					return this.selectedStandardTemplate()
 			}
 		})
 
