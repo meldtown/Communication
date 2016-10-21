@@ -1,8 +1,7 @@
 import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'
 import axios from 'axios'
-import * as types from '../../constants'
-import * as actions from '../../constants'
+import * as constants from '../../constants'
 
 export default class DeclineMessageForm extends AbstractMessageForm {
 	constructor(dispatcher) {
@@ -16,7 +15,7 @@ export default class DeclineMessageForm extends AbstractMessageForm {
 		}
 
 		return axios.post(`${api}/messages`, {
-			type: types.DECLINE_MESSAGE,
+			type: constants.DECLINE_MESSAGE,
 			conversationId: this.conversationId(),
 			text: this.text()
 		}).then(response => {
@@ -26,7 +25,7 @@ export default class DeclineMessageForm extends AbstractMessageForm {
 
 			let message = MessageFactory.create(response.data)
 
-			this.dispatcher.notifySubscribers(message, actions.NEW_MESSAGE)
+			this.dispatcher.notifySubscribers(message, constants.NEW_MESSAGE)
 
 			return message
 		})

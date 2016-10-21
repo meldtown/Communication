@@ -35,7 +35,7 @@ describe('MessageList', () => {
 
 	it('should throw an error if dispatcher not given', () => {
 		// noinspection JSCheckFunctionSignatures
-		assert.throws(() => new Conversation(), Error)
+		assert.throws(() => new MessageList(), Error)
 	})
 
 	it('should have dispatcher prop', () => {

@@ -2,8 +2,7 @@ import * as ko from 'knockout'
 import assert from 'assert'
 import OfferMessageForm from './OfferMessageForm'
 import OfferMessage from '../OfferMessage'
-import * as types from '../../constants'
-import * as actions from '../../constants'
+import * as constants from '../../constants'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
@@ -54,7 +53,7 @@ describe('OfferMessageForm', () => {
 			text,
 			vacancyId,
 			id: 1,
-			type: types.OFFER_MESSAGE,
+			type: constants.OFFER_MESSAGE,
 			date: (new Date()).toISOString()
 		})
 	}
@@ -80,12 +79,12 @@ describe('OfferMessageForm', () => {
 		})
 	})
 
-	it(`should fire ${actions.NEW_MESSAGE} on successful save`, () => {
+	it(`should fire ${constants.NEW_MESSAGE} on successful save`, () => {
 		let counter = 0
 
 		dispatcher.subscribe(() => {
 			counter = counter + 1
-		}, null, actions.NEW_MESSAGE)
+		}, null, constants.NEW_MESSAGE)
 
 		arrangeForSaveTest()
 

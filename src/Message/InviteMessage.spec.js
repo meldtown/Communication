@@ -38,7 +38,7 @@ describe('InviteMessage', () => {
 		}
 		let model = new InviteMessage(data)
 		// noinspection JSUnusedLocalSymbols
-		var {ago, formattedDate, formattedTime, template, ...actual} = ko.toJS(model)
+		var {ago, formattedDate, formattedTime, template, ...actual} = ko.toJS(model) // eslint-disable-line no-unused-vars
 		assert.deepEqual(actual, data)
 	})
 

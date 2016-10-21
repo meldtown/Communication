@@ -4,8 +4,7 @@ import StandardMessageForm from './StandardMessageForm'
 import AbstractMessageForm from './AbstractMessageForm'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import * as types from '../../constants'
-import * as actions from '../../constants'
+import * as constants from '../../constants'
 import StandardMessage from '../StandardMessage'
 
 const api = 'http://sample.com'
@@ -49,7 +48,7 @@ describe('StandardMessageForm', () => {
 			conversationId,
 			text,
 			id: 1,
-			type: types.STANDARD_MESSAGE,
+			type: constants.STANDARD_MESSAGE,
 			date: (new Date()).toISOString()
 		})
 	}
@@ -73,12 +72,12 @@ describe('StandardMessageForm', () => {
 		})
 	})
 
-	it(`should fire ${actions.NEW_MESSAGE} on successful save`, () => {
+	it(`should fire ${constants.NEW_MESSAGE} on successful save`, () => {
 		let counter = 0
 
 		dispatcher.subscribe(() => {
 			counter = counter + 1
-		}, null, actions.NEW_MESSAGE)
+		}, null, constants.NEW_MESSAGE)
 
 		arrangeForSaveTest()
 

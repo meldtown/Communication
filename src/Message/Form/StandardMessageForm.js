@@ -1,5 +1,4 @@
-import * as actions from '../../constants'
-import * as types from '../../constants'
+import * as constants from '../../constants'
 import axios from 'axios'
 import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'
@@ -16,7 +15,7 @@ export default class StandardMessageForm extends AbstractMessageForm {
 		}
 
 		return axios.post(`${api}/messages`, {
-			type: types.STANDARD_MESSAGE,
+			type: constants.STANDARD_MESSAGE,
 			conversationId: this.conversationId(),
 			text: this.text(),
 			avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/digitalmaverick/128.jpg'
@@ -27,7 +26,7 @@ export default class StandardMessageForm extends AbstractMessageForm {
 
 			let message = MessageFactory.create(response.data)
 
-			this.dispatcher.notifySubscribers(message, actions.NEW_MESSAGE)
+			this.dispatcher.notifySubscribers(message, constants.NEW_MESSAGE)
 
 			return message
 		})

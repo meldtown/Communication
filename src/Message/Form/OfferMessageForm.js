@@ -1,7 +1,6 @@
 import * as ko from 'knockout'
 import axios from 'axios'
-import * as types from '../../constants'
-import * as actions from '../../constants'
+import * as constants from '../../constants'
 import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'
 
@@ -18,7 +17,7 @@ export default class OfferMessageForm extends AbstractMessageForm {
 		}
 
 		return axios.post(`${api}/messages`, {
-			type: types.OFFER_MESSAGE,
+			type: constants.OFFER_MESSAGE,
 			conversationId: this.conversationId(),
 			text: this.text(),
 			vacancyId: this.vacancyId()
@@ -29,7 +28,7 @@ export default class OfferMessageForm extends AbstractMessageForm {
 
 			let message = MessageFactory.create(response.data)
 
-			this.dispatcher.notifySubscribers(message, actions.NEW_MESSAGE)
+			this.dispatcher.notifySubscribers(message, constants.NEW_MESSAGE)
 
 			return message
 		})
