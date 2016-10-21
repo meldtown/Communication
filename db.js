@@ -227,6 +227,27 @@ const generateVacancies = () => {
 
 	return vacancies
 }
+
+export const generateAddress = id => ({
+	id,
+	city: faker.address.city(),
+	street: faker.address.streetName(),
+	houseNumber: faker.address.streetAddress(),
+	office: generateNumberBetween(1, 10),
+	description: faker.hacker.phrase(),
+	mapFile: `https://static-maps.yandex.ru/1.x/?l=map&ll=${faker.address.longitude()},${faker.address.latitude()}`
+})
+
+const generateAddresses = () => {
+	let addresses = []
+	let numberOfAddresses = generateNumberBetween(2, 10)
+
+	for (let id = 1; id <= numberOfAddresses; id++) {
+		addresses.push(generateAddress(id))
+	}
+
+	return addresses
+}
 // </editor-fold>
 
 if (require.main === module) {
@@ -234,12 +255,14 @@ if (require.main === module) {
 	let messages = generateMessages(vacancies)
 	let conversations = generateConversations(messages)
 	let templates = generateTemplates()
+	let addresses = generateAddresses()
 
 	let db = {
 		vacancies,
 		conversations,
 		messages,
-		templates
+		templates,
+		addresses
 	}
 
 	let json = JSON.stringify(db, null, 4)
