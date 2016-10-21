@@ -19,16 +19,16 @@ describe('TemplatesFactory', () => {
 		beforeEach(() => {
 			data = {
 				id: 1,
-				title: "Yeah",
-				text: "Great !!!",
-				language: "ru"
+				title: 'Yeah',
+				text: 'Great !!!',
+				language: 'ru'
 			}
 			dispatcher = new ko.subscribable()
 		})
 
 		it('should throw an error if dispatcher not given', () => {
 			// noinspection JSCheckFunctionSignatures
-			assert.throws(() => new Conversation(), Error)
+			assert.throws(() => TemplateFactory.create(), Error)
 		})
 
 		it(`should create ${types.STANDARD_MESSAGE} template`, () => {
@@ -65,9 +65,9 @@ describe('TemplatesFactory', () => {
 			let data = {
 				type: 'UNKNOWN',
 				id: 1,
-				title: "Yeah",
-				text: "Great !!!",
-				language: "ru"
+				title: 'Yeah',
+				text: 'Great !!!',
+				language: 'ru'
 			}
 			assert.equal(TemplateFactory.create(dispatcher, data), null)
 		})
