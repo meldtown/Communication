@@ -246,5 +246,5 @@ if (require.main === module) {
 
 	fs.writeFileSync('db.json', json)
 
-	console.log(json) // eslint-disable-line no-console
+	console.log(json)
 }
