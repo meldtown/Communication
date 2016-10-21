@@ -1,6 +1,6 @@
 <input placeholder="inviteDate..." type="datetime" data-bind="value: inviteDate, enable: hasConversationId">
-<input placeholder="addressId..." type="number" data-bind="value: addressId, enable: hasConversationId">
-
+<label for="addressId">address</label>
+<select id="addressId" data-bind="options: addresses, optionsText: 'optionText', optionsValue: 'id', value: addressId, optionsCaption: 'address...', enable: hasAddresses"></select>
 <textarea placeholder="invite..." data-bind="value: text, enable: hasConversationId"></textarea>
 <div data-bind="if: hasConversationId">
 	<a href="#" data-bind="click: save">Send</a>
