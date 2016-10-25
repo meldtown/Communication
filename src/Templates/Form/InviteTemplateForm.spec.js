@@ -3,6 +3,8 @@ import assert from 'assert'
 import InviteTemplateForm from './InviteTemplateForm'
 import AbstractTemplateForm from './AbstractTemplateForm'
 import AbstractTemplate from '../AbstractTemplate'
+import * as generator from '../../../db'
+
 
 describe('InviteTemplateForm', () => {
 	let model
@@ -28,5 +30,13 @@ describe('InviteTemplateForm', () => {
 
 	it('should have save method', () => {
 		assert.equal(typeof model.save, 'function')
+	})
+
+	it('should accept data into constructor', () => {
+		let data = generator.generateInviteTemplate(1)
+		model = new InviteTemplateForm(dispatcher, data)
+
+		assert.equal(model.id(), data.id)
+		assert.equal(model.title(), data.title)
 	})
 })

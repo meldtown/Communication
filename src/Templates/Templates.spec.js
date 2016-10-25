@@ -649,9 +649,11 @@ describe('Templates', () => {
 			tplStd.select()
 			assert.equal(model.templates().length, 4)
 			mock.onDelete(`${api}/templates/1`).reply(200)
-			model.delete().then(() => {
-				assert.equal(model.templates().length, 3)
-				assert.equal(model.selectedTemplate(), null)
+			new Promise(() => {
+				model.delete().then(() => {
+					assert.equal(model.templates().length, 3)
+					assert.equal(model.selectedTemplate(), null)
+				})
 			})
 		})
 	})
@@ -670,19 +672,31 @@ describe('Templates', () => {
 			model = new Templates(dispatcher)
 			model.templates(templates)
 		})
-		// it('should have create method', () => {
-		// 	assert.equal(typeof model.create, 'function')
-		// 	let stdTpl = new StandardTemplateForm(dispatcher, {
-		// 		id: 0, text: '', title: '', language: 'ru'
-		// 	})
-		// 	model.selectStandardTab()
-		// 	stdTpl().id(67)
-		// 	stdTpl().text('Hello')
-		// 	stdTpl().title('World')
-		// 	stdTpl().language('en')
-		// 	let {id, text, title, language} = ko.toJS(stdTpl)
-		// 	mock.onPost(`${api}/templates/`, {id, text, title, language, type}).reply(200, responseText)
-		// 	// model.create().
-		// })
+		it('should have create method', () => {
+			assert.equal(typeof model.create, 'function')
+			let stdTpl = new StandardTemplateForm(dispatcher, {
+				id: 0, text: '', title: '', language: 'ru'
+			})
+			model.selectStandardTab()
+			stdTpl.id(67)
+			stdTpl.text('Hello')
+			stdTpl.title('World')
+			stdTpl.language('en')
+			let {id, text, title, language} = ko.toJS(stdTpl)
+			model.create()
+			assert.equal(model.isNewTemplateBeingCreated(), true)
+			mock.onPost(`${api}/templates/`, Object.assign({}, {
+				id,
+				text,
+				title,
+				language
+			}, {type: 'standard'})).reply(200)
+			new Promise(() => {
+				model.save(model.isNewTemplateBeingCreated())
+			}).then(() => {
+				assert.equal(model.templates().length, 5)
+				assert.equal(model.templates()[4].text(), 'Hello')
+			})
+		})
 	})
 })

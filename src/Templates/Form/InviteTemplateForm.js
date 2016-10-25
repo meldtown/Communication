@@ -4,8 +4,8 @@ import axios from 'axios'
 
 
 export default class InviteTemplateForm extends AbstractTemplateForm {
-	constructor(dispatcher) {
-		super(dispatcher)
+	constructor(dispatcher, data) {
+		super(dispatcher, data)
 		this.inviteDate = ko.observable()
 		this.addressId = ko.observable()
 	}

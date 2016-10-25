@@ -160,6 +160,7 @@ export default class Templates {
 			this.selectedTemplateForm().fill(this.selectedTemplate())
 			if (isNewTemplateBeingCreated) {
 				this.templates().push(this.selectedTemplate())
+				this.fetch()
 			}
 			this.selectedTemplateForm(null)
 			this.isNewTemplateBeingCreated(false)
@@ -168,10 +169,8 @@ export default class Templates {
 	}
 
 	delete() {
-		return new Promise(() => {
-			this.selectedTemplate().delete()
-		}).then(() => {
-			this.templates().remove(this.selectedTemplate())
+		this.selectedTemplate().delete().then(() => {
+			this.templates.remove(this.selectedTemplate())
 		})
 	}
 
