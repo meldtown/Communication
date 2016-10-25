@@ -17,4 +17,8 @@ describe('DeclineTemplateForm', () => {
 		assert.equal(model instanceof AbstractTemplateForm, true)
 		assert.equal(model instanceof AbstractTemplate, true)
 	})
+
+	it('should have save method', () => {
+		assert.equal(typeof model.save, 'function')
+	})
 })

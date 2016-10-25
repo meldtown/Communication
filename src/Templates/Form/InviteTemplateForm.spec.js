@@ -25,4 +25,8 @@ describe('InviteTemplateForm', () => {
 	it('should have addressId', () => {
 		assert.equal(ko.isObservable(model.addressId), true)
 	})
+
+	it('should have save method', () => {
+		assert.equal(typeof model.save, 'function')
+	})
 })

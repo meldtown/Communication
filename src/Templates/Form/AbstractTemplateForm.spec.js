@@ -24,4 +24,6 @@ describe('AbstractTemplateForm', () => {
 		assert.equal(model.id(), data.id)
 		assert.equal(model.title(), data.title)
 	})
+
+
 })

@@ -1,6 +1,7 @@
 import AbstractTemplate from '../AbstractTemplate'
 import * as actions from '../../constants'
 import * as ko from 'knockout'
+import axios from 'axios'
 
 export default class AbstractTemplateView extends AbstractTemplate {
 	constructor(dispatcher, data) {
@@ -17,5 +18,9 @@ export default class AbstractTemplateView extends AbstractTemplate {
 
 	select() {
 		this.dispatcher.notifySubscribers(this, actions.TEMPLATE_SELECTED)
+	}
+
+	delete() {
+		axios.delete(`${api}/templates/${this.id()}`)
 	}
 }

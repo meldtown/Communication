@@ -89,4 +89,8 @@ describe('AbstractTemplateView', () => {
 		tpl1.select()
 		assert.equal(counter, 5)
 	})
+
+	it('should have delete method', () => {
+		assert.equal(typeof model.delete, 'function')
+	})
 })

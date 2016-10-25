@@ -12,6 +12,10 @@ import OfferTemplateView from './View/OfferTemplateView'
 import TemplateFactory from './TemplateFactory'
 import AbstractTemplate from './AbstractTemplate'
 import AbstractTemplateView from './View/AbstractTemplateView'
+import StandardTemplateForm from './Form/StandardTemplateForm'
+import InviteTemplateForm from './Form/InviteTemplateForm'
+import OfferTemplateForm from './Form/OfferTemplateForm'
+import DeclineTemplateForm from './Form/DeclineTemplateForm'
 
 const api = 'http://sample.com'
 
@@ -553,5 +557,132 @@ describe('Templates', () => {
 		})
 	})
 
+	describe('update template', () => {
+		let model
+		let dispatcher
+		beforeEach(() => {
+			dispatcher = new ko.subscribable()
+			let templates = [
+				generator.generateStandardTemplate(1),
+				generator.generateInviteTemplate(2),
+				generator.generateOfferTemplate(3),
+				generator.generateDeclineTemplate(4),
+			].map(template => TemplateFactory.create(dispatcher, template))
+			model = new Templates(dispatcher)
+			model.templates(templates)
+		})
 
+		it('should have save method', () => {
+
+			assert.equal(typeof model.save, 'function')
+
+		})
+
+		it('should have fill method', () => {
+			let stdTplForm = new StandardTemplateForm(dispatcher)
+			let invTplForm = new InviteTemplateForm(dispatcher)
+			let offerTplForm = new OfferTemplateForm(dispatcher)
+			let declForm = new DeclineTemplateForm(dispatcher)
+			let tplInv = model.templates()[1]
+			assert.equal(typeof stdTplForm.fill, 'function')
+			assert.equal(typeof invTplForm.fill, 'function')
+			assert.equal(typeof offerTplForm.fill, 'function')
+			assert.equal(typeof declForm.fill, 'function')
+
+			model.selectInviteTab()
+			tplInv.select()
+			invTplForm.text('Hello')
+			invTplForm.title('World')
+			invTplForm.addressId(666)
+			let selectedTemplate = model.selectedTemplate()
+			invTplForm.fill(selectedTemplate)
+			assert.equal(selectedTemplate.text(), 'Hello')
+			assert.equal(selectedTemplate.title(), 'World')
+			assert.equal(selectedTemplate.addressId(), 666)
+		})
+
+		it('should set data to corresponding templateView on success put request after save', () => {
+			let responseText = [
+				generator.generateStandardTemplate(1),
+				generator.generateInviteTemplate(2),
+				generator.generateOfferTemplate(3),
+				generator.generateDeclineTemplate(4),
+			]
+			let tplStd = model.templates()[0]
+			tplStd.select()
+			model.edit()
+			let tplForm = model.selectedTemplateForm()
+			tplForm.text('Hello')
+			tplForm.title('World')
+			mock.onPut(`${api}/templates/1`).reply(200, responseText)
+			new Promise(() => {
+				model.save()
+			}).then(() => {
+				assert.equal(tplStd.text(), 'Hello')
+				assert.equal(tplStd.title(), 'World')
+				model.equal(model.selectedTemplateForm(), null)
+				model.fetch().then(() => {
+					assert.equal(model.templates()[0].text(), 'Hello')
+				})
+			})
+		})
+	})
+
+	describe('delete template', () => {
+		let model
+		let dispatcher
+		beforeEach(() => {
+			dispatcher = new ko.subscribable()
+			let templates = [
+				generator.generateStandardTemplate(1),
+				generator.generateInviteTemplate(2),
+				generator.generateOfferTemplate(3),
+				generator.generateDeclineTemplate(4),
+			].map(template => TemplateFactory.create(dispatcher, template))
+			model = new Templates(dispatcher)
+			model.templates(templates)
+		})
+		it('should have delete method', () => {
+			assert.equal(typeof model.delete, 'function')
+
+			let tplStd = model.templates()[0]
+			tplStd.select()
+			assert.equal(model.templates().length, 4)
+			mock.onDelete(`${api}/templates/1`).reply(200)
+			model.delete().then(() => {
+				assert.equal(model.templates().length, 3)
+				assert.equal(model.selectedTemplate(), null)
+			})
+		})
+	})
+
+	describe('create template', () => {
+		let model
+		let dispatcher
+		beforeEach(() => {
+			dispatcher = new ko.subscribable()
+			let templates = [
+				generator.generateStandardTemplate(1),
+				generator.generateInviteTemplate(2),
+				generator.generateOfferTemplate(3),
+				generator.generateDeclineTemplate(4),
+			].map(template => TemplateFactory.create(dispatcher, template))
+			model = new Templates(dispatcher)
+			model.templates(templates)
+		})
+		// it('should have create method', () => {
+		// 	assert.equal(typeof model.create, 'function')
+		// 	let stdTpl = new StandardTemplateForm(dispatcher, {
+		// 		id: 0, text: '', title: '', language: 'ru'
+		// 	})
+		// 	model.selectStandardTab()
+		// 	stdTpl().id(67)
+		// 	stdTpl().text('Hello')
+		// 	stdTpl().title('World')
+		// 	stdTpl().language('en')
+		// 	let {id, text, title, language} = ko.toJS(stdTpl)
+		// 	mock.onPost(`${api}/templates/`, {id, text, title, language, type}).reply(200, responseText)
+		// 	// model.create().
+		// })
+	})
 })

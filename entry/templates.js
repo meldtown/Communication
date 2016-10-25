@@ -1,7 +1,7 @@
 import * as ko from 'knockout'
 import Templates from '../src/Templates/Templates'
 
-export const model = new Templates()
+export const model = new Templates(new ko.subscribable())
 
 export const init = () => {
 	const root = document.getElementById('templates')

@@ -70,6 +70,7 @@ export default class Templates {
 
 		this.selectedTemplateForm = ko.observable(null)
 		this.isSelectedTemplateBeingEdited = ko.observable(false)
+		this.isNewTemplateBeingCreated = ko.observable(false)
 
 		dispatcher.subscribe(template => {
 			switch (template.constructor) {
@@ -146,12 +147,64 @@ export default class Templates {
 				form = new OfferTemplateForm(this.dispatcher, selectedTemplateData)
 				break
 		}
-
 		this.selectedTemplateForm(form)
 	}
 
 	cancel() {
 		this.isSelectedTemplateBeingEdited(false)
 		this.selectedTemplateForm(null)
+	}
+
+	save(isNewTemplateBeingCreated) {
+		this.selectedTemplateForm().save(isNewTemplateBeingCreated).then(() => {
+			this.selectedTemplateForm().fill(this.selectedTemplate())
+			if (isNewTemplateBeingCreated) {
+				this.templates().push(this.selectedTemplate())
+			}
+			this.selectedTemplateForm(null)
+			this.isNewTemplateBeingCreated(false)
+			this.isSelectedTemplateBeingEdited(false)
+		})
+	}
+
+	delete() {
+		return new Promise(() => {
+			this.selectedTemplate().delete()
+		}).then(() => {
+			this.templates().remove(this.selectedTemplate())
+		})
+	}
+
+	create() {
+		this.isNewTemplateBeingCreated(true)
+		let newTemplateForm = null
+		let newTemplateView = null
+		let data = {text: '', title: '', id: 0, language: 'ru'}
+		switch (this.selectedTab()) {
+			case StandardTemplateView:
+				newTemplateForm = new StandardTemplateForm(this.dispatcher, data)
+				newTemplateView = new StandardTemplateView(this.dispatcher, data)
+				break
+			case InviteTemplateView:
+				new InviteTemplateForm(this.dispatcher, Object.assign({}, data, {
+					addressId: 0,
+					inviteDate: '2016-11-11'
+				}))
+				newTemplateView = new InviteTemplateView(this.dispatcher, Object.assign({}, data, {
+					addressId: 0,
+					inviteDate: '2016-11-11'
+				}))
+				break
+			case DeclineTemplateView:
+				newTemplateForm = new DeclineTemplateForm(this.dispatcher, data)
+				newTemplateView = new DeclineTemplateView(this.dispatcher, data)
+				break
+			case OfferTemplateView:
+				newTemplateForm = new OfferTemplateForm(this.dispatcher, data)
+				newTemplateView = new OfferTemplateView(this.dispatcher, data)
+				break
+		}
+		this.selectedTemplateForm(newTemplateForm)
+		newTemplateView.select()
 	}
 }
