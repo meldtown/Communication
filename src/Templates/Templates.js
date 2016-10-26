@@ -20,12 +20,15 @@ export default class Templates {
 
 		this.dispatcher = dispatcher
 		this.templates = ko.observableArray()
+
+		this.tabs = [constants.STANDARD_MESSAGE, constants.INVITE_MESSAGE, constants.DECLINE_MESSAGE, constants.OFFER_MESSAGE]
 		this.selectedTab = ko.observable(StandardTemplateView)
 		this.isStandardTabSelected = ko.computed(() => this.selectedTab() === StandardTemplateView)
 		this.isInviteTabSelected = ko.computed(() => this.selectedTab() === InviteTemplateView)
 		this.isDeclineTabSelected = ko.computed(() => this.selectedTab() === DeclineTemplateView)
 		this.isOfferTabSelected = ko.computed(() => this.selectedTab() === OfferTemplateView)
 
+		this.languages = [constants.RU, constants.UA, constants.EN]
 		this.isRussianLanguageSelected = ko.observable(false)
 		this.isUkrainianLanguageSelected = ko.observable(false)
 		this.isEnglishLanguageSelected = ko.observable(false)
@@ -44,8 +47,8 @@ export default class Templates {
 				})
 				.filter(template => {
 					if (!this.filter()) return true
-					let str = this.filter()
-					return template.title().indexOf(str) !== -1 || template.text().indexOf(str) !== -1
+					let str = this.filter().toLowerCase()
+					return template.title().toLowerCase().indexOf(str) !== -1 || template.text().toLowerCase().indexOf(str) !== -1
 				})
 		})
 
@@ -96,7 +99,9 @@ export default class Templates {
 		return axios.get(`${api}/templates`)
 			.then(response => {
 				this.selectedTab(StandardTemplateView)
-				return this.templates(response.data.map(TemplateFactory.create.bind(this, this.dispatcher)))
+				let templates = this.templates(response.data.map(TemplateFactory.create.bind(this, this.dispatcher)))
+				this.filteredTemplates()[0].select()
+				return templates
 			})
 	}
 
@@ -106,14 +111,17 @@ export default class Templates {
 
 	selectInviteTab() {
 		this.selectedTab(InviteTemplateView)
+		if (!this.selectedInviteTemplate()) this.filteredTemplates()[0].select()
 	}
 
 	selectDeclineTab() {
 		this.selectedTab(DeclineTemplateView)
+		if (!this.selectedDeclineTemplate()) this.filteredTemplates()[0].select()
 	}
 
 	selectOfferTab() {
 		this.selectedTab(OfferTemplateView)
+		if (!this.selectedOfferTemplate()) this.filteredTemplates()[0].select()
 	}
 
 	toggleRussianLanguage() {
@@ -155,12 +163,11 @@ export default class Templates {
 		this.selectedTemplateForm(null)
 	}
 
-	save(isNewTemplateBeingCreated) {
-		this.selectedTemplateForm().save(isNewTemplateBeingCreated).then(() => {
+	save() {
+		return this.selectedTemplateForm().save().then(() => {
 			this.selectedTemplateForm().fill(this.selectedTemplate())
-			if (isNewTemplateBeingCreated) {
-				this.templates().push(this.selectedTemplate())
-				this.fetch()
+			if (!this.selectedTemplateForm().id()) {
+				this.templates.push(this.selectedTemplate())
 			}
 			this.selectedTemplateForm(null)
 			this.isNewTemplateBeingCreated(false)
@@ -169,16 +176,18 @@ export default class Templates {
 	}
 
 	delete() {
-		this.selectedTemplate().delete().then(() => {
+		return this.selectedTemplate().delete().then(() => {
 			this.templates.remove(this.selectedTemplate())
+			this.filteredTemplates()[0].select()
 		})
 	}
 
 	create() {
 		this.isNewTemplateBeingCreated(true)
+		this.isSelectedTemplateBeingEdited(true)
 		let newTemplateForm = null
 		let newTemplateView = null
-		let data = {text: '', title: '', id: 0, language: 'ru'}
+		let data = {text: '', title: '', language: 'ru'}
 		switch (this.selectedTab()) {
 			case StandardTemplateView:
 				newTemplateForm = new StandardTemplateForm(this.dispatcher, data)

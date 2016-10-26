@@ -7,6 +7,7 @@ export default class InviteTemplateView extends AbstractTemplateView {
 		let {inviteDate, addressId} = data
 		this.inviteDate = ko.observable(inviteDate)
 		this.addressId = ko.observable(addressId)
+		this.template = ko.observable('InviteTemplateForm')
 	}
 }
 

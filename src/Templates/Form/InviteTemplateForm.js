@@ -8,9 +8,10 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 		super(dispatcher, data)
 		this.inviteDate = ko.observable()
 		this.addressId = ko.observable()
+		this.template = ko.observable('InviteTemplateForm')
 	}
 
-	save(isNewTemplateBeingCreated) {
+	save() {
 		let data = {
 			type: 'invite',
 			text: this.text(),
@@ -19,11 +20,11 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 			inviteDate: this.inviteDate(),
 			addressId: this.addressId()
 		}
-		if (isNewTemplateBeingCreated) {
-			return axios.post(`${api}/templates/`, data)
+		if (this.id()) {
+			return axios.put(`${api}/templates/${this.id()}`, Object.assign({}, data, {id: this.id()}))
 		}
 		else {
-			return axios.put(`${api}/templates/${this.id()}`, Object.assign({}, data, {id: this.id()}))
+			return axios.post(`${api}/templates/`, data)
 		}
 	}
 

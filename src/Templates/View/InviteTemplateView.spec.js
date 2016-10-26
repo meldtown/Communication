@@ -26,4 +26,9 @@ describe('InviteTemplateView', () => {
 	it('should have inviteDate', () => {
 		assert.equal(ko.isObservable(model.inviteDate), true)
 	})
+
+	it('should have template prop', () => {
+		assert.equal(ko.isObservable(model.template), true)
+		assert.equal((model.template()), 'InviteTemplateForm')
+	})
 })

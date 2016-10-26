@@ -30,4 +30,9 @@ describe('StandardTemplateForm', () => {
 		assert.equal(model.id(), data.id)
 		assert.equal(model.title(), data.title)
 	})
+
+	it('should have template prop', () => {
+		assert.equal(ko.isObservable(model.template), true)
+		assert.equal((model.template()), 'StandardTemplateForm')
+	})
 })

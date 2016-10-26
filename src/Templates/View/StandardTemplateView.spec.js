@@ -18,4 +18,9 @@ describe('StandardTemplateView', () => {
 		assert.equal(model instanceof AbstractTemplateView, true)
 		assert.equal(model instanceof AbstractTemplate, true)
 	})
+
+	it('should have template prop', () => {
+		assert.equal(ko.isObservable(model.template), true)
+		assert.equal((model.template()), 'StandardTemplateForm')
+	})
 })
