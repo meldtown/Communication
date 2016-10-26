@@ -1,4 +1,16 @@
-<input placeholder="inviteDate..." type="datetime" data-bind="value: inviteDate, enable: hasConversationId">
+<!--<input placeholder="inviteDate..." type="datetime" data-bind="value: inviteDate, enable: hasConversationId">-->
+
+<input placeholder="date..." type="date" data-bind="value: inviteDateDate, enable: hasConversationId">
+<label for="time">time</label>
+<select id="time" data-bind="value: inviteDateTime, optionsCaption: 'time...', enable: hasConversationId">
+	<option>09:00</option>
+	<option>10:00</option>
+	<option>11:00</option>
+	<option>12:00</option>
+	<option>14:00</option>
+	<option>15:00</option>
+</select>
+
 <label for="addressId">address</label>
 <select id="addressId" data-bind="options: addresses, optionsText: 'optionText', optionsValue: 'id', value: addressId, optionsCaption: 'address...', enable: hasAddresses"></select>
 <textarea placeholder="invite..." data-bind="value: text, enable: hasConversationId"></textarea>

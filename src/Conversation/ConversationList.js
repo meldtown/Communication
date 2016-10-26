@@ -109,7 +109,6 @@ export default class ConversationList {
 
 				this.fromCvdbSelected(false)
 				this.fromApplySelected(false)
-
 				this.conversations(response.data.map(data => new Conversation(this.dispatcher, data)))
 			})
 			.catch(() => {

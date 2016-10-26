@@ -12,7 +12,7 @@ export default class InviteMessage extends AbstractMessage {
 		this.address = ko.observable(new Address(address))
 		this.template('InviteMessage')
 
-		this.formattedInviteDate = ko.computed(() => helpers.formattedDate(this.date()))
-		this.formattedInviteTime = ko.computed(() => helpers.formattedTime(this.date()))
+		this.formattedInviteDate = ko.computed(() => helpers.formattedDate(this.inviteDate()))
+		this.formattedInviteTime = ko.computed(() => helpers.formattedTime(this.inviteDate()))
 	}
 }

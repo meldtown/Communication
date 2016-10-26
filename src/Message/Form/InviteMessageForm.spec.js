@@ -36,8 +36,67 @@ describe('InviteMessageForm', () => {
 		assert.equal(model instanceof AbstractMessageForm, true)
 	})
 
-	it('should have inviteDate', () => {
-		assert.equal(ko.isObservable(model.inviteDate), true)
+	describe('inviteDate', () => {
+		let date = '2015-04-24'
+		let time = '14:00'
+		let dateTime = `${date}T${time}`
+
+		it('should have inviteDate', () => {
+			assert.ok(ko.isComputed(model.inviteDate))
+			assert.ok(ko.isWriteableObservable(model.inviteDate))
+			assert.ok(ko.isObservable(model.inviteDateDate))
+			assert.ok(ko.isObservable(model.inviteDateTime))
+		})
+
+		it('should return combined date', () => {
+			model.inviteDateDate(date)
+			model.inviteDateTime(time)
+			assert.equal(model.inviteDate().indexOf(dateTime), 0)
+		})
+
+		it('should set internals on write', () => {
+			model.inviteDate(dateTime)
+			assert.equal(model.inviteDateDate(), date)
+			assert.equal(model.inviteDateTime(), time)
+		})
+
+		it('should not return value if date is missing', () => {
+			model.inviteDateTime(time)
+
+			model.inviteDateDate(null)
+			assert.equal(model.inviteDate(), null)
+
+			model.inviteDateDate(undefined)
+			assert.equal(model.inviteDate(), null)
+
+			model.inviteDateDate(false)
+			assert.equal(model.inviteDate(), null)
+
+			model.inviteDateDate('')
+			assert.equal(model.inviteDate(), null)
+
+			model.inviteDateDate('Hello')
+			assert.equal(model.inviteDate(), null)
+		})
+
+		it('should not return value if time is missing', () => {
+			model.inviteDateDate(date)
+
+			model.inviteDateTime(null)
+			assert.equal(model.inviteDate(), null)
+
+			model.inviteDateTime(undefined)
+			assert.equal(model.inviteDate(), null)
+
+			model.inviteDateTime(false)
+			assert.equal(model.inviteDate(), null)
+
+			model.inviteDateTime('')
+			assert.equal(model.inviteDate(), null)
+
+			model.inviteDateTime('Hello')
+			assert.equal(model.inviteDate(), null)
+		})
 	})
 
 	it('should have addressId', () => {
@@ -88,7 +147,7 @@ describe('InviteMessageForm', () => {
 		return model.save().then(() => {
 			assert.equal(model.text(), '')
 			assert.equal(model.addressId(), 0)
-			assert.equal(model.inviteDate(), '')
+			assert.equal(model.inviteDate(), null)
 		})
 	})
 

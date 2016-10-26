@@ -65,7 +65,7 @@ describe('InviteMessage', () => {
 
 		let date = '2015-01-01T23:23:23'
 
-		model.date(date)
+		model.inviteDate(date)
 
 		assert.equal(model.formattedInviteDate(), moment(date).format('LL'))
 	})
@@ -75,7 +75,7 @@ describe('InviteMessage', () => {
 
 		let date = '2015-01-01T23:23:23'
 
-		model.date(date)
+		model.inviteDate(date)
 
 		assert.equal(model.formattedInviteTime(), moment(date).format('HH:mm'))
 	})

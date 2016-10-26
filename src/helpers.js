@@ -15,10 +15,7 @@ export const uniqueReducer = (result = [], item) => {
 	return result
 }
 
-export const formattedDate = date => {
-	return date ? moment(date).format('LL') : null
-}
-
-export const formattedTime = date => {
-	return date ? moment(date).format('HH:mm') : null
-}
+export const formattedDate = date => date && !isNaN(Date.parse(date)) && moment(date).isValid() ? moment(date).format('LL') : null
+export const formattedTime = date => date && !isNaN(Date.parse(date)) && moment(date).isValid() ? moment(date).format('HH:mm') : null
+export const isoDateTime = date => date && !isNaN(Date.parse(date)) && moment(date).isValid() ? moment(date).format() : null
+export const inputFormattedDate = date => date && !isNaN(Date.parse(date)) && moment(date).isValid() ? moment(date).format('YYYY-MM-DD') : null
