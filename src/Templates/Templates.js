@@ -76,6 +76,7 @@ export default class Templates {
 		this.isNewTemplateBeingCreated = ko.observable(false)
 
 		dispatcher.subscribe(template => {
+			this.isSelectedTemplateBeingEdited(false)
 			switch (template.constructor) {
 				case StandardTemplateView:
 					this.selectedStandardTemplate(template)
@@ -107,21 +108,25 @@ export default class Templates {
 
 	selectStandardTab() {
 		this.selectedTab(StandardTemplateView)
+		this.isSelectedTemplateBeingEdited(false)
 	}
 
 	selectInviteTab() {
 		this.selectedTab(InviteTemplateView)
 		if (!this.selectedInviteTemplate()) this.filteredTemplates()[0].select()
+		this.isSelectedTemplateBeingEdited(false)
 	}
 
 	selectDeclineTab() {
 		this.selectedTab(DeclineTemplateView)
 		if (!this.selectedDeclineTemplate()) this.filteredTemplates()[0].select()
+		this.isSelectedTemplateBeingEdited(false)
 	}
 
 	selectOfferTab() {
 		this.selectedTab(OfferTemplateView)
 		if (!this.selectedOfferTemplate()) this.filteredTemplates()[0].select()
+		this.isSelectedTemplateBeingEdited(false)
 	}
 
 	toggleRussianLanguage() {
@@ -164,9 +169,10 @@ export default class Templates {
 	}
 
 	save() {
-		return this.selectedTemplateForm().save().then(() => {
+		return this.selectedTemplateForm().save().then((response) => {
 			this.selectedTemplateForm().fill(this.selectedTemplate())
 			if (!this.selectedTemplateForm().id()) {
+				this.selectedTemplate().id(response.data.id)
 				this.templates.push(this.selectedTemplate())
 			}
 			this.selectedTemplateForm(null)
@@ -194,7 +200,7 @@ export default class Templates {
 				newTemplateView = new StandardTemplateView(this.dispatcher, data)
 				break
 			case InviteTemplateView:
-				new InviteTemplateForm(this.dispatcher, Object.assign({}, data, {
+				newTemplateForm = new InviteTemplateForm(this.dispatcher, Object.assign({}, data, {
 					addressId: 0,
 					inviteDate: '2016-11-11'
 				}))

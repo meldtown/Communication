@@ -172,6 +172,11 @@ describe('Templates', () => {
 		})
 	})
 
+	it('should reset template mode to view after switching tabs', () => {
+
+
+	})
+
 	it('should select the first standard template after fetch', () => {
 		let responseText = [
 			generator.generateStandardTemplate(1),
@@ -644,16 +649,10 @@ describe('Templates', () => {
 			tplForm.text('Hello')
 			tplForm.title('World')
 			mock.onPut(`${api}/templates/1`).reply(200, responseText)
-			new Promise(() => {
-				model.save()
-			}).then(() => {
+			model.save().then(() => {
 				assert.equal(tplStd.text(), 'Hello')
 				assert.equal(tplStd.title(), 'World')
-				model.equal(model.selectedTemplateForm(), null)
-				model.fetch().then(() => {
-					assert.equal(model.templates()[0].text(), 'Hello')
-
-				})
+				assert.equal(model.selectedTemplateForm(), null)
 			})
 		})
 	})
@@ -681,17 +680,20 @@ describe('Templates', () => {
 			let tplStd = model.templates()[0]
 			tplStd.select()
 			assert.equal(model.templates().length, 7)
+			// mock.onAny().reply(config => {
+			// 	console.log(config.method + ' ' + config.url)
+			// 	return [200]
+			// })
 			mock.onDelete(`${api}/templates/1`).reply(200)
-			new Promise(() => {
-				model.delete().then(() => {
-					assert.equal(model.templates().length, 3)
-					assert.equal(model.selectedTemplate(), null)
-				})
+			model.delete().then(() => {
+				assert.equal(model.templates().length, 3)
+				assert.equal(model.selectedTemplate(), null)
 			})
 		})
 
 		it('should select the first filtered template after delete', () => {
 			model.templates()[4].select()
+			mock.onDelete(`${api}/templates/${model.templates()[4].id()}`).reply(200)
 			model.delete().then(() => {
 				assert.equal(model.templates()[0].isSelected(), true)
 			})
@@ -722,18 +724,12 @@ describe('Templates', () => {
 			stdTpl.text('Hello')
 			stdTpl.title('World')
 			stdTpl.language('en')
-			let {id, text, title, language} = ko.toJS(stdTpl)
+			let {id, text, title, language} = ko.toJS(stdTpl) // eslint-disable-line no-unused-vars
 			model.create()
 			assert.equal(model.isNewTemplateBeingCreated(), true)
-			mock.onPost(`${api}/templates/`, Object.assign({}, {
-				id,
-				text,
-				title,
-				language
-			}, {type: 'standard'})).reply(200)
-			new Promise(() => {
-				model.save(model.isNewTemplateBeingCreated())
-			}).then(() => {
+
+			mock.onPost(`${api}/templates/`).reply(200)
+			model.save().then(() => {
 				assert.equal(model.templates().length, 5)
 				assert.equal(model.templates()[4].text(), 'Hello')
 				assert.equal(model.filteredTemplates()[model.filteredTemplates().length - 1].isSelected(), true)
@@ -747,12 +743,12 @@ describe('Templates', () => {
 			assert.equal(model.filteredTemplates().length, 2)
 		})
 
-		it('should recompute filteredTemplates after pushing new one', () => {
+		it('should recompute filteredTemplates after saving new one', () => {
 			assert.equal(model.filteredTemplates().length, 1)
 
 			model.create()
 			assert.ok(model.selectedTemplateForm())
-			mock.onPost(`${api}/templates/`).reply(200)
+			mock.onPost(`${api}/templates/`).reply(200, {id: 1})
 
 			return model.save().then(() => {
 				assert.equal(model.filteredTemplates().length, 2)
@@ -762,7 +758,7 @@ describe('Templates', () => {
 		it('should push new instance while create method being called', () => {
 			model.create()
 			assert.ok(model.selectedTemplateForm())
-			mock.onPost(`${api}/templates/`).reply(200)
+			mock.onPost(`${api}/templates/`).reply(200, {id: 33})
 
 			return model.save().then(() => {
 				assert.equal(model.templates().length, 5)
@@ -774,7 +770,7 @@ describe('Templates', () => {
 			model.templates()[0].select()
 			model.create()
 			assert.ok(model.selectedTemplateForm())
-			mock.onPost(`${api}/templates/`).reply(200)
+			mock.onPost(`${api}/templates/`).reply(200, {id: 1})
 
 			return model.save().then(() => {
 				assert.equal(model.templates().length, 2)
