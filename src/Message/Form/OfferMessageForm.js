@@ -9,11 +9,19 @@ export default class OfferMessageForm extends AbstractMessageForm {
 		super(dispatcher)
 		this.template('OfferMessageForm')
 		this.vacancyId = ko.observable()
+		this.vacancies = ko.observableArray([])
+
+		this.hasVacancies = ko.computed(() => (this.vacancies() || []).length > 0)
+		this.canBeSaved = ko.computed(() => this.conversationId() && this.vacancyId() && this.text())
 	}
 
 	save() {
 		if (!this.conversationId()) {
 			throw new Error('conversationId is required')
+		}
+
+		if (!this.vacancyId()) {
+			throw new Error('vacancyId is required')
 		}
 
 		return axios.post(`${api}/messages`, {
@@ -37,5 +45,10 @@ export default class OfferMessageForm extends AbstractMessageForm {
 	reset() {
 		this.text('')
 		this.vacancyId(0)
+	}
+
+	fetchVacancies() {
+		return axios.get(`${api}/vacancies`)
+			.then(response => this.vacancies(response.data))
 	}
 }

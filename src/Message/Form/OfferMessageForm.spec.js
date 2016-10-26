@@ -1,3 +1,4 @@
+import * as generator from '../../../db'
 import * as ko from 'knockout'
 import assert from 'assert'
 import OfferMessageForm from './OfferMessageForm'
@@ -40,6 +41,12 @@ describe('OfferMessageForm', () => {
 	})
 
 	it('should not try save message without conversationId', () => {
+		model.vacancyId(1)
+		assert.throws(() => model.save(), Error)
+	})
+
+	it('should not try save message without vacancyId', () => {
+		model.conversationId(1)
 		assert.throws(() => model.save(), Error)
 	})
 
@@ -95,5 +102,47 @@ describe('OfferMessageForm', () => {
 
 	it('should have template been set in constructor', () => {
 		assert.equal(model.template(), 'OfferMessageForm')
+	})
+
+
+	describe('vacancies', () => {
+		it('should have vacancies observable array', () => {
+			assert.ok(ko.isObservable(model.vacancies))
+			assert.equal(typeof model.vacancies.push, 'function')
+			assert.equal(model.vacancies().length, 0)
+		})
+
+		it('should have hasVacancies comp', () => {
+			assert.ok(ko.isComputed(model.hasVacancies))
+			assert.equal(model.hasVacancies(), false)
+			model.vacancies([generator.generateVacancy()])
+			assert.equal(model.hasVacancies(), true)
+		})
+
+		it('should have fetchVacancies method', () => {
+			assert.equal(typeof model.fetchVacancies, 'function')
+
+			assert.equal(model.vacancies().length, 0)
+
+			mock.onGet(`${api}/vacancies`).reply(200, [
+				generator.generateVacancy(),
+				generator.generateVacancy()
+			])
+
+			return model.fetchVacancies().then(() => {
+				assert.equal(model.vacancies().length, 2)
+			})
+		})
+	})
+
+	it('should have canBeSaved computed', () => {
+		assert.ok(ko.isComputed(model.canBeSaved))
+		assert.ok(!model.canBeSaved())
+		model.conversationId(1)
+		assert.ok(!model.canBeSaved())
+		model.vacancyId(1)
+		assert.ok(!model.canBeSaved())
+		model.text('Hello')
+		assert.ok(model.canBeSaved())
 	})
 })

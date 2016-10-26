@@ -13,12 +13,6 @@ const MESSAGE_TYPES = [
 	types.OFFER_MESSAGE,
 	types.APPLY_MESSAGE
 ]
-
-const CONVERSATION_TYPES = [
-	types.ACTIVE_CONVERSATION,
-	types.ARCHIVED_CONVERSATION,
-	types.BLOCKED_CONVERSATION
-]
 // </editor-fold>
 
 // <editor-fold desc="Generators">
@@ -39,16 +33,19 @@ export const generateStandardMessage = (id, conversationId) => ({
 	isRead: faker.random.boolean()
 })
 
-export const generateInviteMessage = (id, conversationId) => ({
-	id,
-	conversationId,
-	type: types.INVITE_MESSAGE,
-	date: generateRecentDate(),
-	text: faker.hacker.phrase(),
-	inviteDate: generateWorkTime(),
-	addressId: generateNumberBetween(1, 50),
-	isRead: faker.random.boolean()
-})
+export const generateInviteMessage = (id, conversationId, addresses = []) => {
+	return {
+		id,
+		conversationId,
+		type: types.INVITE_MESSAGE,
+		date: generateRecentDate(),
+		text: faker.hacker.phrase(),
+		inviteDate: generateWorkTime(),
+		address: addresses && addresses.length > 0 ? faker.random.arrayElement(addresses) : generateAddress(id),
+		addressId: generateNumberBetween(1, 50),
+		isRead: faker.random.boolean()
+	}
+}
 
 export const generateDeclineMessage = (id, conversationId) => ({
 	id,
@@ -105,11 +102,11 @@ export const generateApplyMessage = (id, conversationId, vacancies = []) => {
 	}
 }
 
-const generateMessage = (id, conversationId, vacancies) => {
+const generateMessage = (id, conversationId, vacancies, addresses) => {
 	var type = faker.random.arrayElement(MESSAGE_TYPES)
 	switch (type) {
 		case types.INVITE_MESSAGE:
-			return generateInviteMessage(id, conversationId)
+			return generateInviteMessage(id, conversationId, addresses)
 		case types.DECLINE_MESSAGE:
 			return generateDeclineMessage(id, conversationId)
 		case types.OFFER_MESSAGE:
@@ -136,7 +133,7 @@ export const generateConversation = (id, messages) => {
 	return {
 		id,
 		unreadMessagesCount,
-		type: faker.random.arrayElement(CONVERSATION_TYPES),
+		type: faker.random.arrayElement(types.CONVERSATION_TYPES),
 		fullName: faker.name.findName(),
 		avatar: faker.image.avatar(),
 		lastMessage: lastMessage,
@@ -149,13 +146,13 @@ export const generateConversation = (id, messages) => {
 	}
 }
 
-const generateMessages = vacancies => {
+const generateMessages = (vacancies, addresses) => {
 	let messageId = 1
 	let messages = []
 	for (let conversationId = 1; conversationId <= NUMBER_OF_CONVERSATIONS; conversationId++) {
 		let numberOfMessages = generateNumberBetween(1, 10)
 		for (let id = 1; id <= numberOfMessages; id++) {
-			messages.push(generateMessage(messageId++, conversationId, vacancies))
+			messages.push(generateMessage(messageId++, conversationId, vacancies, addresses))
 		}
 	}
 	return messages
@@ -227,11 +224,33 @@ const generateVacancies = () => {
 
 	return vacancies
 }
+
+export const generateAddress = id => ({
+	id,
+	city: faker.address.city(),
+	street: faker.address.streetName(),
+	houseNumber: faker.address.streetAddress(),
+	office: generateNumberBetween(1, 10),
+	description: faker.hacker.phrase(),
+	mapFile: `https://static-maps.yandex.ru/1.x/?l=map&ll=${faker.address.longitude()},${faker.address.latitude()}`
+})
+
+const generateAddresses = () => {
+	let addresses = []
+	let numberOfAddresses = generateNumberBetween(2, 10)
+
+	for (let id = 1; id <= numberOfAddresses; id++) {
+		addresses.push(generateAddress(id))
+	}
+
+	return addresses
+}
 // </editor-fold>
 
 if (require.main === module) {
+	let addresses = generateAddresses()
 	let vacancies = generateVacancies()
-	let messages = generateMessages(vacancies)
+	let messages = generateMessages(vacancies, addresses)
 	let conversations = generateConversations(messages)
 	let templates = generateTemplates()
 
@@ -239,7 +258,8 @@ if (require.main === module) {
 		vacancies,
 		conversations,
 		messages,
-		templates
+		templates,
+		addresses
 	}
 
 	let json = JSON.stringify(db, null, 4)

@@ -1,11 +1,24 @@
-<input placeholder="inviteDate..." type="datetime" data-bind="value: inviteDate, enable: hasConversationId">
-<input placeholder="addressId..." type="number" data-bind="value: addressId, enable: hasConversationId">
+<!--<input placeholder="inviteDate..." type="datetime" data-bind="value: inviteDate, enable: hasConversationId">-->
 
+<input placeholder="date..." type="date" data-bind="value: inviteDateDate, enable: hasConversationId">
+<label for="time">time</label>
+<select id="time" data-bind="value: inviteDateTime, optionsCaption: 'time...', enable: hasConversationId">
+	<option>09:00</option>
+	<option>10:00</option>
+	<option>11:00</option>
+	<option>12:00</option>
+	<option>14:00</option>
+	<option>15:00</option>
+</select>
+
+<label for="addressId">address</label>
+<select id="addressId" data-bind="options: addresses, optionsText: 'optionText', optionsValue: 'id', value: addressId, optionsCaption: 'address...', enable: hasAddresses"></select>
 <textarea placeholder="invite..." data-bind="value: text, enable: hasConversationId"></textarea>
-<div data-bind="if: hasConversationId">
+<div data-bind="if: canBeSaved">
 	<a href="#" data-bind="click: save">Send</a>
 </div>
-<div data-bind="ifnot: hasConversationId">
+<div data-bind="ifnot: canBeSaved">
 	<span>Send</span>
+	<span class="muted">select address and provide text</span>
 </div>
 

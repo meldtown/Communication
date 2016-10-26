@@ -29,6 +29,8 @@ export const init = () => {
 	helpers.injectTemplate('ApplyMessagePreview', require('../src/Message/ApplyMessagePreview.html'))
 
 	model.fetch()
+	model.offerMessageForm.fetchVacancies()
+	model.inviteMessageForm.fetchAddresses()
 	ko.applyBindings(model, root)
 	window['model'] = model
 }
