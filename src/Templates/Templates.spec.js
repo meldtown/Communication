@@ -204,6 +204,10 @@ describe('Templates', () => {
 				assert.equal(model.selectedTab(), InviteTemplateView)
 			})
 		})
+
+		it('should reset template mode to view after switching tabs', () => {
+			// TODO: missing test?
+		})
 	})
 
 	describe('languages', () => {
@@ -254,11 +258,6 @@ describe('Templates', () => {
 			model.toggleEnglishLanguage()
 			assert.equal(model.isEnglishLanguageSelected(), false)
 		})
-	})
-
-
-	it('should reset template mode to view after switching tabs', () => {
-		// TODO: missing test?
 	})
 
 	it('should select the first standard template after fetch', () => {
@@ -429,7 +428,7 @@ describe('Templates', () => {
 		})
 
 		it('should have selectedStandardTemplate', () => {
-			assert.equal(ko.isObservable(model.selectedStandardTemplate), true)
+			assert.ok(ko.isObservable(model.selectedStandardTemplate))
 
 			let stdTpl1 = model.templates()[4]
 			let stdTpl2 = model.templates()[7]
@@ -440,7 +439,7 @@ describe('Templates', () => {
 		})
 
 		it('should have selectedInviteTemplate', () => {
-			assert.equal(ko.isObservable(model.selectedInviteTemplate), true)
+			assert.ok(ko.isObservable(model.selectedInviteTemplate))
 
 			let invTpl1 = model.templates()[0]
 			let stdTpl1 = model.templates()[4]
@@ -451,7 +450,7 @@ describe('Templates', () => {
 		})
 
 		it('should have selectedDeclineTemplate', () => {
-			assert.equal(ko.isObservable(model.selectedDeclineTemplate), true)
+			assert.ok(ko.isObservable(model.selectedDeclineTemplate))
 
 			let dclTpl = model.templates()[3]
 
@@ -460,7 +459,7 @@ describe('Templates', () => {
 		})
 
 		it('should have selectedOfferTemplate', () => {
-			assert.equal(ko.isObservable(model.selectedOfferTemplate), true)
+			assert.ok(ko.isObservable(model.selectedOfferTemplate))
 
 			let offTpl = model.templates()[11]
 			offTpl.select()
@@ -489,7 +488,7 @@ describe('Templates', () => {
 		})
 
 		it('should have selectedTemplate com', () => {
-			assert.equal(ko.isComputed(model.selectedTemplate), true)
+			assert.ok(ko.isComputed(model.selectedTemplate))
 
 			let stdTpl1 = model.templates()[4]
 			let stdTpl2 = model.templates()[7]
