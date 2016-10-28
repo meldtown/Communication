@@ -80,7 +80,7 @@
 				</div>
 				<hr>
 				<div data-bind="if: hasConversations">
-					<div data-bind="template: {name: 'Conversation', foreach: filteredConversations}"></div>
+					<div data-bind="template: {name: 'ConversationSelectable', foreach: filteredConversations}"></div>
 				</div>
 				<div data-bind="ifnot: hasConversations">
 					Nothing here
