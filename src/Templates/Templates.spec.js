@@ -629,7 +629,7 @@ describe('Templates', () => {
 			model.templates(templates)
 		})
 		it('should have delete method', () => {
-			assert.equal(typeof model.delete, 'function')
+			assert.equal(typeof model.remove, 'function')
 
 			let tplStd = model.templates()[0]
 			tplStd.select()
@@ -639,7 +639,7 @@ describe('Templates', () => {
 			// 	return [200]
 			// })
 			mock.onDelete(`${api}/templates/1`).reply(200)
-			model.delete().then(() => {
+			model.remove().then(() => {
 				assert.equal(model.templates().length, 3)
 				assert.equal(model.selectedTemplate(), null)
 			})
@@ -648,7 +648,8 @@ describe('Templates', () => {
 		it('should select the first filtered template after delete', () => {
 			model.templates()[4].select()
 			mock.onDelete(`${api}/templates/${model.templates()[4].id()}`).reply(200)
-			model.delete().then(() => {
+
+			model.remove().then(() => {
 				assert.equal(model.templates()[0].isSelected(), true)
 			})
 		})
