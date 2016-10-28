@@ -3,6 +3,7 @@ import AbstractTemplateForm from './AbstractTemplateForm'
 import AbstractTemplate from '../AbstractTemplate'
 import * as ko from 'knockout'
 import * as generator from '../../../db'
+import * as constants from '../../constants'
 
 describe('AbstractTemplateForm', () => {
 	let model
@@ -25,5 +26,20 @@ describe('AbstractTemplateForm', () => {
 		assert.equal(model.title(), data.title)
 	})
 
+	it('should have fill method', () => {
+		assert.equal(typeof model.fill, 'function')
+	})
 
+	it('should fill given template', () => {
+		model.id(1)
+		model.title('title')
+		model.text('text')
+		model.language(constants.UA)
+
+		let template = new AbstractTemplate(dispatcher)
+
+		model.fill(template)
+
+		assert.deepEqual(ko.toJS(template), ko.toJS(model))
+	})
 })

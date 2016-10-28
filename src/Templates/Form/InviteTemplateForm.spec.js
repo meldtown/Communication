@@ -1,3 +1,4 @@
+import * as constants from '../../constants'
 import * as ko from 'knockout'
 import assert from 'assert'
 import InviteTemplateForm from './InviteTemplateForm'
@@ -8,6 +9,7 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import TemplateFactory from '../TemplateFactory'
 import Templates from '../Templates'
+import InviteTemplateView from '../View/InviteTemplateView'
 
 
 describe('InviteTemplateForm', () => {
@@ -48,45 +50,69 @@ describe('InviteTemplateForm', () => {
 		assert.equal(ko.isObservable(model.template), true)
 		assert.equal((model.template()), 'InviteTemplateForm')
 	})
-})
 
-describe('save method', () => {
-	let model
-	let dispatcher
-	let mock
-	beforeEach(() => {
-		mock = new MockAdapter(axios)
-		dispatcher = new ko.subscribable()
-		let templates = [
-			generator.generateStandardTemplate(1),
-			generator.generateInviteTemplate(2),
-			generator.generateOfferTemplate(3),
-			generator.generateDeclineTemplate(4),
-		].map(template => TemplateFactory.create(dispatcher, template))
-		model = new Templates(dispatcher)
-		model.templates(templates)
+	it('should have fill method', () => {
+		assert.equal(typeof model.fill, 'function')
 	})
 
-	it('should successfully save data via put method', () => {
-		let tpl = model.templates()[1]
-		model.selectInviteTab()
-		tpl.select()
-		model.edit()
-		model.selectedTemplateForm().title('ho-ho-ho')
-		mock.onPut(`${api}/templates/2`).reply(200)
-		model.save().then(() => {
-			assert.equal(tpl.title(), 'ho-ho-ho')
+	it('should fill given template', () => {
+		model.id(1)
+		model.title('title')
+		model.text('text')
+		model.language(constants.UA)
+		model.inviteDate((new Date()).toISOString())
+		model.addressId(1)
+
+		let template = new InviteTemplateView(dispatcher)
+
+		model.fill(template)
+
+		// noinspection JSUnusedLocalSymbols
+		let {isSelected, ...actual} =ko.toJS(template) // eslint-disable-line no-unused-vars
+
+		assert.deepEqual(actual, ko.toJS(model))
+	})
+
+	describe('save method', () => {
+		let model
+		let dispatcher
+		let mock
+		beforeEach(() => {
+			mock = new MockAdapter(axios)
+			dispatcher = new ko.subscribable()
+			let templates = [
+				generator.generateStandardTemplate(1),
+				generator.generateInviteTemplate(2),
+				generator.generateOfferTemplate(3),
+				generator.generateDeclineTemplate(4),
+			].map(template => TemplateFactory.create(dispatcher, template))
+			model = new Templates(dispatcher)
+			model.templates(templates)
+		})
+
+		it('should successfully save data via put method', () => {
+			let tpl = model.templates()[1]
+			model.selectInviteTab()
+			tpl.select()
+			model.edit()
+			model.selectedTemplateForm().title('ho-ho-ho')
+			mock.onPut(`${api}/templates/2`).reply(200)
+			model.save().then(() => {
+				assert.equal(tpl.title(), 'ho-ho-ho')
+			})
+		})
+
+		it('should successfully save data via post method', () => {
+			model.selectInviteTab()
+			model.create()
+			model.selectedTemplateForm().title('ho-ho-ho')
+			model.selectedTemplateForm().text('text')
+			mock.onPost(`${api}/templates/`).reply(200, {id: 555})
+			model.save().then(() => {
+				assert.equal(model.templates()[4].id(), 555)
+			})
 		})
 	})
-
-	it('should successfully save data via post method', () => {
-		model.selectInviteTab()
-		model.create()
-		model.selectedTemplateForm().title('ho-ho-ho')
-		model.selectedTemplateForm().text('text')
-		mock.onPost(`${api}/templates/`).reply(200, {id: 555})
-		model.save().then(() => {
-			assert.equal(model.templates()[4].id(), 555)
-		})
-	})
 })
+
+
