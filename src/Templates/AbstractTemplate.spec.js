@@ -45,6 +45,4 @@ describe('AbstractTemplate', () => {
 		let model = new AbstractTemplate(dispatcher, data)
 		assert.deepEqual(ko.toJS(model), {dispatcher, ...ko.toJS(model)})
 	})
-
-
 })

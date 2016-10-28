@@ -93,4 +93,20 @@ describe('AbstractTemplateView', () => {
 	it('should have delete method', () => {
 		assert.equal(typeof model.delete, 'function')
 	})
+
+	it('should have isSelected prop', () => {
+		assert.ok(ko.isObservable(model.isSelected))
+
+		model.isSelected(true)
+
+		assert.equal(model.isSelected(), true)
+	})
+
+	it('should have dispatcher prop and accept it as first constructor argument', () => {
+		assert.ok(ko.isSubscribable(model.dispatcher))
+	})
+
+	it('should throw an error if dispatcher not given', () => {
+		assert.throws(() => new AbstractTemplateView(), Error)
+	})
 })

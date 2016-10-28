@@ -10,7 +10,6 @@ import InviteTemplateView from './View/InviteTemplateView'
 import DeclineTemplateView from './View/DeclineTemplateView'
 import OfferTemplateView from './View/OfferTemplateView'
 import TemplateFactory from './TemplateFactory'
-import AbstractTemplate from './AbstractTemplate'
 import StandardTemplateForm from './Form/StandardTemplateForm'
 import InviteTemplateForm from './Form/InviteTemplateForm'
 import OfferTemplateForm from './Form/OfferTemplateForm'
@@ -402,30 +401,6 @@ describe('Templates', () => {
 	})
 
 	describe('selectedTemplate', () => {
-		let templates
-
-		beforeEach(() => {
-			templates = [
-				generator.generateInviteTemplate(4),
-				generator.generateOfferTemplate(12),
-				generator.generateOfferTemplate(33),
-				generator.generateDeclineTemplate(666),
-				generator.generateStandardTemplate(1),
-				generator.generateDeclineTemplate(5),
-				generator.generateDeclineTemplate(555),
-				generator.generateStandardTemplate(9),
-				generator.generateDeclineTemplate(17),
-				generator.generateDeclineTemplate(444),
-				generator.generateOfferTemplate(6),
-				generator.generateOfferTemplate(56),
-				generator.generateOfferTemplate(57),
-				generator.generateOfferTemplate(78),
-				generator.generateStandardTemplate(123)
-			]
-			templates = templates.map(template => TemplateFactory.create(dispatcher, template))
-			model.templates(templates)
-		})
-
 		it('should have selectedStandardTemplate', () => {
 			assert.ok(ko.isObservable(model.selectedStandardTemplate))
 
@@ -443,67 +418,58 @@ describe('Templates', () => {
 		it('should have selectedInviteTemplate', () => {
 			assert.ok(ko.isObservable(model.selectedInviteTemplate))
 
-			let invTpl1 = model.templates()[0]
-			let stdTpl1 = model.templates()[4]
-			stdTpl1.select()
-			invTpl1.select()
-			assert.equal(model.selectedInviteTemplate(), invTpl1)
-			assert.equal(model.selectedStandardTemplate(), stdTpl1)
+			let inviteTemplate = TemplateFactory.create(dispatcher, generator.generateInviteTemplate(1))
+			let standardTemplate = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(2))
+			model.templates([inviteTemplate, standardTemplate])
+
+			standardTemplate.select()
+			inviteTemplate.select()
+			assert.equal(model.selectedInviteTemplate(), inviteTemplate)
+			assert.equal(model.selectedStandardTemplate(), standardTemplate)
 		})
 
 		it('should have selectedDeclineTemplate', () => {
 			assert.ok(ko.isObservable(model.selectedDeclineTemplate))
 
-			let dclTpl = model.templates()[3]
+			let template = TemplateFactory.create(dispatcher, generator.generateDeclineTemplate(1))
+			model.templates([template])
 
-			dclTpl.select()
-			assert.equal(model.selectedDeclineTemplate(), dclTpl)
+			template.select()
+			assert.equal(model.selectedDeclineTemplate(), template)
 		})
 
 		it('should have selectedOfferTemplate', () => {
 			assert.ok(ko.isObservable(model.selectedOfferTemplate))
 
-			let offTpl = model.templates()[11]
-			offTpl.select()
-			assert.equal(model.selectedOfferTemplate(), offTpl)
+			let template = TemplateFactory.create(dispatcher, generator.generateOfferTemplate(1))
+			model.templates([template])
+
+			template.select()
+			assert.equal(model.selectedOfferTemplate(), template)
 		})
 
-		it('should have isSelected prop', () => {
-			let template = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
-
-			template.isSelected(true)
-
-			assert.equal(ko.isObservable(template.isSelected), true)
-			assert.equal(template.isSelected(), true)
-		})
-
-		it('should have dispatcher prop and accept it as first constructor argument', () => {
-			let model = new AbstractTemplate(dispatcher, {id: 2, title: 'title', text: 'text', language: 'language'})
-			assert.equal(ko.isSubscribable(model.dispatcher), true)
-		})
-
-		it('should throw an error if dispatcher not given', () => {
-			assert.throws(() => new AbstractTemplate(), Error)
-		})
-
-		it('should have selectedTemplate com', () => {
+		it('should have selectedTemplate computed', () => {
 			assert.ok(ko.isComputed(model.selectedTemplate))
 
-			let stdTpl1 = model.templates()[4]
-			let stdTpl2 = model.templates()[7]
-			let invTpl = model.templates()[0]
-			let dclTpl = model.templates()[3]
-			stdTpl1.select()
-			assert.equal(model.selectedTemplate(), stdTpl1)
-			stdTpl2.select()
-			assert.equal(model.selectedTemplate(), stdTpl2)
-			invTpl.select()
-			assert.equal(model.selectedTemplate(), stdTpl2)
+			let standardTemplate1 = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
+			let standardTemplate2 = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(2))
+			let inviteTemplate1 = TemplateFactory.create(dispatcher, generator.generateInviteTemplate(3))
+			let declineTemplate1 = TemplateFactory.create(dispatcher, generator.generateDeclineTemplate(4))
+			model.templates([standardTemplate1, standardTemplate2, inviteTemplate1, declineTemplate1])
+
+			standardTemplate1.select()
+			assert.equal(model.selectedTemplate(), standardTemplate1)
+			standardTemplate2.select()
+			assert.equal(model.selectedTemplate(), standardTemplate2)
+			assert.equal(model.selectedTemplate(), standardTemplate2)
+
+			inviteTemplate1.select()
 			model.selectInviteTab()
-			assert.equal(model.selectedTemplate(), invTpl)
-			dclTpl.select()
+			assert.equal(model.selectedTemplate(), inviteTemplate1)
+
+			declineTemplate1.select()
 			model.selectDeclineTab()
-			assert.equal(model.selectedTemplate(), dclTpl)
+			assert.equal(model.selectedTemplate(), declineTemplate1)
 		})
 
 		it('should return standardTemplate if selectedTab is not defined', () => {
