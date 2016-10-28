@@ -1,7 +1,7 @@
 import AbstractTemplateForm from './AbstractTemplateForm'
 import axios from 'axios'
 import * as ko from 'knockout'
-
+import * as constants from '../../constants'
 
 export default class StandardTemplateForm extends AbstractTemplateForm {
 	constructor(dispatcher, data = {}) {
@@ -11,7 +11,7 @@ export default class StandardTemplateForm extends AbstractTemplateForm {
 
 	save() {
 		let data = {
-			type: 'standard',
+			type: constants.STANDARD_MESSAGE,
 			text: this.text(),
 			title: this.title(),
 			language: this.language(),

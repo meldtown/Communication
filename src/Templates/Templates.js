@@ -174,7 +174,7 @@ export default class Templates {
 	}
 
 	save() {
-		return this.selectedTemplateForm().save().then((response) => {
+		return this.selectedTemplateForm().save().then(response => {
 			this.selectedTemplateForm().fill(this.selectedTemplate())
 			if (!this.selectedTemplateForm().id()) {
 				this.selectedTemplate().id(response.data.id)

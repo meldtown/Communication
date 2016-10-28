@@ -17,7 +17,6 @@ const MESSAGE_TYPES = [
 
 // <editor-fold desc="Generators">
 const generateNumberBetween = (min, max) => faker.random.number(max - min) + min
-const generateWorkTime = () => `${generateNumberBetween(11, 20)}:${faker.random.arrayElement(['00', '30'])}`
 const generateDummyImage = (width, height, backgroundColor, color, text) => `https://dummyimage.com/${width}x${height}/${backgroundColor}/${color}.png&text=${text}`
 const generateRecentDate = () => faker.date.recent(300).toISOString()
 const generateLanguage = () => faker.random.arrayElement(['ru', 'en', 'ua'])
@@ -40,7 +39,7 @@ export const generateInviteMessage = (id, conversationId, addresses = []) => {
 		type: types.INVITE_MESSAGE,
 		date: generateRecentDate(),
 		text: faker.hacker.phrase(),
-		inviteDate: generateWorkTime(),
+		inviteDate: faker.date.future().toISOString(),
 		address: addresses && addresses.length > 0 ? faker.random.arrayElement(addresses) : generateAddress(id),
 		addressId: generateNumberBetween(1, 50),
 		isRead: faker.random.boolean()

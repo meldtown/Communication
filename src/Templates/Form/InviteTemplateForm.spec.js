@@ -1,4 +1,3 @@
-import * as constants from '../../constants'
 import * as ko from 'knockout'
 import assert from 'assert'
 import InviteTemplateForm from './InviteTemplateForm'
@@ -7,15 +6,19 @@ import AbstractTemplate from '../AbstractTemplate'
 import * as generator from '../../../db'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import TemplateFactory from '../TemplateFactory'
-import Templates from '../Templates'
 import InviteTemplateView from '../View/InviteTemplateView'
 
+const api = 'http://sample.com'
 
 describe('InviteTemplateForm', () => {
+	let mock
 	let model
 	let dispatcher
+
+	before(() => global.api = api)
+
 	beforeEach(() => {
+		mock = new MockAdapter(axios)
 		dispatcher = new ko.subscribable()
 		model = new InviteTemplateForm(dispatcher)
 	})
@@ -34,20 +37,16 @@ describe('InviteTemplateForm', () => {
 		assert.equal(ko.isObservable(model.addressId), true)
 	})
 
-	it('should have save method', () => {
-		assert.equal(typeof model.save, 'function')
-	})
-
 	it('should accept data into constructor', () => {
 		let data = generator.generateInviteTemplate(1)
 		model = new InviteTemplateForm(dispatcher, data)
-
-		assert.equal(model.id(), data.id)
-		assert.equal(model.title(), data.title)
+		let actual = ko.toJS(model)
+		let overrides = {dispatcher: 1, template: 1, type: 1}
+		assert.deepEqual({...actual, ...overrides}, {...data, ...overrides})
 	})
 
 	it('should have template prop', () => {
-		assert.equal(ko.isObservable(model.template), true)
+		assert.ok(ko.isObservable(model.template))
 		assert.equal((model.template()), 'InviteTemplateForm')
 	})
 
@@ -56,13 +55,7 @@ describe('InviteTemplateForm', () => {
 	})
 
 	it('should fill given template', () => {
-		model.id(1)
-		model.title('title')
-		model.text('text')
-		model.language(constants.UA)
-		model.inviteDate((new Date()).toISOString())
-		model.addressId(1)
-
+		model = new InviteTemplateForm(dispatcher, generator.generateInviteTemplate(1))
 		let template = new InviteTemplateView(dispatcher)
 
 		model.fill(template)
@@ -74,43 +67,24 @@ describe('InviteTemplateForm', () => {
 	})
 
 	describe('save method', () => {
-		let model
-		let dispatcher
-		let mock
-		beforeEach(() => {
-			mock = new MockAdapter(axios)
-			dispatcher = new ko.subscribable()
-			let templates = [
-				generator.generateStandardTemplate(1),
-				generator.generateInviteTemplate(2),
-				generator.generateOfferTemplate(3),
-				generator.generateDeclineTemplate(4),
-			].map(template => TemplateFactory.create(dispatcher, template))
-			model = new Templates(dispatcher)
-			model.templates(templates)
+		let {id, ...data} = generator.generateInviteTemplate(1)
+
+		it('should have save method', () => {
+			assert.equal(typeof model.save, 'function')
 		})
 
-		it('should successfully save data via put method', () => {
-			let tpl = model.templates()[1]
-			model.selectInviteTab()
-			tpl.select()
-			model.edit()
-			model.selectedTemplateForm().title('ho-ho-ho')
-			mock.onPut(`${api}/templates/2`).reply(200)
-			model.save().then(() => {
-				assert.equal(tpl.title(), 'ho-ho-ho')
-			})
+		it('should call put while saving existing template', () => {
+			model = new InviteTemplateForm(dispatcher, {...data, id})
+			mock.onPut(`${api}/templates/${id}`, {...data, id}).reply(200)
+
+			return model.save().then(() => assert.ok(true))
 		})
 
-		it('should successfully save data via post method', () => {
-			model.selectInviteTab()
-			model.create()
-			model.selectedTemplateForm().title('ho-ho-ho')
-			model.selectedTemplateForm().text('text')
-			mock.onPost(`${api}/templates/`).reply(200, {id: 555})
-			model.save().then(() => {
-				assert.equal(model.templates()[4].id(), 555)
-			})
+		it('should call post while saving new template', () => {
+			model = new InviteTemplateForm(dispatcher, data)
+			mock.onPost(`${api}/templates/`, data).reply(200, {id})
+
+			return model.save().then(() => assert.ok(true))
 		})
 	})
 })

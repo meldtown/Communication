@@ -714,7 +714,7 @@ describe('Templates', () => {
 
 			model.create()
 			assert.ok(model.selectedTemplateForm())
-			mock.onPost(`${api}/templates/`).reply(200, {id: 1})
+			mock.onPost(`${api}/templates/`).reply(200, {id: 1000})
 
 			return model.save().then(() => {
 				assert.equal(model.filteredTemplates().length, 2)

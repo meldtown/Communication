@@ -6,13 +6,18 @@ import * as ko from 'knockout'
 import * as generator from '../../../db'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import TemplateFactory from '../TemplateFactory'
-import Templates from '../Templates'
+
+const api = 'http://sample.com'
 
 describe('OfferTemplateForm', () => {
+	let mock
 	let model
 	let dispatcher
+
+	before(() => global.api = api)
+
 	beforeEach(() => {
+		mock = new MockAdapter(axios)
 		dispatcher = new ko.subscribable()
 		model = new OfferTemplateForm(dispatcher)
 	})
@@ -23,62 +28,40 @@ describe('OfferTemplateForm', () => {
 		assert.equal(model instanceof AbstractTemplate, true)
 	})
 
-	it('should have save method', () => {
-		assert.equal(typeof model.save, 'function')
-	})
+
 
 	it('should accept data into constructor', () => {
 		let data = generator.generateOfferTemplate(1)
 		model = new OfferTemplateForm(dispatcher, data)
-
-		assert.equal(model.id(), data.id)
-		assert.equal(model.title(), data.title)
+		let actual = ko.toJS(model)
+		let overrides = {dispatcher: 1, template: 1, type: 1}
+		assert.deepEqual({...actual, ...overrides}, {...data, ...overrides})
 	})
 
 	it('should have template prop', () => {
 		assert.equal(ko.isObservable(model.template), true)
 		assert.equal((model.template()), 'OfferTemplateForm')
 	})
-})
 
-describe('save method', () => {
-	let model
-	let dispatcher
-	let mock
-	beforeEach(() => {
-		mock = new MockAdapter(axios)
-		dispatcher = new ko.subscribable()
-		let templates = [
-			generator.generateStandardTemplate(1),
-			generator.generateInviteTemplate(2),
-			generator.generateOfferTemplate(3),
-			generator.generateDeclineTemplate(4),
-		].map(template => TemplateFactory.create(dispatcher, template))
-		model = new Templates(dispatcher)
-		model.templates(templates)
-	})
+	describe('save method', () => {
+		let {id, ...data} = generator.generateOfferTemplate(1)
 
-	it('should successfully save data via put method', () => {
-		let tpl = model.templates()[2]
-		model.selectOfferTab()
-		tpl.select()
-		model.edit()
-		model.selectedTemplateForm().title('ho-ho-ho')
-		mock.onPut(`${api}/templates/3`).reply(200)
-		model.save().then(() => {
-			assert.equal(tpl.title(), 'ho-ho-ho')
+		it('should have save method', () => {
+			assert.equal(typeof model.save, 'function')
 		})
-	})
 
-	it('should successfully save data via post method', () => {
-		model.selectOfferTab()
-		model.create()
-		model.selectedTemplateForm().title('ho-ho-ho')
-		model.selectedTemplateForm().text('text')
-		mock.onPost(`${api}/templates/`).reply(200, {id: 666})
-		model.save().then(() => {
-			assert.equal(model.templates()[4].id(), 666)
+		it('should call put while saving existing template', () => {
+			model = new OfferTemplateForm(dispatcher, {...data, id})
+			mock.onPut(`${api}/templates/${id}`, {...data, id}).reply(200)
+
+			return model.save().then(() => assert.ok(true))
+		})
+
+		it('should call post while saving new template', () => {
+			model = new OfferTemplateForm(dispatcher, data)
+			mock.onPost(`${api}/templates/`, data).reply(200, {id})
+
+			return model.save().then(() => assert.ok(true))
 		})
 	})
 })
-

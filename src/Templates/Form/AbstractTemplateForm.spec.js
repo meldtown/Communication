@@ -13,6 +13,7 @@ describe('AbstractTemplateForm', () => {
 		dispatcher = new ko.subscribable()
 		model = new AbstractTemplateForm(dispatcher)
 	})
+
 	it('should be instantiable', () => {
 		assert.equal(model instanceof AbstractTemplateForm, true)
 		assert.equal(model instanceof AbstractTemplate, true)
