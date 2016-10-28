@@ -90,8 +90,6 @@ export default class Templates {
 				case OfferTemplateView:
 					this.selectedOfferTemplate(template)
 					break
-				default:
-					this.selectedStandardTemplate(template)
 			}
 		}, this, constants.TEMPLATE_SELECTED)
 	}
@@ -190,7 +188,10 @@ export default class Templates {
 
 	create() {
 		this.isNewTemplateBeingCreated(true)
-		this.isSelectedTemplateBeingEdited(true)
+		this.filter('')
+		this.isRussianLanguageSelected(false)
+		this.isUkrainianLanguageSelected(false)
+		this.isEnglishLanguageSelected(false)
 		let newTemplateForm = null
 		let newTemplateView = null
 		let data = {text: '', title: '', language: 'ru'}
@@ -220,5 +221,6 @@ export default class Templates {
 		}
 		this.selectedTemplateForm(newTemplateForm)
 		newTemplateView.select()
+		this.isSelectedTemplateBeingEdited(true)
 	}
 }

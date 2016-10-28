@@ -736,6 +736,17 @@ describe('Templates', () => {
 			})
 		})
 
+		it('should reset filters', () => {
+			model.filter('Lisp')
+			model.toggleRussianLanguage()
+			model.toggleUkrainianLanguage()
+			model.create()
+
+			assert.equal(model.filter(), '')
+			assert.equal(model.isRussianLanguageSelected(), false)
+			assert.equal(model.isUkrainianLanguageSelected(), false)
+		})
+
 		it('should recompute filteredTemplates after pushing new one', () => {
 			assert.equal(model.filteredTemplates().length, 1)
 
