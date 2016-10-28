@@ -532,7 +532,7 @@ describe('Templates', () => {
 			assert.equal(typeof model.cancel, 'function')
 		})
 
-		it('should reset data in selectedTemplateForm after cancel', () => {
+		it('should reset selectedTemplateForm after cancel', () => {
 			let template = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
 			model.templates([template])
 
@@ -611,46 +611,35 @@ describe('Templates', () => {
 		})
 	})
 
-	describe('delete template', () => {
-		let model
-		let dispatcher
-		beforeEach(() => {
-			dispatcher = new ko.subscribable()
-			let templates = [
-				generator.generateStandardTemplate(1),
-				generator.generateInviteTemplate(2),
-				generator.generateOfferTemplate(3),
-				generator.generateDeclineTemplate(4),
-				generator.generateStandardTemplate(6),
-				generator.generateStandardTemplate(7),
-				generator.generateStandardTemplate(8)
-			].map(template => TemplateFactory.create(dispatcher, template))
-			model = new Templates(dispatcher)
-			model.templates(templates)
-		})
-		it('should have delete method', () => {
+	describe('remove template', () => {
+		it('should have remove method', () => {
 			assert.equal(typeof model.remove, 'function')
+		})
 
-			let tplStd = model.templates()[0]
-			tplStd.select()
-			assert.equal(model.templates().length, 7)
-			// mock.onAny().reply(config => {
-			// 	console.log(config.method + ' ' + config.url)
-			// 	return [200]
-			// })
-			mock.onDelete(`${api}/templates/1`).reply(200)
-			model.remove().then(() => {
-				assert.equal(model.templates().length, 3)
-				assert.equal(model.selectedTemplate(), null)
+		it('should call backend and remove item on success', () => {
+			let template = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
+
+			model.templates([template])
+			template.select()
+			assert.equal(model.templates().length, 1)
+
+			mock.onDelete(`${api}/templates/${template.id()}`).reply(200)
+
+			return model.remove().then(() => {
+				assert.equal(model.templates().length, 0)
 			})
 		})
 
 		it('should select the first filtered template after delete', () => {
-			model.templates()[4].select()
-			mock.onDelete(`${api}/templates/${model.templates()[4].id()}`).reply(200)
+			let template1 = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
+			let template2 = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(2))
+
+			model.templates([template1, template2])
+			template1.select()
+			mock.onDelete(`${api}/templates/${template1.id()}`).reply(200)
 
 			model.remove().then(() => {
-				assert.equal(model.templates()[0].isSelected(), true)
+				assert.equal(template2.isSelected(), true)
 			})
 		})
 	})

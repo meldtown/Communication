@@ -189,7 +189,9 @@ export default class Templates {
 	remove() {
 		return this.selectedTemplate().remove().then(() => {
 			this.templates.remove(this.selectedTemplate())
-			this.filteredTemplates()[0].select()
+			if (this.filteredTemplates().length > 0) {
+				this.filteredTemplates()[0].select()
+			}
 		})
 	}
 
