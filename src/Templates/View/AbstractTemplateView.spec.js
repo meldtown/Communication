@@ -9,10 +9,12 @@ import * as generator from '../../../db'
 describe('AbstractTemplateView', () => {
 	let model
 	let dispatcher
+
 	beforeEach(() => {
 		dispatcher = new ko.subscribable()
 		model = new AbstractTemplateView(dispatcher)
 	})
+
 	it('should be instantiable', () => {
 		assert.equal(model instanceof AbstractTemplateView, true)
 		assert.equal(model instanceof AbstractTemplate, true)
@@ -21,9 +23,9 @@ describe('AbstractTemplateView', () => {
 	it('should accept data into constructor', () => {
 		let data = generator.generateStandardTemplate(1)
 		model = new AbstractTemplateView(dispatcher, data)
-
-		assert.equal(model.id(), data.id)
-		assert.equal(model.title(), data.title)
+		let actual = ko.toJS(model)
+		let overrides = {dispatcher: 1, isSelected: 1, template: 1, type: 1}
+		assert.deepEqual({...actual, ...overrides}, {...data, ...overrides})
 	})
 
 	it('should have select method', () => {

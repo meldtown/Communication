@@ -3,6 +3,7 @@ import InviteTemplateView from './InviteTemplateView'
 import AbstractTemplate from '../AbstractTemplate'
 import AbstractTemplateView from './AbstractTemplateView'
 import * as ko from 'knockout'
+import * as generator from '../../../db'
 
 describe('InviteTemplateView', () => {
 	let model
@@ -30,5 +31,13 @@ describe('InviteTemplateView', () => {
 	it('should have template prop', () => {
 		assert.equal(ko.isObservable(model.template), true)
 		assert.equal((model.template()), 'InviteTemplateForm')
+	})
+
+	it('should accept data into constructor', () => {
+		let data = generator.generateInviteTemplate(1)
+		model = new InviteTemplateView(dispatcher, data)
+		let actual = ko.toJS(model)
+		let overrides = {dispatcher: 1, isSelected: 1, template: 1, type: 1}
+		assert.deepEqual({...actual, ...overrides}, {...data, ...overrides})
 	})
 })

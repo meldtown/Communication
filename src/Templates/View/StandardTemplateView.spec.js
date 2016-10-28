@@ -3,6 +3,7 @@ import assert from 'assert'
 import StandardTemplateView from './StandardTemplateView'
 import AbstractTemplate from '../AbstractTemplate'
 import * as ko from 'knockout'
+import * as generator from '../../../db'
 
 describe('StandardTemplateView', () => {
 	let model
@@ -22,5 +23,13 @@ describe('StandardTemplateView', () => {
 	it('should have template prop', () => {
 		assert.equal(ko.isObservable(model.template), true)
 		assert.equal((model.template()), 'StandardTemplateForm')
+	})
+
+	it('should accept data into constructor', () => {
+		let data = generator.generateStandardTemplate(1)
+		model = new StandardTemplateView(dispatcher, data)
+		let actual = ko.toJS(model)
+		let overrides = {dispatcher: 1, isSelected: 1, template: 1, type: 1}
+		assert.deepEqual({...actual, ...overrides}, {...data, ...overrides})
 	})
 })
