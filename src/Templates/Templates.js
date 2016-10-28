@@ -36,9 +36,11 @@ export default class Templates {
 		this.filter = ko.observable()
 		this.filteredTemplates = ko.computed(() => {
 			if (!this.selectedTab()) this.selectStandardTab()
-			return this.templates().filter(template => {
-				return template instanceof this.selectedTab()
-			})
+
+			return this.templates()
+				.filter(template => {
+					return template instanceof this.selectedTab()
+				})
 				.filter(template => {
 					if (!this.isRussianLanguageSelected() && !this.isUkrainianLanguageSelected() && !this.isEnglishLanguageSelected()) return true
 					return ((template.language() === constants.RU) && this.isRussianLanguageSelected()) ||
@@ -98,9 +100,12 @@ export default class Templates {
 		return axios.get(`${api}/templates`)
 			.then(response => {
 				this.selectedTab(StandardTemplateView)
-				let templates = this.templates(response.data.map(TemplateFactory.create.bind(this, this.dispatcher)))
+				this.templates(response.data.map(TemplateFactory.create.bind(this, this.dispatcher)))
+				if (!this.filteredTemplates().length) {
+					this.selectedTab(this.templates()[0].constructor)
+				}
 				this.filteredTemplates()[0].select()
-				return templates
+				return this.templates()
 			})
 	}
 

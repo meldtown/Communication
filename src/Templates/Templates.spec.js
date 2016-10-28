@@ -71,110 +71,194 @@ describe('Templates', () => {
 		})
 	})
 
+	describe('tabs', () => {
+		it('should have observable selectedTab', () => {
+			assert.ok(ko.isObservable(model.selectedTab))
+		})
 
-	it('should have observable selectedTab', () => {
-		assert.equal(ko.isObservable(model.selectedTab), true)
-	})
-
-	it('should have isStandardTabSelected comp', () => {
-		assert.equal(ko.isComputed(model.isStandardTabSelected), true)
-		model.templates([TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1)), TemplateFactory.create(dispatcher, generator.generateOfferTemplate(2))])
-
-		model.selectStandardTab()
-		assert.equal(model.isStandardTabSelected(), true)
-
-		model.selectOfferTab()
-		assert.equal(model.isStandardTabSelected(), false)
-	})
-
-	it('should have isInviteTabSelected comp', () => {
-		assert.equal(ko.isComputed(model.isInviteTabSelected), true)
-
-		model.templates([TemplateFactory.create(dispatcher, generator.generateInviteTemplate(1)), TemplateFactory.create(dispatcher, generator.generateOfferTemplate(2))])
-		model.selectInviteTab()
-		assert.equal(model.isInviteTabSelected(), true)
-
-		model.selectOfferTab()
-		assert.equal(model.isInviteTabSelected(), false)
-	})
-
-	it('should have isDeclineTabSelected comp', () => {
-		assert.equal(ko.isComputed(model.isDeclineTabSelected), true)
-		model.templates([TemplateFactory.create(dispatcher, generator.generateDeclineTemplate(1)), TemplateFactory.create(dispatcher, generator.generateOfferTemplate(2))])
-
-		model.selectDeclineTab()
-		assert.equal(model.isDeclineTabSelected(), true)
-
-		model.selectOfferTab()
-		assert.equal(model.isDeclineTabSelected(), false)
-	})
-
-	it('should have isOfferTabSelected comp', () => {
-		assert.equal(ko.isComputed(model.isOfferTabSelected), true)
-		model.templates([TemplateFactory.create(dispatcher, generator.generateOfferTemplate(1))])
-
-		model.selectOfferTab()
-		assert.equal(model.isOfferTabSelected(), true)
-
-		model.selectStandardTab()
-		assert.equal(model.isOfferTabSelected(), false)
-	})
-
-	it('should have selectStandardTab method', () => {
-		assert.equal(typeof model.selectStandardTab, 'function')
-
-		model.selectStandardTab()
-		assert.ok(model.isStandardTabSelected())
-	})
-
-	it('should have selectInviteTab method', () => {
-		assert.equal(typeof model.selectInviteTab, 'function')
-		model.templates([TemplateFactory.create(dispatcher, generator.generateInviteTemplate(1))])
-
-		model.selectInviteTab()
-
-		assert.equal(model.selectedTab(), InviteTemplateView)
-		assert.equal(model.filteredTemplates()[0].isSelected(), true)
-	})
-
-	it('should have selectDeclineTab method', () => {
-		assert.equal(typeof model.selectDeclineTab, 'function')
-		model.templates([TemplateFactory.create(dispatcher, generator.generateDeclineTemplate(1))])
-
-		model.selectDeclineTab()
-
-		assert.equal(model.selectedTab(), DeclineTemplateView)
-		assert.equal(model.filteredTemplates()[0].isSelected(), true)
-	})
-
-	it('should have selectOfferTab method', () => {
-		assert.equal(typeof model.selectOfferTab, 'function')
-		model.templates([TemplateFactory.create(dispatcher, generator.generateOfferTemplate(1))])
-
-		model.selectOfferTab()
-
-		assert.equal(model.selectedTab(), OfferTemplateView)
-		assert.equal(model.filteredTemplates()[0].isSelected(), true)
-	})
-
-	it('should set selectedTab to standard after fetch', () => {
-		let responseText = [
-			generator.generateStandardTemplate(1),
-			generator.generateInviteTemplate(4),
-			generator.generateDeclineTemplate(5),
-			generator.generateOfferTemplate(6)
-		]
-
-		mock.onGet(`${api}/templates`).reply(200, responseText)
-
-		return model.fetch().then(() => {
+		it('should have default selectedTab', () => {
 			assert.equal(model.selectedTab(), StandardTemplateView)
+		})
+
+		it('should have isStandardTabSelected comp', () => {
+			assert.ok(ko.isComputed(model.isStandardTabSelected))
+
+			model.templates([
+				TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1)),
+				TemplateFactory.create(dispatcher, generator.generateOfferTemplate(2))
+			])
+
+			model.selectStandardTab()
+			assert.equal(model.isStandardTabSelected(), true)
+
+			model.selectOfferTab()
+			assert.equal(model.isStandardTabSelected(), false)
+		})
+
+		it('should have isInviteTabSelected comp', () => {
+			assert.ok(ko.isComputed(model.isInviteTabSelected))
+
+			model.templates([
+				TemplateFactory.create(dispatcher, generator.generateInviteTemplate(1)),
+				TemplateFactory.create(dispatcher, generator.generateOfferTemplate(2))
+			])
+
+			model.selectInviteTab()
+			assert.equal(model.isInviteTabSelected(), true)
+
+			model.selectOfferTab()
+			assert.equal(model.isInviteTabSelected(), false)
+		})
+
+		it('should have isDeclineTabSelected comp', () => {
+			assert.ok(ko.isComputed(model.isDeclineTabSelected))
+
+			model.templates([
+				TemplateFactory.create(dispatcher, generator.generateDeclineTemplate(1)),
+				TemplateFactory.create(dispatcher, generator.generateOfferTemplate(2))
+			])
+
+			model.selectDeclineTab()
+			assert.equal(model.isDeclineTabSelected(), true)
+
+			model.selectOfferTab()
+			assert.equal(model.isDeclineTabSelected(), false)
+		})
+
+		it('should have isOfferTabSelected comp', () => {
+			assert.ok(ko.isComputed(model.isOfferTabSelected))
+
+			model.templates([
+				TemplateFactory.create(dispatcher, generator.generateOfferTemplate(1))
+			])
+
+			model.selectOfferTab()
+			assert.equal(model.isOfferTabSelected(), true)
+
+			model.selectStandardTab()
+			assert.equal(model.isOfferTabSelected(), false)
+		})
+
+		it('should have selectStandardTab method', () => {
+			assert.equal(typeof model.selectStandardTab, 'function')
+
+			model.selectStandardTab()
+			assert.ok(model.isStandardTabSelected())
+		})
+
+		it('should have selectInviteTab method', () => {
+			assert.equal(typeof model.selectInviteTab, 'function')
+			model.templates([TemplateFactory.create(dispatcher, generator.generateInviteTemplate(1))])
+
+			model.selectInviteTab()
+
+			assert.equal(model.selectedTab(), InviteTemplateView)
+			assert.equal(model.filteredTemplates()[0].isSelected(), true)
+		})
+
+		it('should have selectDeclineTab method', () => {
+			assert.equal(typeof model.selectDeclineTab, 'function')
+			model.templates([TemplateFactory.create(dispatcher, generator.generateDeclineTemplate(1))])
+
+			model.selectDeclineTab()
+
+			assert.equal(model.selectedTab(), DeclineTemplateView)
+			assert.equal(model.filteredTemplates()[0].isSelected(), true)
+		})
+
+		it('should have selectOfferTab method', () => {
+			assert.equal(typeof model.selectOfferTab, 'function')
+			model.templates([TemplateFactory.create(dispatcher, generator.generateOfferTemplate(1))])
+
+			model.selectOfferTab()
+
+			assert.equal(model.selectedTab(), OfferTemplateView)
+			assert.equal(model.filteredTemplates()[0].isSelected(), true)
+		})
+
+		it('should set selectedTab to standard after fetch', () => {
+			let responseText = [
+				generator.generateStandardTemplate(1),
+				generator.generateInviteTemplate(4),
+				generator.generateDeclineTemplate(5),
+				generator.generateOfferTemplate(6)
+			]
+
+			mock.onGet(`${api}/templates`).reply(200, responseText)
+
+			return model.fetch().then(() => {
+				assert.equal(model.selectedTab(), StandardTemplateView)
+			})
+		})
+
+		it('should set selectedTab to first available after fetch if there is not standard one', () => {
+			let responseText = [
+				generator.generateInviteTemplate(4),
+				generator.generateDeclineTemplate(5),
+				generator.generateOfferTemplate(6)
+			]
+
+			mock.onGet(`${api}/templates`).reply(200, responseText)
+
+			return model.fetch().then(() => {
+				assert.equal(model.selectedTab(), InviteTemplateView)
+			})
 		})
 	})
 
+	describe('languages', () => {
+		it('should have isRussianLanguageSelected observable', () => {
+			assert.ok(ko.isObservable(model.isRussianLanguageSelected))
+		})
+
+		it('should have isUkrainianLanguageSelected observable', () => {
+			assert.ok(ko.isObservable(model.isUkrainianLanguageSelected))
+		})
+
+		it('should have isEnglishLanguageSelected observable', () => {
+			assert.ok(ko.isObservable(model.isEnglishLanguageSelected))
+		})
+
+		it('should have unselected languages after loading', () => {
+			assert.equal(model.isRussianLanguageSelected(), false)
+			assert.equal(model.isUkrainianLanguageSelected(), false)
+			assert.equal(model.isEnglishLanguageSelected(), false)
+		})
+
+		it('should have toggleRussianLanguage method', () => {
+			assert.equal(typeof model.toggleRussianLanguage, 'function')
+
+			model.toggleRussianLanguage()
+			assert.equal(model.isRussianLanguageSelected(), true)
+
+			model.toggleRussianLanguage()
+			assert.equal(model.isRussianLanguageSelected(), false)
+		})
+
+		it('should have toggleUkrainianLanguage method', () => {
+			assert.equal(typeof model.toggleUkrainianLanguage, 'function')
+
+			model.toggleUkrainianLanguage()
+			assert.equal(model.isUkrainianLanguageSelected(), true)
+
+			model.toggleUkrainianLanguage()
+			assert.equal(model.isUkrainianLanguageSelected(), false)
+		})
+
+		it('should have toggleEnglishLanguage method', () => {
+			assert.equal(typeof model.toggleEnglishLanguage, 'function')
+
+			model.toggleEnglishLanguage()
+			assert.equal(model.isEnglishLanguageSelected(), true)
+
+			model.toggleEnglishLanguage()
+			assert.equal(model.isEnglishLanguageSelected(), false)
+		})
+	})
+
+
 	it('should reset template mode to view after switching tabs', () => {
-
-
+		// TODO: missing test?
 	})
 
 	it('should select the first standard template after fetch', () => {
@@ -186,144 +270,66 @@ describe('Templates', () => {
 		]
 
 		mock.onGet(`${api}/templates`).reply(200, responseText)
+
 		return model.fetch().then(() => {
 			assert.equal(model.filteredTemplates()[0].isSelected(), true)
 		})
 	})
 
-	it('should have default selectedTab', () => {
-		assert.equal(model.selectedTab(), StandardTemplateView)
-	})
+	it('should select the first available template if there is no standard one after fetch', () => {
+		let responseText = [
+			generator.generateInviteTemplate(4),
+			generator.generateDeclineTemplate(5),
+			generator.generateOfferTemplate(6)
+		]
 
-	it('should have isRussianLanguageSelected observable', () => {
-		assert.equal(ko.isObservable(model.isRussianLanguageSelected), true)
-	})
+		mock.onGet(`${api}/templates`).reply(200, responseText)
 
-	it('should have isUkrainianLanguageSelected observable', () => {
-		assert.equal(ko.isObservable(model.isUkrainianLanguageSelected), true)
-	})
-
-	it('should have isEnglishLanguageSelected observable', () => {
-		assert.equal(ko.isObservable(model.isEnglishLanguageSelected), true)
-	})
-
-	it('should have unselected languages after loading', () => {
-		assert.equal(model.isRussianLanguageSelected(), false)
-		assert.equal(model.isUkrainianLanguageSelected(), false)
-		assert.equal(model.isEnglishLanguageSelected(), false)
-	})
-
-	it('should have toggleRussianLanguage method', () => {
-		assert.equal(typeof model.toggleRussianLanguage, 'function')
-
-		model.toggleRussianLanguage()
-		assert.equal(model.isRussianLanguageSelected(), true)
-
-		model.toggleRussianLanguage()
-		assert.equal(model.isRussianLanguageSelected(), false)
-	})
-
-	it('should have toggleUkrainianLanguage method', () => {
-		assert.equal(typeof model.toggleUkrainianLanguage, 'function')
-
-		model.toggleUkrainianLanguage()
-		assert.equal(model.isUkrainianLanguageSelected(), true)
-
-		model.toggleUkrainianLanguage()
-		assert.equal(model.isUkrainianLanguageSelected(), false)
-	})
-
-	it('should have toggleEnglishLanguage method', () => {
-		assert.equal(typeof model.toggleEnglishLanguage, 'function')
-
-		model.toggleEnglishLanguage()
-		assert.equal(model.isEnglishLanguageSelected(), true)
-
-		model.toggleEnglishLanguage()
-		assert.equal(model.isEnglishLanguageSelected(), false)
-
-	})
-
-	it('should have filter prop', () => {
-		assert.equal(ko.isObservable(model.filter), true)
-	})
-
-	it('should have filteredTemplates com', () => {
-		assert.equal(ko.isComputed(model.filteredTemplates), true)
+		return model.fetch().then(() => {
+			assert.equal(model.filteredTemplates()[0].isSelected(), true)
+		})
 	})
 
 	describe('filteredTemplates', () => {
-		beforeEach(() => {
-			let templates = [
-				generator.generateInviteTemplate(4),
-				generator.generateOfferTemplate(12),
-				generator.generateOfferTemplate(33),
-				generator.generateDeclineTemplate(666),
-				generator.generateStandardTemplate(1),
-				generator.generateDeclineTemplate(5),
-				generator.generateDeclineTemplate(555),
-				generator.generateStandardTemplate(9),
-				generator.generateDeclineTemplate(17),
-				generator.generateDeclineTemplate(444),
-				generator.generateOfferTemplate(6),
-				generator.generateOfferTemplate(56),
-				generator.generateOfferTemplate(57),
-				generator.generateOfferTemplate(78),
-				generator.generateStandardTemplate(123)
-			]
-			templates = templates.map(template => TemplateFactory.create(dispatcher, template))
-			model.templates(templates)
-		})
-
 		it('should have filteredTemplates com', () => {
 			assert.ok(ko.isComputed(model.filteredTemplates))
 		})
 
-		it('should gracefuly handle undefined selected tab', () => {
+		it('should have filter prop', () => {
+			assert.ok(ko.isObservable(model.filter))
+		})
+
+		it('should gracefully handle undefined selected tab', () => {
 			model.selectedTab(undefined)
-			model.templates([TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))])
+			model.templates([
+				TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
+			])
 			assert.equal(model.filteredTemplates().length, 1)
 		})
 
 		it('should respect selected tab', () => {
-			assert.equal(model.filteredTemplates().length, 3)
+			model.templates([
+				TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1)),
+				TemplateFactory.create(dispatcher, generator.generateOfferTemplate(2))
+			])
+
+			assert.ok(model.isStandardTabSelected())
+			assert.equal(model.filteredTemplates().length, 1)
 			assert.ok(model.filteredTemplates()[0] instanceof model.selectedTab())
-			assert.ok(model.filteredTemplates()[1] instanceof model.selectedTab())
-			assert.ok(model.filteredTemplates()[2] instanceof model.selectedTab())
 			model.selectOfferTab()
+			assert.equal(model.filteredTemplates().length, 1)
 			assert.ok(model.filteredTemplates()[0] instanceof model.selectedTab())
-			assert.ok(model.filteredTemplates()[1] instanceof model.selectedTab())
-			assert.ok(model.filteredTemplates()[2] instanceof model.selectedTab())
-			assert.ok(model.filteredTemplates()[3] instanceof model.selectedTab())
-			assert.ok(model.filteredTemplates()[4] instanceof model.selectedTab())
-			assert.ok(model.filteredTemplates()[5] instanceof model.selectedTab())
 		})
 
 		it('should respect selected language', () => {
-			let templates = [
-				TemplateFactory.create(dispatcher, {
-					id: 1,
-					type: 'standard',
-					title: 'Yeah',
-					text: 'Success',
-					language: 'ru'
-				}),
-				TemplateFactory.create(dispatcher, {
-					id: 2,
-					type: 'standard',
-					title: 'Java',
-					text: 'Great !!!',
-					language: 'ua'
-				}),
-				TemplateFactory.create(dispatcher, {
-					id: 3,
-					type: 'standard',
-					title: 'Hello',
-					text: 'Great !!!',
-					language: 'en'
-				}),
-			]
-			model.templates(templates)
+			let template = generator.generateStandardTemplate(1)
+
+			model.templates([
+				TemplateFactory.create(dispatcher, {...template, id: 1, language: types.RU}),
+				TemplateFactory.create(dispatcher, {...template, id: 2, language: types.UA}),
+				TemplateFactory.create(dispatcher, {...template, id: 3, language: types.EN})
+			])
+
 			model.toggleRussianLanguage()
 			assert.equal(model.filteredTemplates().length, 1)
 			assert.equal(model.filteredTemplates()[0].language(), types.RU)
@@ -346,14 +352,14 @@ describe('Templates', () => {
 		})
 
 		it('should call all filters', () => {
-			let tpl1 = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
-			tpl1.language(types.RU)
-			tpl1.title('Ruby')
+			let tplStandardRubyRu = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
+			tplStandardRubyRu.language(types.RU)
+			tplStandardRubyRu.title('Ruby')
 
-			let tpl2 = TemplateFactory.create(dispatcher, generator.generateDeclineTemplate(2))
-			tpl2.language(types.EN)
+			let tplDeclineRandomEn = TemplateFactory.create(dispatcher, generator.generateDeclineTemplate(2))
+			tplDeclineRandomEn.language(types.EN)
 
-			model.templates([tpl1, tpl2])
+			model.templates([tplStandardRubyRu, tplDeclineRandomEn])
 
 			model.toggleEnglishLanguage()
 			model.selectDeclineTab()
@@ -365,16 +371,15 @@ describe('Templates', () => {
 		})
 
 		it('should filter by text in title', () => {
-			let tpl1 = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
-			let tpl2 = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(2))
-			let tpl3 = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(3))
-			model.templates([tpl1, tpl2, tpl3])
+			let template = generator.generateStandardTemplate(1)
+
+			model.templates([
+				TemplateFactory.create(dispatcher, {...template, title: 'Javascript'}),
+				TemplateFactory.create(dispatcher, {...template, title: 'Ruby'}),
+				TemplateFactory.create(dispatcher, {...template, title: 'Java'})
+			])
+
 			assert.equal(model.templates().length, 3)
-
-			tpl1.title('Javascript')
-			tpl2.title('Ruby')
-			tpl3.title('Java')
-
 			assert.equal(model.filteredTemplates().length, 3)
 
 			model.filter('Java')
@@ -382,20 +387,15 @@ describe('Templates', () => {
 		})
 
 		it('should filter by text in text', () => {
-			let tpl1 = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
-			let tpl2 = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(2))
-			let tpl3 = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(3))
-			model.templates([tpl1, tpl2, tpl3])
+			let template = generator.generateStandardTemplate(1)
+
+			model.templates([
+				TemplateFactory.create(dispatcher, {...template, title: 'Javascript', text: 'Hello World'}),
+				TemplateFactory.create(dispatcher, {...template, title: 'Ruby', text: 'Hello Javatron'}),
+				TemplateFactory.create(dispatcher, {...template, title: 'Java', text: 'Hello universe'})
+			])
+
 			assert.equal(model.templates().length, 3)
-
-			tpl1.title('Javascript')
-			tpl2.title('Ruby')
-			tpl3.title('Java')
-
-			tpl1.text('Hello world')
-			tpl2.text('Hello Javatron')
-			tpl3.text('Hello universe')
-
 			assert.equal(model.filteredTemplates().length, 3)
 
 			model.filter('Java')
@@ -566,9 +566,9 @@ describe('Templates', () => {
 			tplStd.select()
 			model.selectStandardTab()
 			model.edit()
-			// noinspection JSUnusedLocalSymbols
+			// noinspection JSDuplicatedDeclaration, JSUnusedLocalSymbols
 			var {template, ...actual} = ko.toJS(model.selectedTemplateForm()) // eslint-disable-line no-unused-vars, no-redeclare
-			// noinspection JSUnusedLocalSymbols
+			// noinspection JSDuplicatedDeclaration, JSUnusedLocalSymbols
 			var {isSelected, template, ...expected} = ko.toJS(tplStd) // eslint-disable-line no-unused-vars, no-redeclare
 
 			assert.deepEqual(actual, expected)
@@ -724,6 +724,7 @@ describe('Templates', () => {
 			stdTpl.text('Hello')
 			stdTpl.title('World')
 			stdTpl.language('en')
+			// noinspection JSUnusedLocalSymbols
 			let {id, text, title, language} = ko.toJS(stdTpl) // eslint-disable-line no-unused-vars
 			model.create()
 			assert.equal(model.isNewTemplateBeingCreated(), true)
