@@ -11,7 +11,6 @@ import DeclineTemplateView from './View/DeclineTemplateView'
 import OfferTemplateView from './View/OfferTemplateView'
 import TemplateFactory from './TemplateFactory'
 import AbstractTemplate from './AbstractTemplate'
-import AbstractTemplateView from './View/AbstractTemplateView'
 import StandardTemplateForm from './Form/StandardTemplateForm'
 import InviteTemplateForm from './Form/InviteTemplateForm'
 import OfferTemplateForm from './Form/OfferTemplateForm'
@@ -430,12 +429,15 @@ describe('Templates', () => {
 		it('should have selectedStandardTemplate', () => {
 			assert.ok(ko.isObservable(model.selectedStandardTemplate))
 
-			let stdTpl1 = model.templates()[4]
-			let stdTpl2 = model.templates()[7]
-			stdTpl1.select()
-			assert.equal(model.selectedStandardTemplate(), stdTpl1)
-			stdTpl2.select()
-			assert.equal(model.selectedStandardTemplate(), stdTpl2)
+			let template1 = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
+			let template2 = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(2))
+
+			model.templates([template1, template2])
+
+			template1.select()
+			assert.equal(model.selectedStandardTemplate(), template1)
+			template2.select()
+			assert.equal(model.selectedStandardTemplate(), template2)
 		})
 
 		it('should have selectedInviteTemplate', () => {
@@ -467,15 +469,12 @@ describe('Templates', () => {
 		})
 
 		it('should have isSelected prop', () => {
-			let model = new AbstractTemplateView(dispatcher, {
-				id: 2,
-				title: 'title',
-				text: 'text',
-				language: 'language'
-			})
-			model.isSelected(true)
-			assert.equal(ko.isObservable(model.isSelected), true)
-			assert.equal(model.isSelected(), true)
+			let template = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
+
+			template.isSelected(true)
+
+			assert.equal(ko.isObservable(template.isSelected), true)
+			assert.equal(template.isSelected(), true)
 		})
 
 		it('should have dispatcher prop and accept it as first constructor argument', () => {
