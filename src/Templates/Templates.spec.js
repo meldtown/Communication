@@ -480,28 +480,9 @@ describe('Templates', () => {
 		})
 	})
 
-	it('should have standard form prop', () => {
-		// TODO: x4 for each type
-		// model.standardForm = new StandardForm()
-	})
-
 	describe('editTemplate', () => {
-		let model
-		let dispatcher
-		beforeEach(() => {
-			dispatcher = new ko.subscribable()
-			let templates = [
-				generator.generateStandardTemplate(1),
-				generator.generateInviteTemplate(2),
-				generator.generateOfferTemplate(3),
-				generator.generateDeclineTemplate(4),
-			].map(template => TemplateFactory.create(dispatcher, template))
-			model = new Templates(dispatcher)
-			model.templates(templates)
-		})
-
 		it('should have isSelectedTemplateBeingEdited', () => {
-			assert.equal(ko.isObservable(model.isSelectedTemplateBeingEdited), true)
+			assert.ok(ko.isObservable(model.isSelectedTemplateBeingEdited))
 		})
 
 		it('should isSelectedTemplateBeingEdited return false by default', () => {
@@ -509,33 +490,42 @@ describe('Templates', () => {
 		})
 
 		it('should have selectedTemplateForm observable', () => {
-			assert.equal(ko.isObservable(model.selectedTemplateForm), true)
+			assert.ok(ko.isObservable(model.selectedTemplateForm))
 		})
 
 		it('should have edit method', () => {
 			assert.equal(typeof model.edit, 'function')
 
-			let tplStd = model.templates()[0]
-			tplStd.select()
+			let template = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
+			model.templates([template])
+
+			template.select()
 			model.edit()
 			assert.equal(model.isSelectedTemplateBeingEdited(), true)
 		})
-		//
-		// it('should isSelectedTemplateBeingEdited and selectedTemplateForm have the same type', () => {
-		// 	assert.equal(model.selectedTemplateForm())
-		// })
 
-		it('should edit method set data from selectedTemplateView to selectedTemplateForm', () => {
-			let tplStd = model.templates()[0]
-			tplStd.select()
+		it('should do nothing while trying edit not selected template', () => {
+			assert.equal(typeof model.edit, 'function')
+
+			let template = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
+			model.templates([template])
+
+			model.edit()
+			assert.equal(model.isSelectedTemplateBeingEdited(), false)
+		})
+
+		it('should set data from selectedTemplateView to selectedTemplateForm on edit', () => {
+			let template = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
+			model.templates([template])
+
+			template.select()
 			model.selectStandardTab()
 			model.edit()
-			// noinspection JSDuplicatedDeclaration, JSUnusedLocalSymbols
-			var {template, ...actual} = ko.toJS(model.selectedTemplateForm()) // eslint-disable-line no-unused-vars, no-redeclare
-			// noinspection JSDuplicatedDeclaration, JSUnusedLocalSymbols
-			var {isSelected, template, ...expected} = ko.toJS(tplStd) // eslint-disable-line no-unused-vars, no-redeclare
 
-			assert.deepEqual(actual, expected)
+			// noinspection JSUnusedLocalSymbols
+			var {isSelected, ...expected} = ko.toJS(template) // eslint-disable-line no-unused-vars
+
+			assert.deepEqual(ko.toJS(model.selectedTemplateForm()), expected)
 		})
 
 		it('should have cancel method', () => {
@@ -543,8 +533,10 @@ describe('Templates', () => {
 		})
 
 		it('should reset data in selectedTemplateForm after cancel', () => {
-			let tplStd = model.templates()[0]
-			tplStd.select()
+			let template = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
+			model.templates([template])
+
+			template.select()
 			model.selectStandardTab()
 			model.edit()
 			assert.equal(model.isSelectedTemplateBeingEdited(), true)
@@ -571,9 +563,7 @@ describe('Templates', () => {
 		})
 
 		it('should have save method', () => {
-
 			assert.equal(typeof model.save, 'function')
-
 		})
 
 		it('should have fill method', () => {

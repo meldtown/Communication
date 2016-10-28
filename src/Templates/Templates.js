@@ -145,6 +145,8 @@ export default class Templates {
 	}
 
 	edit() {
+		if (!this.selectedTemplate()) return
+
 		this.isSelectedTemplateBeingEdited(true)
 		// noinspection JSUnusedLocalSymbols
 		let {dispatcher, isSelected, ...selectedTemplateData} = ko.toJS(this.selectedTemplate()) // eslint-disable-line no-unused-vars
