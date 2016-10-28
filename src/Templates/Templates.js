@@ -187,7 +187,7 @@ export default class Templates {
 	}
 
 	delete() {
-		return this.selectedTemplate().delete().then(() => {
+		return this.selectedTemplate().remove().then(() => {
 			this.templates.remove(this.selectedTemplate())
 			this.filteredTemplates()[0].select()
 		})
