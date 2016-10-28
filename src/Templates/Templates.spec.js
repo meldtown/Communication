@@ -398,6 +398,13 @@ describe('Templates', () => {
 			model.filter('Java')
 			assert.equal(model.filteredTemplates().length, 3)
 		})
+
+		it('should recompute filteredTemplates after pushing new one', () => {
+			assert.equal(model.filteredTemplates().length, 0)
+
+			model.templates.push(TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1)))
+			assert.equal(model.filteredTemplates().length, 1)
+		})
 	})
 
 	describe('selectedTemplate', () => {
@@ -547,66 +554,47 @@ describe('Templates', () => {
 		})
 	})
 
-	describe('update template', () => {
-		let model
-		let dispatcher
-		beforeEach(() => {
-			dispatcher = new ko.subscribable()
-			let templates = [
-				generator.generateStandardTemplate(1),
-				generator.generateInviteTemplate(2),
-				generator.generateOfferTemplate(3),
-				generator.generateDeclineTemplate(4),
-			].map(template => TemplateFactory.create(dispatcher, template))
-			model = new Templates(dispatcher)
-			model.templates(templates)
-		})
-
+	describe('save template', () => {
 		it('should have save method', () => {
 			assert.equal(typeof model.save, 'function')
 		})
 
-		it('should have fill method', () => {
-			let stdTplForm = new StandardTemplateForm(dispatcher)
-			let invTplForm = new InviteTemplateForm(dispatcher)
-			let offerTplForm = new OfferTemplateForm(dispatcher)
-			let declForm = new DeclineTemplateForm(dispatcher)
-			let tplInv = model.templates()[1]
-			assert.equal(typeof stdTplForm.fill, 'function')
-			assert.equal(typeof invTplForm.fill, 'function')
-			assert.equal(typeof offerTplForm.fill, 'function')
-			assert.equal(typeof declForm.fill, 'function')
+		it('should set data to corresponding templateView on success put request after save', () => {
+			let data = generator.generateStandardTemplate(1)
+			let template = TemplateFactory.create(dispatcher, data)
 
-			model.selectInviteTab()
-			tplInv.select()
-			invTplForm.text('Hello')
-			invTplForm.title('World')
-			invTplForm.addressId(666)
-			let selectedTemplate = model.selectedTemplate()
-			invTplForm.fill(selectedTemplate)
-			assert.equal(selectedTemplate.text(), 'Hello')
-			assert.equal(selectedTemplate.title(), 'World')
-			assert.equal(selectedTemplate.addressId(), 666)
+			model.templates([template])
+
+			template.select()
+			model.edit()
+
+			let form = model.selectedTemplateForm()
+			form.text('Hello')
+			form.title('World')
+
+			mock.onPut(`${api}/templates/${template.id()}`).reply(200, data)
+
+			return model.save().then(() => {
+				assert.equal(template.text(), 'Hello')
+				assert.equal(template.title(), 'World')
+				assert.equal(model.selectedTemplateForm(), null)
+			})
 		})
 
-		it('should set data to corresponding templateView on success put request after save', () => {
-			let responseText = [
-				generator.generateStandardTemplate(1),
-				generator.generateInviteTemplate(2),
-				generator.generateOfferTemplate(3),
-				generator.generateDeclineTemplate(4),
-			]
-			let tplStd = model.templates()[0]
-			tplStd.select()
+		it('should reset new and editing flags after save', () => {
+			let data = generator.generateStandardTemplate(1)
+			let template = TemplateFactory.create(dispatcher, data)
+
+			model.templates([template])
+
+			template.select()
 			model.edit()
-			let tplForm = model.selectedTemplateForm()
-			tplForm.text('Hello')
-			tplForm.title('World')
-			mock.onPut(`${api}/templates/1`).reply(200, responseText)
-			model.save().then(() => {
-				assert.equal(tplStd.text(), 'Hello')
-				assert.equal(tplStd.title(), 'World')
-				assert.equal(model.selectedTemplateForm(), null)
+
+			mock.onPut(`${api}/templates/${template.id()}`).reply(200, data)
+
+			return model.save().then(() => {
+				assert.equal(model.isNewTemplateBeingCreated(), false)
+				assert.equal(model.isSelectedTemplateBeingEdited(), false)
 			})
 		})
 	})
@@ -645,79 +633,60 @@ describe('Templates', () => {
 	})
 
 	describe('create template', () => {
-		let model
-		let dispatcher
-		beforeEach(() => {
-			dispatcher = new ko.subscribable()
-			let templates = [
-				generator.generateStandardTemplate(1),
-				generator.generateInviteTemplate(2),
-				generator.generateOfferTemplate(3),
-				generator.generateDeclineTemplate(4),
-			].map(template => TemplateFactory.create(dispatcher, template))
-			model = new Templates(dispatcher)
-			model.templates(templates)
-		})
 		it('should have create method', () => {
 			assert.equal(typeof model.create, 'function')
-			let stdTpl = new StandardTemplateForm(dispatcher, {
-				id: 0, text: '', title: '', language: 'ru'
-			})
-			model.selectStandardTab()
-			stdTpl.id(67)
-			stdTpl.text('Hello')
-			stdTpl.title('World')
-			stdTpl.language('en')
-			// noinspection JSUnusedLocalSymbols
-			let {id, text, title, language} = ko.toJS(stdTpl) // eslint-disable-line no-unused-vars
-			model.create()
-			assert.equal(model.isNewTemplateBeingCreated(), true)
+		})
 
-			mock.onPost(`${api}/templates/`).reply(200)
-			model.save().then(() => {
-				assert.equal(model.templates().length, 5)
-				assert.equal(model.templates()[4].text(), 'Hello')
-				assert.equal(model.filteredTemplates()[model.filteredTemplates().length - 1].isSelected(), true)
-			})
+		it('should set isNewTemplateBeingCreated and isSelectedTemplateBeingEdited to true', () => {
+			model.create()
+			assert.ok(model.isNewTemplateBeingCreated())
+			assert.ok(model.isSelectedTemplateBeingEdited())
 		})
 
 		it('should reset filters', () => {
 			model.filter('Lisp')
 			model.toggleRussianLanguage()
 			model.toggleUkrainianLanguage()
+			model.toggleEnglishLanguage()
+
 			model.create()
 
 			assert.equal(model.filter(), '')
 			assert.equal(model.isRussianLanguageSelected(), false)
 			assert.equal(model.isUkrainianLanguageSelected(), false)
+			assert.equal(model.isEnglishLanguageSelected(), false)
 		})
 
-		it('should recompute filteredTemplates after pushing new one', () => {
-			assert.equal(model.filteredTemplates().length, 1)
+		it('should set create right form types', () => {
+			model.selectStandardTab()
+			model.create()
+			assert.ok(model.selectedTemplateForm() instanceof StandardTemplateForm)
 
-			model.templates.push(TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1)))
-			assert.equal(model.filteredTemplates().length, 2)
+			model.selectInviteTab()
+			model.create()
+			assert.ok(model.selectedTemplateForm() instanceof InviteTemplateForm)
+
+			model.selectDeclineTab()
+			model.create()
+			assert.ok(model.selectedTemplateForm() instanceof DeclineTemplateForm)
+
+			model.selectOfferTab()
+			model.create()
+			assert.ok(model.selectedTemplateForm() instanceof OfferTemplateForm)
 		})
 
 		it('should recompute filteredTemplates after saving new one', () => {
-			assert.equal(model.filteredTemplates().length, 1)
+			let id = 1
+			assert.equal(model.filteredTemplates().length, 0)
 
 			model.create()
 			assert.ok(model.selectedTemplateForm())
-			mock.onPost(`${api}/templates/`).reply(200, {id: 1000})
+			mock.onPost(`${api}/templates/`).reply(200, {id})
 
 			return model.save().then(() => {
-				assert.equal(model.filteredTemplates().length, 2)
-			})
-		})
-
-		it('should push new instance while create method being called', () => {
-			model.create()
-			assert.ok(model.selectedTemplateForm())
-			mock.onPost(`${api}/templates/`).reply(200, {id: 33})
-
-			return model.save().then(() => {
-				assert.equal(model.templates().length, 5)
+				assert.equal(model.templates().length, 1)
+				assert.equal(model.filteredTemplates().length, 1)
+				assert.equal(model.templates()[0].id(), id)
 			})
 		})
 

@@ -116,19 +116,19 @@ export default class Templates {
 
 	selectInviteTab() {
 		this.selectedTab(InviteTemplateView)
-		if (!this.selectedInviteTemplate()) this.filteredTemplates()[0].select()
+		if (!this.selectedInviteTemplate() && this.filteredTemplates().length > 0) this.filteredTemplates()[0].select()
 		this.isSelectedTemplateBeingEdited(false)
 	}
 
 	selectDeclineTab() {
 		this.selectedTab(DeclineTemplateView)
-		if (!this.selectedDeclineTemplate()) this.filteredTemplates()[0].select()
+		if (!this.selectedDeclineTemplate() && this.filteredTemplates().length > 0) this.filteredTemplates()[0].select()
 		this.isSelectedTemplateBeingEdited(false)
 	}
 
 	selectOfferTab() {
 		this.selectedTab(OfferTemplateView)
-		if (!this.selectedOfferTemplate()) this.filteredTemplates()[0].select()
+		if (!this.selectedOfferTemplate() && this.filteredTemplates().length > 0) this.filteredTemplates()[0].select()
 		this.isSelectedTemplateBeingEdited(false)
 	}
 
@@ -203,29 +203,22 @@ export default class Templates {
 		this.isEnglishLanguageSelected(false)
 		let newTemplateForm = null
 		let newTemplateView = null
-		let data = {text: '', title: '', language: 'ru'}
 		switch (this.selectedTab()) {
 			case StandardTemplateView:
-				newTemplateForm = new StandardTemplateForm(this.dispatcher, data)
-				newTemplateView = new StandardTemplateView(this.dispatcher, data)
+				newTemplateForm = new StandardTemplateForm(this.dispatcher)
+				newTemplateView = new StandardTemplateView(this.dispatcher)
 				break
 			case InviteTemplateView:
-				newTemplateForm = new InviteTemplateForm(this.dispatcher, Object.assign({}, data, {
-					addressId: 0,
-					inviteDate: '2016-11-11'
-				}))
-				newTemplateView = new InviteTemplateView(this.dispatcher, Object.assign({}, data, {
-					addressId: 0,
-					inviteDate: '2016-11-11'
-				}))
+				newTemplateForm = new InviteTemplateForm(this.dispatcher)
+				newTemplateView = new InviteTemplateView(this.dispatcher)
 				break
 			case DeclineTemplateView:
-				newTemplateForm = new DeclineTemplateForm(this.dispatcher, data)
-				newTemplateView = new DeclineTemplateView(this.dispatcher, data)
+				newTemplateForm = new DeclineTemplateForm(this.dispatcher)
+				newTemplateView = new DeclineTemplateView(this.dispatcher)
 				break
 			case OfferTemplateView:
-				newTemplateForm = new OfferTemplateForm(this.dispatcher, data)
-				newTemplateView = new OfferTemplateView(this.dispatcher, data)
+				newTemplateForm = new OfferTemplateForm(this.dispatcher)
+				newTemplateView = new OfferTemplateView(this.dispatcher)
 				break
 		}
 		this.selectedTemplateForm(newTemplateForm)
