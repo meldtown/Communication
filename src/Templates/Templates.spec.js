@@ -552,6 +552,40 @@ describe('Templates', () => {
 			assert.equal(model.isSelectedTemplateBeingEdited(), false)
 			assert.equal(model.selectedTemplateForm(), null)
 		})
+
+		it('should create right form types', () => {
+			let standardTemplate = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
+			let inviteTemplate = TemplateFactory.create(dispatcher, generator.generateInviteTemplate(2))
+			let declineTemplate = TemplateFactory.create(dispatcher, generator.generateDeclineTemplate(3))
+			let offerTemplate = TemplateFactory.create(dispatcher, generator.generateOfferTemplate(4))
+
+			model.templates([
+				standardTemplate,
+				inviteTemplate,
+				declineTemplate,
+				offerTemplate
+			])
+
+			model.selectStandardTab()
+			standardTemplate.select()
+			model.edit()
+			assert.ok(model.selectedTemplateForm() instanceof StandardTemplateForm)
+
+			model.selectInviteTab()
+			inviteTemplate.select()
+			model.edit()
+			assert.ok(model.selectedTemplateForm() instanceof InviteTemplateForm)
+
+			model.selectDeclineTab()
+			declineTemplate.select()
+			model.edit()
+			assert.ok(model.selectedTemplateForm() instanceof DeclineTemplateForm)
+
+			model.selectOfferTab()
+			offerTemplate.select()
+			model.edit()
+			assert.ok(model.selectedTemplateForm() instanceof OfferTemplateForm)
+		})
 	})
 
 	describe('save template', () => {
@@ -657,7 +691,7 @@ describe('Templates', () => {
 			assert.equal(model.isEnglishLanguageSelected(), false)
 		})
 
-		it('should set create right form types', () => {
+		it('should create right form types', () => {
 			model.selectStandardTab()
 			model.create()
 			assert.ok(model.selectedTemplateForm() instanceof StandardTemplateForm)
