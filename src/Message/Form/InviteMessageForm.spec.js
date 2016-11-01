@@ -8,6 +8,7 @@ import AbstractMessageForm from './AbstractMessageForm'
 import * as constants from '../../constants'
 import * as generator from '../../../db'
 import Address from '../../Address/Address'
+import AddressForm from '../../Address/AddressForm'
 
 const api = 'http://sample.com'
 
@@ -208,6 +209,63 @@ describe('InviteMessageForm', () => {
 			assert.ok(!model.canBeSaved())
 			model.text('Hello')
 			assert.ok(model.canBeSaved())
+		})
+
+		it('should have creatingAddress prop', () => {
+			assert.equal(ko.isObservable(model.creatingAddress), true)
+			assert.equal(model.creatingAddress(), false)
+		})
+
+		it('should have createAddress method', () => {
+			assert.equal(typeof model.createAddress, 'function')
+
+			model.createAddress()
+			assert.equal(model.creatingAddress(), true)
+		})
+
+		it('should have addAddress method', () => {
+			let data = {
+				street: '12th Avenue',
+				houseNumber: '12',
+				office: '13',
+				city: 'New York',
+				description: ''
+			}
+
+			model.addresses([generator.generateAddress(1), generator.generateAddress(2)])
+			assert.equal(typeof model.addAddress, 'function')
+
+			model.createAddress()
+			model.addressForm().city('New York')
+			model.addressForm().street('12th Avenue')
+			model.addressForm().houseNumber('12')
+			model.addressForm().office('13')
+			model.addressForm().description('')
+			mock.onPost(`${api}/addresses/`, data).reply(200, Object.assign({}, data, {id: 12}))
+			model.addAddress().then(() => {
+				assert.equal(model.addressId(), 12)
+				assert.equal(model.addresses().length, 3)
+				assert.equal(model.creatingAddress(), false)
+			})
+		})
+
+		it('should have cancel method', () => {
+			assert.equal(typeof model.cancel, 'function')
+
+			model.createAddress()
+			assert.equal(model.creatingAddress(), true)
+			assert.equal(model.addressForm() instanceof AddressForm, true)
+
+			model.cancel()
+			assert.equal(model.creatingAddress(), false)
+			assert.equal(model.addressForm(), null)
+		})
+	})
+
+	describe('addressForm', () => {
+		it('should have addressForm prop', () => {
+			assert.equal(ko.isObservable(model.addressForm), true)
+			assert.equal(model.addressForm(), null)
 		})
 	})
 })

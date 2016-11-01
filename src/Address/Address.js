@@ -12,4 +12,6 @@ export default class Address {
 
 		this.optionText = ko.computed(() => `${this.street()} ${this.houseNumber()}, ${this.office()}`)
 	}
+
+
 }

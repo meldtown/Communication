@@ -5,6 +5,8 @@ import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'
 import Address from '../../Address/Address'
 import * as helpers from '../../helpers'
+import AddressForm from '../../Address/AddressForm'
+
 
 export default class InviteMessageForm extends AbstractMessageForm {
 	constructor(dispatcher) {
@@ -12,7 +14,10 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.template('InviteMessageForm')
 		this.addressId = ko.observable()
 		this.addresses = ko.observableArray([])
+		this.addressForm = ko.observable(null)
 
+
+		this.creatingAddress = ko.observable(false)
 		this.inviteDateDate = ko.observable()
 		this.inviteDateTime = ko.observable()
 		this.inviteDate = ko.computed({
@@ -25,6 +30,10 @@ export default class InviteMessageForm extends AbstractMessageForm {
 
 		this.hasAddresses = ko.computed(() => (this.addresses() || []).length > 0)
 		this.canBeSaved = ko.computed(() => this.conversationId() && this.addressId() && this.text())
+		this.isAddButtonDisabled = ko.computed(() => {
+			if (!this.addressForm()) return
+			return !this.addressForm().city() || !this.addressForm().street() || !this.addressForm().houseNumber()
+		})
 	}
 
 	save() {
@@ -55,6 +64,25 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.text('')
 		this.inviteDate('')
 		this.addressId(0)
+	}
+
+	createAddress() {
+		this.creatingAddress(true)
+		this.addressForm(new AddressForm())
+	}
+
+	addAddress() {
+		return this.addressForm().save().then(() => {
+			this.addressId(this.addressForm().id)
+			this.addresses.push(new Address(ko.toJS(this.addressForm())))
+			this.creatingAddress(false)
+			this.addressForm(null)
+		})
+	}
+
+	cancel() {
+		this.creatingAddress(false)
+		this.addressForm(null)
 	}
 
 	fetchAddresses() {

@@ -10,10 +10,19 @@
 	<option>14:00</option>
 	<option>15:00</option>
 </select>
-
 <label for="addressId">address</label>
 <select id="addressId" data-bind="options: addresses, optionsText: 'optionText', optionsValue: 'id', value: addressId, optionsCaption: 'address...', enable: hasAddresses"></select>
 <textarea placeholder="invite..." data-bind="value: text, enable: hasConversationId"></textarea>
+<div>
+	<button data-bind="click: createAddress">Add address</button>
+	<div data-bind="with: addressForm">
+		<div data-bind="template: 'AddressForm'"></div>
+	</div>
+	<div data-bind="visible: addressForm">
+		<button data-bind="disable: isAddButtonDisabled, click: addAddress">Add</button>
+		<button data-bind="click: cancel">Cancel</button>
+	</div>
+</div>
 <div data-bind="if: canBeSaved">
 	<a href="#" data-bind="click: save">Send</a>
 </div>

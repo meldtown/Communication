@@ -28,6 +28,7 @@ export const init = () => {
 	helpers.injectTemplate('DeclineMessagePreview', require('../src/Message/DeclineMessagePreview.html'))
 	helpers.injectTemplate('OfferMessagePreview', require('../src/Message/OfferMessagePreview.html'))
 	helpers.injectTemplate('ApplyMessagePreview', require('../src/Message/ApplyMessagePreview.html'))
+	helpers.injectTemplate('AddressForm', require('../src/Address/AddressForm.html'))
 
 	model.fetch()
 	model.offerMessageForm.fetchVacancies()
