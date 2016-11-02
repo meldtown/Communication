@@ -19,7 +19,7 @@ export default class AddressForm {
 			office: this.office(),
 			description: this.description(),
 		}
-		if (!data.city || !data.street || !data.houseNumber) return
+		if (!data.city || !data.street || !data.houseNumber) return new Promise((res, rej) => rej())
 		return axios.post(`${api}/addresses/`, data).then(response => {
 			this.id = response.data.id
 		})

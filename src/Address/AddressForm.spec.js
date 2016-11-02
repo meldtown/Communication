@@ -68,6 +68,8 @@ describe('AddressForm', () => {
 		mock.onPost(`${api}/addresses/`, data).reply(200, Object.assign({}, data, {id: 12}))
 		return model.save().then(() => {
 			assert.equal(model.id, 12)
+		}).catch(() => {
+			console.log('Fill required fields')
 		})
 	})
 })

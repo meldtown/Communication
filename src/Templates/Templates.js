@@ -157,6 +157,7 @@ export default class Templates {
 				break
 			case InviteTemplateView:
 				form = new InviteTemplateForm(this.dispatcher, selectedTemplateData)
+
 				break
 			case DeclineTemplateView:
 				form = new DeclineTemplateForm(this.dispatcher, selectedTemplateData)
