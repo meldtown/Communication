@@ -16,8 +16,6 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.addresses = ko.observableArray([])
 		this.addressForm = ko.observable(null)
 
-
-		this.creatingAddress = ko.observable(false)
 		this.inviteDateDate = ko.observable()
 		this.inviteDateTime = ko.observable()
 		this.inviteDate = ko.computed({
@@ -67,7 +65,6 @@ export default class InviteMessageForm extends AbstractMessageForm {
 	}
 
 	createAddress() {
-		this.creatingAddress(true)
 		this.addressForm(new AddressForm())
 	}
 
@@ -75,13 +72,11 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		return this.addressForm().save().then(() => {
 			this.addressId(this.addressForm().id)
 			this.addresses.push(new Address(ko.toJS(this.addressForm())))
-			this.creatingAddress(false)
 			this.addressForm(null)
 		})
 	}
 
-	cancel() {
-		this.creatingAddress(false)
+	cancelAddressForm() {
 		this.addressForm(null)
 	}
 

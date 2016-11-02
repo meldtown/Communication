@@ -211,16 +211,8 @@ describe('InviteMessageForm', () => {
 			assert.ok(model.canBeSaved())
 		})
 
-		it('should have creatingAddress prop', () => {
-			assert.equal(ko.isObservable(model.creatingAddress), true)
-			assert.equal(model.creatingAddress(), false)
-		})
-
 		it('should have createAddress method', () => {
 			assert.equal(typeof model.createAddress, 'function')
-
-			model.createAddress()
-			assert.equal(model.creatingAddress(), true)
 		})
 
 		it('should have addAddress method', () => {
@@ -245,19 +237,16 @@ describe('InviteMessageForm', () => {
 			model.addAddress().then(() => {
 				assert.equal(model.addressId(), 12)
 				assert.equal(model.addresses().length, 3)
-				assert.equal(model.creatingAddress(), false)
 			})
 		})
 
-		it('should have cancel method', () => {
-			assert.equal(typeof model.cancel, 'function')
+		it('should have cancelAddressForm method', () => {
+			assert.equal(typeof model.cancelAddressForm, 'function')
 
 			model.createAddress()
-			assert.equal(model.creatingAddress(), true)
 			assert.equal(model.addressForm() instanceof AddressForm, true)
 
-			model.cancel()
-			assert.equal(model.creatingAddress(), false)
+			model.cancelAddressForm()
 			assert.equal(model.addressForm(), null)
 		})
 	})
