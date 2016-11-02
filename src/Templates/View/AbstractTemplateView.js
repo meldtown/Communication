@@ -6,6 +6,7 @@ import axios from 'axios'
 export default class AbstractTemplateView extends AbstractTemplate {
 	constructor(dispatcher, data) {
 		super(dispatcher, data)
+
 		dispatcher.subscribe(template => {
 			if (this.constructor === template.constructor) {
 				this.isSelected(this.id() === template.id())
@@ -20,7 +21,7 @@ export default class AbstractTemplateView extends AbstractTemplate {
 		this.dispatcher.notifySubscribers(this, actions.TEMPLATE_SELECTED)
 	}
 
-	delete() {
+	remove() {
 		return axios.delete(`${api}/templates/${this.id()}`)
 	}
 }

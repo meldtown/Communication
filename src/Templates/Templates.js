@@ -36,9 +36,11 @@ export default class Templates {
 		this.filter = ko.observable()
 		this.filteredTemplates = ko.computed(() => {
 			if (!this.selectedTab()) this.selectStandardTab()
-			return this.templates().filter(template => {
-				return template instanceof this.selectedTab()
-			})
+
+			return this.templates()
+				.filter(template => {
+					return template instanceof this.selectedTab()
+				})
 				.filter(template => {
 					if (!this.isRussianLanguageSelected() && !this.isUkrainianLanguageSelected() && !this.isEnglishLanguageSelected()) return true
 					return ((template.language() === constants.RU) && this.isRussianLanguageSelected()) ||
@@ -98,9 +100,12 @@ export default class Templates {
 		return axios.get(`${api}/templates`)
 			.then(response => {
 				this.selectedTab(StandardTemplateView)
-				let templates = this.templates(response.data.map(TemplateFactory.create.bind(this, this.dispatcher)))
+				this.templates(response.data.map(TemplateFactory.create.bind(this, this.dispatcher)))
+				if (!this.filteredTemplates().length) {
+					this.selectedTab(this.templates()[0].constructor)
+				}
 				this.filteredTemplates()[0].select()
-				return templates
+				return this.templates()
 			})
 	}
 
@@ -111,19 +116,19 @@ export default class Templates {
 
 	selectInviteTab() {
 		this.selectedTab(InviteTemplateView)
-		if (!this.selectedInviteTemplate()) this.filteredTemplates()[0].select()
+		if (!this.selectedInviteTemplate() && this.filteredTemplates().length > 0) this.filteredTemplates()[0].select()
 		this.isSelectedTemplateBeingEdited(false)
 	}
 
 	selectDeclineTab() {
 		this.selectedTab(DeclineTemplateView)
-		if (!this.selectedDeclineTemplate()) this.filteredTemplates()[0].select()
+		if (!this.selectedDeclineTemplate() && this.filteredTemplates().length > 0) this.filteredTemplates()[0].select()
 		this.isSelectedTemplateBeingEdited(false)
 	}
 
 	selectOfferTab() {
 		this.selectedTab(OfferTemplateView)
-		if (!this.selectedOfferTemplate()) this.filteredTemplates()[0].select()
+		if (!this.selectedOfferTemplate() && this.filteredTemplates().length > 0) this.filteredTemplates()[0].select()
 		this.isSelectedTemplateBeingEdited(false)
 	}
 
@@ -140,6 +145,8 @@ export default class Templates {
 	}
 
 	edit() {
+		if (!this.selectedTemplate()) return
+
 		this.isSelectedTemplateBeingEdited(true)
 		// noinspection JSUnusedLocalSymbols
 		let {dispatcher, isSelected, ...selectedTemplateData} = ko.toJS(this.selectedTemplate()) // eslint-disable-line no-unused-vars
@@ -167,7 +174,7 @@ export default class Templates {
 	}
 
 	save() {
-		return this.selectedTemplateForm().save().then((response) => {
+		return this.selectedTemplateForm().save().then(response => {
 			this.selectedTemplateForm().fill(this.selectedTemplate())
 			if (!this.selectedTemplateForm().id()) {
 				this.selectedTemplate().id(response.data.id)
@@ -179,10 +186,12 @@ export default class Templates {
 		})
 	}
 
-	delete() {
-		return this.selectedTemplate().delete().then(() => {
+	remove() {
+		return this.selectedTemplate().remove().then(() => {
 			this.templates.remove(this.selectedTemplate())
-			this.filteredTemplates()[0].select()
+			if (this.filteredTemplates().length > 0) {
+				this.filteredTemplates()[0].select()
+			}
 		})
 	}
 
@@ -194,29 +203,22 @@ export default class Templates {
 		this.isEnglishLanguageSelected(false)
 		let newTemplateForm = null
 		let newTemplateView = null
-		let data = {text: '', title: '', language: 'ru'}
 		switch (this.selectedTab()) {
 			case StandardTemplateView:
-				newTemplateForm = new StandardTemplateForm(this.dispatcher, data)
-				newTemplateView = new StandardTemplateView(this.dispatcher, data)
+				newTemplateForm = new StandardTemplateForm(this.dispatcher)
+				newTemplateView = new StandardTemplateView(this.dispatcher)
 				break
 			case InviteTemplateView:
-				newTemplateForm = new InviteTemplateForm(this.dispatcher, Object.assign({}, data, {
-					addressId: 0,
-					inviteDate: '2016-11-11'
-				}))
-				newTemplateView = new InviteTemplateView(this.dispatcher, Object.assign({}, data, {
-					addressId: 0,
-					inviteDate: '2016-11-11'
-				}))
+				newTemplateForm = new InviteTemplateForm(this.dispatcher)
+				newTemplateView = new InviteTemplateView(this.dispatcher)
 				break
 			case DeclineTemplateView:
-				newTemplateForm = new DeclineTemplateForm(this.dispatcher, data)
-				newTemplateView = new DeclineTemplateView(this.dispatcher, data)
+				newTemplateForm = new DeclineTemplateForm(this.dispatcher)
+				newTemplateView = new DeclineTemplateView(this.dispatcher)
 				break
 			case OfferTemplateView:
-				newTemplateForm = new OfferTemplateForm(this.dispatcher, data)
-				newTemplateView = new OfferTemplateView(this.dispatcher, data)
+				newTemplateForm = new OfferTemplateForm(this.dispatcher)
+				newTemplateView = new OfferTemplateView(this.dispatcher)
 				break
 		}
 		this.selectedTemplateForm(newTemplateForm)

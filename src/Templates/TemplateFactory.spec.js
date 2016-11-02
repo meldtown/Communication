@@ -13,9 +13,11 @@ describe('TemplatesFactory', () => {
 	it('should have static create method', () => {
 		assert.equal(typeof TemplateFactory.create, 'function')
 	})
+
 	describe('create', () => {
 		let data
 		let dispatcher
+
 		beforeEach(() => {
 			data = {
 				id: 1,
@@ -62,14 +64,7 @@ describe('TemplatesFactory', () => {
 		})
 
 		it('should return null in all other cases', () => {
-			let data = {
-				type: 'UNKNOWN',
-				id: 1,
-				title: 'Yeah',
-				text: 'Great !!!',
-				language: 'ru'
-			}
-			assert.equal(TemplateFactory.create(dispatcher, data), null)
+			assert.equal(TemplateFactory.create(dispatcher, {...data, type: 'UNKNOWN'}), null)
 		})
 
 		it('should map array', () => {
