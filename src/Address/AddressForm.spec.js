@@ -4,11 +4,6 @@ import * as ko from 'knockout'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
-const api = 'http://sample.com'
-
-before(() => {
-	global.api = api
-})
 
 describe('AddressForm', () => {
 	let model
