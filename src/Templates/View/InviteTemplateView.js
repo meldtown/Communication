@@ -1,13 +1,16 @@
 import AbstractTemplateView from './AbstractTemplateView'
 import * as ko from 'knockout'
+import Address from '../../Address/Address'
 
 export default class InviteTemplateView extends AbstractTemplateView {
 	constructor(dispatcher, data = {}) {
 		super(dispatcher, data)
-		let {inviteDate, addressId} = data
+		let {inviteDate, addressId, address} = data
 		this.inviteDate = ko.observable(inviteDate)
 		this.addressId = ko.observable(addressId)
 		this.template = ko.observable('InviteTemplateForm')
+		this.address = ko.observable(new Address(address))
+
 	}
 }
 

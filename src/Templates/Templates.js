@@ -212,6 +212,7 @@ export default class Templates {
 			case InviteTemplateView:
 				newTemplateForm = new InviteTemplateForm(this.dispatcher)
 				newTemplateView = new InviteTemplateView(this.dispatcher)
+				newTemplateForm.fetchAddresses()
 				break
 			case DeclineTemplateView:
 				newTemplateForm = new DeclineTemplateForm(this.dispatcher)

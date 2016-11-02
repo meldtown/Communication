@@ -171,10 +171,11 @@ export const generateStandardTemplate = id => {
 	return {id, type, text, title: faker.random.word(), language: generateLanguage()}
 }
 
-export const generateInviteTemplate = id => {
+export const generateInviteTemplate = (id, addresses = []) => {
 	const {type, text, inviteDate, addressId } = generateInviteMessage(id, 0)
+	let address = addresses && addresses.length > 0 ? faker.random.arrayElement(addresses) : generateAddress(id)
 
-	return {id, type, text, inviteDate, addressId, title: faker.random.word(), language: generateLanguage()}
+	return {id, type, text, inviteDate, addressId, address, title: faker.random.word(), language: generateLanguage()}
 }
 
 export const generateDeclineTemplate = id => {
@@ -188,11 +189,11 @@ export const generateOfferTemplate = id => {
 	return {id, type, text, title: faker.random.word(), language: generateLanguage()}
 }
 
-const generateTemplate = id => {
+const generateTemplate = (id, addresses) => {
 	let type = faker.random.arrayElement(MESSAGE_TYPES.filter(type => type !== types.APPLY_MESSAGE))
 	switch (type) {
 		case types.INVITE_MESSAGE:
-			return generateInviteTemplate(id)
+			return generateInviteTemplate(id, addresses)
 		case types.DECLINE_MESSAGE:
 			return generateDeclineTemplate(id)
 		case types.OFFER_MESSAGE:
@@ -202,12 +203,12 @@ const generateTemplate = id => {
 	}
 }
 
-const generateTemplates = () => {
+const generateTemplates = addresses => {
 	let templates = []
 	let numberOfTemplates = generateNumberBetween(3, 10)
 
 	for (let id = 1; id <= numberOfTemplates; id++) {
-		templates.push(generateTemplate(id))
+		templates.push(generateTemplate(id, addresses))
 	}
 
 	return templates
@@ -251,7 +252,7 @@ if (require.main === module) {
 	let vacancies = generateVacancies()
 	let messages = generateMessages(vacancies, addresses)
 	let conversations = generateConversations(messages)
-	let templates = generateTemplates()
+	let templates = generateTemplates(addresses)
 
 	let db = {
 		vacancies,

@@ -698,6 +698,7 @@ describe('Templates', () => {
 			assert.ok(model.selectedTemplateForm() instanceof StandardTemplateForm)
 
 			model.selectInviteTab()
+			mock.onGet(`${api}/addresses`).reply(200, [])
 			model.create()
 			assert.ok(model.selectedTemplateForm() instanceof InviteTemplateForm)
 

@@ -37,7 +37,7 @@ describe('InviteTemplateView', () => {
 		let data = generator.generateInviteTemplate(1)
 		model = new InviteTemplateView(dispatcher, data)
 		let actual = ko.toJS(model)
-		let overrides = {dispatcher: 1, isSelected: 1, template: 1, type: 1}
+		let overrides = {dispatcher: 1, isSelected: 1, template: 1, type: 1, address: {...data.address, optionText: 1}}
 		assert.deepEqual({...actual, ...overrides}, {...data, ...overrides})
 	})
 })

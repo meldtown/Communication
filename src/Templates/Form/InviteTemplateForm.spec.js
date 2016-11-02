@@ -42,7 +42,7 @@ describe('InviteTemplateForm', () => {
 		model = new InviteTemplateForm(dispatcher, data)
 		let actual = ko.toJS(model)
 		let {addresses, addressForm} = actual
-		let overrides = {dispatcher: 1, template: 1, type: 1}
+		let overrides = {dispatcher: 1, template: 1, type: 1,  address: {...data.address, optionText: 1}}
 		assert.deepEqual({...actual, ...overrides}, {...data, addresses, addressForm, ...overrides})
 	})
 
@@ -62,20 +62,20 @@ describe('InviteTemplateForm', () => {
 		model.fill(template)
 
 		// noinspection JSUnusedLocalSymbols
-		let {isSelected, ...actual} = ko.toJS(template) // eslint-disable-line no-unused-vars
+		let {isSelected, address, ...actual} = ko.toJS(template) // eslint-disable-line no-unused-vars
 		let {addresses, addressForm, ...expected} = ko.toJS(model) // eslint-disable-line no-unused-vars
 		assert.deepEqual(actual, expected)
 	})
 
 	describe('save method', () => {
-		let {id, ...data} = generator.generateInviteTemplate(1)
+		let {id, address, ...data} = generator.generateInviteTemplate(1)
 
 		it('should have save method', () => {
 			assert.equal(typeof model.save, 'function')
 		})
 
 		it('should call put while saving existing template', () => {
-			model = new InviteTemplateForm(dispatcher, {...data, id})
+			model = new InviteTemplateForm(dispatcher, {...data, id, address})
 			mock.onPut(`${api}/templates/${id}`, {...data, id}).reply(200)
 
 			return model.save().then(() => assert.ok(true))
