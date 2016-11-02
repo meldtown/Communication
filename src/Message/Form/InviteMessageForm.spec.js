@@ -215,7 +215,7 @@ describe('InviteMessageForm', () => {
 			assert.equal(typeof model.createAddress, 'function')
 		})
 
-		it('should have addAddress method', () => {
+		it('should have saveAddress method', () => {
 			let data = {
 				street: '12th Avenue',
 				houseNumber: '12',
@@ -225,7 +225,7 @@ describe('InviteMessageForm', () => {
 			}
 
 			model.addresses([generator.generateAddress(1), generator.generateAddress(2)])
-			assert.equal(typeof model.addAddress, 'function')
+			assert.equal(typeof model.saveAddress, 'function')
 
 			model.createAddress()
 			model.addressForm().city('New York')
@@ -234,7 +234,7 @@ describe('InviteMessageForm', () => {
 			model.addressForm().office('13')
 			model.addressForm().description('')
 			mock.onPost(`${api}/addresses/`, data).reply(200, Object.assign({}, data, {id: 12}))
-			model.addAddress().then(() => {
+			model.saveAddress().then(() => {
 				assert.equal(model.addressId(), 12)
 				assert.equal(model.addresses().length, 3)
 			})
