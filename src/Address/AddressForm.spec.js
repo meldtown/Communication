@@ -69,7 +69,7 @@ describe('AddressForm', () => {
 		return model.save().then(() => {
 			assert.equal(model.id, 12)
 		}).catch(() => {
-			console.log('Fill required fields')
+			throw new Error('Fill the required fields')
 		})
 	})
 })

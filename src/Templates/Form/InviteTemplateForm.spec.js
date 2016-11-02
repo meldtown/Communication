@@ -41,8 +41,9 @@ describe('InviteTemplateForm', () => {
 		let data = generator.generateInviteTemplate(1)
 		model = new InviteTemplateForm(dispatcher, data)
 		let actual = ko.toJS(model)
+		let {addresses, addressForm} = actual
 		let overrides = {dispatcher: 1, template: 1, type: 1}
-		assert.deepEqual({...actual, ...overrides}, {...data, ...overrides})
+		assert.deepEqual({...actual, ...overrides}, {...data, addresses, addressForm, ...overrides})
 	})
 
 	it('should have template prop', () => {
@@ -61,9 +62,9 @@ describe('InviteTemplateForm', () => {
 		model.fill(template)
 
 		// noinspection JSUnusedLocalSymbols
-		let {isSelected, ...actual} =ko.toJS(template) // eslint-disable-line no-unused-vars
-
-		assert.deepEqual(actual, ko.toJS(model))
+		let {isSelected, ...actual} = ko.toJS(template) // eslint-disable-line no-unused-vars
+		let {addresses, addressForm, ...expected} = ko.toJS(model) // eslint-disable-line no-unused-vars
+		assert.deepEqual(actual, expected)
 	})
 
 	describe('save method', () => {
