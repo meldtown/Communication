@@ -40,24 +40,14 @@
 	<button class="create-new" data-bind="click: create">Create new template</button>
 	<div data-bind="if: isSelectedTemplateBeingEdited">
 		<div data-bind="with: selectedTemplateForm">
-			<h3>Language</h3>
-			<select name="language" id="language" data-bind="options: $parent.languages, value: language"></select>
-			<h3>Title</h3>
-			<input type="text" name="title" id="title" data-bind="value: title">
-			<h3>text</h3>
-			<input type="text" name="text" id="text" data-bind="value: text">
+			<div data-bind="template: template"></div>
 		</div>
 		<button data-bind="click: $root.cancel">Cancel</button>
 		<button data-bind="click: $root.save">Save</button>
 	</div>
 	<div data-bind="ifnot: isSelectedTemplateBeingEdited">
 		<div data-bind="with: selectedTemplate">
-			<h3>Language</h3>
-			<div data-bind="text: language"></div>
-			<h3>Title</h3>
-			<div data-bind="text: title"></div>
-			<h3>Text</h3>
-			<div data-bind="text: text"></div>
+			<div data-bind="template: template"></div>
 		</div>
 		<button data-bind="click: $root.edit">Edit</button>
 		<button data-bind="click: $root.delete">Remove</button>
