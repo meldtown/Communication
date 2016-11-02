@@ -150,6 +150,7 @@ export default class Templates {
 				break
 			case InviteTemplateView:
 				form = new InviteTemplateForm(this.dispatcher, selectedTemplateData)
+
 				break
 			case DeclineTemplateView:
 				form = new DeclineTemplateForm(this.dispatcher, selectedTemplateData)
@@ -209,6 +210,7 @@ export default class Templates {
 					addressId: 0,
 					inviteDate: '2016-11-11'
 				}))
+
 				break
 			case DeclineTemplateView:
 				newTemplateForm = new DeclineTemplateForm(this.dispatcher, data)

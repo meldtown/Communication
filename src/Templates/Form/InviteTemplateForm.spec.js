@@ -8,6 +8,8 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import TemplateFactory from '../TemplateFactory'
 import Templates from '../Templates'
+import AddressForm from '../../Address/AddressForm'
+import Address from '../../Address/Address'
 
 
 describe('InviteTemplateForm', () => {
@@ -47,6 +49,79 @@ describe('InviteTemplateForm', () => {
 	it('should have template prop', () => {
 		assert.equal(ko.isObservable(model.template), true)
 		assert.equal((model.template()), 'InviteTemplateForm')
+	})
+
+	it('should have addressForm prop', () => {
+		assert.equal(ko.isObservable(model.addressForm), true)
+		assert.equal(model.addressForm(), null)
+	})
+
+	it('should have createAddress method', () => {
+		assert.equal(typeof model.createAddress, 'function')
+	})
+
+	it('should have createAddress method', () => {
+		assert.equal(typeof model.createAddress, 'function')
+	})
+
+	it('should have addresses observable array', () => {
+		assert.ok(ko.isObservable(model.addresses))
+		assert.equal(typeof model.addresses.push, 'function')
+		assert.equal(model.addresses().length, 0)
+	})
+
+	it('should have saveAddress method', () => {
+		let data = {
+			street: '12th Avenue',
+			houseNumber: '12',
+			office: '13',
+			city: 'New York',
+			description: ''
+		}
+
+		let mock = new MockAdapter(axios)
+
+		model.addresses([generator.generateAddress(1), generator.generateAddress(2)])
+		assert.equal(typeof model.saveAddress, 'function')
+
+		model.createAddress()
+		model.addressForm().city('New York')
+		model.addressForm().street('12th Avenue')
+		model.addressForm().houseNumber('12')
+		model.addressForm().office('13')
+		model.addressForm().description('')
+		mock.onPost(`${api}/addresses/`, data).reply(200, Object.assign({}, data, {id: 12}))
+		model.saveAddress().then(() => {
+			assert.equal(model.addressId(), 12)
+			assert.equal(model.addresses().length, 3)
+		})
+	})
+
+	it('should have cancelAddressForm method', () => {
+		assert.equal(typeof model.cancelAddressForm, 'function')
+
+		model.createAddress()
+		assert.equal(model.addressForm() instanceof AddressForm, true)
+
+		model.cancelAddressForm()
+		assert.equal(model.addressForm(), null)
+	})
+
+	it('should have fetchAddresses method', () => {
+		let mock = new MockAdapter(axios)
+		assert.equal(typeof model.fetchAddresses, 'function')
+
+		assert.equal(model.addresses().length, 0)
+
+		mock.onGet(`${api}/addresses`).reply(200, [
+			generator.generateAddress(1),
+			generator.generateAddress(2)
+		])
+
+		return model.fetchAddresses().then(() => {
+			assert.equal(model.addresses().length, 2)
+			assert.ok(model.addresses()[0] instanceof Address)
+		})
 	})
 })
 

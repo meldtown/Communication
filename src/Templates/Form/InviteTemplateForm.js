@@ -1,6 +1,8 @@
 import * as ko from 'knockout'
 import AbstractTemplateForm from './AbstractTemplateForm'
 import axios from 'axios'
+import AddressForm from '../../Address/AddressForm'
+import Address from '../../Address/Address'
 
 
 export default class InviteTemplateForm extends AbstractTemplateForm {
@@ -9,6 +11,8 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 		this.inviteDate = ko.observable()
 		this.addressId = ko.observable()
 		this.template = ko.observable('InviteTemplateForm')
+		this.addressForm = ko.observable(null)
+		this.addresses = ko.observableArray([])
 	}
 
 	save() {
@@ -32,6 +36,27 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 		super.fill(selectedTemplate)
 		selectedTemplate.addressId(this.addressId())
 		selectedTemplate.inviteDate(this.inviteDate())
+	}
+
+	createAddress() {
+		this.addressForm(new AddressForm())
+	}
+
+	saveAddress() {
+		return this.addressForm().save().then(() => {
+			this.addressId(this.addressForm().id)
+			this.addresses.push(new Address(ko.toJS(this.addressForm())))
+			this.addressForm(null)
+		})
+	}
+
+	cancelAddressForm() {
+		this.addressForm(null)
+	}
+
+	fetchAddresses() {
+		return axios.get(`${api}/addresses`)
+			.then(response => this.addresses(response.data.map(item => new Address(item))))
 	}
 }
 
