@@ -11,6 +11,7 @@ import StandardTemplateForm from '../Templates/Form/StandardTemplateForm'
 import InviteTemplateForm from '../Templates/Form/InviteTemplateForm'
 import DeclineTemplateForm from '../Templates/Form/DeclineTemplateForm'
 import OfferTemplateForm from '../Templates/Form/OfferTemplateForm'
+import Address from '../Address/Address'
 
 export default class Templates {
 	constructor(dispatcher) {
@@ -20,6 +21,7 @@ export default class Templates {
 
 		this.dispatcher = dispatcher
 		this.templates = ko.observableArray()
+		this.addresses = ko.observableArray([])
 
 		this.tabs = [constants.STANDARD_MESSAGE, constants.INVITE_MESSAGE, constants.DECLINE_MESSAGE, constants.OFFER_MESSAGE]
 		this.selectedTab = ko.observable(StandardTemplateView)
@@ -157,7 +159,7 @@ export default class Templates {
 				break
 			case InviteTemplateView:
 				form = new InviteTemplateForm(this.dispatcher, selectedTemplateData)
-				form.fetchAddresses()
+				form.addresses(this.addresses())
 				break
 			case DeclineTemplateView:
 				form = new DeclineTemplateForm(this.dispatcher, selectedTemplateData)
@@ -179,6 +181,9 @@ export default class Templates {
 			this.selectedTemplateForm().fill(this.selectedTemplate())
 			if (!this.selectedTemplateForm().id()) {
 				this.selectedTemplate().id(response.data.id)
+				if (this.selectedTemplateForm() instanceof InviteTemplateForm) {
+					this.selectedTemplate().addressId(response.data.addressId)
+				}
 				this.templates.push(this.selectedTemplate())
 			}
 			this.selectedTemplateForm(null)
@@ -212,7 +217,8 @@ export default class Templates {
 			case InviteTemplateView:
 				newTemplateForm = new InviteTemplateForm(this.dispatcher)
 				newTemplateView = new InviteTemplateView(this.dispatcher)
-				newTemplateForm.fetchAddresses()
+				newTemplateForm.addresses(this.addresses())
+				// newTemplateForm.fetchAddresses()
 				break
 			case DeclineTemplateView:
 				newTemplateForm = new DeclineTemplateForm(this.dispatcher)
@@ -226,5 +232,10 @@ export default class Templates {
 		this.selectedTemplateForm(newTemplateForm)
 		newTemplateView.select()
 		this.isSelectedTemplateBeingEdited(true)
+	}
+
+	fetchAddresses() {
+		return axios.get(`${api}/addresses`)
+			.then(response => this.addresses(response.data.map(item => new Address(item))))
 	}
 }

@@ -22,7 +22,7 @@ describe('StandardTemplateView', () => {
 
 	it('should have template prop', () => {
 		assert.equal(ko.isObservable(model.template), true)
-		assert.equal((model.template()), 'StandardTemplateForm')
+		assert.equal((model.template()), 'StandardTemplateView')
 	})
 
 	it('should accept data into constructor', () => {

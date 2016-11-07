@@ -33,6 +33,7 @@ export const generateStandardMessage = (id, conversationId) => ({
 })
 
 export const generateInviteMessage = (id, conversationId, addresses = []) => {
+	let address = addresses && addresses.length > 0 ? faker.random.arrayElement(addresses) : generateAddress(id)
 	return {
 		id,
 		conversationId,
@@ -40,8 +41,8 @@ export const generateInviteMessage = (id, conversationId, addresses = []) => {
 		date: generateRecentDate(),
 		text: faker.hacker.phrase(),
 		inviteDate: faker.date.future().toISOString(),
-		address: addresses && addresses.length > 0 ? faker.random.arrayElement(addresses) : generateAddress(id),
-		addressId: generateNumberBetween(1, 50),
+		address: address,
+		addressId: address.id,
 		isRead: faker.random.boolean()
 	}
 }
@@ -172,9 +173,7 @@ export const generateStandardTemplate = id => {
 }
 
 export const generateInviteTemplate = (id, addresses = []) => {
-	const {type, text, inviteDate, addressId } = generateInviteMessage(id, 0)
-	let address = addresses && addresses.length > 0 ? faker.random.arrayElement(addresses) : generateAddress(id)
-
+	const {type, text, inviteDate, address, addressId } = generateInviteMessage(id, 0, addresses)
 	return {id, type, text, inviteDate, addressId, address, title: faker.random.word(), language: generateLanguage()}
 }
 

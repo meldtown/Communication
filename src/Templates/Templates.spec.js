@@ -14,6 +14,7 @@ import StandardTemplateForm from './Form/StandardTemplateForm'
 import InviteTemplateForm from './Form/InviteTemplateForm'
 import OfferTemplateForm from './Form/OfferTemplateForm'
 import DeclineTemplateForm from './Form/DeclineTemplateForm'
+import Address from '../Address/Address'
 
 const api = 'http://sample.com'
 
@@ -66,6 +67,22 @@ describe('Templates', () => {
 			assert.ok(model.templates()[1] instanceof InviteTemplateView)
 			assert.ok(model.templates()[2] instanceof DeclineTemplateView)
 			assert.ok(model.templates()[3] instanceof OfferTemplateView)
+		})
+	})
+
+	it('should have fetchAddresses method', () => {
+		assert.equal(typeof model.fetchAddresses, 'function')
+
+		assert.equal(model.addresses().length, 0)
+
+		mock.onGet(`${api}/addresses`).reply(200, [
+			generator.generateAddress(1),
+			generator.generateAddress(2)
+		])
+
+		return model.fetchAddresses().then(() => {
+			assert.equal(model.addresses().length, 2)
+			assert.ok(model.addresses()[0] instanceof Address)
 		})
 	})
 
@@ -531,8 +548,8 @@ describe('Templates', () => {
 
 			// noinspection JSUnusedLocalSymbols
 			var {isSelected, ...expected} = ko.toJS(template) // eslint-disable-line no-unused-vars
-
-			assert.deepEqual(ko.toJS(model.selectedTemplateForm()), expected)
+			var actual = ko.toJS(model.selectedTemplateForm())
+			assert.deepEqual({...actual, template: 1}, {...expected, template: 1})
 		})
 
 		it('should have cancel method', () => {

@@ -7,6 +7,7 @@ import * as generator from '../../../db'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import InviteTemplateView from '../View/InviteTemplateView'
+import Address from '../../Address/Address'
 
 const api = 'http://sample.com'
 
@@ -42,7 +43,7 @@ describe('InviteTemplateForm', () => {
 		model = new InviteTemplateForm(dispatcher, data)
 		let actual = ko.toJS(model)
 		let {addresses, addressForm} = actual
-		let overrides = {dispatcher: 1, template: 1, type: 1,  address: {...data.address, optionText: 1}}
+		let overrides = {dispatcher: 1, template: 1, type: 1, isAddButtonDisabled: true,  address: {...data.address, optionText: 1}}
 		assert.deepEqual({...actual, ...overrides}, {...data, addresses, addressForm, ...overrides})
 	})
 
@@ -58,13 +59,33 @@ describe('InviteTemplateForm', () => {
 	it('should fill given template', () => {
 		model = new InviteTemplateForm(dispatcher, generator.generateInviteTemplate(1))
 		let template = new InviteTemplateView(dispatcher)
-
 		model.fill(template)
 
 		// noinspection JSUnusedLocalSymbols
 		let {isSelected, address, ...actual} = ko.toJS(template) // eslint-disable-line no-unused-vars
 		let {addresses, addressForm, ...expected} = ko.toJS(model) // eslint-disable-line no-unused-vars
-		assert.deepEqual(actual, expected)
+		assert.deepEqual({...actual, addressText: '', template: 1, isAddButtonDisabled: true}, {...expected, addressText: '', template: 1, isAddButtonDisabled: true})
+	})
+
+	it('should fill address if given', () => {
+		model = new InviteTemplateForm(dispatcher, generator.generateInviteTemplate(1))
+		let template = new InviteTemplateView(dispatcher, {address: generator.generateAddress(333)})
+		model.addresses([generator.generateAddress(222), generator.generateAddress(333)].map(item => new Address(item)))
+		model.addressId(333)
+		model.fill(template)
+
+		let address = model.addresses()[1]
+		assert.equal(template.address(), address)
+		assert.equal(template.addressText(), address.optionText())
+	})
+
+	it('should set default message if there\'s not selected address', () => {
+		model = new InviteTemplateForm(dispatcher, generator.generateInviteTemplate(1))
+		let template = new InviteTemplateView(dispatcher)
+		model.addresses([generator.generateAddress(222), generator.generateAddress(333)].map(item => new Address(item)))
+
+		model.fill(template)
+		assert.equal(template.addressText(), 'No attached address')
 	})
 
 	describe('save method', () => {

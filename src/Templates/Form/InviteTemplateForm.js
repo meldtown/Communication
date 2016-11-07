@@ -15,6 +15,10 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 		this.template = ko.observable('InviteTemplateForm')
 		this.addressForm = ko.observable(null)
 		this.addresses = ko.observableArray([])
+		this.isAddButtonDisabled = ko.computed(() => {
+			if (!this.addressForm()) return
+			return !this.addressForm().city() || !this.addressForm().street() || !this.addressForm().houseNumber()
+		})
 	}
 
 	save() {
@@ -35,9 +39,13 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 	}
 
 	fill(selectedTemplate) {
-		super.fill(selectedTemplate)
 		selectedTemplate.addressId(this.addressId())
 		selectedTemplate.inviteDate(this.inviteDate())
+		let address = this.addresses().filter(address => {
+			return address.id() === this.addressId()
+		}).shift()
+		selectedTemplate.address(address)
+		super.fill(selectedTemplate)
 	}
 
 	createAddress() {
@@ -56,9 +64,9 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 		this.addressForm(null)
 	}
 
-	fetchAddresses() {
-		return axios.get(`${api}/addresses`)
-			.then(response => this.addresses(response.data.map(item => new Address(item))))
-	}
+	// fetchAddresses() {
+	// 	return axios.get(`${api}/addresses`)
+	// 		.then(response => this.addresses(response.data.map(item => new Address(item))))
+	// }
 }
 

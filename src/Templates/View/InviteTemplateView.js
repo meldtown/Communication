@@ -10,7 +10,9 @@ export default class InviteTemplateView extends AbstractTemplateView {
 		this.addressId = ko.observable(addressId)
 		this.template = ko.observable('InviteTemplateView')
 		this.address = ko.observable(new Address(address))
-
+		this.addressText = ko.computed(() => {
+			return address ? this.address().optionText() : 'No attached address'
+		})
 	}
 }
 
