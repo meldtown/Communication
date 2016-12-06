@@ -35,14 +35,14 @@ export default (app) => ({
 	},
 	module: {
 		loaders: [
-			{test: /\.html$/, loader: 'html'},
-			{test: /\.js$/, loader: 'babel', exclude: /node_modules/},
+			{test: /\.html$/, loader: 'html-loader'},
+			{test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/},
 			{
 				test: /\.s?css$/,
 				loader: isProduction ? ExtractTextPlugin.extract({
-					fallbackLoader: 'style',
-					loader: 'css?sourceMap!postcss!sass?sourceMap'
-				}) : 'style!css?sourceMap!postcss!sass?sourceMap'
+					fallbackLoader: 'style-loader',
+					loader: 'css-loader?sourceMap!postcss-loader!sass-loader?sourceMap'
+				}) : 'style-loader!css-loader?sourceMap!postcss-loader!sass-loader?sourceMap'
 			}
 		]
 	},
