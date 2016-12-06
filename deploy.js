@@ -11,6 +11,7 @@ const branch2bucket = {
 	dev: 'rua-assets-dev'
 }
 
+
 git.branch(branch => {
 	if (branch2bucket[branch]) {
 		glob('**/*', {cwd: __dirname + '/dist', nodir: true}, function (err, files) {
