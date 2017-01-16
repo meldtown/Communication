@@ -33,7 +33,7 @@ describe('DeclineTemplateForm', () => {
 		model = new DeclineTemplateForm(dispatcher, data)
 
 		assert.equal(model.id(), data.id)
-		assert.equal(model.title(), data.title)
+		assert.equal(model.name(), data.name)
 	})
 
 	it('should have template prop', () => {

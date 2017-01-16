@@ -33,7 +33,7 @@
 
 
 	<div class="templates-list" data-bind="foreach: filteredTemplates">
-		<div class="template-item" data-bind="text: title, click: select, css: {selectedTemplate: isSelected()}"></div>
+		<div class="template-item" data-bind="text: name, click: select, css: {selectedTemplate: isSelected()}"></div>
 	</div>
 </div>
 <div class="selected-template-template">
@@ -50,6 +50,6 @@
 			<div data-bind="template: template"></div>
 		</div>
 		<button data-bind="click: $root.edit">Edit</button>
-		<button data-bind="click: $root.delete">Remove</button>
+		<button data-bind="click: $root.remove">Remove</button>
 	</div>
 </div>

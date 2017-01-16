@@ -169,23 +169,23 @@ const generateConversations = messages => {
 export const generateStandardTemplate = id => {
 	const {type, text} = generateStandardMessage(id, 0)
 
-	return {id, type, text, title: faker.random.word(), language: generateLanguage()}
+	return {id, type, text, name: faker.random.word(), language: generateLanguage()}
 }
 
 export const generateInviteTemplate = (id, addresses = []) => {
 	const {type, text, inviteDate, address, addressId } = generateInviteMessage(id, 0, addresses)
-	return {id, type, text, inviteDate, addressId, address, title: faker.random.word(), language: generateLanguage()}
+	return {id, type, text, inviteDate, addressId, address, name: faker.random.word(), language: generateLanguage()}
 }
 
 export const generateDeclineTemplate = id => {
 	const {type, text} = generateDeclineMessage(id, 0)
-	return {id, type, text, title: faker.random.word(), language: generateLanguage()}
+	return {id, type, text, name: faker.random.word(), language: generateLanguage()}
 }
 
 export const generateOfferTemplate = id => {
 	const {type, text} = generateOfferMessage(id, 0)
 
-	return {id, type, text, title: faker.random.word(), language: generateLanguage()}
+	return {id, type, text, name: faker.random.word(), language: generateLanguage()}
 }
 
 const generateTemplate = (id, addresses) => {

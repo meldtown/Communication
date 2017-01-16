@@ -13,7 +13,7 @@ export default class StandardTemplateForm extends AbstractTemplateForm {
 		let data = {
 			type: constants.STANDARD_MESSAGE,
 			text: this.text(),
-			title: this.title(),
+			name: this.name(),
 			language: this.language(),
 		}
 		if (this.id()) {

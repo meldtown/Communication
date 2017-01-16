@@ -13,7 +13,7 @@ export default class OfferTemplateForm extends AbstractTemplateForm {
 		let data = {
 			type: constants.OFFER_MESSAGE,
 			text: this.text(),
-			title: this.title(),
+			name: this.name(),
 			language: this.language(),
 		}
 		if (this.id()) {

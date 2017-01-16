@@ -7,7 +7,7 @@ export default class AbstractTemplateForm extends AbstractTemplate {
 
 	fill(selectedTemplate) {
 		selectedTemplate.text(this.text())
-		selectedTemplate.title(this.title())
+		selectedTemplate.name(this.name())
 		selectedTemplate.id(this.id())
 		selectedTemplate.language(this.language())
 	}

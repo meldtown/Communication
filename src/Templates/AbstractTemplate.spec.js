@@ -22,10 +22,10 @@ describe('AbstractTemplate', () => {
 		assert.equal(model.id(), 1)
 	})
 
-	it('should have title prop', () => {
-		model.title('title')
-		assert.equal(ko.isObservable(model.title), true)
-		assert.equal(model.title(), 'title')
+	it('should have name prop', () => {
+		model.name('name')
+		assert.equal(ko.isObservable(model.name), true)
+		assert.equal(model.name(), 'name')
 	})
 
 	it('should have language prop', () => {
@@ -41,7 +41,7 @@ describe('AbstractTemplate', () => {
 	})
 
 	it('should accept data into constructor', () => {
-		let data = {id: 1, language: 'ru', text: 'Hello World', title: 'title'}
+		let data = {id: 1, language: 'ru', text: 'Hello World', name: 'name'}
 		let model = new AbstractTemplate(dispatcher, data)
 		assert.deepEqual(ko.toJS(model), {dispatcher, ...ko.toJS(model)})
 	})

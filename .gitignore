@@ -3,14 +3,7 @@ npm-debug.log
 npm-debug.log.*
 .DS_Store
 dist
-.idea/*.iml
-.idea/modules.xml
-.idea/dictionaries
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/datasources.xml
-.idea/dataSources.ids
-.idea/libraries
+.idea
 coverage
 typings
 db.json

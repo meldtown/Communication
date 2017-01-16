@@ -21,7 +21,7 @@ describe('TemplatesFactory', () => {
 		beforeEach(() => {
 			data = {
 				id: 1,
-				title: 'Yeah',
+				name: 'Yeah',
 				text: 'Great !!!',
 				language: 'ru'
 			}

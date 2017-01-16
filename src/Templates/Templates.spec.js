@@ -368,7 +368,7 @@ describe('Templates', () => {
 		it('should call all filters', () => {
 			let tplStandardRubyRu = TemplateFactory.create(dispatcher, generator.generateStandardTemplate(1))
 			tplStandardRubyRu.language(types.RU)
-			tplStandardRubyRu.title('Ruby')
+			tplStandardRubyRu.name('Ruby')
 
 			let tplDeclineRandomEn = TemplateFactory.create(dispatcher, generator.generateDeclineTemplate(2))
 			tplDeclineRandomEn.language(types.EN)
@@ -384,13 +384,13 @@ describe('Templates', () => {
 			assert.equal(model.filteredTemplates().length, 1)
 		})
 
-		it('should filter by text in title', () => {
+		it('should filter by text in name', () => {
 			let template = generator.generateStandardTemplate(1)
 
 			model.templates([
-				TemplateFactory.create(dispatcher, {...template, title: 'Javascript'}),
-				TemplateFactory.create(dispatcher, {...template, title: 'Ruby'}),
-				TemplateFactory.create(dispatcher, {...template, title: 'Java'})
+				TemplateFactory.create(dispatcher, {...template, name: 'Javascript'}),
+				TemplateFactory.create(dispatcher, {...template, name: 'Ruby'}),
+				TemplateFactory.create(dispatcher, {...template, name: 'Java'})
 			])
 
 			assert.equal(model.templates().length, 3)
@@ -404,9 +404,9 @@ describe('Templates', () => {
 			let template = generator.generateStandardTemplate(1)
 
 			model.templates([
-				TemplateFactory.create(dispatcher, {...template, title: 'Javascript', text: 'Hello World'}),
-				TemplateFactory.create(dispatcher, {...template, title: 'Ruby', text: 'Hello Javatron'}),
-				TemplateFactory.create(dispatcher, {...template, title: 'Java', text: 'Hello universe'})
+				TemplateFactory.create(dispatcher, {...template, name: 'Javascript', text: 'Hello World'}),
+				TemplateFactory.create(dispatcher, {...template, name: 'Ruby', text: 'Hello Javatron'}),
+				TemplateFactory.create(dispatcher, {...template, name: 'Java', text: 'Hello universe'})
 			])
 
 			assert.equal(model.templates().length, 3)
@@ -622,13 +622,13 @@ describe('Templates', () => {
 
 			let form = model.selectedTemplateForm()
 			form.text('Hello')
-			form.title('World')
+			form.name('World')
 
 			mock.onPut(`${api}/templates/${template.id()}`).reply(200, data)
 
 			return model.save().then(() => {
 				assert.equal(template.text(), 'Hello')
-				assert.equal(template.title(), 'World')
+				assert.equal(template.name(), 'World')
 				assert.equal(model.selectedTemplateForm(), null)
 			})
 		})

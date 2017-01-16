@@ -24,7 +24,7 @@ describe('AbstractTemplateForm', () => {
 		model = new AbstractTemplateForm(dispatcher, data)
 
 		assert.equal(model.id(), data.id)
-		assert.equal(model.title(), data.title)
+		assert.equal(model.name(), data.name)
 	})
 
 	it('should have fill method', () => {
@@ -33,7 +33,7 @@ describe('AbstractTemplateForm', () => {
 
 	it('should fill given template', () => {
 		model.id(1)
-		model.title('title')
+		model.name('name')
 		model.text('text')
 		model.language(constants.UA)
 

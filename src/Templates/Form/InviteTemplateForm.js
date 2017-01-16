@@ -25,7 +25,7 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 		let data = {
 			type: constants.INVITE_MESSAGE,
 			text: this.text(),
-			title: this.title(),
+			name: this.name(),
 			language: this.language(),
 			inviteDate: this.inviteDate(),
 			addressId: this.addressId()

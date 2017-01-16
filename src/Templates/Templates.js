@@ -52,7 +52,7 @@ export default class Templates {
 				.filter(template => {
 					if (!this.filter()) return true
 					let str = this.filter().toLowerCase()
-					return template.title().toLowerCase().indexOf(str) !== -1 || template.text().toLowerCase().indexOf(str) !== -1
+					return template.name().toLowerCase().indexOf(str) !== -1 || template.text().toLowerCase().indexOf(str) !== -1
 				})
 		})
 

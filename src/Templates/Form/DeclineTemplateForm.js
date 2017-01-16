@@ -14,7 +14,7 @@ export default class DeclineTemplateForm extends AbstractTemplateForm {
 		let data = {
 			type: constants.DECLINE_MESSAGE,
 			text: this.text(),
-			title: this.title(),
+			name: this.name(),
 			language: this.language(),
 		}
 
