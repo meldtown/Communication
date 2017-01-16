@@ -1,6 +1,7 @@
 import path from 'path'
 import LoaderOptionsPlugin from 'webpack/lib/LoaderOptionsPlugin'
 import ProvidePlugin from 'webpack/lib/ProvidePlugin'
+import DefinePlugin from 'webpack/lib/DefinePlugin'
 import CommonsChunkPlugin from 'webpack/lib/optimize/CommonsChunkPlugin'
 import HotModuleReplacementPlugin from 'webpack/lib/HotModuleReplacementPlugin'
 import ContextReplacementPlugin from 'webpack/lib/ContextReplacementPlugin'
@@ -48,7 +49,7 @@ export default (app) => ({
 	},
 	plugins: isProduction
 		? plugins.concat([new ExtractTextPlugin('[name].css')])
-		: plugins.concat([new HotModuleReplacementPlugin()]),
+		: plugins.concat([new HotModuleReplacementPlugin(), new DefinePlugin({api2: `"http://hub.api.${process.env.COMPUTERNAME.toLowerCase()}.rabota.ua"`})]),
 	devServer: {
 		hot: true,
 		host: '0.0.0.0',
