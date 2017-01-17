@@ -99,7 +99,7 @@ export default class Templates {
 	}
 
 	fetch() {
-		return axios.get(`${api}/templates`)
+		return axios.get(`${api2}/templates`)
 			.then(response => {
 				this.selectedTab(StandardTemplateView)
 				this.templates(response.data.map(TemplateFactory.create.bind(this, this.dispatcher)))
