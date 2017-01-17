@@ -51,7 +51,8 @@
       "mocha": true
     },
     "globals": {
-      "api": true
+      "api": true,
+      "api2": true
     },
     "rules": {
       "semi": [

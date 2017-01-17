@@ -48,7 +48,7 @@ export default class OfferMessageForm extends AbstractMessageForm {
 	}
 
 	fetchVacancies() {
-		return axios.get(`${api}/vacancies`)
+		return axios.get(`${api2}/employer/vacancylist`)
 			.then(response => this.vacancies(response.data))
 	}
 }

@@ -1,7 +1,11 @@
+import axios from 'axios'
 import * as ko from 'knockout'
 import * as helpers from '../src/helpers'
 import EmployerHub from '../src/Hub/EmployerHub'
 
+axios.defaults.withCredentials = true
+
+// noinspection JSPotentiallyInvalidConstructorUsage
 export const dispatcher = new ko.subscribable()
 export const model = new EmployerHub(dispatcher)
 
@@ -34,4 +38,5 @@ export const init = () => {
 	model.inviteMessageForm.fetchAddresses()
 	ko.applyBindings(model, root)
 	window['model'] = model
+	window['ko'] = ko
 }
