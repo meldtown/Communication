@@ -19,11 +19,13 @@ describe('OfferMessageForm', () => {
 	let mock
 
 	before(() => {
-		global.api = api
+		// noinspection JSPrimitiveTypeWrapperUsage
+		global.api = global.api2 = api
 	})
 
 	beforeEach(() => {
 		mock = new MockAdapter(axios)
+		// noinspection JSPotentiallyInvalidConstructorUsage
 		dispatcher = new ko.subscribable()
 		model = new OfferMessageForm(dispatcher)
 	})
@@ -124,7 +126,7 @@ describe('OfferMessageForm', () => {
 
 			assert.equal(model.vacancies().length, 0)
 
-			mock.onGet(`${api}/vacancies`).reply(200, [
+			mock.onGet(`${api}/employer/vacancylist`).reply(200, [
 				generator.generateVacancy(),
 				generator.generateVacancy()
 			])
