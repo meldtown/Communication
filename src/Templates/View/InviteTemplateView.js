@@ -13,7 +13,7 @@ export default class InviteTemplateView extends AbstractTemplateView {
 		this.addressText = ko.computed(() => {
 			if (this.address()) {
 				return (this.address().id()) ? this.address().optionText() : 'No attached address'
-			}
+			} else return 'No attached address'
 		})
 	}
 }

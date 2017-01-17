@@ -83,8 +83,8 @@ describe('InviteTemplateForm', () => {
 		model = new InviteTemplateForm(dispatcher, generator.generateInviteTemplate(1))
 		let template = new InviteTemplateView(dispatcher)
 		model.addresses([generator.generateAddress(222), generator.generateAddress(333)].map(item => new Address(item)))
+		template.address(new Address(generator.generateAddress()))
 
-		model.fill(template)
 		assert.equal(template.addressText(), 'No attached address')
 	})
 
