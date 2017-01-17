@@ -17,10 +17,10 @@ export default class OfferTemplateForm extends AbstractTemplateForm {
 			language: this.language(),
 		}
 		if (this.id()) {
-			return axios.put(`${api}/templates/${this.id()}`, Object.assign({}, data, {id: this.id()}))
+			return axios.put(`${api2}/templates/${this.id()}`, Object.assign({}, data, {id: this.id()}))
 		}
 		else {
-			return axios.post(`${api}/templates/`, data)
+			return axios.post(`${api2}/templates/`, data)
 		}
 	}
 }

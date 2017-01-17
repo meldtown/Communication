@@ -4,10 +4,10 @@ export const CONVERSATION_ARCHIVED = 'CONVERSATION_ARCHIVED'
 export const CONVERSATION_ACTIVATED = 'CONVERSATION_ACTIVATED'
 export const NEW_MESSAGE = 'NEW_MESSAGE'
 
-export const STANDARD_MESSAGE = 'standard'
-export const INVITE_MESSAGE = 'invite'
-export const DECLINE_MESSAGE = 'decline'
-export const OFFER_MESSAGE = 'offer'
+export const STANDARD_MESSAGE = 1
+export const INVITE_MESSAGE = 3
+export const DECLINE_MESSAGE = 4
+export const OFFER_MESSAGE = 2
 export const APPLY_MESSAGE = 'apply'
 
 export const ACTIVE_CONVERSATION = 'active'

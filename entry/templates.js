@@ -1,6 +1,10 @@
+import axios from 'axios'
 import * as ko from 'knockout'
 import * as helpers from '../src/helpers'
 import Templates from '../src/Templates/Templates'
+
+axios.defaults.withCredentials = true
+
 
 export const dispatcher = new ko.subscribable()
 export const model = new Templates(dispatcher)
