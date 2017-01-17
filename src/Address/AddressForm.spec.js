@@ -25,8 +25,8 @@ describe('AddressForm', () => {
 		assert.equal(ko.isObservable(model.street), true)
 	})
 
-	it('should have houseNumber prop', () => {
-		assert.equal(ko.isObservable(model.houseNumber), true)
+	it('should have building prop', () => {
+		assert.equal(ko.isObservable(model.building), true)
 	})
 
 	it('should have office prop', () => {
@@ -48,7 +48,7 @@ describe('AddressForm', () => {
 	it('should save entered data after saving', () => {
 		let data = {
 			street: '15th avenue',
-			houseNumber: '12',
+			building: '12',
 			office: '13',
 			city: 'Denver',
 			description: ''
@@ -56,7 +56,7 @@ describe('AddressForm', () => {
 		model.city(data.city)
 		model.street(data.street)
 		model.office(data.office)
-		model.houseNumber(data.houseNumber)
+		model.building(data.building)
 		model.description(data.description)
 
 

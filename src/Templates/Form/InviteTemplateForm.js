@@ -17,7 +17,7 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 		this.addresses = ko.observableArray([])
 		this.isAddButtonDisabled = ko.computed(() => {
 			if (!this.addressForm()) return
-			return !this.addressForm().city() || !this.addressForm().street() || !this.addressForm().houseNumber()
+			return !this.addressForm().city() || !this.addressForm().street() || !this.addressForm().building()
 		})
 	}
 
