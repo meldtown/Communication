@@ -31,10 +31,10 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 			addressId: this.addressId()
 		}
 		if (this.id()) {
-			return axios.put(`${api}/templates/${this.id()}`, {...data, id: this.id()})
+			return axios.put(`${api2}/templates/${this.id()}`, {...data, id: this.id()})
 		}
 		else {
-			return axios.post(`${api}/templates/`, data)
+			return axios.post(`${api2}/templates/`, data)
 		}
 	}
 
