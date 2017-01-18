@@ -180,7 +180,7 @@ export default class Templates {
 		return this.selectedTemplateForm().save().then(response => {
 			this.selectedTemplateForm().fill(this.selectedTemplate())
 			if (!this.selectedTemplateForm().id()) {
-				this.selectedTemplate().id(response.data.id)
+				this.selectedTemplate().id(response.data)
 				// if (this.selectedTemplateForm() instanceof InviteTemplateForm) {
 				// 	this.selectedTemplate().addressId(response.data.addressId)
 				// }

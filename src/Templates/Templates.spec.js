@@ -739,7 +739,7 @@ describe('Templates', () => {
 			return model.save().then(() => {
 				assert.equal(model.templates().length, 1)
 				assert.equal(model.filteredTemplates().length, 1)
-				assert.equal(model.templates()[0].id(), id)
+				assert.equal(model.templates()[0].id().id, id)
 			})
 		})
 
