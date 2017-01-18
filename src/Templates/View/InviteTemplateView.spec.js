@@ -21,20 +21,20 @@ describe('InviteTemplateView', () => {
 		assert.equal(model instanceof AbstractTemplate, true)
 	})
 
-	it('should have addressId', () => {
-		assert.equal(ko.isObservable(model.addressId), true)
-	})
-
-	it('should have address prop', () => {
-		let data =  generator.generateInviteTemplate(33)
-		let model = new InviteTemplateView(dispatcher, data)
-		assert.equal(ko.isObservable(model.address), true)
-		assert.deepEqual(ko.toJS(model.address()), ko.toJS(new Address(data.address)))
-	})
-
-	it('should have addressText comp', () => {
-		assert.equal(ko.isComputed(model.addressText), true)
-	})
+	// it('should have addressId', () => {
+	// 	assert.equal(ko.isObservable(model.addressId), true)
+	// })
+    //
+	// it('should have address prop', () => {
+	// 	let data =  generator.generateInviteTemplate(33)
+	// 	let model = new InviteTemplateView(dispatcher, data)
+	// 	assert.equal(ko.isObservable(model.address), true)
+	// 	assert.deepEqual(ko.toJS(model.address()), ko.toJS(new Address(data.address)))
+	// })
+    //
+	// it('should have addressText comp', () => {
+	// 	assert.equal(ko.isComputed(model.addressText), true)
+	// })
 
 	it('should have inviteDate', () => {
 		assert.equal(ko.isObservable(model.inviteDate), true)

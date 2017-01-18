@@ -70,21 +70,21 @@ describe('Templates', () => {
 		})
 	})
 
-	it('should have fetchAddresses method', () => {
-		assert.equal(typeof model.fetchAddresses, 'function')
-
-		assert.equal(model.addresses().length, 0)
-
-		mock.onGet(`${api}/addresses`).reply(200, [
-			generator.generateAddress(1),
-			generator.generateAddress(2)
-		])
-
-		return model.fetchAddresses().then(() => {
-			assert.equal(model.addresses().length, 2)
-			assert.ok(model.addresses()[0] instanceof Address)
-		})
-	})
+	// it('should have fetchAddresses method', () => {
+	// 	assert.equal(typeof model.fetchAddresses, 'function')
+    //
+	// 	assert.equal(model.addresses().length, 0)
+    //
+	// 	mock.onGet(`${api}/addresses`).reply(200, [
+	// 		generator.generateAddress(1),
+	// 		generator.generateAddress(2)
+	// 	])
+    //
+	// 	return model.fetchAddresses().then(() => {
+	// 		assert.equal(model.addresses().length, 2)
+	// 		assert.ok(model.addresses()[0] instanceof Address)
+	// 	})
+	// })
 
 	describe('tabs', () => {
 		it('should have observable selectedTab', () => {
