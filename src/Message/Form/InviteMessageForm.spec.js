@@ -23,11 +23,13 @@ describe('InviteMessageForm', () => {
 	let mock
 
 	before(() => {
-		global.api = api
+		// noinspection JSPrimitiveTypeWrapperUsage
+		global.api = global.api2 = api
 	})
 
 	beforeEach(() => {
 		mock = new MockAdapter(axios)
+		// noinspection JSPotentiallyInvalidConstructorUsage
 		dispatcher = new ko.subscribable()
 		model = new InviteMessageForm(dispatcher)
 	})
@@ -189,7 +191,7 @@ describe('InviteMessageForm', () => {
 
 			assert.equal(model.addresses().length, 0)
 
-			mock.onGet(`${api}/addresses`).reply(200, [
+			mock.onGet(`${api2}/employer/address`).reply(200, [
 				generator.generateAddress(1),
 				generator.generateAddress(2)
 			])
@@ -218,7 +220,7 @@ describe('InviteMessageForm', () => {
 		it('should have saveAddress method', () => {
 			let data = {
 				street: '12th Avenue',
-				houseNumber: '12',
+				building: '12',
 				office: '13',
 				city: 'New York',
 				description: ''
@@ -230,7 +232,7 @@ describe('InviteMessageForm', () => {
 			model.createAddress()
 			model.addressForm().city('New York')
 			model.addressForm().street('12th Avenue')
-			model.addressForm().houseNumber('12')
+			model.addressForm().building('12')
 			model.addressForm().office('13')
 			model.addressForm().description('')
 			mock.onPost(`${api}/addresses/`, data).reply(200, Object.assign({}, data, {id: 12}))

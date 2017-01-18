@@ -30,7 +30,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.canBeSaved = ko.computed(() => this.conversationId() && this.addressId() && this.text())
 		this.isAddButtonDisabled = ko.computed(() => {
 			if (!this.addressForm()) return
-			return !this.addressForm().city() || !this.addressForm().street() || !this.addressForm().houseNumber()
+			return !this.addressForm().city() || !this.addressForm().street() || !this.addressForm().building()
 		})
 	}
 
@@ -81,7 +81,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 	}
 
 	fetchAddresses() {
-		return axios.get(`${api}/addresses`)
+		return axios.get(`${api2}/employer/address`)
 			.then(response => this.addresses(response.data.map(item => new Address(item))))
 	}
 }

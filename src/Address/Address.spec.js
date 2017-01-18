@@ -26,7 +26,7 @@ describe('Address', () => {
 		assert.ok(ko.isObservable(model.id))
 		assert.ok(ko.isObservable(model.city))
 		assert.ok(ko.isObservable(model.street))
-		assert.ok(ko.isObservable(model.houseNumber))
+		assert.ok(ko.isObservable(model.building))
 		assert.ok(ko.isObservable(model.office))
 		assert.ok(ko.isObservable(model.description))
 		assert.ok(ko.isObservable(model.mapFile))
@@ -35,7 +35,7 @@ describe('Address', () => {
 			id: 1,
 			city: 'city',
 			street: 'street',
-			houseNumber: 'houseNumber',
+			building: 'building',
 			office: 'office',
 			description: 'description',
 			mapFile: 'Map933461_1.png'
@@ -51,9 +51,10 @@ describe('Address', () => {
 	it('should optionText prop', () => {
 		assert.ok(ko.isComputed(model.optionText))
 		model.street('street')
-		model.houseNumber('1')
+		model.city('city')
+		model.building('1')
 		model.office(1)
-		assert.equal(model.optionText(), 'street 1, 1')
+		assert.equal(model.optionText(), 'city street 1, 1')
 	})
 
 	// it('should have save method', () => {
