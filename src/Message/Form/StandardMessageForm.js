@@ -14,9 +14,10 @@ export default class StandardMessageForm extends AbstractMessageForm {
 			throw new Error('chatId is required')
 		}
 
-		return axios.put(`${api2}/messages`, {
+		return axios.post(`${api2}/messages/hubmessage`, {
 			typeId: constants.STANDARD_MESSAGE,
 			chatId: this.chatId(),
+			headId: this.headId(),
 			text: this.text()
 		}).then(response => {
 			if (this.reset) {

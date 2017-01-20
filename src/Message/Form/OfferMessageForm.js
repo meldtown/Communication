@@ -24,11 +24,13 @@ export default class OfferMessageForm extends AbstractMessageForm {
 			throw new Error('vacancyId is required')
 		}
 
-		return axios.post(`${api}/messages`, {
+		return axios.post(`${api2}/messages/hubmessage`, {
 			typeId: constants.OFFER_MESSAGE,
 			chatId: this.chatId(),
+			headId: this.headId(),
 			text: this.text(),
-			vacancyId: this.vacancyId()
+			// vacancyId: this.vacancyId()
+			vacancy: {id: this.vacancyId()}
 		}).then(response => {
 			if (this.reset) {
 				this.reset()

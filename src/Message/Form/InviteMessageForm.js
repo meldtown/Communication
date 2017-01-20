@@ -39,9 +39,10 @@ export default class InviteMessageForm extends AbstractMessageForm {
 			throw new Error('chatId is required')
 		}
 
-		return axios.post(`${api}/messages`, {
+		return axios.post(`${api2}/messages/hubmessage`, {
 			typeId: constants.INVITE_MESSAGE,
 			chatId: this.chatId(),
+			headId: this.headId(),
 			text: this.text(),
 			inviteDate: this.inviteDate(),
 			addressId: this.addressId()
