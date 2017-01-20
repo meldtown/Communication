@@ -13,7 +13,7 @@ import AddressForm from '../../Address/AddressForm'
 const api = 'http://sample.com'
 
 describe('InviteMessageForm', () => {
-	const conversationId = 1
+	const chatId = 1
 	const text = 'Hello World'
 	const inviteDate = (new Date()).toISOString()
 	const addressId = 1
@@ -110,18 +110,18 @@ describe('InviteMessageForm', () => {
 		assert.equal(typeof model.save, 'function')
 	})
 
-	it('should not try save message without conversationId', () => {
+	it('should not try save message without chatId', () => {
 		assert.throws(() => model.save(), Error)
 	})
 
 	const arrangeForSaveTest = () => {
-		model.conversationId(conversationId)
+		model.chatId(chatId)
 		model.text(text)
 		model.inviteDate(inviteDate)
 		model.addressId(addressId)
 
 		mock.onPost(`${api}/messages`).reply(200, {
-			conversationId,
+			chatId,
 			text,
 			inviteDate,
 			addressId,
@@ -139,7 +139,7 @@ describe('InviteMessageForm', () => {
 			assert.equal(message.text(), text)
 			assert.equal(message.inviteDate(), inviteDate)
 			assert.equal(message.addressId(), addressId)
-			assert.equal(message.conversationId(), conversationId)
+			assert.equal(message.chatId(), chatId)
 			assert.equal(message.id(), 1)
 		})
 	})
@@ -205,7 +205,7 @@ describe('InviteMessageForm', () => {
 		it('should have canBeSaved computed', () => {
 			assert.ok(ko.isComputed(model.canBeSaved))
 			assert.ok(!model.canBeSaved())
-			model.conversationId(1)
+			model.chatId(1)
 			assert.ok(!model.canBeSaved())
 			model.addressId(1)
 			assert.ok(!model.canBeSaved())

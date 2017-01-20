@@ -14,18 +14,18 @@ import Conversation from '../Conversation/Conversation'
 const api = 'http://sample.com'
 
 describe('Accordion', () => {
-	const conversationId = 1
+	const chatId = 1
 
 	let mock
 	let model
 	let dispatcher
 
-	before(() => global.api = api)
+	before(() => global['api'] = api)
 
 	beforeEach(() => {
 		mock = new MockAdapter(axios)
 		dispatcher = new ko.subscribable()
-		model = new Accordion(dispatcher, conversationId)
+		model = new Accordion(dispatcher, chatId)
 	})
 
 	it('should be instantiable', () => {
@@ -34,33 +34,33 @@ describe('Accordion', () => {
 
 	it('should throw an error if dispatcher not given', () => {
 		// noinspection JSCheckFunctionSignatures
-		assert.throws(() => new Accordion(undefined, conversationId), Error)
+		assert.throws(() => new Accordion(undefined, chatId), Error)
 	})
 
 	it('should have dispatcher prop', () => {
 		assert.equal(ko.isSubscribable(model.dispatcher), true)
 	})
 
-	it('should throw an error if conversationId not given', () => {
+	it('should throw an error if chatId not given', () => {
 		// noinspection JSCheckFunctionSignatures
 		assert.throws(() => new Accordion(dispatcher), Error)
 	})
 
-	it('should have conversationId prop', () => {
-		assert.equal(ko.isSubscribable(model.conversationId), true)
+	it('should have chatId prop', () => {
+		assert.equal(ko.isSubscribable(model.chatId), true)
 	})
 
 	it('should have messages', () => {
 		assert.equal(model.messages instanceof MessageList, true)
 	})
 
-	it('should change conversationId in all places', () => {
-		model.conversationId(2)
-		assert.equal(model.messages.conversationId(), model.conversationId())
-		assert.equal(model.standardMessageForm.conversationId(), model.conversationId())
-		assert.equal(model.inviteMessageForm.conversationId(), model.conversationId())
-		assert.equal(model.declineMessageForm.conversationId(), model.conversationId())
-		assert.equal(model.offerMessageForm.conversationId(), model.conversationId())
+	it('should change chatId in all places', () => {
+		model.chatId(2)
+		assert.equal(model.messages.chatId(), model.chatId())
+		assert.equal(model.standardMessageForm.chatId(), model.chatId())
+		assert.equal(model.inviteMessageForm.chatId(), model.chatId())
+		assert.equal(model.declineMessageForm.chatId(), model.chatId())
+		assert.equal(model.offerMessageForm.chatId(), model.chatId())
 	})
 
 	it('should have fetch method', () => {
@@ -69,8 +69,8 @@ describe('Accordion', () => {
 
 	it('should call fetch on messages while fetching data', () => {
 		let responseText = [
-			generator.generateStandardMessage(1, conversationId),
-			generator.generateApplyMessage(2, conversationId)
+			generator.generateStandardMessage(1, chatId),
+			generator.generateApplyMessage(2, chatId)
 		]
 
 		mock.onGet(`${api}/messages`).reply(200, responseText)
@@ -80,31 +80,31 @@ describe('Accordion', () => {
 		})
 	})
 
-	it('should call fetch on conversationId change', () => {
+	it('should call fetch on chatId change', () => {
 		let counter = 0
 		model.fetch = () => counter = counter + 1
-		model.conversationId(2)
+		model.chatId(2)
 		assert.equal(counter, 1)
 	})
 
 	it('should have standard message form', () => {
 		assert.equal(model.standardMessageForm instanceof StandardMessageForm, true)
-		assert.equal(model.standardMessageForm.conversationId(), model.conversationId())
+		assert.equal(model.standardMessageForm.chatId(), model.chatId())
 	})
 
 	it('should have invite message form', () => {
 		assert.equal(model.inviteMessageForm instanceof InviteMessageForm, true)
-		assert.equal(model.inviteMessageForm.conversationId(), model.conversationId())
+		assert.equal(model.inviteMessageForm.chatId(), model.chatId())
 	})
 
 	it('should have decline message form', () => {
 		assert.equal(model.declineMessageForm instanceof DeclineMessageForm, true)
-		assert.equal(model.declineMessageForm.conversationId(), model.conversationId())
+		assert.equal(model.declineMessageForm.chatId(), model.chatId())
 	})
 
 	it('should have offer message form', () => {
 		assert.equal(model.offerMessageForm instanceof OfferMessageForm, true)
-		assert.equal(model.offerMessageForm.conversationId(), model.conversationId())
+		assert.equal(model.offerMessageForm.chatId(), model.chatId())
 	})
 
 	it('should have isStandardFormSelected prop', () => {
@@ -159,7 +159,7 @@ describe('Accordion', () => {
 	it('should have fetchConversation method', () => {
 		assert.equal(typeof model.fetchConversation, 'function')
 
-		mock.onGet(`${api}/conversations/${conversationId}`).reply(200, generator.generateConversation(conversationId, [generator.generateStandardMessage(1, conversationId)]))
+		mock.onGet(`${api}/conversations/${chatId}`).reply(200, generator.generateConversation(chatId, [generator.generateStandardMessage(1, chatId)]))
 
 		model.fetchConversation().then(conversation => {
 			assert.ok(conversation instanceof Conversation)

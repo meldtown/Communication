@@ -12,12 +12,12 @@ export default class OfferMessageForm extends AbstractMessageForm {
 		this.vacancies = ko.observableArray([])
 
 		this.hasVacancies = ko.computed(() => (this.vacancies() || []).length > 0)
-		this.canBeSaved = ko.computed(() => this.conversationId() && this.vacancyId() && this.text())
+		this.canBeSaved = ko.computed(() => this.chatId() && this.vacancyId() && this.text())
 	}
 
 	save() {
-		if (!this.conversationId()) {
-			throw new Error('conversationId is required')
+		if (!this.chatId()) {
+			throw new Error('chatId is required')
 		}
 
 		if (!this.vacancyId()) {
@@ -26,7 +26,7 @@ export default class OfferMessageForm extends AbstractMessageForm {
 
 		return axios.post(`${api}/messages`, {
 			type: constants.OFFER_MESSAGE,
-			conversationId: this.conversationId(),
+			chatId: this.chatId(),
 			text: this.text(),
 			vacancyId: this.vacancyId()
 		}).then(response => {

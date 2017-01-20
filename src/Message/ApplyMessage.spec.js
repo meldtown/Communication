@@ -23,7 +23,7 @@ describe('ApplyMessage', () => {
 		let data = {
 			id: 1,
 			date: '2015-04-24T23:04:59',
-			conversationId: 1,
+			chatId: 1,
 			text: 'Hello World',
 			vacancyId: 1,
 			resumeId: 1,
@@ -31,7 +31,7 @@ describe('ApplyMessage', () => {
 		}
 		let model = new ApplyMessage(data)
 		// noinspection JSUnusedLocalSymbols
-		var {ago, formattedDate, formattedTime, template, ...actual} = ko.toJS(model) // eslint-disable-line no-unused-vars
+		let {ago, formattedDate, formattedTime, template, ...actual} = ko.toJS(model) // eslint-disable-line no-unused-vars
 		assert.deepEqual(actual, data)
 	})
 

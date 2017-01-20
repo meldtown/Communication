@@ -10,7 +10,7 @@ import MockAdapter from 'axios-mock-adapter'
 const api = 'http://sample.com'
 
 describe('OfferMessageForm', () => {
-	const conversationId = 1
+	const chatId = 1
 	const text = 'Hello World'
 	const vacancyId = 1
 
@@ -42,23 +42,23 @@ describe('OfferMessageForm', () => {
 		assert.equal(typeof model.save, 'function')
 	})
 
-	it('should not try save message without conversationId', () => {
+	it('should not try save message without chatId', () => {
 		model.vacancyId(1)
 		assert.throws(() => model.save(), Error)
 	})
 
 	it('should not try save message without vacancyId', () => {
-		model.conversationId(1)
+		model.chatId(1)
 		assert.throws(() => model.save(), Error)
 	})
 
 	const arrangeForSaveTest = () => {
-		model.conversationId(conversationId)
+		model.chatId(chatId)
 		model.text(text)
 		model.vacancyId(vacancyId)
 
 		mock.onPost(`${api}/messages`).reply(200, {
-			conversationId,
+			chatId,
 			text,
 			vacancyId,
 			id: 1,
@@ -74,7 +74,7 @@ describe('OfferMessageForm', () => {
 			assert.equal(message instanceof OfferMessage, true)
 			assert.equal(message.text(), text)
 			assert.equal(message.vacancyId(), vacancyId)
-			assert.equal(message.conversationId(), conversationId)
+			assert.equal(message.chatId(), chatId)
 			assert.equal(message.id(), 1)
 		})
 	})
@@ -140,7 +140,7 @@ describe('OfferMessageForm', () => {
 	it('should have canBeSaved computed', () => {
 		assert.ok(ko.isComputed(model.canBeSaved))
 		assert.ok(!model.canBeSaved())
-		model.conversationId(1)
+		model.chatId(1)
 		assert.ok(!model.canBeSaved())
 		model.vacancyId(1)
 		assert.ok(!model.canBeSaved())

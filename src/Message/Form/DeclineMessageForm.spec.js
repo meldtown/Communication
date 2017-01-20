@@ -9,7 +9,7 @@ import MockAdapter from 'axios-mock-adapter'
 const api = 'http://sample.com'
 
 describe('DeclineMessageForm', () => {
-	const conversationId = 1
+	const chatId = 1
 	const text = 'Hello World'
 
 	let model
@@ -17,7 +17,7 @@ describe('DeclineMessageForm', () => {
 	let mock
 
 	before(() => {
-		global.api = api
+		global['api'] = api
 	})
 
 	beforeEach(() => {
@@ -34,16 +34,16 @@ describe('DeclineMessageForm', () => {
 		assert.equal(typeof model.save, 'function')
 	})
 
-	it('should not try save message without conversationId', () => {
+	it('should not try save message without chatId', () => {
 		assert.throws(() => model.save(), Error)
 	})
 
 	const arrangeForSaveTest = () => {
-		model.conversationId(conversationId)
+		model.chatId(chatId)
 		model.text(text)
 
 		mock.onPost(`${api}/messages`).reply(200, {
-			conversationId,
+			chatId,
 			text,
 			id: 1,
 			type: constants.DECLINE_MESSAGE,
@@ -57,7 +57,7 @@ describe('DeclineMessageForm', () => {
 		return model.save().then(message => {
 			assert.equal(message instanceof DeclineMessage, true)
 			assert.equal(message.text(), text)
-			assert.equal(message.conversationId(), conversationId)
+			assert.equal(message.chatId(), chatId)
 			assert.equal(message.id(), 1)
 		})
 	})

@@ -27,10 +27,10 @@ describe('AbstractMessage', () => {
 		assert.equal(model.date(), '2016-05-25T23:05:59')
 	})
 
-	it('should have conversationId prop', () => {
-		model.conversationId(1)
-		assert.equal(ko.isObservable(model.conversationId), true)
-		assert.equal(model.conversationId(), 1)
+	it('should have chatId prop', () => {
+		model.chatId(1)
+		assert.equal(ko.isObservable(model.chatId), true)
+		assert.equal(model.chatId(), 1)
 	})
 
 	it('should have text prop', () => {
@@ -44,7 +44,7 @@ describe('AbstractMessage', () => {
 	})
 
 	it('should accept data into constructor', () => {
-		let data = {id: 1, date: '2015-04-24T23:04:59', conversationId: 1, text: 'Hello World', isRead: true}
+		let data = {id: 1, date: '2015-04-24T23:04:59', chatId: 1, text: 'Hello World', isRead: true}
 		let model = new AbstractMessage(data)
 		// noinspection JSUnusedLocalSymbols
 		let {ago, formattedDate, formattedTime, template, ...actual} = ko.toJS(model) // eslint-disable-line no-unused-vars

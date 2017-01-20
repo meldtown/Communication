@@ -3,11 +3,11 @@ import * as helpers from '../helpers'
 import moment from 'moment'
 
 export default class AbstractMessage {
-	constructor({id, date, conversationId, text, isRead} = {}) {
+	constructor({id, date, chatId, text, isRead} = {}) {
 		this.id = ko.observable(id)
 		this.addDate = ko.observable(date)
-		this.conversationId = ko.observable(conversationId)
-		// this.chatId = ko.observable(conversationId)
+		this.chatId = ko.observable(chatId)
+		// this.chatId = ko.observable(chatId)
 		this.text = ko.observable(text)
 		this.isRead = ko.observable(isRead)
 

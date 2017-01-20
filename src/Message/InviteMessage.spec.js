@@ -37,7 +37,7 @@ describe('InviteMessage', () => {
 		let data = {
 			id: 1,
 			date: '2015-04-24T23:04:59',
-			conversationId: 1,
+			chatId: 1,
 			text: 'Hello World',
 			inviteDate: '2015-04-12T23:05',
 			addressId: 1,
@@ -48,9 +48,9 @@ describe('InviteMessage', () => {
 		let model = new InviteMessage(data)
 
 		// noinspection JSDuplicatedDeclaration, JSUnusedLocalSymbols
-		var {ago, formattedDate, formattedTime, template, formattedInviteDate, formattedInviteTime, address, ...actual} = ko.toJS(model) // eslint-disable-line no-unused-vars, no-redeclare
+		let {ago, formattedDate, formattedTime, template, formattedInviteDate, formattedInviteTime, address, ...actual} = ko.toJS(model) // eslint-disable-line no-unused-vars, no-redeclare
 		// noinspection JSDuplicatedDeclaration, JSUnusedLocalSymbols
-		var {address, ...expected} = data // eslint-disable-line no-unused-vars, no-redeclare
+		let {address, ...expected} = data // eslint-disable-line no-unused-vars, no-redeclare
 
 		assert.deepEqual(actual, expected) // eslint-disable-line no-unused-vars
 		assert.ok(model.address() instanceof Address)

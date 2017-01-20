@@ -8,14 +8,14 @@ export default class AbstractMessageForm {
 		}
 
 		this.dispatcher = dispatcher
-		this.conversationId = ko.observable()
+		this.chatId = ko.observable()
 		this.text = ko.observable()
 		this.template = ko.observable()
 
-		this.hasConversationId = ko.computed(() => this.conversationId() ? true : false)
+		this.hasChatId = ko.computed(() => !!this.chatId())
 
-		dispatcher.subscribe(conversationId => {
-			this.conversationId(conversationId)
+		dispatcher.subscribe(chatId => {
+			this.chatId(chatId)
 			if (this.reset) {
 				this.reset()
 			}
