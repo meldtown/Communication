@@ -29,7 +29,6 @@ export default class OfferMessageForm extends AbstractMessageForm {
 			chatId: this.chatId(),
 			headId: this.headId(),
 			text: this.text(),
-			// vacancyId: this.vacancyId()
 			vacancy: {id: this.vacancyId()}
 		}).then(response => {
 			if (this.reset) {
