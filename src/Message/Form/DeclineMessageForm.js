@@ -2,6 +2,7 @@ import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'
 import axios from 'axios'
 import * as constants from '../../constants'
+import Attach from '../../Attach/Attach'
 
 export default class DeclineMessageForm extends AbstractMessageForm {
 	constructor(dispatcher) {
@@ -18,11 +19,15 @@ export default class DeclineMessageForm extends AbstractMessageForm {
 			typeId: constants.DECLINE_MESSAGE,
 			chatId: this.chatId(),
 			headId: this.headId(),
+			attachId: this.attach().id,
+			attach: this.attach(),
 			text: this.text()
 		}).then(response => {
 			if (this.reset) {
 				this.reset()
 			}
+
+			this.attach(new Attach())
 
 			let message = MessageFactory.create(response.data)
 

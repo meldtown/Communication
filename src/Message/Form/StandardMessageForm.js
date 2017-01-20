@@ -2,6 +2,7 @@ import * as constants from '../../constants'
 import axios from 'axios'
 import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'
+import Attach from '../../Attach/Attach'
 
 export default class StandardMessageForm extends AbstractMessageForm {
 	constructor(dispatcher) {
@@ -17,12 +18,16 @@ export default class StandardMessageForm extends AbstractMessageForm {
 		return axios.post(`${api2}/messages/hubmessage`, {
 			typeId: constants.STANDARD_MESSAGE,
 			chatId: this.chatId(),
+			attachId: this.attach().id,
 			headId: this.headId(),
-			text: this.text()
+			text: this.text(),
+			attach: this.attach()
 		}).then(response => {
 			if (this.reset) {
 				this.reset()
 			}
+
+			this.attach(new Attach())
 
 			let message = MessageFactory.create(response.data)
 

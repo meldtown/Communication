@@ -1,5 +1,7 @@
 import * as actions from '../../constants'
 import * as ko from 'knockout'
+import Attach from '../../Attach/Attach'
+
 
 export default class AbstractMessageForm {
 	constructor(dispatcher) {
@@ -12,6 +14,8 @@ export default class AbstractMessageForm {
 		this.text = ko.observable()
 		this.template = ko.observable()
 		this.headId = ko.observable()
+		this.attach = ko.observable(new Attach())
+
 
 		this.hasChatId = ko.computed(() => !!this.chatId())
 
