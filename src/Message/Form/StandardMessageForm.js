@@ -18,7 +18,8 @@ export default class StandardMessageForm extends AbstractMessageForm {
 			typeId: constants.STANDARD_MESSAGE,
 			chatId: this.chatId(),
 			headId: this.headId(),
-			text: this.text()
+			text: this.text(),
+			attach: this.attach()
 		}).then(response => {
 			if (this.reset) {
 				this.reset()
