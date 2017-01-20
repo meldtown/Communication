@@ -11,6 +11,8 @@ import StandardTemplateForm from '../Templates/Form/StandardTemplateForm'
 import InviteTemplateForm from '../Templates/Form/InviteTemplateForm'
 import DeclineTemplateForm from '../Templates/Form/DeclineTemplateForm'
 import OfferTemplateForm from '../Templates/Form/OfferTemplateForm'
+import '../bindingHandlers/attach'
+
 // import Address from '../Address/Address'
 
 export default class Templates {

@@ -1,8 +1,9 @@
 import * as ko from 'knockout'
 import * as languages from '../constants'
+import Attach from '../Attach/Attach'
 
 export default class AbstractTemplate {
-	constructor(dispatcher, {id, name, text, language} = {}) {
+	constructor(dispatcher, {id, name, text, language, attach = {}} = {}) {
 		if (!ko.isSubscribable(dispatcher)) {
 			throw new Error('ko.subscribable is required')
 		}
@@ -19,6 +20,7 @@ export default class AbstractTemplate {
 		this.language = ko.observable(language)
 		this.text = ko.observable(text)
 		this.name = ko.observable(name)
+		this.attach = ko.observable(new Attach(attach))
 		this.dispatcher = dispatcher
 	}
 }
