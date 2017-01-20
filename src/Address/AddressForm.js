@@ -3,17 +3,27 @@ import axios from 'axios'
 
 export default class AddressForm {
 	constructor() {
-		this.city = ko.observable()
-
-		this.street = ko.observable()
-		this.building = ko.observable()
-		this.office = ko.observable()
-		this.mapFile = ko.observable()
-
-		this.description = ko.observable()
+		this.city = ko.observable('')
+		this.street = ko.observable('')
+		this.building = ko.observable('')
+		this.office = ko.observable('')
+		this.mapFile = ko.observable('')
 		this.lat = ko.observable(50.466040)
 		this.lng = ko.observable(30.512890)
-		this.mapZoom = 15
+		this.mapZoom = ko.observable(15)
+		this.description = ko.observable('')
+	}
+
+	geoCoder(queryString) {
+		const googleApi = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC7Tu5aFWFlg845_hG_fw70JmN81mlrh1Q'
+
+		const searchAddress = axios.get(`${googleApi}&components=country:Ukraine&address=${queryString}`, { withCredentials: false })
+			.then(res => {
+				if( res.data.status !== 'OK' ) return Promise.reject('Address Not Found')
+				return Promise.resolve(res.data.results)
+			})
+
+		return searchAddress
 	}
 
 	save() {
