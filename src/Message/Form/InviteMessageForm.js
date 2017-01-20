@@ -6,7 +6,7 @@ import MessageFactory from '../MessageFactory'
 import Address from '../../Address/Address'
 import * as helpers from '../../helpers'
 import AddressForm from '../../Address/AddressForm'
-
+import Attach from '../../Attach/Attach'
 
 export default class InviteMessageForm extends AbstractMessageForm {
 	constructor(dispatcher) {
@@ -42,14 +42,18 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		return axios.post(`${api2}/messages/hubmessage`, {
 			typeId: constants.INVITE_MESSAGE,
 			chatId: this.chatId(),
+			attachId: this.attach().id,
 			headId: this.headId(),
 			text: this.text(),
 			inviteDate: this.inviteDate(),
-			addressId: this.addressId()
+			addressId: this.addressId(),
+			attach: this.attach()
 		}).then(response => {
 			if (this.reset) {
 				this.reset()
 			}
+
+			this.attach(new Attach())
 
 			let message = MessageFactory.create(response.data)
 
