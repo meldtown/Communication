@@ -15,9 +15,10 @@ export default class DeclineMessageForm extends AbstractMessageForm {
 			throw new Error('chatId is required')
 		}
 
-		return axios.post(`${api2}/messages`, {
+		return axios.post(`${api2}/messages/hubmessage`, {
 			typeId: constants.DECLINE_MESSAGE,
 			chatId: this.chatId(),
+			headId: this.headId(),
 			attachId: this.attach().id,
 			attach: this.attach(),
 			text: this.text()

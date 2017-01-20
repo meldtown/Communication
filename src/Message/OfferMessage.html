@@ -12,6 +12,11 @@
 					<span data-bind="text: name"></span>
 				</span>
 			</div>
+			<div data-bind="with: attach">
+				<div data-bind="if: id">
+					<small data-bind="text: fileName"></small>
+				</div>
+			</div>
 
 		</td>
 	</tr>

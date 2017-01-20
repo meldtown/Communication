@@ -1,9 +1,10 @@
 import * as ko from 'knockout'
 import * as helpers from '../helpers'
 import moment from 'moment'
+import Attach from '../Attach/Attach'
 
 export default class AbstractMessage {
-	constructor({id, date, chatId, text, isRead, avatar, seekerName, headId} = {}) {
+	constructor({id, date, chatId, text, isRead, avatar, seekerName, headId, attachId, attach = {}} = {}) {
 		this.id = ko.observable(id)
 		this.addDate = ko.observable(date)
 		this.chatId = ko.observable(chatId)
@@ -12,6 +13,8 @@ export default class AbstractMessage {
 		this.avatar = ko.observable(avatar)
 		this.seekerName = ko.observable(seekerName)
 		this.headId = ko.observable(headId)
+		this.attachId = ko.observable(attachId)
+		this.attach = ko.observable(new Attach(attach))
 
 		this.template = ko.observable()
 

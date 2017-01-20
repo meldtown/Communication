@@ -8,6 +8,11 @@
 				<span data-bind="text: formattedTime"></span>
 			</small>
 			<div data-bind="text: text"></div>
+			<div data-bind="with: attach">
+				<div data-bind="if: id">
+					<small data-bind="text: fileName"></small>
+				</div>
+			</div>
 			<fieldset>
 				<small>
 					<strong>date:</strong>
