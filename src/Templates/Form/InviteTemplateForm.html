@@ -6,11 +6,15 @@
 <input type="text" name="text" id="text" data-bind="value: text">
 <h3>Attached files</h3>
 <div data-bind="with: attach">
+	<h4 data-bind="if: id">
+		<span data-bind="text: fileName"></span>
+		<span data-bind="text: fileSize"></span>
+	</h4>
 	<div data-bind="ifnot: id">
 		<h4>No files chosen for attach</h4>
 	</div>
 	<div data-bind="if: id">
-		<span>Choose another file for attaching</span>
+		<span>You can choose another file for attaching</span>
 	</div>
 </div>
 <label class="attach-file-form">
@@ -20,12 +24,7 @@
 		<span data-bind="if: id">Choose another file</span>
 	</div>
 </label>
-<div data-bind="with: attach">
-	<h4 data-bind="if: id">
-		<span data-bind="text: fileName"></span>
-		<span data-bind="text: fileSize"></span>
-	</h4>
-</div>
+
 
 <!--<div>-->
 <!--<select id="addressId" data-bind="options: addresses, optionsText: 'optionText', optionsValue: 'id', value: addressId, optionsCaption: 'address...'"></select>-->
