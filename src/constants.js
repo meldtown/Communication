@@ -10,9 +10,9 @@ export const DECLINE_MESSAGE = 6
 export const OFFER_MESSAGE = 3
 export const APPLY_MESSAGE = 2
 
-export const ACTIVE_CONVERSATION = 'active'
-export const ARCHIVED_CONVERSATION = 'archive'
-export const BLOCKED_CONVERSATION = 'blocked'
+export const ACTIVE_CONVERSATION = 1
+export const ARCHIVED_CONVERSATION = 2
+export const BLOCKED_CONVERSATION = 3
 export const CONVERSATION_TYPES = [
 	ACTIVE_CONVERSATION,
 	ARCHIVED_CONVERSATION,

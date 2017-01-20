@@ -23,7 +23,6 @@ export default class Conversation {
 		this.fromCvdb = ko.observable(fromCvdb)
 		this.fromApply = ko.observable(fromApply)
 
-
 		this.isSelected = ko.observable(false)
 
 		this.isActive = ko.computed(() => this.type() === constants.ACTIVE_CONVERSATION)
@@ -46,7 +45,7 @@ export default class Conversation {
 	}
 
 	_changeType(targetType, eventToFire) {
-		return axios.put(`${api}/conversations/${this.id()}`, {type: targetType}).then(data => {
+		return axios.put(`${api2}/conversations/${this.id()}?type=${targetType}`).then(data => {
 			this.dispatcher.notifySubscribers(this, eventToFire)
 			this.type(targetType)
 			return data

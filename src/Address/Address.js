@@ -14,6 +14,4 @@ export default class Address {
 			return `${this.city()} ${this.street()} ${this.building()}, ${this.office()}`
 		})
 	}
-
-
 }
