@@ -2,23 +2,23 @@ import * as ko from 'knockout'
 import AbstractTemplateForm from './AbstractTemplateForm'
 import axios from 'axios'
 import * as constants from '../../constants'
-import AddressForm from '../../Address/AddressForm'
-import Address from '../../Address/Address'
+// import AddressForm from '../../Address/AddressForm'
+// import Address from '../../Address/Address'
 
 
 export default class InviteTemplateForm extends AbstractTemplateForm {
 	constructor(dispatcher, data = {}) {
 		super(dispatcher, data)
-		let {inviteDate, addressId} = data
+		let {inviteDate} = data
 		this.inviteDate = ko.observable(inviteDate)
-		this.addressId = ko.observable(addressId)
+		// this.addressId = ko.observable(addressId)
 		this.template = ko.observable('InviteTemplateForm')
-		this.addressForm = ko.observable(null)
-		this.addresses = ko.observableArray([])
-		this.isAddButtonDisabled = ko.computed(() => {
-			if (!this.addressForm()) return
-			return !this.addressForm().city() || !this.addressForm().street() || !this.addressForm().building()
-		})
+		// this.addressForm = ko.observable(null)
+		// this.addresses = ko.observableArray([])
+		// this.isAddButtonDisabled = ko.computed(() => {
+		// 	if (!this.addressForm()) return
+		// 	return !this.addressForm().city() || !this.addressForm().street() || !this.addressForm().building()
+		// })
 	}
 
 	save() {
@@ -28,7 +28,7 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 			name: this.name(),
 			language: this.language(),
 			inviteDate: this.inviteDate(),
-			addressId: this.addressId()
+			// addressId: this.addressId()
 		}
 		if (this.id()) {
 			return axios.put(`${api2}/templates/${this.id()}`, {...data, id: this.id()})
@@ -39,30 +39,30 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 	}
 
 	fill(selectedTemplate) {
-		selectedTemplate.addressId(this.addressId())
+		// selectedTemplate.addressId(this.addressId())
 		selectedTemplate.inviteDate(this.inviteDate())
-		let address = this.addresses().filter(address => {
-			return address.id() === this.addressId()
-		}).shift()
-		selectedTemplate.address(address)
+		// let address = this.addresses().filter(address => {
+		// 	return address.id() === this.addressId()
+		// }).shift()
+		// selectedTemplate.address(address)
 		super.fill(selectedTemplate)
 	}
 
-	createAddress() {
-		this.addressForm(new AddressForm())
-	}
+	// createAddress() {
+	// 	this.addressForm(new AddressForm())
+	// }
+    //
+	// saveAddress() {
+	// 	return this.addressForm().save().then(() => {
+	// 		this.addressId(this.addressForm().id)
+	// 		this.addresses.push(new Address(ko.toJS(this.addressForm())))
+	// 		this.addressForm(null)
+	// 	})
+	// }
 
-	saveAddress() {
-		return this.addressForm().save().then(() => {
-			this.addressId(this.addressForm().id)
-			this.addresses.push(new Address(ko.toJS(this.addressForm())))
-			this.addressForm(null)
-		})
-	}
-
-	cancelAddressForm() {
-		this.addressForm(null)
-	}
+	// cancelAddressForm() {
+	// 	this.addressForm(null)
+	// }
 
 	// fetchAddresses() {
 	// 	return axios.get(`${api}/addresses`)

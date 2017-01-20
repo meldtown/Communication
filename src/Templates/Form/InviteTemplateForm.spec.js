@@ -34,17 +34,18 @@ describe('InviteTemplateForm', () => {
 		assert.equal(ko.isObservable(model.inviteDate), true)
 	})
 
-	it('should have addressId', () => {
-		assert.equal(ko.isObservable(model.addressId), true)
-	})
+	// it('should have addressId', () => {
+	// 	assert.equal(ko.isObservable(model.addressId), true)
+	// })
 
 	it('should accept data into constructor', () => {
 		let data = generator.generateInviteTemplate(1)
 		model = new InviteTemplateForm(dispatcher, data)
 		let actual = ko.toJS(model)
+		console.log(actual)
 		let {addresses, addressForm} = actual
 		let overrides = {dispatcher: 1, template: 1, type: 1, isAddButtonDisabled: true,  address: {...data.address, optionText: 1}}
-		assert.deepEqual({...actual, ...overrides}, {...data, addresses, addressForm, ...overrides})
+		assert.deepEqual({...actual, ...overrides}, {...data, ...overrides})
 	})
 
 	it('should have template prop', () => {
@@ -67,36 +68,36 @@ describe('InviteTemplateForm', () => {
 		assert.deepEqual({...actual, addressText: '', template: 1, isAddButtonDisabled: true}, {...expected, addressText: '', template: 1, isAddButtonDisabled: true})
 	})
 
-	it('should fill address if given', () => {
-		model = new InviteTemplateForm(dispatcher, generator.generateInviteTemplate(1))
-		let template = new InviteTemplateView(dispatcher, {address: generator.generateAddress(333)})
-		model.addresses([generator.generateAddress(222), generator.generateAddress(333)].map(item => new Address(item)))
-		model.addressId(333)
-		model.fill(template)
+	// it('should fill address if given', () => {
+	// 	model = new InviteTemplateForm(dispatcher, generator.generateInviteTemplate(1))
+	// 	let template = new InviteTemplateView(dispatcher, {address: generator.generateAddress(333)})
+	// 	model.addresses([generator.generateAddress(222), generator.generateAddress(333)].map(item => new Address(item)))
+	// 	model.addressId(333)
+	// 	model.fill(template)
+    //
+	// 	let address = model.addresses()[1]
+	// 	assert.equal(template.address(), address)
+	// 	assert.equal(template.addressText(), address.optionText())
+	// })
 
-		let address = model.addresses()[1]
-		assert.equal(template.address(), address)
-		assert.equal(template.addressText(), address.optionText())
-	})
-
-	it('should set default message if there\'s not selected address', () => {
-		model = new InviteTemplateForm(dispatcher, generator.generateInviteTemplate(1))
-		let template = new InviteTemplateView(dispatcher)
-		model.addresses([generator.generateAddress(222), generator.generateAddress(333)].map(item => new Address(item)))
-		template.address(new Address(generator.generateAddress()))
-
-		assert.equal(template.addressText(), 'No attached address')
-	})
+	// it('should set default message if there\'s not selected address', () => {
+	// 	model = new InviteTemplateForm(dispatcher, generator.generateInviteTemplate(1))
+	// 	let template = new InviteTemplateView(dispatcher)
+	// 	model.addresses([generator.generateAddress(222), generator.generateAddress(333)].map(item => new Address(item)))
+	// 	template.address(new Address(generator.generateAddress()))
+    //
+	// 	assert.equal(template.addressText(), 'No attached address')
+	// })
 
 	describe('save method', () => {
-		let {id, address, ...data} = generator.generateInviteTemplate(1)
+		let {id, ...data} = generator.generateInviteTemplate(1)
 
 		it('should have save method', () => {
 			assert.equal(typeof model.save, 'function')
 		})
 
 		it('should call put while saving existing template', () => {
-			model = new InviteTemplateForm(dispatcher, {...data, id, address})
+			model = new InviteTemplateForm(dispatcher, {...data, id})
 			mock.onPut(`${api}/templates/${id}`, {...data, id}).reply(200)
 
 			return model.save().then(() => assert.ok(true))

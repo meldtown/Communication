@@ -22,6 +22,6 @@ export default class AbstractTemplateView extends AbstractTemplate {
 	}
 
 	remove() {
-		return axios.delete(`${api}/templates/${this.id()}`)
+		return axios.delete(`${api2}/templates/${this.id()}`)
 	}
 }

@@ -27,7 +27,7 @@ export const init = () => {
 	helpers.injectTemplate('AddressForm', require('../src/Address/AddressForm.html'))
 
 	model.fetch()
-	model.fetchAddresses()
+	// model.fetchAddresses()
 	ko.applyBindings(model, root)
 	window['model'] = model
 }
