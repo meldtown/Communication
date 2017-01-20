@@ -17,14 +17,14 @@ export default class MessageList {
 		this.hasMessages = ko.computed(() => this.messages() && this.messages().length > 0)
 
 		dispatcher.subscribe(message => {
-			if (message.chatId() === this.chatId()) {
+			if (message.headId() === this.headId()) {
 				this.messages.push(message)
 			}
 		}, this, actions.NEW_MESSAGE)
 	}
 
 	fetch() {
-		return axios.get(`${api2}/conversations/${this.chatId()}/messages`)
+		return axios.get(`${api2}/conversations/${this.headId()}/messages`)
 			.then(response => {
 				this.messages(response.data.map(MessageFactory.create))
 			})
