@@ -28,7 +28,7 @@ export default class JobsearcherHub {
 			}
 		})
 
-		dispatcher.subscribe(chatId => {
+		dispatcher.subscribe(({chatId}) => {
 			this.messages.chatId(chatId)
 			this.messages.fetch()
 		}, this, actions.CONVERSATION_SELECTED)

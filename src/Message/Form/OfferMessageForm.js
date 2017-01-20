@@ -25,7 +25,7 @@ export default class OfferMessageForm extends AbstractMessageForm {
 		}
 
 		return axios.post(`${api}/messages`, {
-			type: constants.OFFER_MESSAGE,
+			typeId: constants.OFFER_MESSAGE,
 			chatId: this.chatId(),
 			text: this.text(),
 			vacancyId: this.vacancyId()

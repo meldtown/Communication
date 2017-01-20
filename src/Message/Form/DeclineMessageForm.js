@@ -15,7 +15,7 @@ export default class DeclineMessageForm extends AbstractMessageForm {
 		}
 
 		return axios.post(`${api}/messages`, {
-			type: constants.DECLINE_MESSAGE,
+			typeId: constants.DECLINE_MESSAGE,
 			chatId: this.chatId(),
 			text: this.text()
 		}).then(response => {

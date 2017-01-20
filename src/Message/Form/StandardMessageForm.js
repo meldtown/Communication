@@ -14,11 +14,10 @@ export default class StandardMessageForm extends AbstractMessageForm {
 			throw new Error('chatId is required')
 		}
 
-		return axios.post(`${api}/messages`, {
-			type: constants.STANDARD_MESSAGE,
+		return axios.put(`${api2}/messages`, {
+			typeId: constants.STANDARD_MESSAGE,
 			chatId: this.chatId(),
-			text: this.text(),
-			avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/digitalmaverick/128.jpg'
+			text: this.text()
 		}).then(response => {
 			if (this.reset) {
 				this.reset()
