@@ -1,6 +1,8 @@
+import * as ko from 'knockout'
+
 ko.bindingHandlers.googleMap = {
-	init(element, valueAccessor) {
-		const prop = valueAccessor()
+	init(element, valueAccessor, allBindings, viewModel, bindingContext) {
+		const prop = bindingContext.$data
 		let lat = parseFloat(prop.lat()) || 0
 		let lng = parseFloat(prop.lng()) || 0
 
@@ -28,14 +30,14 @@ ko.bindingHandlers.googleMap = {
 
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(position => {
-				map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
+				map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude})
 			})
 		}
 
 		element.map = map
 	},
-	update(element, valueAccessor) {
-		let prop = valueAccessor()
+	update(element, valueAccessor, allBindings, viewModel, bindingContext) {
+		let prop = bindingContext.$data
 		let lat = parseFloat(prop.lat()) || 0
 		let lng = parseFloat(prop.lng()) || 0
 
