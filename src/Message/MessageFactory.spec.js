@@ -18,7 +18,7 @@ describe('MessageFactory', () => {
 		let data
 
 		beforeEach(() => {
-			data = {id: 1, date: '2015-04-24T23:04:59', conversationId: 1, text: 'Hello World'}
+			data = {id: 1, date: '2015-04-24T23:04:59', chatId: 1, text: 'Hello World'}
 		})
 
 		it(`should create ${types.STANDARD_MESSAGE} message`, () => {
@@ -59,7 +59,7 @@ describe('MessageFactory', () => {
 		})
 
 		it('should return null in all other cases', () => {
-			let data = {type: 'UNKNOWN', id: 1, date: '2015-04-24T23:04:59', conversationId: 1, text: 'Hello World'}
+			let data = {type: 'UNKNOWN', id: 1, date: '2015-04-24T23:04:59', chatId: 1, text: 'Hello World'}
 			assert.equal(MessageFactory.create(data), null)
 		})
 

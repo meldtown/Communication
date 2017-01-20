@@ -19,7 +19,7 @@ describe('MessageList', () => {
 	let dispatcher
 
 	before(() => {
-		global.api = api
+		global['api'] = api
 	})
 
 	beforeEach(() => {
@@ -42,8 +42,8 @@ describe('MessageList', () => {
 		assert.equal(ko.isSubscribable(model.dispatcher), true)
 	})
 
-	it('should have conversationId prop', () => {
-		assert.equal(ko.isObservable(model.conversationId), true)
+	it('should have chatId prop', () => {
+		assert.equal(ko.isObservable(model.chatId), true)
 	})
 
 	it('should have messages observable array', () => {
@@ -56,16 +56,16 @@ describe('MessageList', () => {
 	})
 
 	it('should map fetched messages', () => {
-		let conversationId = 1
+		let chatId = 1
 
-		model.conversationId(conversationId)
+		model.chatId(chatId)
 
 		let responseText = [
-			generator.generateStandardMessage(1, conversationId),
-			generator.generateInviteMessage(2, conversationId),
-			generator.generateDeclineMessage(3, conversationId),
-			generator.generateOfferMessage(4, conversationId),
-			generator.generateApplyMessage(5, conversationId)
+			generator.generateStandardMessage(1, chatId),
+			generator.generateInviteMessage(2, chatId),
+			generator.generateDeclineMessage(3, chatId),
+			generator.generateOfferMessage(4, chatId),
+			generator.generateApplyMessage(5, chatId)
 		]
 
 		mock.onGet(`${api}/messages`).reply(200, responseText)
@@ -82,9 +82,9 @@ describe('MessageList', () => {
 	})
 
 	it('should reset messages on error', done => {
-		let conversationId = 1
+		let chatId = 1
 
-		model.conversationId(conversationId)
+		model.chatId(chatId)
 
 		mock.onGet(`${api}/messages`).reply(500, 'error')
 
@@ -104,8 +104,8 @@ describe('MessageList', () => {
 		let model1 = new MessageList(dispatcher)
 		let model2 = new MessageList(dispatcher)
 
-		model1.conversationId(1)
-		model2.conversationId(2)
+		model1.chatId(1)
+		model2.chatId(2)
 
 		assert.equal(model1.messages().length, 0)
 		assert.equal(model2.messages().length, 0)

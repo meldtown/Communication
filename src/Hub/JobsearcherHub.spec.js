@@ -18,7 +18,7 @@ describe('JobsearcherHub', () => {
 	let dispatcher
 
 	before(() => {
-		global.api = api
+		global['api'] = api
 	})
 
 	beforeEach(() => {
@@ -76,12 +76,12 @@ describe('JobsearcherHub', () => {
 
 	it(`should fetch messages on ${actions.CONVERSATION_SELECTED} event`, () => {
 		let counter = 0
-		let conversationId = 5
+		let chatId = 5
 
-		model.conversations.conversations([new Conversation(dispatcher, generator.generateConversation(conversationId, []))])
+		model.conversations.conversations([new Conversation(dispatcher, generator.generateConversation(chatId, []))])
 		model.messages.fetch = () => counter = counter + 1
 
-		dispatcher.notifySubscribers(conversationId, actions.CONVERSATION_SELECTED)
+		dispatcher.notifySubscribers(chatId, actions.CONVERSATION_SELECTED)
 
 		assert.equal(counter, 1)
 	})
@@ -100,21 +100,21 @@ describe('JobsearcherHub', () => {
 		assert.equal(model.selectedConversation().id(), 1)
 	})
 
-	it('should reset messages and conversationId if there is no conversations', () => {
+	it('should reset messages and chatId if there is no conversations', () => {
 		// Arrange
-		let conversationId = 1
-		let conversation = new Conversation(dispatcher, generator.generateConversation(conversationId, []))
+		let chatId = 1
+		let conversation = new Conversation(dispatcher, generator.generateConversation(chatId, []))
 		model.conversations.conversations([conversation])
-		model.messages.conversationId(conversationId)
-		model.standardMessageForm.conversationId(conversationId)
+		model.messages.chatId(chatId)
+		model.standardMessageForm.chatId(chatId)
 		model.messages.messages([conversation.lastMessage])
 
 		// Act
 		model.conversations.conversations([])
 
 		// Assert
-		assert.equal(model.messages.conversationId(), null)
-		assert.equal(model.standardMessageForm.conversationId(), null)
+		assert.equal(model.messages.chatId(), null)
+		assert.equal(model.standardMessageForm.chatId(), null)
 		assert.equal(model.messages.messages().length, 0)
 	})
 })

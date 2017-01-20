@@ -7,8 +7,8 @@ import ApplyMessage from './ApplyMessage'
 
 export default class MessageFactory {
 	static create(data = {}) {
-		let {type} = data
-		switch (type) {
+		let {typeId} = data // var type = data.type
+		switch (typeId) {
 			case types.STANDARD_MESSAGE:
 				return new StandardMessage(data)
 			case types.INVITE_MESSAGE:

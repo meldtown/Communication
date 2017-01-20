@@ -6,12 +6,12 @@ export default class Address {
 		this.city = ko.observable(city)
 		this.street = ko.observable(street)
 		this.building = ko.observable(building)
-		this.office = ko.observable(office)
+		this.office = ko.observable(office || '')
 		this.description = ko.observable(description)
 		this.mapFile = ko.observable(mapFile)
 
-		this.optionText = ko.computed(() => `${this.city()} ${this.street()} ${this.building()}, ${this.office()}`)
+		this.optionText = ko.computed(() => {
+			return `${this.city()} ${this.street()} ${this.building()}, ${this.office()}`
+		})
 	}
-
-
 }

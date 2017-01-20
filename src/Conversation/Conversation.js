@@ -4,7 +4,7 @@ import axios from 'axios'
 import MessageFactory from '../Message/MessageFactory'
 
 export default class Conversation {
-	constructor(dispatcher, {id, avatar, lastMessage, type, unreadMessagesCount, fullName, vacancies, hasInvites, hasDeclines, hasOffers, fromCvdb, fromApply} = {}) {
+	constructor(dispatcher, {id, avatar, lastMessage, type, unreadMessagesCount, fullName, vacancies, hasInvites, hasDeclines, hasOffers, fromCvdb, fromApply, headId} = {}) {
 		if (!ko.isSubscribable(dispatcher)) {
 			throw new Error('ko.subscribable is required')
 		}
@@ -22,7 +22,7 @@ export default class Conversation {
 		this.hasOffers = ko.observable(hasOffers)
 		this.fromCvdb = ko.observable(fromCvdb)
 		this.fromApply = ko.observable(fromApply)
-
+		this.headId = ko.observable(headId)
 
 		this.isSelected = ko.observable(false)
 
@@ -36,17 +36,17 @@ export default class Conversation {
 				: null
 		})
 
-		dispatcher.subscribe(id => {
-			this.isSelected(this.id() === id)
+		dispatcher.subscribe(({chatId}) => {
+			this.isSelected(this.id() === chatId)
 		}, this, constants.CONVERSATION_SELECTED)
 	}
 
 	select() {
-		this.dispatcher.notifySubscribers(this.id(), constants.CONVERSATION_SELECTED)
+		this.dispatcher.notifySubscribers({chatId: this.id(), headId: this.headId()}, constants.CONVERSATION_SELECTED)
 	}
 
 	_changeType(targetType, eventToFire) {
-		return axios.put(`${api}/conversations/${this.id()}`, {type: targetType}).then(data => {
+		return axios.put(`${api2}/conversations/${this.id()}?type=${targetType}`).then(data => {
 			this.dispatcher.notifySubscribers(this, eventToFire)
 			this.type(targetType)
 			return data

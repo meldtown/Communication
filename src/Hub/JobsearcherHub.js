@@ -22,14 +22,14 @@ export default class JobsearcherHub {
 
 		this.conversations.hasConversations.subscribe(hasConversations => {
 			if (!hasConversations) {
-				this.messages.conversationId(null)
-				this.standardMessageForm.conversationId(null)
+				this.messages.chatId(null)
+				this.standardMessageForm.chatId(null)
 				this.messages.messages([])
 			}
 		})
 
-		dispatcher.subscribe(conversationId => {
-			this.messages.conversationId(conversationId)
+		dispatcher.subscribe(({chatId}) => {
+			this.messages.chatId(chatId)
 			this.messages.fetch()
 		}, this, actions.CONVERSATION_SELECTED)
 	}

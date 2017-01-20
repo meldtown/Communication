@@ -1,8 +1,8 @@
-<textarea placeholder="standard..." data-bind="value: text, enable: hasConversationId"></textarea>
-<div data-bind="if: hasConversationId">
+<textarea placeholder="standard..." data-bind="value: text, enable: hasChatId"></textarea>
+<div data-bind="if: hasChatId">
 	<a href="#" data-bind="click: save">Send</a>
 </div>
-<div data-bind="ifnot: hasConversationId">
+<div data-bind="ifnot: hasChatId">
 	<span>Send</span>
 </div>
 

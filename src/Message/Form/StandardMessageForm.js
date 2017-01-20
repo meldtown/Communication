@@ -10,15 +10,15 @@ export default class StandardMessageForm extends AbstractMessageForm {
 	}
 
 	save() {
-		if (!this.conversationId()) {
-			throw new Error('conversationId is required')
+		if (!this.chatId()) {
+			throw new Error('chatId is required')
 		}
 
-		return axios.post(`${api}/messages`, {
-			type: constants.STANDARD_MESSAGE,
-			conversationId: this.conversationId(),
-			text: this.text(),
-			avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/digitalmaverick/128.jpg'
+		return axios.post(`${api2}/messages/hubmessage`, {
+			typeId: constants.STANDARD_MESSAGE,
+			chatId: this.chatId(),
+			headId: this.headId(),
+			text: this.text()
 		}).then(response => {
 			if (this.reset) {
 				this.reset()

@@ -1,7 +1,19 @@
 <div class="newAddress">
-	<label>City: <input type="text" data-bind="value: city"></label>
-	<label>Street: <input type="text" data-bind="value: street"></label>
-	<label>Building:<input type="text" data-bind="value: building"></label>
-	<label>Office: <input type="text" data-bind="value: office"></label>
-	<label>Description: <input type="text" data-bind="value: description"></label>
+	<label>City: <input type="text" data-bind="cityAutocomplete"></label>
+
+	<label>street: <input type="text" data-bind="value: street"></label>
+	<label>building: <input type="text" data-bind="value: building"></label>
+	<label>office: <input type="text" data-bind="value: office"></label>
+
+	<br>
+
+	<label>Lat: <input type="text" data-bind="value: lat"></label>
+	<label>Lng: <input type="text" data-bind="value: lng"></label>
+
+	<div data-bind="template: { name: 'GoogleMap' }"></div>
+
+	<br><br>
+	<label>Description: <textarea rows="7" data-bind="value: description"></textarea></label>
+	<br><br>
+
 </div>

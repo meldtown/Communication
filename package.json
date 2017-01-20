@@ -52,7 +52,8 @@
     },
     "globals": {
       "api": true,
-      "api2": true
+      "api2": true,
+      "google": true
     },
     "rules": {
       "semi": [
@@ -176,6 +177,7 @@
     "axios": "^0.15.3",
     "jquery": "^3.1.1",
     "knockout": "^3.4.1",
-    "moment": "^2.17.1"
+    "moment": "^2.17.1",
+    "jquery-ui": "^1.12.1"
   }
 }

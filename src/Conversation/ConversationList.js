@@ -95,13 +95,12 @@ export default class ConversationList {
 	}
 
 	fetch() {
-		let request = {type: this.selectedType()}
-
-		if (this.term()) {
-			request.q = this.term()
+		let request = {
+			type: this.selectedType(),
+			keywords: this.term()
 		}
 
-		return axios.get(`${api}/conversations`, {params: request})
+		return axios.get(`${api2}/conversations`, {params: request})
 			.then(response => {
 				this.hasInvitesSelected(false)
 				this.hasDeclinesSelected(false)
@@ -109,6 +108,7 @@ export default class ConversationList {
 
 				this.fromCvdbSelected(false)
 				this.fromApplySelected(false)
+
 				this.conversations(response.data.map(data => new Conversation(this.dispatcher, data)))
 			})
 			.catch(() => {

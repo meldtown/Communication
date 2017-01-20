@@ -1,7 +1,7 @@
 <label for="vacancyId">vacancy</label>
 <select id="vacancyId" data-bind="options: vacancies, optionsText: 'name', optionsValue: 'id', value: vacancyId, optionsCaption: 'vacancy...', enable: hasVacancies"></select>
 <br>
-<textarea placeholder="offer..." data-bind="value: text, valueUpdate: 'keyup', enable: hasConversationId"></textarea>
+<textarea placeholder="offer..." data-bind="value: text, valueUpdate: 'keyup', enable: hasChatId"></textarea>
 <div data-bind="if: canBeSaved">
 	<a href="#" data-bind="click: save">Send</a>
 </div>

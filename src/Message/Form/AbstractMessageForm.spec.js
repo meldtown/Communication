@@ -31,21 +31,21 @@ describe('AbstractMessageForm', () => {
 		assert.equal(model.text(), 'text')
 	})
 
-	it('should have conversationId prop', () => {
-		assert.equal(ko.isObservable(model.conversationId), true)
+	it('should have chatId prop', () => {
+		assert.equal(ko.isObservable(model.chatId), true)
 	})
 
 	it(`should handle ${actions.CONVERSATION_SELECTED} event`, () => {
-		let conversationId = 1
-		dispatcher.notifySubscribers(conversationId, actions.CONVERSATION_SELECTED)
-		assert.equal(model.conversationId(), conversationId)
+		let chatId = 1
+		dispatcher.notifySubscribers(chatId, actions.CONVERSATION_SELECTED)
+		assert.equal(model.chatId(), chatId)
 	})
 
 	it(`should call reset method if any on ${actions.CONVERSATION_SELECTED} event`, () => {
 		model.text('Hello')
 		model.reset = () => model.text('')
-		let conversationId = 1
-		dispatcher.notifySubscribers(conversationId, actions.CONVERSATION_SELECTED)
+		let chatId = 1
+		dispatcher.notifySubscribers(chatId, actions.CONVERSATION_SELECTED)
 		assert.equal(model.text(), '')
 	})
 
@@ -53,11 +53,11 @@ describe('AbstractMessageForm', () => {
 		assert.ok(ko.isObservable(model.template))
 	})
 
-	it('should have hasConversationId comp', () => {
-		assert.ok(ko.isComputed(model.hasConversationId))
+	it('should have hasChatId comp', () => {
+		assert.ok(ko.isComputed(model.hasChatId))
 
-		assert.equal(model.hasConversationId(), false)
-		model.conversationId(1)
-		assert.equal(model.hasConversationId(), true)
+		assert.equal(model.hasChatId(), false)
+		model.chatId(1)
+		assert.equal(model.hasChatId(), true)
 	})
 })

@@ -9,6 +9,8 @@ import StandardMessageForm from '../Message/Form/StandardMessageForm'
 import InviteMessageForm from '../Message/Form/InviteMessageForm'
 import DeclineMessageForm from '../Message/Form/DeclineMessageForm'
 import OfferMessageForm from '../Message/Form/OfferMessageForm'
+import '../customBindings/googleMap'
+import '../customBindings/addressAutocomplete'
 
 export default class EmployerHub {
 	constructor(dispatcher) {
@@ -34,18 +36,25 @@ export default class EmployerHub {
 
 		this.selectedConversation = ko.computed(() => this.conversations.selectedConversation())
 
-		dispatcher.subscribe(conversationId => {
-			this.messages.conversationId(conversationId)
+		dispatcher.subscribe(({chatId}) => {
+			this.messages.chatId(chatId)
 			this.messages.fetch()
 		}, this, actions.CONVERSATION_SELECTED)
 
 		this.conversations.hasConversations.subscribe(hasConversations => {
 			if (!hasConversations) {
-				this.messages.conversationId(null)
-				this.standardMessageForm.conversationId(null)
-				this.inviteMessageForm.conversationId(null)
-				this.declineMessageForm.conversationId(null)
-				this.offerMessageForm.conversationId(null)
+				this.messages.chatId(null)
+
+				this.standardMessageForm.chatId(null)
+				this.inviteMessageForm.chatId(null)
+				this.declineMessageForm.chatId(null)
+				this.offerMessageForm.chatId(null)
+
+				this.standardMessageForm.headId(null)
+				this.inviteMessageForm.headId(null)
+				this.declineMessageForm.headId(null)
+				this.offerMessageForm.headId(null)
+
 				this.messages.messages([])
 			}
 		})

@@ -15,7 +15,7 @@ describe('Conversation', () => {
 	let dispatcher
 
 	before(() => {
-		global.api = api
+		global['api'] = api
 	})
 
 	beforeEach(() => {
@@ -45,7 +45,7 @@ describe('Conversation', () => {
 	it('should take constructor params', () => {
 		let data = {id: 1, avatar: 'http:/placehold.it/50x50', lastMessage: generator.generateStandardMessage(1, 1)}
 		let model = new Conversation(dispatcher, data)
-		var actual = ko.toJS(model)
+		let actual = ko.toJS(model)
 		assert.equal(actual.id, data.id)
 		assert.equal(actual.avatar, data.avatar)
 		assert.deepEqual(actual.vacancy, data.vacancy)
@@ -65,13 +65,13 @@ describe('Conversation', () => {
 	})
 
 	it(`should react to ${constants.CONVERSATION_SELECTED} event`, () => {
-		var conversationId = 1
+		const chatId = 1
 
-		model.id(conversationId)
+		model.id(chatId)
 
 		assert.equal(model.isSelected(), false)
 
-		dispatcher.notifySubscribers(conversationId, constants.CONVERSATION_SELECTED)
+		dispatcher.notifySubscribers(chatId, constants.CONVERSATION_SELECTED)
 
 		assert.equal(model.isSelected(), true)
 	})
@@ -119,13 +119,13 @@ describe('Conversation', () => {
 	})
 
 	it('should call backend to block conversation', () => {
-		let conversationId = 1
+		let chatId = 1
 
-		model.id(conversationId)
+		model.id(chatId)
 		model.type(constants.ACTIVE_CONVERSATION)
 		assert.equal(model.type(), constants.ACTIVE_CONVERSATION)
 
-		mock.onPut(`${api}/conversations/${conversationId}`, {type: constants.BLOCKED_CONVERSATION}).reply(200)
+		mock.onPut(`${api}/conversations/${chatId}`, {type: constants.BLOCKED_CONVERSATION}).reply(200)
 
 		return model.block().then(() => {
 			assert.equal(model.type(), constants.BLOCKED_CONVERSATION)
@@ -133,16 +133,16 @@ describe('Conversation', () => {
 	})
 
 	it(`should fire ${constants.CONVERSATION_BLOCKED} event`, () => {
-		let conversationId = 1
+		let chatId = 1
 		let counter = 0
 
 		dispatcher.subscribe(() => {
 			counter = counter + 1
 		}, null, constants.CONVERSATION_BLOCKED)
 
-		model.id(conversationId)
+		model.id(chatId)
 
-		mock.onPut(`${api}/conversations/${conversationId}`, {type: constants.BLOCKED_CONVERSATION}).reply(200)
+		mock.onPut(`${api}/conversations/${chatId}`, {type: constants.BLOCKED_CONVERSATION}).reply(200)
 
 		return model.block().then(() => {
 			assert.equal(counter, 1)
@@ -154,13 +154,13 @@ describe('Conversation', () => {
 	})
 
 	it('should call backend to archive conversation', () => {
-		let conversationId = 1
+		let chatId = 1
 
-		model.id(conversationId)
+		model.id(chatId)
 		model.type(constants.ACTIVE_CONVERSATION)
 		assert.equal(model.type(), constants.ACTIVE_CONVERSATION)
 
-		mock.onPut(`${api}/conversations/${conversationId}`, {type: constants.ARCHIVED_CONVERSATION}).reply(200)
+		mock.onPut(`${api}/conversations/${chatId}`, {type: constants.ARCHIVED_CONVERSATION}).reply(200)
 
 		return model.archive().then(() => {
 			assert.equal(model.type(), constants.ARCHIVED_CONVERSATION)
@@ -168,16 +168,16 @@ describe('Conversation', () => {
 	})
 
 	it(`should fire ${constants.CONVERSATION_ARCHIVED} event`, () => {
-		let conversationId = 1
+		let chatId = 1
 		let counter = 0
 
 		dispatcher.subscribe(() => {
 			counter = counter + 1
 		}, null, constants.CONVERSATION_ARCHIVED)
 
-		model.id(conversationId)
+		model.id(chatId)
 
-		mock.onPut(`${api}/conversations/${conversationId}`, {type: constants.ARCHIVED_CONVERSATION}).reply(200)
+		mock.onPut(`${api}/conversations/${chatId}`, {type: constants.ARCHIVED_CONVERSATION}).reply(200)
 
 		return model.archive().then(() => {
 			assert.equal(counter, 1)
@@ -189,13 +189,13 @@ describe('Conversation', () => {
 	})
 
 	it('should call backend to activate conversation', () => {
-		let conversationId = 1
+		let chatId = 1
 
-		model.id(conversationId)
+		model.id(chatId)
 		model.type(constants.BLOCKED_CONVERSATION)
 		assert.equal(model.type(), constants.BLOCKED_CONVERSATION)
 
-		mock.onPut(`${api}/conversations/${conversationId}`, {type: constants.ACTIVE_CONVERSATION}).reply(200)
+		mock.onPut(`${api}/conversations/${chatId}`, {type: constants.ACTIVE_CONVERSATION}).reply(200)
 
 		return model.activate().then(() => {
 			assert.equal(model.type(), constants.ACTIVE_CONVERSATION)
@@ -203,16 +203,16 @@ describe('Conversation', () => {
 	})
 
 	it(`should fire ${constants.CONVERSATION_ACTIVATED} event`, () => {
-		let conversationId = 1
+		let chatId = 1
 		let counter = 0
 
 		dispatcher.subscribe(() => {
 			counter = counter + 1
 		}, null, constants.CONVERSATION_ACTIVATED)
 
-		model.id(conversationId)
+		model.id(chatId)
 
-		mock.onPut(`${api}/conversations/${conversationId}`, {type: constants.ACTIVE_CONVERSATION}).reply(200)
+		mock.onPut(`${api}/conversations/${chatId}`, {type: constants.ACTIVE_CONVERSATION}).reply(200)
 
 		return model.activate().then(() => {
 			assert.equal(counter, 1)
@@ -272,7 +272,7 @@ describe('Conversation', () => {
 	})
 
 	it('should set vacancies from constructor', () => {
-		var vacancies = [1, 2]
+		const vacancies = [1, 2]
 		model = new Conversation(dispatcher, {vacancies})
 		assert.equal(model.vacancies().length, 2)
 		assert.deepEqual(model.vacancies(), vacancies)

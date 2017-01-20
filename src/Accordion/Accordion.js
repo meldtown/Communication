@@ -9,31 +9,31 @@ import Conversation from '../Conversation/Conversation'
 import axios from 'axios'
 
 export default class Accordion {
-	constructor(dispatcher, conversationId) {
+	constructor(dispatcher, chatId) {
 		if (!ko.isSubscribable(dispatcher)) {
 			throw new Error('ko.subscribable is required')
 		}
 
-		if (!conversationId) {
-			throw new Error('conversationId is required')
+		if (!chatId) {
+			throw new Error('chatId is required')
 		}
 
 		this.dispatcher = dispatcher
-		this.conversationId = ko.observable(conversationId)
+		this.chatId = ko.observable(chatId)
 		this.conversation = ko.observable(new Conversation(dispatcher))
 		this.messages = new MessageList(dispatcher)
 
-		this.messages.conversationId(conversationId)
+		this.messages.chatId(chatId)
 
 		this.standardMessageForm = new StandardMessageForm(dispatcher)
 		this.inviteMessageForm = new InviteMessageForm(dispatcher)
 		this.declineMessageForm = new DeclineMessageForm(dispatcher)
 		this.offerMessageForm = new OfferMessageForm(dispatcher)
 
-		this.standardMessageForm.conversationId(conversationId)
-		this.inviteMessageForm.conversationId(conversationId)
-		this.declineMessageForm.conversationId(conversationId)
-		this.offerMessageForm.conversationId(conversationId)
+		this.standardMessageForm.chatId(chatId)
+		this.inviteMessageForm.chatId(chatId)
+		this.declineMessageForm.chatId(chatId)
+		this.offerMessageForm.chatId(chatId)
 
 		this.selectedForm = ko.observable(this.standardMessageForm)
 
@@ -42,12 +42,12 @@ export default class Accordion {
 		this.isDeclineFormSelected = ko.computed(() => this.selectedForm() === this.declineMessageForm)
 		this.isOfferFormSelected = ko.computed(() => this.selectedForm() === this.offerMessageForm)
 
-		this.conversationId.subscribe(conversationId => {
-			this.messages.conversationId(conversationId)
-			this.standardMessageForm.conversationId(conversationId)
-			this.inviteMessageForm.conversationId(conversationId)
-			this.declineMessageForm.conversationId(conversationId)
-			this.offerMessageForm.conversationId(conversationId)
+		this.chatId.subscribe(chatId => {
+			this.messages.chatId(chatId)
+			this.standardMessageForm.chatId(chatId)
+			this.inviteMessageForm.chatId(chatId)
+			this.declineMessageForm.chatId(chatId)
+			this.offerMessageForm.chatId(chatId)
 			this.fetch()
 		})
 	}
@@ -57,7 +57,7 @@ export default class Accordion {
 	}
 
 	fetchConversation() {
-		return axios.get(`${api}/conversations/${this.conversationId()}`)
+		return axios.get(`${api}/conversations/${this.chatId()}`)
 			.then(response => {
 				let conversation = new Conversation(this.dispatcher, response.data)
 				this.conversation(conversation)

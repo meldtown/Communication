@@ -5,14 +5,14 @@ export const CONVERSATION_ACTIVATED = 'CONVERSATION_ACTIVATED'
 export const NEW_MESSAGE = 'NEW_MESSAGE'
 
 export const STANDARD_MESSAGE = 1
-export const INVITE_MESSAGE = 3
-export const DECLINE_MESSAGE = 4
-export const OFFER_MESSAGE = 2
-export const APPLY_MESSAGE = 'apply'
+export const INVITE_MESSAGE = 4
+export const DECLINE_MESSAGE = 6
+export const OFFER_MESSAGE = 3
+export const APPLY_MESSAGE = 2
 
-export const ACTIVE_CONVERSATION = 'active'
-export const ARCHIVED_CONVERSATION = 'archive'
-export const BLOCKED_CONVERSATION = 'blocked'
+export const ACTIVE_CONVERSATION = 1
+export const ARCHIVED_CONVERSATION = 2
+export const BLOCKED_CONVERSATION = 3
 export const CONVERSATION_TYPES = [
 	ACTIVE_CONVERSATION,
 	ARCHIVED_CONVERSATION,

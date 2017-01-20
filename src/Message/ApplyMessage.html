@@ -6,9 +6,14 @@
 			</small>
 			<div>
 				<strong>
-					<span>R<span data-bind="text: resumeId"></span></span>
+
+					<span data-bind="with: resume">
+						<span data-bind="text: speciality"></span>
+					</span>
 					<span>&rarr;</span>
-					<span>V<span data-bind="text: vacancyId"></span></span>
+					<span data-bind="with: vacancy">
+						<span data-bind="text: name"></span>
+					</span>
 				</strong>
 			</div>
 			<div>

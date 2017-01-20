@@ -21,7 +21,7 @@ describe('EmployerHub', () => {
 	let dispatcher
 
 	before(() => {
-		global.api = api
+		global['api'] = api
 	})
 
 	beforeEach(() => {
@@ -79,12 +79,12 @@ describe('EmployerHub', () => {
 
 	it(`should fetch messages on ${actions.CONVERSATION_SELECTED} event`, () => {
 		let counter = 0
-		let conversationId = 5
+		let chatId = 5
 
-		model.conversations.conversations([new Conversation(dispatcher, generator.generateConversation(conversationId, []))])
+		model.conversations.conversations([new Conversation(dispatcher, generator.generateConversation(chatId, []))])
 		model.messages.fetch = () => counter = counter + 1
 
-		dispatcher.notifySubscribers(conversationId, actions.CONVERSATION_SELECTED)
+		dispatcher.notifySubscribers(chatId, actions.CONVERSATION_SELECTED)
 
 		assert.equal(counter, 1)
 	})
@@ -159,27 +159,27 @@ describe('EmployerHub', () => {
 		assert.equal(model.selectedConversation().id(), 1)
 	})
 
-	it('should reset messages and conversationId if there is no conversations', () => {
+	it('should reset messages and chatId if there is no conversations', () => {
 		// Arrange
-		let conversationId = 1
-		let conversation = new Conversation(dispatcher, generator.generateConversation(conversationId, []))
+		let chatId = 1
+		let conversation = new Conversation(dispatcher, generator.generateConversation(chatId, []))
 		model.conversations.conversations([conversation])
-		model.messages.conversationId(conversationId)
-		model.standardMessageForm.conversationId(conversationId)
-		model.inviteMessageForm.conversationId(conversationId)
-		model.declineMessageForm.conversationId(conversationId)
-		model.offerMessageForm.conversationId(conversationId)
+		model.messages.chatId(chatId)
+		model.standardMessageForm.chatId(chatId)
+		model.inviteMessageForm.chatId(chatId)
+		model.declineMessageForm.chatId(chatId)
+		model.offerMessageForm.chatId(chatId)
 		model.messages.messages([conversation.lastMessage])
 
 		// Act
 		model.conversations.conversations([])
 
 		// Assert
-		assert.equal(model.messages.conversationId(), null)
-		assert.equal(model.standardMessageForm.conversationId(), null)
-		assert.equal(model.inviteMessageForm.conversationId(), null)
-		assert.equal(model.declineMessageForm.conversationId(), null)
-		assert.equal(model.offerMessageForm.conversationId(), null)
+		assert.equal(model.messages.chatId(), null)
+		assert.equal(model.standardMessageForm.chatId(), null)
+		assert.equal(model.inviteMessageForm.chatId(), null)
+		assert.equal(model.declineMessageForm.chatId(), null)
+		assert.equal(model.offerMessageForm.chatId(), null)
 		assert.equal(model.messages.messages().length, 0)
 	})
 })

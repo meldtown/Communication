@@ -11,21 +11,23 @@ export default class MessageList {
 
 		this.dispatcher = dispatcher
 
-		this.conversationId = ko.observable()
+		this.chatId = ko.observable()
 		this.messages = ko.observableArray()
 
 		this.hasMessages = ko.computed(() => this.messages() && this.messages().length > 0)
 
 		dispatcher.subscribe(message => {
-			if (message.conversationId() === this.conversationId()) {
+			if (message.chatId() === this.chatId()) {
 				this.messages.push(message)
 			}
 		}, this, actions.NEW_MESSAGE)
 	}
 
 	fetch() {
-		return axios.get(`${api}/messages`, {params: {conversationId: this.conversationId()}})
-			.then(response => this.messages(response.data.map(MessageFactory.create)))
+		return axios.get(`${api2}/conversations/${this.chatId()}/messages`)
+			.then(response => {
+				this.messages(response.data.map(MessageFactory.create))
+			})
 			.catch(() => this.messages([]))
 	}
 }

@@ -27,7 +27,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		})
 
 		this.hasAddresses = ko.computed(() => (this.addresses() || []).length > 0)
-		this.canBeSaved = ko.computed(() => this.conversationId() && this.addressId() && this.text())
+		this.canBeSaved = ko.computed(() => this.chatId() && this.addressId() && this.text())
 		this.isAddButtonDisabled = ko.computed(() => {
 			if (!this.addressForm()) return
 			return !this.addressForm().city() || !this.addressForm().street() || !this.addressForm().building()
@@ -35,13 +35,14 @@ export default class InviteMessageForm extends AbstractMessageForm {
 	}
 
 	save() {
-		if (!this.conversationId()) {
-			throw new Error('conversationId is required')
+		if (!this.chatId()) {
+			throw new Error('chatId is required')
 		}
 
-		return axios.post(`${api}/messages`, {
-			type: constants.INVITE_MESSAGE,
-			conversationId: this.conversationId(),
+		return axios.post(`${api2}/messages/hubmessage`, {
+			typeId: constants.INVITE_MESSAGE,
+			chatId: this.chatId(),
+			headId: this.headId(),
 			text: this.text(),
 			inviteDate: this.inviteDate(),
 			addressId: this.addressId()
