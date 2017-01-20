@@ -26,7 +26,6 @@ export default class MessageList {
 	fetch() {
 		return axios.get(`${api2}/conversations/3/messages`)
 			.then(response => {
-				// console.log(response.data)
 				this.messages(response.data.map(MessageFactory.create))
 			})
 			.catch(() => this.messages([]))

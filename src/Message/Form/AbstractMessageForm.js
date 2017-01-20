@@ -11,11 +11,13 @@ export default class AbstractMessageForm {
 		this.chatId = ko.observable()
 		this.text = ko.observable()
 		this.template = ko.observable()
+		this.headId = ko.observable()
 
 		this.hasChatId = ko.computed(() => !!this.chatId())
 
-		dispatcher.subscribe(chatId => {
+		dispatcher.subscribe(({chatId, headId}) => {
 			this.chatId(chatId)
+			this.headId(headId)
 			if (this.reset) {
 				this.reset()
 			}

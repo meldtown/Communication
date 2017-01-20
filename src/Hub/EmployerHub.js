@@ -36,7 +36,7 @@ export default class EmployerHub {
 
 		this.selectedConversation = ko.computed(() => this.conversations.selectedConversation())
 
-		dispatcher.subscribe(chatId => {
+		dispatcher.subscribe(({chatId}) => {
 			this.messages.chatId(chatId)
 			this.messages.fetch()
 		}, this, actions.CONVERSATION_SELECTED)
@@ -44,10 +44,17 @@ export default class EmployerHub {
 		this.conversations.hasConversations.subscribe(hasConversations => {
 			if (!hasConversations) {
 				this.messages.chatId(null)
+
 				this.standardMessageForm.chatId(null)
 				this.inviteMessageForm.chatId(null)
 				this.declineMessageForm.chatId(null)
 				this.offerMessageForm.chatId(null)
+
+				this.standardMessageForm.headId(null)
+				this.inviteMessageForm.headId(null)
+				this.declineMessageForm.headId(null)
+				this.offerMessageForm.headId(null)
+
 				this.messages.messages([])
 			}
 		})

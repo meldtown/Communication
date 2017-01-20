@@ -40,7 +40,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		}
 
 		return axios.post(`${api}/messages`, {
-			type: constants.INVITE_MESSAGE,
+			typeId: constants.INVITE_MESSAGE,
 			chatId: this.chatId(),
 			text: this.text(),
 			inviteDate: this.inviteDate(),
