@@ -36,7 +36,7 @@ export const init = () => {
 	helpers.injectTemplate('GoogleMap', require('../src/Address/GoogleMap.html'))
 
 	model.fetch()
-	model.offerMessageForm.fetchVacancies()
+	model.fetchVacancies()
 	model.inviteMessageForm.fetchAddresses()
 	ko.applyBindings(model, root)
 	window['model'] = model

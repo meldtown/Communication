@@ -5,10 +5,10 @@ export const CONVERSATION_ACTIVATED = 'CONVERSATION_ACTIVATED'
 export const NEW_MESSAGE = 'NEW_MESSAGE'
 
 export const STANDARD_MESSAGE = 1
+export const APPLY_MESSAGE = 2
+export const OFFER_MESSAGE = 3
 export const INVITE_MESSAGE = 4
 export const DECLINE_MESSAGE = 6
-export const OFFER_MESSAGE = 3
-export const APPLY_MESSAGE = 2
 
 export const ACTIVE_CONVERSATION = 1
 export const ARCHIVED_CONVERSATION = 2

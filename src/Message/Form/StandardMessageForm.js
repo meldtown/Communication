@@ -10,7 +10,7 @@ export default class StandardMessageForm extends AbstractMessageForm {
 	}
 
 	save() {
-		if (!this.chatId()) {
+		if (!this.headId()) {
 			throw new Error('chatId is required')
 		}
 

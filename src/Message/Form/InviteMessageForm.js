@@ -16,6 +16,9 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.addresses = ko.observableArray([])
 		this.addressForm = ko.observable(null)
 
+		this.vacancyId = ko.observable()
+		this.vacancies = ko.observableArray([])
+
 		this.inviteDateDate = ko.observable()
 		this.inviteDateTime = ko.observable()
 		this.inviteDate = ko.computed({
@@ -26,6 +29,8 @@ export default class InviteMessageForm extends AbstractMessageForm {
 			}
 		})
 
+
+		this.hasVacancies = ko.computed(() => (this.vacancies() || []).length > 0)
 		this.hasAddresses = ko.computed(() => (this.addresses() || []).length > 0)
 		this.canBeSaved = ko.computed(() => this.chatId() && this.addressId() && this.text())
 		this.isAddButtonDisabled = ko.computed(() => {
@@ -35,7 +40,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 	}
 
 	save() {
-		if (!this.chatId()) {
+		if (!this.headId()) {
 			throw new Error('chatId is required')
 		}
 
@@ -45,7 +50,8 @@ export default class InviteMessageForm extends AbstractMessageForm {
 			headId: this.headId(),
 			text: this.text(),
 			inviteDate: this.inviteDate(),
-			addressId: this.addressId()
+			addressId: this.addressId(),
+			vacancy: {id: this.vacancyId()}
 		}).then(response => {
 			if (this.reset) {
 				this.reset()
@@ -63,6 +69,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.text('')
 		this.inviteDate('')
 		this.addressId(0)
+		this.vacancyId(0)
 	}
 
 	createAddress() {

@@ -10,13 +10,14 @@ export default class DeclineMessageForm extends AbstractMessageForm {
 	}
 
 	save() {
-		if (!this.chatId()) {
+		if (!this.headId()) {
 			throw new Error('chatId is required')
 		}
 
-		return axios.post(`${api}/messages`, {
+		return axios.post(`${api2}/messages/hubmessage`, {
 			typeId: constants.DECLINE_MESSAGE,
 			chatId: this.chatId(),
+			headId: this.headId(),
 			text: this.text()
 		}).then(response => {
 			if (this.reset) {

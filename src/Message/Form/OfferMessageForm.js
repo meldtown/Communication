@@ -16,7 +16,7 @@ export default class OfferMessageForm extends AbstractMessageForm {
 	}
 
 	save() {
-		if (!this.chatId()) {
+		if (!this.headId()) {
 			throw new Error('chatId is required')
 		}
 
@@ -46,10 +46,5 @@ export default class OfferMessageForm extends AbstractMessageForm {
 	reset() {
 		this.text('')
 		this.vacancyId(0)
-	}
-
-	fetchVacancies() {
-		return axios.get(`${api2}/employer/vacancylist`)
-			.then(response => this.vacancies(response.data))
 	}
 }

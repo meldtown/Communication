@@ -10,9 +10,16 @@
 	<option>14:00</option>
 	<option>15:00</option>
 </select>
+
 <label for="addressId">address</label>
 <select id="addressId" data-bind="options: addresses, optionsText: 'optionText', optionsValue: 'id', value: addressId, optionsCaption: 'address...', enable: hasAddresses"></select>
+
 <textarea placeholder="invite..." data-bind="value: text, enable: hasChatId"></textarea>
+
+<label for="vacancyId">vacancy</label>
+<select id="vacancyId" data-bind="options: vacancies, optionsText: 'name', optionsValue: 'id', value: vacancyId, optionsCaption: 'vacancy...', enable: hasVacancies"></select>
+
+<br>
 <div>
 	<button data-bind="click: createAddress">Add address</button>
 	<div data-bind="with: addressForm">
