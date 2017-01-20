@@ -108,4 +108,17 @@ body {
 	margin: 10px;
 }
 
+.attach-file-form {
+	background: steelblue;
+	display: block;
+	border-radius: 5px;
+	text-align: center;
+	padding: 5px;
+	color: #fff;
+	cursor: pointer;
+	input {
+		display: none;
+	}
+}
+
 

@@ -7,8 +7,12 @@
 <div data-bind="with: attach">
 	<h3>Attached files</h3>
 	<p data-bind="text: fileName"></p>
-	<p>
-		<span data-bind="text: fileSize"></span>
-		<span>kb</span>
-	</p>
+	<div data-bind="if: id">
+		<h3>Attached files</h3>
+		<p data-bind="text: fileName"></p>
+		<p>
+			<span data-bind="text: fileSize"></span>
+			<span>kb</span>
+		</p>
+	</div>
 </div>

@@ -1,5 +1,3 @@
-import * as ko from 'knockout'
-import axios from 'axios'
 
 export default class Attach {
 	constructor(data = {}) {
