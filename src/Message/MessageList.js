@@ -12,6 +12,7 @@ export default class MessageList {
 		this.dispatcher = dispatcher
 
 		this.chatId = ko.observable()
+		this.headId = ko.observable()
 		this.messages = ko.observableArray()
 
 		this.hasMessages = ko.computed(() => this.messages() && this.messages().length > 0)

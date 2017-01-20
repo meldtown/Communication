@@ -111,8 +111,9 @@ export default class ConversationList {
 
 				this.conversations(response.data.map(data => new Conversation(this.dispatcher, data)))
 			})
-			.catch(() => {
+			.catch(err => {
 				this.conversations([])
+				throw err
 			})
 	}
 
