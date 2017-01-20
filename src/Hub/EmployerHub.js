@@ -10,7 +10,7 @@ import InviteMessageForm from '../Message/Form/InviteMessageForm'
 import DeclineMessageForm from '../Message/Form/DeclineMessageForm'
 import OfferMessageForm from '../Message/Form/OfferMessageForm'
 import '../customBindings/googleMap'
-import '../customBindings/cityAutocomplete'
+import '../customBindings/addressAutocomplete'
 
 export default class EmployerHub {
 	constructor(dispatcher) {

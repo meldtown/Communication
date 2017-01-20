@@ -1,3 +1,17 @@
+# Backend enums
+
+```
+// typeId
+public enum MessageType { 
+    standard = 1, 
+    invite = 4, 
+    decline = 6, 
+    offer = 3, 
+    apply = 2, 
+    unoffer = 5 
+}
+```
+
 # Packages
 
 ## ES6
