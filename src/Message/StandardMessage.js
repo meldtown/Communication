@@ -4,10 +4,10 @@ import AbstractMessage from './AbstractMessage'
 export default class StandardMessage extends AbstractMessage {
 	constructor(data = {}) {
 		super(data)
-		let {avatar, multiUser} = data
+		let {avatar, multiUserId} = data
 		this.avatar = ko.observable(avatar)
-		this.multiUser = ko.observable(multiUser)
+		this.multiUserId = ko.observable(multiUserId)
 		this.template('StandardMessage')
-		this.isJobsearcher = ko.computed(() => this.multiUser() === 0)
+		this.isJobsearcher = ko.computed(() => this.multiUserId() === 0)
 	}
 }

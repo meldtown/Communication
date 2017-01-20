@@ -4,8 +4,8 @@ import AbstractMessage from './AbstractMessage'
 export default class OfferMessage extends AbstractMessage {
 	constructor(data = {}) {
 		super(data)
-		let {vacancyId} = data
-		this.vacancyId = ko.observable(vacancyId)
+		let {vacancy} = data
+		this.vacancy = ko.observable(vacancy)
 		this.template('OfferMessage')
 	}
 }
