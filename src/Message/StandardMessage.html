@@ -1,39 +1,49 @@
 <div style="overflow: hidden;margin: 20px 0;">
-	<!-- ko if: isJobsearcher -->
-	<table align="right" data-bind="css: {muted: isRead}">
-		<caption data-bind="text: formattedDate" class="muted"></caption>
-		<tbody>
-		<tr>
-			<td>
-				<small data-bind="text: formattedTime" class="muted"></small>
-			</td>
-			<td>
-				<div style="background:white" data-bind="text: text"></div>
-			</td>
-			<td>
-				<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
-			</td>
-		</tr>
-		</tbody>
-	</table>
-	<!-- /ko -->
-	<!-- ko ifnot: isJobsearcher -->
-	<table align="left" data-bind="css: {muted: isRead}">
-		<caption data-bind="text: formattedDate" class="muted"></caption>
-		<tbody>
-		<tr>
-			<td>
-				<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
-			</td>
-			<td>
-				<div style="background:white" data-bind="text: text"></div>
-			</td>
-			<td>
-				<small data-bind="text: formattedTime" class="muted"></small>
-			</td>
-		</tr>
-		</tbody>
-	</table>
-	<!-- /ko -->
+	<div data-bind="if: isJobsearcher">
+		<table align="right" data-bind="css: {muted: isRead}">
+			<caption data-bind="text: formattedDate" class="muted"></caption>
+			<tbody>
+			<tr>
+				<td>
+					<small data-bind="text: formattedTime" class="muted"></small>
+				</td>
+				<td>
+					<div style="background:white" data-bind="text: text"></div>
+					<div data-bind="with: attach">
+						<div data-bind="if: id">
+							<small data-bind="text: fileName"></small>
+						</div>
+					</div>
+				</td>
+				<td>
+					<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+	<div data-bind="ifnot: isJobsearcher">
+		<table align="left" data-bind="css: {muted: isRead}">
+			<caption data-bind="text: formattedDate" class="muted"></caption>
+			<tbody>
+			<tr>
+				<td>
+					<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+				</td>
+				<td>
+					<div style="background:white" data-bind="text: text"></div>
+					<div data-bind="with: attach">
+						<div data-bind="if: id">
+							<small data-bind="text: fileName"></small>
+						</div>
+					</div>
+				</td>
+				<td>
+					<small data-bind="text: formattedTime" class="muted"></small>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
 </div>
 

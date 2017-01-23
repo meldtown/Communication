@@ -10,6 +10,7 @@
     "start:accordion": "webpack-dev-server --env accordion --port 8585",
     "start:db": "json-server --watch db.json --host 0.0.0.0 --port 8181",
     "dist": "webpack -p",
+    "dist:watch": "webpack -p --watch",
     "test": "mocha --reporter spec --require babel-register --require ignore-styles --require jsdom-global/register \"src/**/*.spec.js\"",
     "test:teamcity": "nyc --reporter=teamcity mocha --reporter mocha-teamcity-reporter --require babel-register --require ignore-styles --require jsdom-global/register \"src/**/*.spec.js\"",
     "cover": "nyc mocha --reporter spec --require babel-register --require ignore-styles --require jsdom-global/register \"src/**/*.spec.js\"",

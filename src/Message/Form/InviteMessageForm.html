@@ -10,9 +10,16 @@
 	<option>14:00</option>
 	<option>15:00</option>
 </select>
+
 <label for="addressId">address</label>
 <select id="addressId" data-bind="options: addresses, optionsText: 'optionText', optionsValue: 'id', value: addressId, optionsCaption: 'address...', enable: hasAddresses"></select>
+
 <textarea placeholder="invite..." data-bind="value: text, enable: hasChatId"></textarea>
+
+<label for="vacancyId">vacancy</label>
+<select id="vacancyId" data-bind="options: vacancies, optionsText: 'name', optionsValue: 'id', value: vacancyId, optionsCaption: 'vacancy...', enable: hasVacancies"></select>
+
+<br>
 <div>
 	<button data-bind="click: createAddress">Add address</button>
 	<div data-bind="with: addressForm">
@@ -30,4 +37,24 @@
 	<span>Send</span>
 	<span class="muted">select address and provide text</span>
 </div>
+<h3>Attached files</h3>
+<div data-bind="with: attach">
+	<h4 data-bind="if: id">
+		<span data-bind="text: fileName"></span>
+		<span data-bind="text: fileSize"></span>
+	</h4>
+	<div data-bind="ifnot: id">
+		<h4>No files chosen for attach</h4>
+	</div>
+	<div data-bind="if: id">
+		<span>You can choose another file for attaching</span>
+	</div>
+</div>
+<label class="attach-file-form">
+	<input type="file" data-bind="attach: {attach: attach}"/>
+	<div data-bind="with: attach">
+		<span data-bind="ifnot: id">Attach file</span>
+		<span data-bind="if: id">Choose another file</span>
+	</div>
+</label>
 

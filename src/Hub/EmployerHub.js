@@ -1,8 +1,10 @@
 import * as actions from '../constants'
 import * as ko from 'knockout'
+import axios from 'axios'
 import './EmployerHub.scss'
 import '../bindingHandlers/hasFocus'
 import '../bindingHandlers/enterPress'
+import '../bindingHandlers/attach'
 import ConversationList from '../Conversation/ConversationList'
 import MessageList from '../Message/MessageList'
 import StandardMessageForm from '../Message/Form/StandardMessageForm'
@@ -36,14 +38,16 @@ export default class EmployerHub {
 
 		this.selectedConversation = ko.computed(() => this.conversations.selectedConversation())
 
-		dispatcher.subscribe(({chatId}) => {
+		dispatcher.subscribe(({chatId, headId}) => {
 			this.messages.chatId(chatId)
+			this.messages.headId(headId)
 			this.messages.fetch()
 		}, this, actions.CONVERSATION_SELECTED)
 
 		this.conversations.hasConversations.subscribe(hasConversations => {
 			if (!hasConversations) {
 				this.messages.chatId(null)
+				this.messages.headId(null)
 
 				this.standardMessageForm.chatId(null)
 				this.inviteMessageForm.chatId(null)
@@ -78,5 +82,13 @@ export default class EmployerHub {
 
 	selectOfferForm() {
 		this.selectedForm(this.offerMessageForm)
+	}
+
+	fetchVacancies() {
+		return axios.get(`${api2}/employer/vacancylist`)
+			.then(response => {
+				this.inviteMessageForm.vacancies(response.data)
+				this.offerMessageForm.vacancies(response.data)
+			})
 	}
 }

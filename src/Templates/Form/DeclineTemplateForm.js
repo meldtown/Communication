@@ -16,6 +16,7 @@ export default class DeclineTemplateForm extends AbstractTemplateForm {
 			text: this.text(),
 			name: this.name(),
 			language: this.language(),
+			attach: this.attach()
 		}
 
 		if (this.id()) {

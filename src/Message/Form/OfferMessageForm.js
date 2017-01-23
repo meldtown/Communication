@@ -3,6 +3,7 @@ import axios from 'axios'
 import * as constants from '../../constants'
 import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'
+import Attach from '../../Attach/Attach'
 
 export default class OfferMessageForm extends AbstractMessageForm {
 	constructor(dispatcher) {
@@ -16,7 +17,7 @@ export default class OfferMessageForm extends AbstractMessageForm {
 	}
 
 	save() {
-		if (!this.chatId()) {
+		if (!this.headId()) {
 			throw new Error('chatId is required')
 		}
 
@@ -24,15 +25,20 @@ export default class OfferMessageForm extends AbstractMessageForm {
 			throw new Error('vacancyId is required')
 		}
 
-		return axios.post(`${api}/messages`, {
+		return axios.post(`${api2}/messages/hubmessage`, {
 			typeId: constants.OFFER_MESSAGE,
 			chatId: this.chatId(),
+			attachId: this.attach().id,
+			headId: this.headId(),
 			text: this.text(),
-			vacancyId: this.vacancyId()
+			attach: this.attach(),
+			vacancy: {id: this.vacancyId()}
 		}).then(response => {
 			if (this.reset) {
 				this.reset()
 			}
+
+			this.attach(new Attach())
 
 			let message = MessageFactory.create(response.data)
 
@@ -45,10 +51,5 @@ export default class OfferMessageForm extends AbstractMessageForm {
 	reset() {
 		this.text('')
 		this.vacancyId(0)
-	}
-
-	fetchVacancies() {
-		return axios.get(`${api2}/employer/vacancylist`)
-			.then(response => this.vacancies(response.data))
 	}
 }

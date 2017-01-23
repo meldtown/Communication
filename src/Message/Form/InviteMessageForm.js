@@ -6,7 +6,7 @@ import MessageFactory from '../MessageFactory'
 import Address from '../../Address/Address'
 import * as helpers from '../../helpers'
 import AddressForm from '../../Address/AddressForm'
-
+import Attach from '../../Attach/Attach'
 
 export default class InviteMessageForm extends AbstractMessageForm {
 	constructor(dispatcher) {
@@ -15,6 +15,9 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.addressId = ko.observable()
 		this.addresses = ko.observableArray([])
 		this.addressForm = ko.observable(null)
+
+		this.vacancyId = ko.observable()
+		this.vacancies = ko.observableArray([])
 
 		this.inviteDateDate = ko.observable()
 		this.inviteDateTime = ko.observable()
@@ -26,6 +29,8 @@ export default class InviteMessageForm extends AbstractMessageForm {
 			}
 		})
 
+
+		this.hasVacancies = ko.computed(() => (this.vacancies() || []).length > 0)
 		this.hasAddresses = ko.computed(() => (this.addresses() || []).length > 0)
 		this.canBeSaved = ko.computed(() => this.chatId() && this.addressId() && this.text())
 		this.isAddButtonDisabled = ko.computed(() => {
@@ -35,20 +40,26 @@ export default class InviteMessageForm extends AbstractMessageForm {
 	}
 
 	save() {
-		if (!this.chatId()) {
+		if (!this.headId()) {
 			throw new Error('chatId is required')
 		}
 
-		return axios.post(`${api}/messages`, {
+		return axios.post(`${api2}/messages/hubmessage`, {
 			typeId: constants.INVITE_MESSAGE,
 			chatId: this.chatId(),
+			attachId: this.attach().id,
+			headId: this.headId(),
 			text: this.text(),
 			inviteDate: this.inviteDate(),
-			addressId: this.addressId()
+			addressId: this.addressId(),
+			vacancy: {id: this.vacancyId()},
+			attach: this.attach()
 		}).then(response => {
 			if (this.reset) {
 				this.reset()
 			}
+
+			this.attach(new Attach())
 
 			let message = MessageFactory.create(response.data)
 
@@ -62,6 +73,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.text('')
 		this.inviteDate('')
 		this.addressId(0)
+		this.vacancyId(0)
 	}
 
 	createAddress() {

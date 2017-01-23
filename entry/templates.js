@@ -30,4 +30,6 @@ export const init = () => {
 	// model.fetchAddresses()
 	ko.applyBindings(model, root)
 	window['model'] = model
+	window['ko'] = ko
 }
+

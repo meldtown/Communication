@@ -4,14 +4,36 @@
 <input type="text" name="name" id="name" data-bind="value: name">
 <h3>text</h3>
 <input type="text" name="text" id="text" data-bind="value: text">
+<h3>Attached files</h3>
+<div data-bind="with: attach">
+	<h4 data-bind="if: id">
+		<span data-bind="text: fileName"></span>
+		<span data-bind="text: fileSize"></span>
+	</h4>
+	<div data-bind="ifnot: id">
+		<h4>No files chosen for attach</h4>
+	</div>
+	<div data-bind="if: id">
+		<span>You can choose another file for attaching</span>
+	</div>
+</div>
+<label class="attach-file-form">
+	<input type="file" data-bind="attach: {attach: attach}"/>
+	<div data-bind="with: attach">
+		<span data-bind="ifnot: id">Attach file</span>
+		<span data-bind="if: id">Choose another file</span>
+	</div>
+</label>
+
+
 <!--<div>-->
-	<!--<select id="addressId" data-bind="options: addresses, optionsText: 'optionText', optionsValue: 'id', value: addressId, optionsCaption: 'address...'"></select>-->
+<!--<select id="addressId" data-bind="options: addresses, optionsText: 'optionText', optionsValue: 'id', value: addressId, optionsCaption: 'address...'"></select>-->
 <!--</div>-->
 <!--<div data-bind="with: addressForm">-->
-	<!--<div data-bind="template: 'AddressForm'"></div>-->
+<!--<div data-bind="template: 'AddressForm'"></div>-->
 <!--</div>-->
 <!--<div data-bind="visible: addressForm">-->
-	<!--<button data-bind="disable: isAddButtonDisabled, click: saveAddress">Add</button>-->
-	<!--<button data-bind="click: cancelAddressForm">Cancel</button>-->
+<!--<button data-bind="disable: isAddButtonDisabled, click: saveAddress">Add</button>-->
+<!--<button data-bind="click: cancelAddressForm">Cancel</button>-->
 <!--</div>-->
 <!--<button data-bind="click: createAddress">Add address</button>-->

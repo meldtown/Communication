@@ -11,6 +11,11 @@
 	<tr>
 		<td>
 			<div data-bind="text: text"></div>
+			<div data-bind="with: attach">
+				<div data-bind="if: id">
+					<small data-bind="text: fileName"></small>
+				</div>
+			</div>
 		</td>
 		<td>
 			<small data-bind="text: formattedTime" class="muted"></small>
