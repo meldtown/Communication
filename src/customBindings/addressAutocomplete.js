@@ -4,58 +4,53 @@ import 'jquery-ui/ui/widgets/autocomplete'
 
 
 
-const recursiveTree = (function letsMagic(tree) {
-	console.debug('Tree: ', tree)
+const recursiveFindName = (function letsMagic(tree, filterName) {
 
-	const classOf = obj => {
-		return Object.prototype.toString.call(obj).slice(8, -1)
-	}
+	const classOf = obj => Object.prototype.toString.call(obj).slice(8, -1)
+	const currIterable = classOf(tree)
 
-	if(classOf(tree) === 'Object') {
-		Object.keys(tree).map(item => {
-			if(typeof tree[item] === 'object') {
-				letsMagic(tree[item])
+	if( currIterable === 'Array' ) {
+		if (tree.indexOf(filterName) > -1)
+			return true
+
+		for (let i = 0; i < tree.length; i++) {
+			if (typeof tree[i] === 'object') {
+				if (letsMagic(tree[i], filterName))
+					return tree[i].short_name
+				letsMagic(tree[i], filterName)
 			}
-		})
-	}
-
-	else if (classOf(tree) === 'Array') {
-
-		console.log('ARRAY_TREE', tree)
-		if( tree.indexOf('locality') !== -1 ) {
-			console.log('Im Find: ', tree.indexOf('locality'))
 		}
-
-		tree.map(item => {
-			if(typeof item === 'object') {
-				letsMagic(item)
-			}
-		})
 	}
 
-	else
-		return false
+	else if ( currIterable === 'Object' )
+		for(let key in tree) {
+			if( typeof tree[key] === 'object' )
+				return letsMagic(tree[key], filterName)
+		}
 })
 
 
-const formattedResponse = (data, filterName) => {
-	// return data.filter(item => {
-    //
-	// 	const name = item.address_components.filter(comp => {
-	// 		return comp.types.indexOf('locality') !== -1
-	// 	})
-    //
-	// 	if( name.length === 0 ) return false
-    //
-	// 	return {
-	// 		label: (name[0].long_name || item.formatted_address),
-	// 		coordinates: item.geometry.location
-	// 	}
-	// })
+const formattedResponse = (data, filterName, additionalFilter) => {
+	const formattedArr = []
 
 	data.map(item => {
-		recursiveTree(item.address_components)
+
+		// check on type of item (city/street..)
+		if( item.types.indexOf(filterName) < 0 ) return false
+
+		const name = recursiveFindName(item.address_components, filterName)
+		const descr = recursiveFindName(item.address_components, additionalFilter)
+
+		if( name ) {
+			formattedArr.push({
+				label: `${name}${descr ? ' ('+descr+')' : ''}`,
+				value: name,
+				coordinates: item.geometry.location
+			})
+		}
 	})
+
+	return formattedArr
 }
 
 ko.bindingHandlers.cityAutocomplete = {
@@ -67,15 +62,15 @@ ko.bindingHandlers.cityAutocomplete = {
 			autoFocus: true,
 
 			source(request, response) {
-				prop.geoCoder(`${$(element).val()}`)
-					.then(data => response( formattedResponse(data) ))
+				prop.geoCoder(`&address=${$(element).val()}`)
+					.then(data => response( formattedResponse(data, 'locality', 'administrative_area_level_1') ))
 			},
 
 			select(event, ui) {
 				const prop = bindingContext.$data
 				prop.lat( ui.item.coordinates.lat )
 				prop.lng( ui.item.coordinates.lng )
-				prop.city( ui.item.label )
+				prop.city( ui.item.value )
 			}
 		})
 	}
@@ -86,19 +81,21 @@ ko.bindingHandlers.streetAutocomplete = {
 		const prop = bindingContext.$data
 
 		$(element).autocomplete({
-			minLength: 5,
-			autoFocus: false,
+			minLength: 3,
+			autoFocus: true,
 
 			source(request, response) {
-				prop.geoCoder(`${prop.city()} ${$(element).val()}`)
-					.then(data => response( formattedResponse(data) ))
+				const addressQuery = `&address=${ prop.city() ? prop.city() : '' } ${ $(element).val()}`
+
+				prop.geoCoder(addressQuery)
+					.then(data => response( formattedResponse(data, 'route', 'locality') ))
 			},
 
 			select(event, ui) {
 				const prop = bindingContext.$data
 				prop.lat( ui.item.coordinates.lat )
 				prop.lng( ui.item.coordinates.lng )
-				prop.street( ui.item.label )
+				prop.street( ui.item.value )
 			}
 		})
 	}

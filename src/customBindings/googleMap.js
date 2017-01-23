@@ -8,7 +8,7 @@ ko.bindingHandlers.googleMap = {
 
 		const map = new google.maps.Map(element, {
 			center: {lat, lng},
-			zoom: prop.mapZoom()
+			zoom: 15
 		})
 
 		const marker = new google.maps.Marker({
