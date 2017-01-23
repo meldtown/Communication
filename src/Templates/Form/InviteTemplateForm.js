@@ -28,7 +28,8 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 			name: this.name(),
 			language: this.language(),
 			inviteDate: this.inviteDate(),
-			attach: this.attach()
+			attach: this.attach(),
+			attachId: this.attach().id
 			// addressId: this.addressId()
 		}
 		if (this.id()) {
