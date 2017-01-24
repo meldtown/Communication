@@ -27,4 +27,8 @@ export default class AbstractMessageForm {
 			}
 		}, this, actions.CONVERSATION_SELECTED)
 	}
+
+	resetAttach() {
+		this.attach(new Attach())
+	}
 }

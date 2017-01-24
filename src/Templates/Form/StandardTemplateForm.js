@@ -15,7 +15,8 @@ export default class StandardTemplateForm extends AbstractTemplateForm {
 			text: this.text(),
 			name: this.name(),
 			language: this.language(),
-			attach: this.attach()
+			attach: this.attach(),
+			attachId: this.attach().id
 		}
 		if (this.id()) {
 			return axios.put(`${api2}/templates/${this.id()}`, Object.assign({}, data, {id: this.id()}))
