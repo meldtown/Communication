@@ -123,12 +123,16 @@
 					<a href="#" data-bind="click: selectStandardForm">Standard</a>
 				</span>
 
-				<span data-bind="if: isInviteFormSelected">
-					<span>Invite</span>
+
+				<span data-bind="if: isInviteFormAvailable">
+					<span data-bind="if: isInviteFormSelected">
+						<span>Invite</span>
+					</span>
+					<span data-bind="ifnot: isInviteFormSelected">
+						<a href="#" data-bind="click: selectInviteForm">Invite</a>
+					</span>
 				</span>
-				<span data-bind="ifnot: isInviteFormSelected">
-					<a href="#" data-bind="click: selectInviteForm">Invite</a>
-				</span>
+
 
 				<span data-bind="if: isDeclineFormSelected">
 					<span>Decline</span>

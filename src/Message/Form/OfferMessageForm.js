@@ -4,6 +4,8 @@ import * as constants from '../../constants'
 import AbstractMessageForm from './AbstractMessageForm'
 import MessageFactory from '../MessageFactory'
 import Attach from '../../Attach/Attach'
+import OfferMessage from '../OfferMessage'
+import InviteMessage from '../InviteMessage'
 
 export default class OfferMessageForm extends AbstractMessageForm {
 	constructor(dispatcher) {
@@ -11,14 +13,31 @@ export default class OfferMessageForm extends AbstractMessageForm {
 		this.template('OfferMessageForm')
 		this.vacancyId = ko.observable()
 		this.vacancies = ko.observableArray([])
+		this.messages = ko.observableArray([])
 
 		this.hasVacancies = ko.computed(() => (this.vacancies() || []).length > 0)
 		this.canBeSaved = ko.computed(() => this.chatId() && this.vacancyId() && this.text())
+
+		this.messages.subscribe(messages => {
+			let messagesWithVacancy = messages.filter(message => message instanceof OfferMessage || message instanceof InviteMessage)
+
+			if (messagesWithVacancy.length > 0) {
+				this.vacancyId(messagesWithVacancy.pop().vacancy().id)
+			} else {
+				this.vacancyId(0)
+			}
+		})
+
+		dispatcher.subscribe(message => {
+			if (message.headId() === this.headId()) {
+				this.messages.push(message)
+			}
+		}, this, constants.NEW_MESSAGE)
 	}
 
 	save() {
 		if (!this.headId()) {
-			throw new Error('chatId is required')
+			throw new Error('headId is required')
 		}
 
 		if (!this.vacancyId()) {
