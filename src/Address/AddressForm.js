@@ -10,6 +10,7 @@ export default class AddressForm {
 		this.mapFile = ko.observable('')
 		this.lat = ko.observable(50.466040)
 		this.lng = ko.observable(30.512890)
+		this.mapZoom = ko.observable(14)
 		this.description = ko.observable('')
 
 		this.building.subscribe(() => {
@@ -28,6 +29,7 @@ export default class AddressForm {
 						{
 							this.lat(find[0].geometry.location.lat)
 							this.lng(find[0].geometry.location.lng)
+							this.mapZoom(18)
 						}
 
 					}
