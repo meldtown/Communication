@@ -6,7 +6,7 @@ ko.bindingHandlers.attach = {
 	init: function (element, valueAccessor) {
 		let value = ko.unwrap(valueAccessor())
 		const currentId = value.attach().id
-		element.onchange = function () {
+		element.addEventListener('change', function () {
 			if (currentId) {
 				axios.delete(`${api2}/attaches/${currentId}`).then(() => {
 					ko.bindingHandlers.attach.doUpload(element, valueAccessor)
@@ -14,7 +14,7 @@ ko.bindingHandlers.attach = {
 			} else {
 				ko.bindingHandlers.attach.doUpload(element, valueAccessor)
 			}
-		}
+		})
 	},
 	doUpload: function(element, valueAccessor) {
 		let value = valueAccessor()
