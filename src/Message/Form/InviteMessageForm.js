@@ -7,6 +7,8 @@ import Address from '../../Address/Address'
 import * as helpers from '../../helpers'
 import AddressForm from '../../Address/AddressForm'
 import Attach from '../../Attach/Attach'
+import OfferMessage from '../OfferMessage'
+import InviteMessage from '../InviteMessage'
 
 export default class InviteMessageForm extends AbstractMessageForm {
 	constructor(dispatcher) {
@@ -18,6 +20,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 
 		this.vacancyId = ko.observable()
 		this.vacancies = ko.observableArray([])
+		this.messages = ko.observableArray([])
 
 		this.inviteDateDate = ko.observable()
 		this.inviteDateTime = ko.observable()
@@ -37,6 +40,23 @@ export default class InviteMessageForm extends AbstractMessageForm {
 			if (!this.addressForm()) return
 			return !this.addressForm().city() || !this.addressForm().street() || !this.addressForm().building()
 		})
+
+		this.messages.subscribe(messages => {
+			let messagesWithVacancy = messages.filter(message => message instanceof OfferMessage || message instanceof InviteMessage)
+
+			if (messagesWithVacancy.length > 0) {
+				this.vacancyId(messagesWithVacancy.pop().vacancy().id)
+			} else {
+				this.vacancyId(0)
+			}
+
+		})
+
+		dispatcher.subscribe(message => {
+			if (message.headId() === this.headId()) {
+				this.messages.push(message)
+			}
+		}, this, constants.NEW_MESSAGE)
 	}
 
 	save() {
