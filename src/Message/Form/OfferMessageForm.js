@@ -18,7 +18,7 @@ export default class OfferMessageForm extends AbstractMessageForm {
 
 	save() {
 		if (!this.headId()) {
-			throw new Error('chatId is required')
+			throw new Error('headId is required')
 		}
 
 		if (!this.vacancyId()) {

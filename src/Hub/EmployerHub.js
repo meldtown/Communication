@@ -36,6 +36,11 @@ export default class EmployerHub {
 		this.isDeclineFormSelected = ko.computed(() => this.selectedForm() === this.declineMessageForm)
 		this.isOfferFormSelected = ko.computed(() => this.selectedForm() === this.offerMessageForm)
 
+		this.isInviteFormAvailable = ko.computed(() => {
+			return this.messages.messages().some((message) => message.isRead())
+			// return this.messages.messages().filter((message) => message.typeId === actions.OFFER_MESSAGE || message.typeId === actions.APPLY_MESSAGE).length > 0
+		})
+
 		this.selectedConversation = ko.computed(() => this.conversations.selectedConversation())
 
 		dispatcher.subscribe(({chatId, headId}) => {
@@ -62,6 +67,13 @@ export default class EmployerHub {
 				this.messages.messages([])
 			}
 		})
+
+		// this.messages.messages.subscribe(messages => {
+		// 	let vacancyId = 4//messages.filter(....).vacancy.id
+		// 	//TODO: if vacancyId <> null and vacancyId exists in inviteForm.vacancyOptions
+		// 	this.inviteMessageForm.vacancyId(vacancyId);
+		// 	//this.inviteMessageForm.messages(messages);
+		// })
 	}
 
 	fetch() {
