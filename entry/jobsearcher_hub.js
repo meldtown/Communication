@@ -1,6 +1,9 @@
 import * as ko from 'knockout'
 import * as helpers from '../src/helpers'
+import axios from 'axios'
 import JobsearcherHub from '../src/Hub/JobsearcherHub'
+
+axios.defaults.withCredentials = true
 
 export const dispatcher = new ko.subscribable()
 export const model = new JobsearcherHub(dispatcher)
