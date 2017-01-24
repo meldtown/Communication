@@ -20,16 +20,12 @@
 </div>
 <label class="attach-file-form">
 	<input type="file" data-bind="attach: {attach: attach}"/>
-	<div data-bind="with: attach">
+	<span data-bind="with: attach">
 		<span data-bind="ifnot: id">Attach file</span>
 		<span data-bind="if: id">Choose another file</span>
-	</div>
+	</span>
 </label>
 <div data-bind="if: attach().id">
 	<button data-bind="click: resetAttach">Reset attach</button>
-	<div data-bind="with: attach">
-		<div data-bind="if: isImage">
-			<img data-bind="attr: {src: url}" alt="image" width="100" height="100">
-		</div>
-	</div>
+	<div data-bind="template: {name: 'Attach', data: attach}"></div>
 </div>

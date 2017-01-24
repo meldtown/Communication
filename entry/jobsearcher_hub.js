@@ -31,6 +31,7 @@ export const init = () => {
 	helpers.injectTemplate('DeclineMessagePreview', require('../src/Message/DeclineMessagePreview.html'))
 	helpers.injectTemplate('OfferMessagePreview', require('../src/Message/OfferMessagePreview.html'))
 	helpers.injectTemplate('ApplyMessagePreview', require('../src/Message/ApplyMessagePreview.html'))
+	helpers.injectTemplate('Attach', require('../src/Attach/Attach.html'))
 
 	model.fetch()
 	ko.applyBindings(model, root)
