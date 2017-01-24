@@ -1,5 +1,5 @@
 <div style="overflow: hidden;margin: 20px 0;">
-	<div data-bind="if: isJobsearcher">
+	<div data-bind="if: isMultiUser">
 		<table align="right" data-bind="css: {muted: isRead}">
 			<caption data-bind="text: formattedDate" class="muted"></caption>
 			<tbody>
@@ -25,7 +25,7 @@
 			</tbody>
 		</table>
 	</div>
-	<div data-bind="ifnot: isJobsearcher">
+	<div data-bind="ifnot: isMultiUser">
 		<table align="left" data-bind="css: {muted: isRead}">
 			<caption data-bind="text: formattedDate" class="muted"></caption>
 			<tbody>
