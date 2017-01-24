@@ -20,6 +20,9 @@
 			<div data-bind="with: attach">
 				<div data-bind="if: id">
 					<small data-bind="text: fileName"></small>
+					<div data-bind="if: isImage">
+						<img data-bind="attr: {src: url}" alt="image" width="100" height="100">
+					</div>
 				</div>
 			</div>
 			<fieldset>
