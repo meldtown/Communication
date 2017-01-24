@@ -12,6 +12,7 @@ import InviteTemplateForm from '../Templates/Form/InviteTemplateForm'
 import DeclineTemplateForm from '../Templates/Form/DeclineTemplateForm'
 import OfferTemplateForm from '../Templates/Form/OfferTemplateForm'
 import '../bindingHandlers/attach'
+import Attach from '../Attach/Attach'
 
 // import Address from '../Address/Address'
 
@@ -174,6 +175,7 @@ export default class Templates {
 	}
 
 	cancel() {
+		if (!this.selectedTemplateForm().attach().id) this.selectedTemplate().attach(new Attach())
 		this.isSelectedTemplateBeingEdited(false)
 		this.selectedTemplateForm(null)
 	}
