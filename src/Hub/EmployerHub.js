@@ -14,6 +14,10 @@ import OfferMessageForm from '../Message/Form/OfferMessageForm'
 import '../customBindings/googleMap'
 import '../customBindings/addressAutocomplete'
 
+// Remove after changing observable isInviteFormAvailable
+import OfferMessage from '../Message/OfferMessage'
+import ApplyMessage from '../Message/ApplyMessage'
+
 export default class EmployerHub {
 	constructor(dispatcher) {
 		if (!ko.isSubscribable(dispatcher)) {
@@ -36,12 +40,21 @@ export default class EmployerHub {
 		this.isDeclineFormSelected = ko.computed(() => this.selectedForm() === this.declineMessageForm)
 		this.isOfferFormSelected = ko.computed(() => this.selectedForm() === this.offerMessageForm)
 
+		this.isInviteFormAvailable = ko.computed(() => {
+			// init after isRead() implementation
+			// return this.messages.messages().some(message => message.isRead())
+
+			// remove after isRead() implementation
+			return this.messages.messages().some(message => message instanceof OfferMessage || message instanceof ApplyMessage)
+		})
+
 		this.selectedConversation = ko.computed(() => this.conversations.selectedConversation())
 
 		dispatcher.subscribe(({chatId, headId}) => {
 			this.messages.chatId(chatId)
 			this.messages.headId(headId)
 			this.messages.fetch()
+			this.selectedForm(this.standardMessageForm)
 		}, this, actions.CONVERSATION_SELECTED)
 
 		this.conversations.hasConversations.subscribe(hasConversations => {
@@ -61,6 +74,11 @@ export default class EmployerHub {
 
 				this.messages.messages([])
 			}
+		})
+
+		this.messages.messages.subscribe(messages => {
+			this.inviteMessageForm.messages(messages)
+			this.offerMessageForm.messages(messages)
 		})
 	}
 

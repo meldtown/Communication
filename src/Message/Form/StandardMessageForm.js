@@ -12,16 +12,16 @@ export default class StandardMessageForm extends AbstractMessageForm {
 
 	save() {
 		if (!this.headId()) {
-			throw new Error('chatId is required')
+			throw new Error('headId is required')
 		}
 
 		return axios.post(`${api2}/messages/hubmessage`, {
 			typeId: constants.STANDARD_MESSAGE,
 			chatId: this.chatId(),
-			attachId: this.attach().id,
 			headId: this.headId(),
-			text: this.text(),
-			attach: this.attach()
+			attachId: this.attach().id,
+			attach: this.attach(),
+			text: this.text()
 		}).then(response => {
 			if (this.reset) {
 				this.reset()
