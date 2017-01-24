@@ -25,10 +25,4 @@ export default class AbstractTemplateView extends AbstractTemplate {
 	remove() {
 		return axios.delete(`${api2}/templates/${this.id()}`)
 	}
-
-	removeAttach() {
-		axios.delete(`${api2}/attaches/${this.attach().id}`).then(() => {
-			this.attach(new Attach())
-		})
-	}
 }

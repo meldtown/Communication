@@ -1,4 +1,6 @@
 import AbstractTemplate from '../AbstractTemplate'
+import Attach from '../../Attach/Attach'
+import axios from 'axios'
 
 export default class AbstractTemplateForm extends AbstractTemplate {
 	constructor(dispatcher, data) {
@@ -12,4 +14,6 @@ export default class AbstractTemplateForm extends AbstractTemplate {
 		selectedTemplate.language(this.language())
 		selectedTemplate.attach(this.attach())
 	}
+
+
 }
