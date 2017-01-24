@@ -71,6 +71,7 @@ ko.bindingHandlers.cityAutocomplete = {
 				prop.lat( ui.item.coordinates.lat )
 				prop.lng( ui.item.coordinates.lng )
 				prop.city( ui.item.value )
+				prop.mapZoom(16)
 			}
 		})
 	}
@@ -96,6 +97,7 @@ ko.bindingHandlers.streetAutocomplete = {
 				prop.lat( ui.item.coordinates.lat )
 				prop.lng( ui.item.coordinates.lng )
 				prop.street( ui.item.value )
+				prop.mapZoom(17)
 			}
 		})
 	}
