@@ -1,3 +1,5 @@
+<select id="vacancyId" data-bind="options: vacancies, optionsText: 'label', optionsValue: 'id', value: vacancyId, optionsCaption: 'vacancy...', enable: hasVacancies"></select>
+<br>
 <textarea placeholder="decline..." data-bind="value: text, enable: hasChatId"></textarea>
 <div data-bind="if: hasChatId">
 	<a href="#" data-bind="click: save">Send</a>

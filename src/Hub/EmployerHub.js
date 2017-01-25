@@ -48,6 +48,10 @@ export default class EmployerHub {
 			return this.messages.messages().some(message => message instanceof OfferMessage || message instanceof ApplyMessage)
 		})
 
+		this.isDeclineFormAvailable = ko.computed(() => {
+			return this.messages.messages().some(message => message instanceof ApplyMessage)
+		})
+
 		this.selectedConversation = ko.computed(() => this.conversations.selectedConversation())
 
 		dispatcher.subscribe(({chatId, headId}) => {
@@ -79,6 +83,7 @@ export default class EmployerHub {
 		this.messages.messages.subscribe(messages => {
 			this.inviteMessageForm.messages(messages)
 			this.offerMessageForm.messages(messages)
+			this.declineMessageForm.messages(messages)
 		})
 	}
 
