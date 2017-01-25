@@ -24,7 +24,7 @@ export default class OfferMessageForm extends AbstractMessageForm {
 			if (messagesWithVacancy.length > 0) {
 				this.vacancyId(messagesWithVacancy.pop().vacancy().id)
 			} else {
-				this.vacancyId(0)
+				this.vacancyId('')
 			}
 		})
 

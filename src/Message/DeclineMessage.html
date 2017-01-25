@@ -10,6 +10,15 @@
 	<tbody>
 	<tr>
 		<td>
+			<div>Vacancy:
+				<span data-bind="with: vacancy">
+						<span data-bind="text: name"></span>
+					</span>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
 			<div data-bind="text: text"></div>
 			<div data-bind="with: attach">
 				<div data-bind="if: id">
