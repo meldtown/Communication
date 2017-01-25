@@ -55,9 +55,9 @@ export default class AddressForm {
 			office: this.office(),
 			description: this.description(),
 		}
-		if (!data.city || !data.street || !data.building) return new Promise((res, rej) => rej())
-		return axios.post(`${api}/addresses/`, data).then(response => {
-			this.id = response.data.id
+		if (!data.city || !data.street || !data.building) return Promise.reject(new Error('Some field is empty !!!'))
+		return axios.post(`${api2}/employer/address/`, data).then(response => {
+			this.id = response.data
 		})
 	}
 }
