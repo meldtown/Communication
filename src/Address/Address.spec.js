@@ -12,7 +12,7 @@ before(() => {
 
 describe('Address', () => {
 	let model
-	var mock // eslint-disable-line no-unused-vars
+	let mock // eslint-disable-line no-unused-vars
 	beforeEach(() => {
 		mock = new MockAdapter(axios)
 		model = new Address()
