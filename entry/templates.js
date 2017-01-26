@@ -23,8 +23,8 @@ export const init = () => {
 	helpers.injectTemplate('InviteTemplateForm', require('../src/Templates/Form/InviteTemplateForm.html'))
 	helpers.injectTemplate('OfferTemplateForm', require('../src/Templates/Form/OfferTemplateForm.html'))
 	helpers.injectTemplate('StandardTemplateForm', require('../src/Templates/Form/StandardTemplateForm.html'))
-
 	helpers.injectTemplate('AddressForm', require('../src/Address/AddressForm.html'))
+	helpers.injectTemplate('Attach', require('../src/Attach/Attach.html'))
 
 	model.fetch()
 	// model.fetchAddresses()
