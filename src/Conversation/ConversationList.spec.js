@@ -66,7 +66,7 @@ describe('ConversationList', () => {
 				let conversation = model.conversations()[i]
 				assert.equal(conversation.id(), responseText[i].id)
 				// noinspection JSUnusedLocalSymbols
-				var {ago, formattedDate, formattedTime, isJobsearcher, template, ...actual} = ko.toJS(conversation.lastMessage()) // eslint-disable-line no-unused-vars
+				let {ago, formattedDate, formattedTime, isJobsearcher, template, ...actual} = ko.toJS(conversation.lastMessage()) // eslint-disable-line no-unused-vars
 				assert.deepEqual({...actual, type: responseText[i].lastMessage.type}, responseText[i].lastMessage)
 			}
 		})
@@ -448,7 +448,7 @@ describe('ConversationList', () => {
 		it('should have vacancies computed', () => {
 			assert.ok(ko.isComputed(model.vacancies))
 			assert.equal(model.vacancies().length, 0)
-			var vacancy = generator.generateVacancy()
+			let vacancy = generator.generateVacancy()
 			model.conversations([new Conversation(dispatcher, {vacancies: [vacancy]})])
 			assert.equal(model.vacancies().length, 1)
 			assert.equal(model.vacancies()[0].id, vacancy.id)

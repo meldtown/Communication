@@ -14,7 +14,6 @@ import StandardTemplateForm from './Form/StandardTemplateForm'
 import InviteTemplateForm from './Form/InviteTemplateForm'
 import OfferTemplateForm from './Form/OfferTemplateForm'
 import DeclineTemplateForm from './Form/DeclineTemplateForm'
-import Address from '../Address/Address'
 
 const api = 'http://sample.com'
 
@@ -547,8 +546,8 @@ describe('Templates', () => {
 			model.edit()
 
 			// noinspection JSUnusedLocalSymbols
-			var {isSelected, ...expected} = ko.toJS(template) // eslint-disable-line no-unused-vars
-			var actual = ko.toJS(model.selectedTemplateForm())
+			let {isSelected, ...expected} = ko.toJS(template) // eslint-disable-line no-unused-vars
+			let actual = ko.toJS(model.selectedTemplateForm())
 			assert.deepEqual({...actual, template: 1}, {...expected, template: 1})
 		})
 

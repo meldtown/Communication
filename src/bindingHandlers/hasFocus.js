@@ -14,7 +14,7 @@ const hasFocus = {
 		})
 	},
 	update: (element, valueAccessor) => {
-		var value = valueAccessor()
+		let value = valueAccessor()
 		if (ko.unwrap(value)) {
 			element.focus()
 		} else {

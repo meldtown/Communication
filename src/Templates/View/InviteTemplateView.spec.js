@@ -4,7 +4,6 @@ import AbstractTemplate from '../AbstractTemplate'
 import AbstractTemplateView from './AbstractTemplateView'
 import * as ko from 'knockout'
 import * as generator from '../../../db'
-import Address from '../../Address/Address'
 
 describe('InviteTemplateView', () => {
 	let model
