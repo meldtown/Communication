@@ -12,6 +12,12 @@ body {
 	}
 }
 
+#templates::after {
+	content: '';
+	display: table;
+	clear: both;
+}
+
 .templates-wrapper {
 	float: left;
 }
