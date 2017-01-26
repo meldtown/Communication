@@ -4,16 +4,23 @@
 	<meta charset="UTF-8"/>
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
 	<title>templates</title>
+	<link rel="stylesheet" href="https://s3.eu-central-1.amazonaws.com/rua-assets-dev/fedor/index.css">
 	<link rel="stylesheet" href="/dist/templates.css">
 </head>
-<body>
-<div id="templates"></div>
-<script src="/dist/commons.js"></script>
-<script src="/dist/templates.js"></script>
-<script>
-	// noinspection JSUnusedLocalSymbols
-	var api = `${window.location.protocol}//${window.location.hostname}:8181`
-</script>
-<script>templates.init()</script>
+<body class="fedor">
+<form>
+	<div class="f-main-wrapper">
+		<div class="f-paper fd-p20">
+			<div id="templates"></div>
+		</div>
+	</div>
+	<script src="/dist/commons.js"></script>
+	<script src="/dist/templates.js"></script>
+	<script>
+		// noinspection JSUnusedLocalSymbols
+		var api = `${window.location.protocol}//${window.location.hostname}:8181`
+	</script>
+	<script>templates.init()</script>
+</form>
 </body>
 </html>
