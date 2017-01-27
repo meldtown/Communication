@@ -1,41 +1,26 @@
 <div style="overflow: hidden;margin: 20px 0;">
 	<div data-bind="if: isMultiUser">
-		<table align="right" data-bind="css: {muted: isRead}">
-			<caption data-bind="text: formattedDate" class="muted"></caption>
-			<tbody>
-			<tr>
-				<td>
-					<small data-bind="text: formattedTime" class="muted"></small>
-				</td>
-				<td>
-					<div style="background:white" data-bind="text: text"></div>
-					<div data-bind="template: {name: 'Attach', data: attach}"></div>
-				</td>
-				<td>
-					<!--<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>-->
-				</td>
-			</tr>
-			</tbody>
-		</table>
+		<div class="message-container fd-f-right-middle">
+			<div class="message-date">
+				<span data-bind="text: formattedDate"></span>
+			</div>
+			<div class="message-text fd-peasant">
+				<span data-bind="text: text"></span>
+				<div data-bind="template: {name: 'Attach', data: attach}"></div>
+			</div>
+		</div>
 	</div>
 	<div data-bind="ifnot: isMultiUser">
-		<table align="left" data-bind="css: {muted: isRead}">
-			<caption data-bind="text: formattedDate" class="muted"></caption>
-			<tbody>
-			<tr>
-				<td>
-					<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
-				</td>
-				<td>
-					<div style="background:white" data-bind="text: text"></div>
-					<div data-bind="template: {name: 'Attach', data: attach}"></div>
-				</td>
-				<td>
-					<small data-bind="text: formattedTime" class="muted"></small>
-				</td>
-			</tr>
-			</tbody>
-		</table>
+		<div class="message-container fd-f-right-middle">
+			<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+			<div class="message-text fd-peasant">
+				<span data-bind="text: text"></span>
+				<div data-bind="template: {name: 'Attach', data: attach}"></div>
+			</div>
+			<div class="message-date">
+				<span data-bind="text: formattedDate"></span>
+			</div>
+		</div>
 	</div>
 </div>
 
