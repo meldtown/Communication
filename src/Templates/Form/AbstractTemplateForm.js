@@ -12,4 +12,6 @@ export default class AbstractTemplateForm extends AbstractTemplate {
 		selectedTemplate.language(this.language())
 		selectedTemplate.attach(this.attach())
 	}
+
+
 }

@@ -24,5 +24,8 @@
 		<span data-bind="if: id">Choose another file</span>
 	</div>
 </label>
-
+<div data-bind="template: {name: 'Attach', data: attach}"></div>
+<div data-bind="if: attach().id">
+	<button data-bind="click: resetAttach">Reset attach</button>
+</div>
 

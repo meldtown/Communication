@@ -34,6 +34,7 @@ export const init = () => {
 	helpers.injectTemplate('ApplyMessagePreview', require('../src/Message/ApplyMessagePreview.html'))
 	helpers.injectTemplate('AddressForm', require('../src/Address/AddressForm.html'))
 	helpers.injectTemplate('GoogleMap', require('../src/Address/GoogleMap.html'))
+	helpers.injectTemplate('Attach', require('../src/Attach/Attach.html'))
 
 	model.fetch()
 	model.fetchVacancies()

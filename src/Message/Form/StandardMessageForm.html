@@ -27,5 +27,6 @@
 </label>
 <div data-bind="if: attach().id">
 	<button data-bind="click: resetAttach">Reset attach</button>
+	<div data-bind="template: {name: 'Attach', data: attach}"></div>
 </div>
 

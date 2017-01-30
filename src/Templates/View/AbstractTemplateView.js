@@ -2,7 +2,6 @@ import AbstractTemplate from '../AbstractTemplate'
 import * as actions from '../../constants'
 import * as ko from 'knockout'
 import axios from 'axios'
-import Attach from '../../Attach/Attach'
 
 export default class AbstractTemplateView extends AbstractTemplate {
 	constructor(dispatcher, data) {
@@ -24,11 +23,5 @@ export default class AbstractTemplateView extends AbstractTemplate {
 
 	remove() {
 		return axios.delete(`${api2}/templates/${this.id()}`)
-	}
-
-	removeAttach() {
-		axios.delete(`${api2}/attaches/${this.attach().id}`).then(() => {
-			this.attach(new Attach())
-		})
 	}
 }

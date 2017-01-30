@@ -10,12 +10,17 @@
 	<tbody>
 	<tr>
 		<td>
-			<div data-bind="text: text"></div>
-			<div data-bind="with: attach">
-				<div data-bind="if: id">
-					<small data-bind="text: fileName"></small>
-				</div>
+			<div>Vacancy:
+				<span data-bind="with: vacancy">
+						<span data-bind="text: name"></span>
+					</span>
 			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div data-bind="text: text"></div>
+			<div data-bind="template: {name: 'Attach', data: attach}"></div>
 		</td>
 		<td>
 			<small data-bind="text: formattedTime" class="muted"></small>

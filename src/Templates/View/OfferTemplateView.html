@@ -5,8 +5,6 @@
 <h3>Text</h3>
 <div data-bind="text: text"></div>
 <div data-bind="with: attach">
-	<h3>Attached files</h3>
-	<p data-bind="text: fileName"></p>&nbsp;
 	<div data-bind="if: id">
 		<h3>Attached files</h3>
 		<p data-bind="text: fileName"></p>
@@ -14,6 +12,6 @@
 			<span data-bind="text: fileSize"></span>
 			<span>kb</span>
 		</p>
-		<button data-bind="click: $parent.removeAttach.bind($parent)">Remove attached file</button>
+		<div data-bind="template: 'Attach'"></div>
 	</div>
 </div>

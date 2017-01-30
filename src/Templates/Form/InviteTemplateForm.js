@@ -2,6 +2,7 @@ import * as ko from 'knockout'
 import AbstractTemplateForm from './AbstractTemplateForm'
 import axios from 'axios'
 import * as constants from '../../constants'
+import Attach from '../../Attach/Attach'
 // import AddressForm from '../../Address/AddressForm'
 // import Address from '../../Address/Address'
 
@@ -40,6 +41,22 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 		}
 	}
 
+	resetAttach() {
+		let put = (function () {
+			this.attach(new Attach())
+			let data = {
+				type: constants.STANDARD_MESSAGE,
+				text: this.text(),
+				name: this.name(),
+				language: this.language(),
+				attach: this.attach(),
+				attachId: this.attach().id
+			}
+			return axios.put(`${api2}/templates/${this.id()}`, {...data, id: this.id()})
+		}).bind(this)
+		axios.delete(`${api2}/attaches/${this.attach().id}`).then(put, put)
+	}
+
 	fill(selectedTemplate) {
 		// selectedTemplate.addressId(this.addressId())
 		selectedTemplate.inviteDate(this.inviteDate())
@@ -53,7 +70,7 @@ export default class InviteTemplateForm extends AbstractTemplateForm {
 	// createAddress() {
 	// 	this.addressForm(new AddressForm())
 	// }
-    //
+	//
 	// saveAddress() {
 	// 	return this.addressForm().save().then(() => {
 	// 		this.addressId(this.addressForm().id)

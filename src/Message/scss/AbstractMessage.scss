@@ -1,0 +1,13 @@
+@import "variables";
+
+.message-container {
+	.message-text {
+		max-width: 490px;
+		padding: 12px;
+		background-color:$message_bg_color;
+		border-radius: 2px;
+	}
+	.message-time {
+
+	}
+}

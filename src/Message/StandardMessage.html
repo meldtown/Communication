@@ -1,5 +1,6 @@
 <div style="overflow: hidden;margin: 20px 0;">
-	<div data-bind="if: isJobsearcher">
+	<div data-bind="if: isMultiUser">
+<<<<<<< HEAD
 		<table align="right" data-bind="css: {muted: isRead}">
 			<caption data-bind="text: formattedDate" class="muted"></caption>
 			<tbody>
@@ -9,41 +10,36 @@
 				</td>
 				<td>
 					<div style="background:white" data-bind="text: text"></div>
-					<div data-bind="with: attach">
-						<div data-bind="if: id">
-							<small data-bind="text: fileName"></small>
-						</div>
-					</div>
+					<div data-bind="template: {name: 'Attach', data: attach}"></div>
 				</td>
 				<td>
-					<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+					<!--<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>-->
+					<div data-bind="text: getInitials" style="background: #afdce1; width: 40px; height: 40px; border-radius: 50%; text-align: center; display: inherit; vertical-align: middle;"></div>
 				</td>
 			</tr>
 			</tbody>
 		</table>
+		<div class="message-container fd-f-right-middle">
+			<div class="message-date">
+				<span data-bind="text: formattedDate"></span>
+			</div>
+			<div class="message-text fd-peasant">
+				<span data-bind="text: text"></span>
+				<div data-bind="template: {name: 'Attach', data: attach}"></div>
+			</div>
+		</div>
 	</div>
-	<div data-bind="ifnot: isJobsearcher">
-		<table align="left" data-bind="css: {muted: isRead}">
-			<caption data-bind="text: formattedDate" class="muted"></caption>
-			<tbody>
-			<tr>
-				<td>
-					<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
-				</td>
-				<td>
-					<div style="background:white" data-bind="text: text"></div>
-					<div data-bind="with: attach">
-						<div data-bind="if: id">
-							<small data-bind="text: fileName"></small>
-						</div>
-					</div>
-				</td>
-				<td>
-					<small data-bind="text: formattedTime" class="muted"></small>
-				</td>
-			</tr>
-			</tbody>
-		</table>
+	<div data-bind="ifnot: isMultiUser">
+		<div class="message-container fd-f-right-middle">
+			<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+			<div class="message-text fd-peasant">
+				<span data-bind="text: text"></span>
+				<div data-bind="template: {name: 'Attach', data: attach}"></div>
+			</div>
+			<div class="message-date">
+				<span data-bind="text: formattedDate"></span>
+			</div>
+		</div>
 	</div>
 </div>
 

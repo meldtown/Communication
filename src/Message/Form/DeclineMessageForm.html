@@ -1,3 +1,5 @@
+<select id="vacancyId" data-bind="options: vacancies, optionsText: 'label', optionsValue: 'id', value: vacancyId, optionsCaption: 'vacancy...', enable: hasVacancies"></select>
+<br>
 <textarea placeholder="decline..." data-bind="value: text, enable: hasChatId"></textarea>
 <div data-bind="if: hasChatId">
 	<a href="#" data-bind="click: save">Send</a>
@@ -20,11 +22,12 @@
 </div>
 <label class="attach-file-form">
 	<input type="file" data-bind="attach: {attach: attach}"/>
-	<div data-bind="with: attach">
+	<span data-bind="with: attach">
 		<span data-bind="ifnot: id">Attach file</span>
 		<span data-bind="if: id">Choose another file</span>
-	</div>
+	</span>
 </label>
 <div data-bind="if: attach().id">
 	<button data-bind="click: resetAttach">Reset attach</button>
+	<div data-bind="template: {name: 'Attach', data: attach}"></div>
 </div>

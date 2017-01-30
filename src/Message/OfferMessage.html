@@ -1,7 +1,10 @@
-<table data-bind="css: {muted: isRead}" style="margin: 20px 0;background: rgba(0, 0, 255, .5)">
+<table data-bind="css: {muted: isRead}">
 	<tbody>
 	<tr>
 		<td>
+			<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+		</td>
+		<td style="margin: 20px 0;background: rgba(0, 0, 255, .5)">
 			<small>
 				OFFER
 				<span data-bind="text: formattedDate" class="muted"></span>
@@ -12,12 +15,7 @@
 					<span data-bind="text: name"></span>
 				</span>
 			</div>
-			<div data-bind="with: attach">
-				<div data-bind="if: id">
-					<small data-bind="text: fileName"></small>
-				</div>
-			</div>
-
+			<div data-bind="template: {name: 'Attach', data: attach}"></div>
 		</td>
 	</tr>
 	</tbody>

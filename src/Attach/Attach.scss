@@ -1,0 +1,13 @@
+.attach-file-form {
+	background: steelblue;
+	display: inline-block;
+	border-radius: 5px;
+	text-align: center;
+	padding: 5px;
+	color: #fff;
+	cursor: pointer;
+
+	input {
+		display: none;
+	}
+}

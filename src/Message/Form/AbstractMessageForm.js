@@ -1,7 +1,7 @@
 import * as actions from '../../constants'
 import * as ko from 'knockout'
 import Attach from '../../Attach/Attach'
-
+import axios from 'axios'
 
 export default class AbstractMessageForm {
 	constructor(dispatcher) {
@@ -29,6 +29,10 @@ export default class AbstractMessageForm {
 	}
 
 	resetAttach() {
-		this.attach(new Attach())
+		axios.delete(`${api2}/attaches/${this.attach().id}`).then(() => {
+			this.attach(new Attach())
+		}).catch(() => {
+			this.attach(new Attach())
+		})
 	}
 }

@@ -2,9 +2,9 @@ import * as ko from 'knockout'
 
 ko.bindingHandlers.enterPress = {
 	init: (element, valueAccessor, allBindingsAccessor, viewModel) => {
-		var allBindings = allBindingsAccessor()
+		let allBindings = allBindingsAccessor()
 		element.addEventListener('keyup', event => {
-			var keyCode = (event.which ? event.which : event.keyCode)
+			let keyCode = (event.which ? event.which : event.keyCode)
 			if (keyCode === 13) {
 				allBindings.enterPress.call(viewModel)
 				return false

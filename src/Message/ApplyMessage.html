@@ -19,11 +19,7 @@
 			<div>
 				<small data-bind="text: text"></small>
 			</div>
-			<div data-bind="with: attach">
-				<div data-bind="if: id">
-					<span data-bind="text: fileName"></span>
-				</div>
-			</div>
+			<div data-bind="template: {name: 'Attach', data: attach}"></div>
 		</td>
 	</tr>
 </table>

@@ -7,7 +7,6 @@ import * as generator from '../../../db'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import InviteTemplateView from '../View/InviteTemplateView'
-import Address from '../../Address/Address'
 
 const api = 'http://sample.com'
 
@@ -42,8 +41,6 @@ describe('InviteTemplateForm', () => {
 		let data = generator.generateInviteTemplate(1)
 		model = new InviteTemplateForm(dispatcher, data)
 		let actual = ko.toJS(model)
-		console.log(actual)
-		let {addresses, addressForm} = actual
 		let overrides = {dispatcher: 1, template: 1, type: 1, isAddButtonDisabled: true,  address: {...data.address, optionText: 1}}
 		assert.deepEqual({...actual, ...overrides}, {...data, ...overrides})
 	})
