@@ -22,5 +22,12 @@ export default class AbstractMessage {
 		this.ago = ko.computed(() => moment(this.addDate()).fromNow().toString())
 		this.formattedDate = ko.computed(() => helpers.formattedDate(this.addDate()))
 		this.formattedTime = ko.computed(() => helpers.formattedTime(this.addDate()))
+
+		this.getInitials = ko.computed(() => {
+			if (this.isMultiUser() && this.seekerName()) {
+				let initails = this.seekerName().split(' ')
+				return (initails[0].charAt(0) + initails[1].charAt(0))
+			}
+		})
 	}
 }
