@@ -3,13 +3,20 @@
 html,
 body {
 	background: #f7f7f7;
-	font-family: Jokerman;
+	font-family: Jokerman, fantasy;
 	font-size: 20px;
-	&::after {
-		content: '';
+
+	&:after {
+		content: "";
 		display: table;
 		clear: both;
 	}
+}
+
+#templates::after {
+	content: '';
+	display: table;
+	clear: both;
 }
 
 .templates-wrapper {
@@ -41,6 +48,7 @@ body {
 	display: inline-block;
 	text-transform: uppercase;
 	margin: 0 10px;
+
 	a {
 		color: purple;
 		text-decoration: none;
@@ -57,6 +65,7 @@ body {
 	border-radius: 3px;
 	background: darkkhaki;
 	border: 3px solid lightskyblue;
+
 	.language-item {
 		display: inline-block;
 		text-transform: uppercase;
@@ -99,6 +108,7 @@ body {
 	margin-left: 20px;
 	background: #aaa;
 	padding: 10px;
+
 	h3 {
 		margin: 5px 0;
 		color: lemonchiffon;
@@ -109,7 +119,3 @@ body {
 	display: block;
 	margin: 10px;
 }
-
-
-
-

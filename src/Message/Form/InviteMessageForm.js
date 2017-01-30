@@ -102,8 +102,8 @@ export default class InviteMessageForm extends AbstractMessageForm {
 
 	saveAddress() {
 		return this.addressForm().save().then(() => {
-			this.addressId(this.addressForm().id)
 			this.addresses.push(new Address(ko.toJS(this.addressForm())))
+			this.addressId(this.addressForm().id)
 			this.addressForm(null)
 		})
 	}

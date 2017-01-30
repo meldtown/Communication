@@ -4,9 +4,9 @@ import moment from 'moment'
 import Attach from '../Attach/Attach'
 
 export default class AbstractMessage {
-	constructor({id, date, chatId, text, isRead, isMultiUser, avatar, seekerName, headId, attachId, attach = {}} = {}) {
+	constructor({id, addDate, chatId, text, isRead, isMultiUser, avatar, seekerName, headId, attachId, attach = {}} = {}) {
 		this.id = ko.observable(id)
-		this.addDate = ko.observable(date)
+		this.addDate = ko.observable(addDate)
 		this.chatId = ko.observable(chatId)
 		this.text = ko.observable(text)
 		this.isRead = ko.observable(isRead)

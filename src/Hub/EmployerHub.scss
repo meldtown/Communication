@@ -1,4 +1,5 @@
 @import "../Attach/Attach";
+@import "../Message/scss/AbstractMessage";
 
 html,
 body {
@@ -6,7 +7,7 @@ body {
 }
 
 .active {
-	color: red
+	color: red;
 }
 
 .muted {
@@ -14,5 +15,7 @@ body {
 }
 
 .conversation.active {
-	background: #999
+	background: #999;
 }
+
+
