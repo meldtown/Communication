@@ -40,7 +40,7 @@ export default class AddressForm {
 	geoCoder(queryString) {
 		const googleApi = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC7Tu5aFWFlg845_hG_fw70JmN81mlrh1Q'
 
-		return axios.get(`${googleApi}&components=country:Ukraine${queryString}`, { withCredentials: false })
+		return axios.get(`${googleApi}&language=ru&components=country:UA${queryString}`, { withCredentials: false })
 			.then(res => {
 				if( res.data.status !== 'OK' ) return Promise.reject('Address Not Found')
 				return Promise.resolve(res.data.results)
