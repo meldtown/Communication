@@ -1,0 +1,14 @@
+@import 'variables';
+
+.testblock {
+	max-width: 99999px;
+	background: #000;
+	color: $ultra_yellow;
+	&__testelem {
+		color: #fff;
+
+		&.-disabled {
+			opacity: 0.5;
+		}
+	}
+}
