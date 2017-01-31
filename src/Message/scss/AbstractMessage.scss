@@ -13,14 +13,51 @@
 }
 
 .message-container {
+	display: flex;
+	align-items: center;
+	margin: 20px 0;
 	.message-text {
 		max-width: 490px;
-		margin-left: 12px;
-		padding: 12px;
-		background-color:$message_bg_color;
+		padding: 8px;
 		border-radius: 2px;
+		box-sizing: border-box;
+		line-height: 1.5;
 	}
 	.message-date {
 		color: $message_time_color;
 	}
+
+	.message-avatar {
+		margin-right: 9px;
+		border-radius: 5px;
+	}
 }
+
+.employer .message-container.-employer {
+	justify-content: flex-end;
+	.message-text {
+		background-color: $message_bg_color;
+		margin-left: 12px;
+	}
+	.message-avatar {
+		display: none;
+	}
+}
+
+.employer .message-container.-jobsearcher {
+	.message-text {
+		border: 1px solid #ddd;
+		margin-right: 12px;
+	}
+}
+
+.jobsearcher .message-container.-jobsearcher {
+	.message-text {
+		margin-left: 12px;
+	}
+	.message-avatar {
+		display: none;
+	}
+}
+
+
