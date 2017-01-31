@@ -1,5 +1,23 @@
 <div style="overflow: hidden;margin: 20px 0;">
 	<div data-bind="if: isMultiUser">
+		<table align="right" data-bind="css: {muted: isRead}">
+			<caption data-bind="text: formattedDate" class="muted"></caption>
+			<tbody>
+			<tr>
+				<td>
+					<small data-bind="text: formattedTime" class="muted"></small>
+				</td>
+				<td>
+					<div style="background:white" data-bind="text: text"></div>
+					<div data-bind="template: {name: 'Attach', data: attach}"></div>
+				</td>
+				<td>
+					<!--<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>-->
+					<div data-bind="text: getInitials" style="background: #afdce1; width: 40px; height: 40px; border-radius: 50%; text-align: center; display: inherit; vertical-align: middle;"></div>
+				</td>
+			</tr>
+			</tbody>
+		</table>
 		<div class="message-container fd-f-right-middle">
 			<div class="message-date fd-serf">
 				<span data-bind="text: formattedDate"></span>
