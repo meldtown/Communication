@@ -1,13 +1,26 @@
 @import "variables";
 
+.f-main-wrapper {
+	max-width: 1000px;
+}
+
+.conversations-container {
+	width: 300px;
+}
+
+.message-list-container {
+	padding: 0 50px;
+}
+
 .message-container {
 	.message-text {
 		max-width: 490px;
+		margin-left: 12px;
 		padding: 12px;
 		background-color:$message_bg_color;
 		border-radius: 2px;
 	}
-	.message-time {
-
+	.message-date {
+		color: $message_time_color;
 	}
 }
