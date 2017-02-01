@@ -4,9 +4,11 @@
 			<div class="message-date fd-serf">
 				<span data-bind="text: formattedDate"></span>
 			</div>
-			<div class="message-text fd-peasant">
-				<span data-bind="text: text"></span>
-				<div data-bind="template: {name: 'Attach', data: attach}"></div>
+			<div class="message-text-container">
+				<div class="message-text">
+					<span data-bind="text: text"></span>
+					<div data-bind="template: {name: 'Attach', data: attach}"></div>
+				</div>
 			</div>
 			<div class="fd-f-left-middle" data-bind="if: avatar">
 				<img class="message-avatar" width="26px" height="26px" data-bind="attr: {src: avatar}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
@@ -26,11 +28,13 @@
 					<i class="fi-avatar"></i>
 				</div>
 			</div>
-			<div class="message-text fd-peasant">
-				<span data-bind="text: text"></span>
-				<div data-bind="template: {name: 'Attach', data: attach}"></div>
+			<div class="message-text-container">
+				<div class="message-text">
+					<span data-bind="text: text"></span>
+					<div data-bind="template: {name: 'Attach', data: attach}"></div>
+				</div>
 			</div>
-			<div class="message-date fd-serf">
+			<div class="message-date">
 				<span data-bind="text: formattedDate"></span>
 			</div>
 		</div>
