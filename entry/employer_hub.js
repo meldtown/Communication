@@ -2,6 +2,7 @@ import axios from 'axios'
 import * as ko from 'knockout'
 import * as helpers from '../src/helpers'
 import EmployerHub from '../src/Hub/EmployerHub'
+import '../src/general.scss'
 
 axios.defaults.withCredentials = true
 

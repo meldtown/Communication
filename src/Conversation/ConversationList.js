@@ -1,6 +1,5 @@
 import * as ko from 'knockout'
 import axios from 'axios'
-import './Conversation.scss'
 import Conversation from './Conversation'
 import * as types from '../constants'
 import moment from 'moment'

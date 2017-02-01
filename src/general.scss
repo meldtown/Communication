@@ -1,4 +1,10 @@
 @import 'variables';
+@import 'Conversation/Conversation.scss';
+
+* {
+	box-sizing: border-box;
+}
+
 
 .testblock {
 	max-width: 99999px;
