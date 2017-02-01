@@ -1,25 +1,25 @@
-<table width="100%" class="conversation">
-	<tbody>
-	<tr>
-		<td width="50">
-			<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
-		</td>
-		<td>
-			<div>
-				<b data-bind="text: fullName"></b>
-				<span data-bind="if: unreadMessagesCount">
-					(<span data-bind="text: unreadMessagesCount"></span>)
-				</span>
-			</div>
-			<div data-bind="with: lastMessage">
-				<div style="text-align: right">
-					<small data-bind="text: ago"></small>
-				</div>
-			</div>
-			<div data-bind="if: lastMessage">
-				<div data-bind="template: { name: lastMessageTemplate, data: lastMessage }"></div>
-			</div>
-		</td>
-	</tr>
-	</tbody>
-</table>
+<div class="conversation__container fd-f-left" data-bind="css: {'-is-active-conversation': isSelected}">
+	<img data-bind="attr: {src: avatar}" class="conversation__userpic" />
+	<div class="conversation__message-wrap" data-bind="css: {'-is-active-conversation': isSelected}">
+		<!--<h5 class="conversation__authorname" data-bind="text: fullName, css: { 'fd-beefy-peasant': unreadMessagesCount, 'fssd-fat-peasant -unread': unreadMessagesCount && !isSelected }"></h5>-->
+
+		<h5 class="fd-beefy-peasant conversation__authorname" data-bind="if: ( !unreadMessagesCount() || isSelected() )">
+			<span data-bind="text: fullName"></span>
+		</h5>
+
+		<h5 class="fd-fat-peasant conversation__authorname -unread" data-bind="if: ( unreadMessagesCount() && !isSelected() )">
+			<span data-bind="text: fullName"></span>
+		</h5>
+
+		<div data-bind="if: lastMessage"></div>
+		<p class="fd-peasant conversation__lastmessage" data-bind="template: { name: lastMessageTemplate, data: lastMessage }"></p>
+	</div>
+	<div class="conversation__datewrap">
+		<p class="fd-serf conversation__lastdate" data-bind="with: lastMessage">
+			<span data-bind="text: ago"></span>
+		</p>
+		<p class="fd-fat-craftsmen conversation__unread-count" data-bind="if: unreadMessagesCount, css: {'-is-active-conversation': isSelected}">
+			<span data-bind="text: unreadMessagesCount"></span>
+		</p>
+	</div>
+</div>
