@@ -1,6 +1,5 @@
 import * as ko from 'knockout'
 import * as helpers from '../helpers'
-import moment from 'moment'
 import Attach from '../Attach/Attach'
 
 export default class AbstractMessage {
@@ -19,7 +18,7 @@ export default class AbstractMessage {
 
 		this.template = ko.observable()
 
-		this.ago = ko.computed(() => moment(this.addDate()).fromNow().toString())
+		this.ago = ko.computed(() => helpers.formattedAgo(this.addDate()))
 		this.formattedDate = ko.computed(() => helpers.formattedDate(this.addDate()))
 		this.formattedTime = ko.computed(() => helpers.formattedTime(this.addDate()))
 

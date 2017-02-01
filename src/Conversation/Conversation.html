@@ -1,12 +1,13 @@
 <div class="conversation__container fd-f-left" data-bind="css: {'-is-active-conversation': isSelected}">
 	<img data-bind="attr: {src: avatar}" class="conversation__userpic" />
 	<div class="conversation__message-wrap" data-bind="css: {'-is-active-conversation': isSelected}">
-		<!--<h5 class="conversation__authorname" data-bind="text: fullName, css: { 'fd-beefy-peasant': unreadMessagesCount, 'fssd-fat-peasant -unread': unreadMessagesCount && !isSelected }"></h5>-->
 
+		<!-- Readed || Selected -->
 		<h5 class="fd-beefy-peasant conversation__authorname" data-bind="if: ( !unreadMessagesCount() || isSelected() )">
 			<span data-bind="text: fullName"></span>
 		</h5>
 
+		<!-- !Selected && HaveUnread -->
 		<h5 class="fd-fat-peasant conversation__authorname -unread" data-bind="if: ( unreadMessagesCount() && !isSelected() )">
 			<span data-bind="text: fullName"></span>
 		</h5>
