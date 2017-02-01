@@ -1,4 +1,5 @@
 @import "variables";
+@import "ApplyMessage";
 
 .f-main-wrapper {
 	max-width: 1000px;
@@ -16,15 +17,17 @@
 	display: flex;
 	align-items: center;
 	margin: 20px 0;
-	.message-text {
+	.message-text-container {
 		max-width: 490px;
+		font-size: 13px;
+	}
+	.message-text {
 		padding: 8px;
 		border-radius: 2px;
 		box-sizing: border-box;
-		line-height: 1.5;
 	}
 	.message-date {
-		color: $message_time_color;
+		color: $light_gray;
 	}
 
 	.message-avatar {
@@ -37,28 +40,55 @@
 			color: #fff;
 		}
 	}
+
+	.vacancy-description {
+		padding: 8px;
+		border-top: 1px dashed $light_black;
+		background-color: rgba(0, 0, 0, 0.05);
+		h4 {
+			font-family: $graphic_medium;
+			color: $mid_blue;
+		}
+		p {
+			color: $light_gray;
+			font-size: 12px;
+		}
+	}
 }
 
 .employer .message-container.-employer {
 	justify-content: flex-end;
+	.message-text-container {
+		margin-left: 12px;
+	}
 	.message-text {
 		background-color: $message_bg_color;
-		margin-left: 12px;
 	}
 	.message-avatar {
 		display: none;
 	}
+	.message-title {
+		margin-bottom: 2px;
+		padding: 10px 15px;
+		color: $gray;
+		border-radius: 2px;
+		&.-offer {
+			background-color: $purple;
+		}
+	}
 }
 
 .employer .message-container.-jobsearcher {
-	.message-text {
-		border: 1px solid #ddd;
+	.message-text-container {
 		margin-right: 12px;
+		.message-text {
+			border: 1px solid #ddd;
+		}
 	}
 }
 
 .jobsearcher .message-container.-jobsearcher {
-	.message-text {
+	.message-text-container {
 		margin-left: 12px;
 	}
 	.message-avatar {
