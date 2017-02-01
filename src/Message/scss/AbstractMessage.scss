@@ -1,4 +1,5 @@
 @import "variables";
+@import "ApplyMessage";
 
 .f-main-wrapper {
 	max-width: 1000px;
@@ -70,8 +71,10 @@
 		margin-bottom: 2px;
 		padding: 10px 15px;
 		color: $gray;
-		background-color: $purple;
 		border-radius: 2px;
+		&.-offer {
+			background-color: $purple;
+		}
 	}
 }
 

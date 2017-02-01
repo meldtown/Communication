@@ -1,27 +1,67 @@
-<table data-bind="css: {muted: isRead}" style="background: rgba(255, 255, 0, .5);margin: 20px 0">
-	<tr>
-		<td style="text-align:center">
-			<small>
-				<span data-bind="text: formattedDate" class="muted"></span>
-			</small>
-			<div>
-				<strong>
+<div>
+	<div data-bind="if: isMultiUser">
+		<div class="message-container -employer">
+			<div class="message-date fd-serf">
+				<span data-bind="text: formattedDate"></span>
+			</div>
+			<div class="message-text-container">
+				<div class="message-title -offer">
+					Вы преждожили вакансию
+				</div>
+				<div class="message-text">
+					<span data-bind="text: text"></span>
+				</div>
+				<div class="vacancy-description">
+					<h4>
+						<span data-bind="with: vacancy">
+							<span data-bind="text: name"></span>,
+							<span data-bind="text: city.ru"></span>
+						</span>
+					</h4>
+					<p>
+						Международная инвестиционная компания ищет Менеджера по продажам Что нужно будет делать: Активно
+						предлагать и продавать продукты клиентам (теплая база...
+					</p>
+				</div>
+				<div data-bind="template: {name: 'Attach', data: attach}"></div>
+			</div>
+			<div class="fd-f-left-middle" data-bind="if: avatar">
+				<img class="message-avatar" width="26px" height="26px" data-bind="attr: {src: avatar}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+			</div>
+			<div class="fd-f-left-middle" data-bind="ifnot: avatar">
+				<div class="message-avatar -anon"></div>
+			</div>
+		</div>
+	</div>
+	<div data-bind="ifnot: isMultiUser">
+		<div class="message-container -jobsearcher">
+			<div class="message-text-container -apply">
+				<div class="message-text fd-f">
+					<i class="fi-cv-apply-arrow"></i>
+					<div>
+						<div class="speciality">
+							<h5>Резюме</h5>
+							<div data-bind="with: resume">
+								<i class="fi-attach-cv"></i>
+								<span data-bind="text: speciality"></span>
+							</div>
+						</div>
+						<div class="vacancy">
+							<h5>Отклик на вакансию</h5>
+							<div data-bind="with: vacancy">
+								<span data-bind="text: name"></span>
+							</div>
+						</div>
+						<div data-bind="template: {name: 'Attach', data: attach}"></div>
+					</div>
+				</div>
+			</div>
+			<div class="message-date fd-serf">
+				<span data-bind="text: formattedDate"></span>
+			</div>
+		</div>
+	</div>
+</div>
 
-					<span data-bind="with: resume">
-						<span data-bind="text: speciality"></span>
-					</span>
-					<span>&rarr;</span>
-					<span data-bind="with: vacancy">
-						<span data-bind="text: name"></span>
-					</span>
-				</strong>
-			</div>
-			<div>
-				<small data-bind="text: text"></small>
-			</div>
-			<div data-bind="template: {name: 'Attach', data: attach}"></div>
-		</td>
-	</tr>
-</table>
 
 
