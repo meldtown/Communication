@@ -1,23 +1,56 @@
-<table data-bind="css: {muted: isRead}">
-	<tbody>
-	<tr>
-		<td>
-			<img data-bind="attr: {src: avatar}" style="width: 50px;height:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
-		</td>
-		<td style="margin: 20px 0;background: rgba(0, 0, 255, .5)">
-			<small>
-				OFFER
-				<span data-bind="text: formattedDate" class="muted"></span>
-				<span data-bind="text: formattedTime" class="muted"></span>
-			</small>
-			<div class="muted">Vacancy:
-				<span data-bind="with: vacancy">
-					<span data-bind="text: name"></span>
-				</span>
+<div>
+	<div data-bind="if: isMultiUser">
+		<div class="message-container -employer">
+			<div class="message-date fd-serf">
+				<span data-bind="text: formattedDate"></span>
 			</div>
-			<div data-bind="template: {name: 'Attach', data: attach}"></div>
-		</td>
-	</tr>
-	</tbody>
-</table>
-
+			<div class="message-text-container">
+				<div class="message-title">
+					Вы преждожили вакансию
+				</div>
+				<div class="message-text">
+					<span data-bind="text: text"></span>
+				</div>
+				<div class="vacancy-description">
+					<h4>
+						<span data-bind="with: vacancy">
+							<span data-bind="text: name"></span>,
+							<span data-bind="text: city.ru"></span>
+						</span>
+					</h4>
+					<p>
+						Международная инвестиционная компания ищет Менеджера по продажам Что нужно будет делать: Активно предлагать и продавать продукты клиентам (теплая база...
+					</p>
+				</div>
+				<div data-bind="template: {name: 'Attach', data: attach}"></div>
+			</div>
+			<div class="fd-f-left-middle" data-bind="if: avatar">
+				<img class="message-avatar" width="26px" height="26px" data-bind="attr: {src: avatar}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+			</div>
+			<div class="fd-f-left-middle" data-bind="ifnot: avatar">
+				<div class="message-avatar -anon"></div>
+			</div>
+		</div>
+	</div>
+	<div data-bind="ifnot: isMultiUser">
+		<div class="message-container -jobsearcher">
+			<div class="fd-f-left-middle" data-bind="if: avatar">
+				<img class="message-avatar" width="24px" height="32px" data-bind="attr: {src: avatar}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+			</div>
+			<div class="fd-f-left-middle" data-bind="ifnot: avatar">
+				<div class="message-avatar -anon fd-f-center-middle">
+					<i class="fi-avatar"></i>
+				</div>
+			</div>
+			<div class="message-text fd-peasant">
+				<div>
+					<span data-bind="text: text"></span>
+					<div data-bind="template: {name: 'Attach', data: attach}"></div>
+				</div>
+			</div>
+			<div class="message-date fd-serf">
+				<span data-bind="text: formattedDate"></span>
+			</div>
+		</div>
+	</div>
+</div>
