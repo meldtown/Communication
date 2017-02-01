@@ -30,6 +30,12 @@
 	.message-avatar {
 		margin-right: 9px;
 		border-radius: 5px;
+		&.-anon {
+			width: 24px;
+			height: 32px;
+			background-color: #d8d8d8;
+			color: #fff;
+		}
 	}
 }
 
