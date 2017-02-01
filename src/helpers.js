@@ -25,16 +25,20 @@ export const formattedAgo = date => {
 		const momented = moment(date)
 
 		if( momented.isSame(moment(), 'day') ) {
-			return momented.format('HH:mm')
+			return momented.format('HH:mm') // if date is today
 		}
+		if( momented.isSame(moment().subtract(1, 'day'), 'day') ) {
+			return 'Вчера' // if date is yesterday
+		}
+		//
 		if( momented.isBetween(moment().subtract(7,'d'), moment(), 'day') ) {
-			return momented.format('ddd')
+			return momented.format('ddd') // if date is less than a week
 		}
 		if( momented.isSame(moment(), 'year') ) {
-			return momented.format('DD MMM')
+			return momented.format('DD MMM') // if this year
 		}
 
-		return momented.format('DD/MM/YYYY')
+		return momented.format('DD/MM/YYYY') // yearlier than in this year
 	}
 	return null
 }
