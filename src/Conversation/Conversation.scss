@@ -89,6 +89,7 @@ $is_active_anim_bezier: ease-in-out;
 		margin-top: 7px;
 	}
 	&__lastdate {
+		white-space: nowrap;
 		color: $grey_color;
 	}
 	&__unread-count {
