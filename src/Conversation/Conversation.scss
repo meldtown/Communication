@@ -33,6 +33,7 @@ $is_active_anim_bezier: ease-in-out;
 
 			&::before {
 				transition: width 0.3s ease-in-out;
+				transition-delay: -0.05s;
 			}
 		}
 
