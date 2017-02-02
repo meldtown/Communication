@@ -32,11 +32,12 @@
 			<span data-bind="text: fullName, attr: { title: fullName }"></span>
 		</h5>
 
-		<div data-bind="if: lastMessage"></div>
-		<p
-			class="fd-peasant conversation__lastmessage"
-			data-bind="template: { name: lastMessageTemplate, data: lastMessage }, attr: { title: lastMessage }">
-		</p>
+		<div data-bind="if: lastMessage">
+			<p
+				class="fd-peasant conversation__lastmessage"
+				data-bind="template: { name: lastMessageTemplate, data: lastMessage }">
+			</p>
+		</div>
 	</div>
 	<div class="conversation__datewrap">
 		<p class="fd-serf conversation__lastdate" data-bind="with: lastMessage">
