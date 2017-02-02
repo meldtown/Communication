@@ -1,10 +1,13 @@
-$grey_color: #777;
 $count_red_color: #ff5252;
 $border_color: rgba(0, 0, 0, 0.12);
+
 $active_conversation_bg: rgba(0, 0, 0, 0.05);
 $active_label_bg: #cfd8dc;
+
 $is_active_anim_duration: 0.2s;
 $is_active_anim_bezier: ease-in-out;
+
+
 
 .conversation {
 	&__selectable-wrapper {
@@ -28,12 +31,16 @@ $is_active_anim_bezier: ease-in-out;
 			width: 0;
 		}
 
+		&, &:hover {
+			will-change: background, padding;
+		}
+
 		&, &.-is-active-conversation {
 			transition: background 0.1s ease-in, padding $is_active_anim_duration $is_active_anim_bezier;
 
 			&::before {
 				transition: width 0.3s ease-in-out;
-				transition-delay: -0.05s;
+				transition-delay: 0.1s;
 			}
 		}
 
@@ -61,15 +68,20 @@ $is_active_anim_bezier: ease-in-out;
 		}
 	}
 	&__message-wrap {
-		width: 170px;
-		color: $grey_color;
+		width: 160px;
+		margin-right: 10px;
+		color: $general_black;
+
+		&, &:hover {
+			will-change: margin;
+		}
 
 		&, &.-is-active-conversation {
-			transition: width $is_active_anim_duration $is_active_anim_bezier;
+			transition: margin $is_active_anim_duration $is_active_anim_bezier;
 		}
 
 		&.-is-active-conversation {
-			width: 160px;
+			margin-right: 0;
 		}
 	}
 	&__authorname, &__lastmessage {
@@ -97,7 +109,7 @@ $is_active_anim_bezier: ease-in-out;
 	}
 	&__lastdate {
 		white-space: nowrap;
-		color: $grey_color;
+		color: $general_black;
 	}
 	&__unread-count {
 		color: $count_red_color;

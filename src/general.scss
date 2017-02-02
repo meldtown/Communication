@@ -5,16 +5,30 @@
 	box-sizing: border-box;
 }
 
+// Redefined controls
 
-.testblock {
-	max-width: 99999px;
-	background: #000;
-	color: $ultra_yellow;
-	&__testelem {
-		color: #fff;
+.searchfield {
+	&__wrapper {
+		padding: 0 20px 0 16px;
+	}
+	&__input {
+		margin: 0;
+	}
+	&__filters-icon {
+		cursor: pointer;
+		padding: 0;
+		margin-left: 10px;
+		font-size: 33.5px;
+		color: $general_light_black;
+	}
+}
 
-		&.-disabled {
-			opacity: 0.5;
+.hubcontrol {
+	&__input {
+		& input {
+			border-color: $general_light_black;
+			font-size: 13px;
+			padding: 10px;
 		}
 	}
 }
