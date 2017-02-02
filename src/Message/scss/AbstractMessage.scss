@@ -1,5 +1,6 @@
 @import "variables";
 @import "ApplyMessage";
+@import "InviteMessage";
 
 .f-main-wrapper {
 	max-width: 1000px;
@@ -25,6 +26,7 @@
 		padding: 8px;
 		border-radius: 2px;
 		box-sizing: border-box;
+		line-height: 17px;
 	}
 	.message-date {
 		color: $light_gray;
@@ -77,6 +79,9 @@
 		}
 		&.-decline {
 			background-color: $light_orange;
+		}
+		&.-invite {
+			background-color: $green;
 		}
 	}
 }
