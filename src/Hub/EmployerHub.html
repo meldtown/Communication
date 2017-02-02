@@ -72,11 +72,11 @@
 					</label>
 				</div>
 				<hr>
-				<div>
-					<input placeholder="filter..." type="text" data-bind="value: term, enterPress: fetch">
-					<span data-bind="if: hasTerm">
-						<a href="#" data-bind="click: clearTerm">clear</a>
-					</span>
+				<div class="fd-f-between searchfield__wrapper">
+					<div class="fd-f1 f-input-block hubcontrol__input searchfield__input">
+						<input type="text" data-bind="value: term, enterPress: fetch" placeholder="Поиск...">
+					</div>
+					<span class="fi-hub-filters searchfield__filters-icon"></span>
 				</div>
 				<hr>
 				<div data-bind="if: hasConversations">
