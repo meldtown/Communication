@@ -1,0 +1,35 @@
+@import "StandardMessageForm";
+@import "InviteMessageForm";
+@import "OfferMessageForm";
+@import "DeclineMessageForm";
+
+.hub-tabs {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+	margin-top: 20px;
+
+	&__tab {
+		height: 32px;
+		display: inline-block;
+		padding: 0 20px;
+		margin-right: 4px;
+		border-radius: 2px;
+		background-color: rgba(0, 0, 0, 0.05);
+		box-sizing: border-box;
+		text-align: center;
+		color: rgba(0, 0, 0, 0.54);
+
+		&.-active {
+			background-color: #e1f5fe;
+			color: rgba(0, 0, 0, 0.87);
+		}
+	}
+
+	&__icon {
+		top: 3px;
+		font-size: 25px;
+		padding-right: 8px;
+	}
+}
+
+
+

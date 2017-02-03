@@ -29,6 +29,7 @@
 </header>
 
 
+
 <div class="employer fd-f-left">
 
 		<div class="left-sidebar__wrapper" data-bind="template: { name: 'LeftSidebar', data: conversations }"></div>
@@ -37,40 +38,37 @@
 
 			<div class="messages-container__scrollable-place" data-bind="perfectScroll, template: {name: 'MessageList', data: messages}"></div>
 
-			<hr/>
-			<div>
+			<div class="hub-tabs fd-f-left fm-c-stretch">
 				<span data-bind="if: isStandardFormSelected">
-					<span>Standard</span>
+					<span class="hub-tabs__tab -active fd-craftsmen"><i class="hub-tabs__icon fi-hub-wright"></i>Написать</span>
 				</span>
 				<span data-bind="ifnot: isStandardFormSelected">
-					<a href="#" data-bind="click: selectStandardForm">Standard</a>
+					<a class="hub-tabs__tab fd-craftsmen" href="#" data-bind="click: selectStandardForm"><i class="hub-tabs__icon fi-hub-wright"></i>Написать</a>
 				</span>
-
 
 				<span data-bind="if: isInviteFormAvailable">
 					<span data-bind="if: isInviteFormSelected">
-						<span>Invite</span>
+						<span class="hub-tabs__tab -active fd-craftsmen"><i class="hub-tabs__icon fi-hub-invite"></i>Пригласить</span>
 					</span>
 					<span data-bind="ifnot: isInviteFormSelected">
-						<a href="#" data-bind="click: selectInviteForm">Invite</a>
+						<a class="hub-tabs__tab fd-craftsmen" href="#" data-bind="click: selectInviteForm"><i class="hub-tabs__icon fi-hub-invite"></i>Пригласить</a>
 					</span>
 				</span>
 
 				<span data-bind="if: isDeclineFormAvailable">
 					<span data-bind="if: isDeclineFormSelected">
-						<span>Decline</span>
+						<span class="hub-tabs__tab -active fd-craftsmen"><i class="hub-tabs__icon fi-hub-refuse"></i>Отказать</span>
 					</span>
 					<span data-bind="ifnot: isDeclineFormSelected">
-						<a href="#" data-bind="click: selectDeclineForm">Decline</a>
+						<a class="hub-tabs__tab fd-craftsmen" href="#" data-bind="click: selectDeclineForm"><i class="hub-tabs__icon fi-hub-refuse"></i>Отказать</a>
 					</span>
 				</span>
 
-
 				<span data-bind="if: isOfferFormSelected">
-					<span>Offer</span>
+					<span class="hub-tabs__tab -active fd-craftsmen"><i class="hub-tabs__icon fi-hub-offer"></i>Предложить</span>
 				</span>
 				<span data-bind="ifnot: isOfferFormSelected">
-					<a href="#" data-bind="click: selectOfferForm">Offer</a>
+					<a class="hub-tabs__tab fd-craftsmen" href="#" data-bind="click: selectOfferForm"><i class="hub-tabs__icon fi-hub-offer"></i>Предложить</a>
 				</span>
 			</div>
 
