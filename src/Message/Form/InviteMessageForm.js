@@ -18,6 +18,10 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.addresses = ko.observableArray([])
 		this.addressForm = ko.observable(null)
 
+		this.selectedAddress = ko.computed(() => {
+			return this.addresses().filter(address => address.id() === this.addressId())[0]
+		})
+
 		this.vacancyId = ko.observable()
 		this.vacancies = ko.observableArray([])
 		this.messages = ko.observableArray([])
@@ -72,6 +76,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 			text: this.text(),
 			inviteDate: this.inviteDate(),
 			addressId: this.addressId(),
+			address: ko.toJS(this.selectedAddress()),
 			vacancy: {id: this.vacancyId()},
 			attach: this.attach()
 		}).then(response => {
@@ -81,9 +86,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 
 			this.attach(new Attach())
 
-			let selectedAddress = this.addresses().filter(address => address.id() === this.addressId())[0]
-
-			let message = MessageFactory.create(Object.assign({}, response.data, {address: selectedAddress}))
+			let message = MessageFactory.create(response.data)
 
 			this.dispatcher.notifySubscribers(message, constants.NEW_MESSAGE)
 

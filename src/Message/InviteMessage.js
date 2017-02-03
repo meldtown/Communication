@@ -1,6 +1,7 @@
 import AbstractMessage from './AbstractMessage'
 import * as ko from 'knockout'
 import * as helpers from '../helpers'
+import Addrss from '../Address/Address'
 
 export default class InviteMessage extends AbstractMessage {
 	constructor(data = {}) {
@@ -10,7 +11,7 @@ export default class InviteMessage extends AbstractMessage {
 		this.addressId = ko.observable(addressId)
 
 		this.vacancy = ko.observable(vacancy)
-		this.address = ko.observable(address)
+		this.address = ko.observable(new Addrss(address))
 
 		this.template('InviteMessage')
 
