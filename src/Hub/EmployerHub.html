@@ -1,5 +1,5 @@
 <h3>Employer hub</h3>
-<table cellpadding="5" cellspacing="0" border="1" width="100%">
+<table cellpadding="5" cellspacing="0" border="1" width="100%" class="employer">
 	<tbody>
 	<tr>
 		<td valign="top" width="240">
@@ -72,11 +72,24 @@
 					</label>
 				</div>
 				<hr>
-				<div>
-					<input placeholder="filter..." type="text" data-bind="value: term, enterPress: fetch">
-					<span data-bind="if: hasTerm">
-						<a href="#" data-bind="click: clearTerm">clear</a>
-					</span>
+				<div class="searchfield__wrapper">
+
+					<div class="f-checkbox hubcontrol__checkbox fd-peasant searchfield__unreadfilter hub-color__lightblack">
+						<label>
+							<input type="checkbox" value="on">
+							<span class="f-checkbox-control">
+							<i class="fi-check-icon"></i>
+						</span>
+							<span>непрочитанные (2)</span>
+						</label>
+					</div>
+
+					<div class="fd-f-between">
+						<div class="fd-f1 f-input-block hubcontrol__input searchfield__input">
+							<input type="text" data-bind="value: term, enterPress: fetch" placeholder="Поиск...">
+						</div>
+						<span class="fi-hub-filters searchfield__filters-icon"></span>
+					</div>
 				</div>
 				<hr>
 				<div data-bind="if: hasConversations">

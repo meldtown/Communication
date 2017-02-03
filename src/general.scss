@@ -1,0 +1,65 @@
+@import 'variables';
+
+
+.hub_mount * {
+	box-sizing: border-box;
+}
+
+
+// Hub Colors
+.hub-color {
+	&__black {
+		color: $general_black;
+	}
+	&__lightblack {
+		color: $general_light_black;
+	}
+	&__boldblack {
+		color: $general_bold_black;
+	}
+}
+
+
+
+// Redefined controls
+
+.hubcontrol {
+	&__input {
+		& input {
+			border-color: $general_light_black;
+			font-size: 13px;
+			padding: 10px;
+		}
+	}
+
+	&__checkbox {
+		input:not(:checked)~.f-checkbox-control {
+			border-color: $general_light_black;
+		}
+	}
+}
+
+// ------------------------------
+
+
+.searchfield {
+	&__wrapper {
+		padding: 0 20px 0 16px;
+	}
+	&__unreadfilter {
+		margin-bottom: 7px;
+	}
+	&__input {
+		margin: 0;
+	}
+	&__filters-icon {
+		cursor: pointer;
+		padding: 0;
+		margin-left: 10px;
+		font-size: 33.5px;
+		color: $general_light_black;
+	}
+}
+
+
+@import 'Conversation/Conversation.scss';

@@ -1,4 +1,6 @@
 @import "variables";
+@import "ApplyMessage";
+@import "InviteMessage";
 
 .f-main-wrapper {
 	max-width: 1000px;
@@ -13,14 +15,93 @@
 }
 
 .message-container {
-	.message-text {
+	display: flex;
+	align-items: center;
+	margin: 20px 0;
+	.message-text-container {
 		max-width: 490px;
-		margin-left: 12px;
-		padding: 12px;
-		background-color:$message_bg_color;
+		font-size: 13px;
+	}
+	.message-text {
+		padding: 8px;
 		border-radius: 2px;
+		box-sizing: border-box;
+		line-height: 17px;
 	}
 	.message-date {
-		color: $message_time_color;
+		color: $light_gray;
+	}
+
+	.message-avatar {
+		margin-right: 9px;
+		border-radius: 5px;
+		&.-anon {
+			width: 24px;
+			height: 32px;
+			background-color: #d8d8d8;
+			color: #fff;
+		}
+	}
+
+	.vacancy-description {
+		padding: 8px;
+		border-top: 1px dashed $light_black;
+		background-color: rgba(0, 0, 0, 0.05);
+		h4 {
+			font-family: $graphic_medium;
+			color: $mid_blue;
+		}
+		p {
+			color: $light_gray;
+			font-size: 12px;
+		}
 	}
 }
+
+.employer .message-container.-employer {
+	justify-content: flex-end;
+	.message-text-container {
+		margin-left: 12px;
+	}
+	.message-text {
+		background-color: $message_bg_color;
+	}
+	.message-avatar {
+		display: none;
+	}
+	.message-title {
+		margin-bottom: 2px;
+		padding: 10px 15px;
+		color: $gray;
+		border-radius: 2px;
+		&.-offer {
+			background-color: $purple;
+		}
+		&.-decline {
+			background-color: $light_orange;
+		}
+		&.-invite {
+			background-color: $green;
+		}
+	}
+}
+
+.employer .message-container.-jobsearcher {
+	.message-text-container {
+		margin-right: 12px;
+		.message-text {
+			border: 1px solid #ddd;
+		}
+	}
+}
+
+.jobsearcher .message-container.-jobsearcher {
+	.message-text-container {
+		margin-left: 12px;
+	}
+	.message-avatar {
+		display: none;
+	}
+}
+
+

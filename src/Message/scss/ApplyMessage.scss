@@ -1,0 +1,38 @@
+.message-container {
+	.message-text-container.-apply {
+		max-width: 526px;
+		.message-text {
+			padding: 15px;
+			h5 {
+				color: #bbb;
+			}
+			span, .fi-attach-cv {
+				color: $blue;
+			}
+			.fi-attach-cv {
+				font-size: 20px;
+				margin-right: 2px;
+			}
+			.fi-cv-apply-arrow {
+				font-size: 54px;
+				margin-top: 25px;
+				margin-right: 5px;
+				color: #777;
+			}
+			.speciality {
+				margin-bottom: 10px;
+				h5 {
+					margin-bottom: 6px;
+				}
+				span, .fi-attach-cv {
+					vertical-align: middle;
+				}
+			}
+			.vacancy {
+				h5 {
+					margin-bottom: 3px;
+				}
+			}
+		}
+	}
+}
