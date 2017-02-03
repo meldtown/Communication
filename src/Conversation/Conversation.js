@@ -3,6 +3,7 @@ import * as ko from 'knockout'
 import axios from 'axios'
 import MessageFactory from '../Message/MessageFactory'
 
+
 export default class Conversation {
 	constructor(dispatcher, {id, avatar, lastMessage, type, unreadMessagesCount, fullName, vacancies, hasInvites, hasDeclines, hasOffers, fromCvdb, fromApply, headId} = {}) {
 		if (!ko.isSubscribable(dispatcher)) {

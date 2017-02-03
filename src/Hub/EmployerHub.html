@@ -1,132 +1,42 @@
-<h3>Employer hub</h3>
-<table cellpadding="5" cellspacing="0" border="1" width="100%" class="employer">
-	<tbody>
-	<tr>
-		<td valign="top" width="240">
-			<div data-bind="with: conversations">
-				<div>
-					<span data-bind="if: isActiveSelected">
-						<span>Active</span>
-					</span>
-					<span data-bind="ifnot: isActiveSelected">
-						<a href="#" data-bind="click: selectActive">Active</a>
-					</span>
+<header class="header__wrap">
+	<!--<div data-bind="with: selectedConversation">-->
+		<!--<span data-bind="if: isActive">-->
+			<!--<span>Active</span>-->
+		<!--</span>-->
 
-					<span data-bind="if: isArchiveSelected">
-						<span>Archive</span>
-					</span>
-					<span data-bind="ifnot: isArchiveSelected">
-						<a href="#" data-bind="click: selectArchive">Archive</a>
-					</span>
+		<!--<span data-bind="ifnot: isActive">-->
+			<!--<a href="#" data-bind="click: activate">Active</a>-->
+		<!--</span>-->
 
-					<span data-bind="if: isBlockedSelected">
-						<span>Blocked</span>
-					</span>
-					<span data-bind="ifnot: isBlockedSelected">
-						<a href="#" data-bind="click: selectBlocked">Blocked</a>
-					</span>
-				</div>
+		<!--<span data-bind="if: isArchived">-->
+			<!--<span>Archive</span>-->
+		<!--</span>-->
+		<!--<span data-bind="ifnot: isArchived">-->
+			<!--<a href="#" data-bind="click: archive">Archive</a>-->
+		<!--</span>-->
 
-				<div>
-					<label style="display: none" for="vacancyId">vacancy</label>
-					<select id="vacancyId" data-bind="options: vacancies, optionsText: 'vacancyName', optionsValue: 'id', value: vacancyId, optionsCaption: 'vacancy...', enable: hasVacancies"></select>
-				</div>
+		<!--<span data-bind="if: isBlocked">-->
+			<!--<span>Blocked</span>-->
+		<!--</span>-->
 
-				<div>
-					<label>
-						<input type="checkbox" data-bind="checked: hasInvitesSelected">
-						<span>invites</span>
-					</label>
-					<label>
-						<input type="checkbox" data-bind="checked: hasDeclinesSelected">
-						<span>declines</span>
-					</label>
-					<label>
-						<input type="checkbox" data-bind="checked: hasOffersSelected">
-						<span>offers</span>
-					</label>
-				</div>
-				<hr>
-				<div>
-					<label>
-						<input type="checkbox" data-bind="checked: fromCvdbSelected">
-						<span>cvdb</span>
-					</label>
-					<label>
-						<input type="checkbox" data-bind="checked: fromApplySelected">
-						<span>apply</span>
-					</label>
-				</div>
-				<hr>
-				<div>
-					<div>
-						<input placeholder="from..." type="date" data-bind="value: periodFromInputFormatted">
-					</div>
-					<label>
-						<input name="period" type="radio" data-bind="value: weekAgo, checked: periodFrom">
-						<span>week</span>
-					</label>
-					<label>
-						<input name="period" type="radio" data-bind="value: monthAgo, checked: periodFrom">
-						<span>month</span>
-					</label>
-				</div>
-				<hr>
-				<div class="searchfield__wrapper">
+		<!--<span data-bind="ifnot: isBlocked">-->
+			<!--<a href="#" data-bind="click: block">Blocked</a>-->
+		<!--</span>-->
+	<!--</div>-->
 
-					<div class="f-checkbox hubcontrol__checkbox fd-peasant searchfield__unreadfilter hub-color__lightblack">
-						<label>
-							<input type="checkbox" value="on">
-							<span class="f-checkbox-control">
-							<i class="fi-check-icon"></i>
-						</span>
-							<span>непрочитанные (2)</span>
-						</label>
-					</div>
+	<h3 class="header__title fd-soldier">Активные диалоги</h3>
 
-					<div class="fd-f-between">
-						<div class="fd-f1 f-input-block hubcontrol__input searchfield__input">
-							<input type="text" data-bind="value: term, enterPress: fetch" placeholder="Поиск...">
-						</div>
-						<span class="fi-hub-filters searchfield__filters-icon"></span>
-					</div>
-				</div>
-				<hr>
-				<div data-bind="if: hasConversations">
-					<div data-bind="template: {name: 'ConversationSelectable', foreach: filteredConversations}"></div>
-				</div>
-				<div data-bind="ifnot: hasConversations">
-					Nothing here
-				</div>
-			</div>
-		</td>
-		<td valign="top">
-			<div style="text-align: right" data-bind="with: selectedConversation">
-				<span data-bind="if: isActive">
-					<span>Active</span>
-				</span>
-				<span data-bind="ifnot: isActive">
-					<a href="#" data-bind="click: activate">Active</a>
-				</span>
+</header>
 
-				<span data-bind="if: isArchived">
-					<span>Archive</span>
-				</span>
-				<span data-bind="ifnot: isArchived">
-					<a href="#" data-bind="click: archive">Archive</a>
-				</span>
 
-				<span data-bind="if: isBlocked">
-					<span>Blocked</span>
-				</span>
-				<span data-bind="ifnot: isBlocked">
-					<a href="#" data-bind="click: block">Blocked</a>
-				</span>
-			</div>
 
-			<div data-bind="template: {name: 'MessageList', data: messages}"></div>
+<div class="employer fd-f-left">
 
-			<hr/>
+		<div class="left-sidebar__wrapper" data-bind="template: { name: 'LeftSidebar', data: conversations }"></div>
+
+		<div class="fd-p20 messages-container">
+
+			<div class="messages-container__scrollable-place" data-bind="template: {name: 'MessageList', data: messages}"></div>
 
 			<div class="hub-tabs fd-f-left fm-c-stretch">
 				<span data-bind="if: isStandardFormSelected">
@@ -166,7 +76,5 @@
 				<div data-bind="template: template"></div>
 			</div>
 
-		</td>
-	</tr>
-	</tbody>
-</table>
+		</div>
+</div>

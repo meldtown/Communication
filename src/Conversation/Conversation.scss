@@ -8,6 +8,13 @@ $is_active_anim_duration: 0.2s;
 $is_active_anim_bezier: ease-in-out;
 
 
+.conversation {
+	.selected {
+		&.-disabled {
+
+		}
+	}
+}
 
 .conversation {
 	&__selectable-wrapper {

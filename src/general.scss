@@ -17,6 +17,7 @@
 	&__boldblack {
 		color: $general_bold_black;
 	}
+
 }
 
 
@@ -39,27 +40,31 @@
 	}
 }
 
-// ------------------------------
+// ----------------------------------------------
 
-
-.searchfield {
-	&__wrapper {
-		padding: 0 20px 0 16px;
+.header {
+	$header_height: 50px;
+	&__wrap {
+		padding: 0 20px;
+		height: $header_height;
+		background-color: #cfd8dc;
 	}
-	&__unreadfilter {
-		margin-bottom: 7px;
-	}
-	&__input {
-		margin: 0;
-	}
-	&__filters-icon {
-		cursor: pointer;
-		padding: 0;
-		margin-left: 10px;
-		font-size: 33.5px;
-		color: $general_light_black;
+	&__title {
+		line-height: $header_height;
 	}
 }
 
+.messages-container {
+	width: 100%;
+	max-width: 100%;
+
+	&__scrollable-place {
+		padding-right: 10px;
+		min-height: 400px;
+		max-height: 500px;
+		overflow-y: scroll;
+	}
+}
 
 @import 'Conversation/Conversation.scss';
+@import 'LeftSidebar/LeftSidebar';
