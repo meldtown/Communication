@@ -72,11 +72,24 @@
 					</label>
 				</div>
 				<hr>
-				<div class="fd-f-between searchfield__wrapper">
-					<div class="fd-f1 f-input-block hubcontrol__input searchfield__input">
-						<input type="text" data-bind="value: term, enterPress: fetch" placeholder="Поиск...">
+				<div class="searchfield__wrapper">
+
+					<div class="f-checkbox hubcontrol__checkbox fd-peasant searchfield__unreadfilter hub-color__lightblack">
+						<label>
+							<input type="checkbox" value="on">
+							<span class="f-checkbox-control">
+							<i class="fi-check-icon"></i>
+						</span>
+							<span>непрочитанные (2)</span>
+						</label>
 					</div>
-					<span class="fi-hub-filters searchfield__filters-icon"></span>
+
+					<div class="fd-f-between">
+						<div class="fd-f1 f-input-block hubcontrol__input searchfield__input">
+							<input type="text" data-bind="value: term, enterPress: fetch" placeholder="Поиск...">
+						</div>
+						<span class="fi-hub-filters searchfield__filters-icon"></span>
+					</div>
 				</div>
 				<hr>
 				<div data-bind="if: hasConversations">
