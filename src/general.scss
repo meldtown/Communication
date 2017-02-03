@@ -54,9 +54,15 @@
 	}
 }
 
-.messages-place {
-	&__wrap {
-		width: 100%;
+.messages-container {
+	width: 100%;
+	max-width: 100%;
+
+	&__scrollable-place {
+		padding-right: 10px;
+		min-height: 400px;
+		max-height: 500px;
+		overflow-y: scroll;
 	}
 }
 
