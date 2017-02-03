@@ -20,5 +20,46 @@
 
 	&__text {
 		color: rgba(0, 0, 0, 0.3);
+
+		&.-invite {
+			line-height: 1.7;
+		}
 	}
+}
+
+.opportunities {
+	&__item {
+		margin-right: 15px;
+	}
+}
+
+.invite-info {
+	&__add-btn {
+		height: 26px;
+		border-radius: 2px;
+		border: solid 1px #78909c;
+		text-transform: uppercase;
+		color: #78909c;
+		background: transparent;
+		margin-left: 10px;
+	}
+
+	&__date {
+		margin-bottom: 15px;
+		margin-top: 20px;
+	}
+}
+
+.message-form-control {
+	&__input,
+	&__select {
+		height: 26px;
+		border-radius: 2px;
+		border: solid 1px rgba(0, 0, 0, 0.3);
+		color: rgba(0, 0, 0, 0.3);
+		padding: 6px;
+		margin-left: 10px;
+	}
+
+
 }

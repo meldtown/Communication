@@ -11,3 +11,30 @@
 		display: none;
 	}
 }
+
+.form-attached-file {
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	padding: 10px 10px 4px 10px;
+	position: relative;
+	margin-top: 10px;
+
+	&__name {
+		color: #0d47a1;
+	}
+
+	&__size {
+		color: rgba(0, 0, 0, 0.3);
+		padding-left: 22px;
+		margin-bottom: 5px;
+	}
+
+	&__remove {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		width: 16px;
+		height: 16px;
+		color: rgba(0, 0, 0, 0.3);
+		cursor: pointer;
+	}
+}

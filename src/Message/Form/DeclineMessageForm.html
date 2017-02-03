@@ -4,34 +4,47 @@
 		<i class="fi-drop-down-icon"></i>
 	</div>
 
+	<div class="form-attached-file">
+		<div data-bind="with: attach">
+			<div data-bind="if: id">
+
+				<div class="form-attached-file__name fd-craftsmen"><i class="fi-hub-attach"></i>&nbsp;&nbsp;<span data-bind="text: fileName"></span></div>
+				<div class="form-attached-file__size fd-craftsmen"><span data-bind="text: fileSize"></span>&nbsp;&nbsp;KB</div>
+			</div>
+			<!--<div data-bind="ifnot: id">-->
+			<!--<h4 class="fd-craftsmen">No files chosen for attach</h4>-->
+			<!--</div>-->
+			<!--<div data-bind="if: id">-->
+			<!--<span class="fd-craftsmen">You can choose another file for attaching</span>-->
+			<!--</div>-->
+		</div>
+		<div data-bind="if: attach().id">
+			<div data-bind="template: {name: 'Attach', data: attach}"></div>
+			<i class="form-attached-file__remove fi-close-big" data-bind="click: resetAttach"></i>
+		</div>
+	</div>
+
 	<textarea class="message-form__area fd-peasant" placeholder="Написать сообщение..." data-bind="value: text, enable: hasChatId"></textarea>
 
 	<div class="fd-f-between-middle">
-		<div>
-			<div data-bind="with: attach">
-				<div data-bind="if: id">
-					<span data-bind="text: fileName"></span>
-					<span data-bind="text: fileSize"></span>
-				</div>
-				<!--<div data-bind="ifnot: id">-->
-				<!--<h4 class="fd-craftsmen">No files chosen for attach</h4>-->
-				<!--</div>-->
-				<div data-bind="if: id">
-					<span class="fd-craftsmen">You can choose another file for attaching</span>
-				</div>
+		<div class="fd-f-left fm-c-stretch opportunities">
+			<div class="message-form__text opportunities__item fd-craftsmen">
+				<i class="fi-hub-template"></i>
+				<span>шаблоны сообщений</span>
 			</div>
-			<div data-bind="if: attach().id">
-				<div data-bind="template: {name: 'Attach', data: attach}"></div>
-				<i class="fi-close-big" data-bind="click: resetAttach"></i>
+			<div class="message-form__text opportunities__item fd-craftsmen ">
+				<i class="fi-hub-emozzi"></i>
 			</div>
-			<label class="attach-file-form">
-				<input type="file" data-bind="attach: {attach: attach}"/>
-				<span data-bind="with: attach">
-					<i class="fi-attach" data-bind="ifnot: id"></i>
-					<span data-bind="if: id">Выбрать другой файл</span>
-				</span>
-			</label>
 
+			<div class="opportunities__item">
+				<label class="attach-file-form">
+					<input type="file" data-bind="attach: {attach: attach}"/>
+					<div class="message-form__text fd-craftsmen" data-bind="with: attach">
+						<i class="fi-hub-attach" data-bind="ifnot: id"></i>
+						<span class="fd-craftsmen" data-bind="if: id">Выбрать другой файл</span>
+					</div>
+				</label>
+			</div>
 		</div>
 		<div>
 			<div data-bind="if: hasChatId">
