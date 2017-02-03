@@ -13,6 +13,9 @@ export const model = new EmployerHub(dispatcher)
 export const init = () => {
 	const root = document.getElementById('employer_hub')
 	root.innerHTML = require('../src/Hub/EmployerHub.html')
+
+	helpers.injectTemplate('LeftSidebar', require('../src/LeftSidebar/LeftSidebar.html'))
+
 	helpers.injectTemplate('Conversation', require('../src/Conversation/Conversation.html'))
 	helpers.injectTemplate('ConversationSelectable', require('../src/Conversation/ConversationSelectable.html'))
 	helpers.injectTemplate('MessageList', require('../src/Message/MessageList.html'))
