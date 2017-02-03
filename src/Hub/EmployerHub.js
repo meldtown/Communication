@@ -1,6 +1,7 @@
 import * as actions from '../constants'
 import * as ko from 'knockout'
 import axios from 'axios'
+import 'babel-polyfill'
 import './EmployerHub.scss'
 import '../bindingHandlers/hasFocus'
 import '../bindingHandlers/enterPress'
@@ -13,6 +14,7 @@ import DeclineMessageForm from '../Message/Form/DeclineMessageForm'
 import OfferMessageForm from '../Message/Form/OfferMessageForm'
 import '../customBindings/googleMap'
 import '../customBindings/addressAutocomplete'
+import '../customBindings/perfectScroll'
 
 // Remove after changing observable isInviteFormAvailable
 import OfferMessage from '../Message/OfferMessage'

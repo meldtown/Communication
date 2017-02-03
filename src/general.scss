@@ -59,10 +59,11 @@
 	max-width: 100%;
 
 	&__scrollable-place {
+		position: relative;
 		padding-right: 10px;
 		min-height: 400px;
 		max-height: 500px;
-		overflow-y: scroll;
+		overflow-y: auto;
 	}
 }
 
