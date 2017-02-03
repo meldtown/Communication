@@ -1,0 +1,24 @@
+.message-form {
+	&__area {
+		width: 100%;
+		border: 0;
+		border-bottom: 2px solid #0d47a1;
+		display: block;
+		min-height: 50px;
+		resize: none;
+		margin-bottom: 15px;
+		color: rgba(0, 0, 0, 0.87);
+		font-family: "Graphik Regular", sans-serif;
+		padding: 15px 0 30px;
+		line-height: 17px;
+		box-sizing: border-box;
+
+		&:focus {
+			outline: 0;
+		}
+	}
+
+	&__text {
+		color: rgba(0, 0, 0, 0.3);
+	}
+}
