@@ -81,7 +81,9 @@ export default class InviteMessageForm extends AbstractMessageForm {
 
 			this.attach(new Attach())
 
-			let message = MessageFactory.create(response.data)
+			let selectedAddress = this.addresses().filter(address => address.id() === this.addressId())[0]
+
+			let message = MessageFactory.create(Object.assign({}, response.data, {address: selectedAddress}))
 
 			this.dispatcher.notifySubscribers(message, constants.NEW_MESSAGE)
 

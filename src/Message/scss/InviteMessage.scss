@@ -1,0 +1,24 @@
+.message-container {
+	.message-text-container.-invite {
+		background-color: $message_bg_color;
+		.invite-data {
+			padding: 0 8px;
+			color: $gray;
+			i {
+				margin-right: 4px;
+			}
+			div:first-child {
+				margin-bottom: 7px;
+				span {
+					font-size: 14px;
+					&:first-child {
+						margin-right: 7px;
+					}
+				}
+			}
+			.map {
+				margin-top: 5px;
+			}
+		}
+	}
+}
