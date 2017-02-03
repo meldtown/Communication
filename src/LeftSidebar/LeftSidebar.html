@@ -1,0 +1,95 @@
+<!--<div class="left-sidebar__wrapper" data-bind="with: conversations">-->
+<!--<div>
+	<span data-bind="if: isActiveSelected">
+		<span>Active</span>
+	</span>
+	<span data-bind="ifnot: isActiveSelected">
+		<a href="#" data-bind="click: selectActive">Active</a>
+	</span>
+
+	<span data-bind="if: isArchiveSelected">
+		<span>Archive</span>
+	</span>
+	<span data-bind="ifnot: isArchiveSelected">
+		<a href="#" data-bind="click: selectArchive">Archive</a>
+	</span>
+
+	<span data-bind="if: isBlockedSelected">
+		<span>Blocked</span>
+	</span>
+	<span data-bind="ifnot: isBlockedSelected">
+		<a href="#" data-bind="click: selectBlocked">Blocked</a>
+	</span>
+</div>
+
+<div>
+	<label style="display: none" for="vacancyId">vacancy</label>
+	<select id="vacancyId" data-bind="options: vacancies, optionsText: 'vacancyName', optionsValue: 'id', value: vacancyId, optionsCaption: 'vacancy...', enable: hasVacancies"></select>
+</div>
+
+<div>
+	<label>
+		<input type="checkbox" data-bind="checked: hasInvitesSelected">
+		<span>invites</span>
+	</label>
+	<label>
+		<input type="checkbox" data-bind="checked: hasDeclinesSelected">
+		<span>declines</span>
+	</label>
+	<label>
+		<input type="checkbox" data-bind="checked: hasOffersSelected">
+		<span>offers</span>
+	</label>
+</div>
+<hr>
+<div>
+	<label>
+		<input type="checkbox" data-bind="checked: fromCvdbSelected">
+		<span>cvdb</span>
+	</label>
+	<label>
+		<input type="checkbox" data-bind="checked: fromApplySelected">
+		<span>apply</span>
+	</label>
+</div>
+<hr>
+<div>
+	<div>
+		<input placeholder="from..." type="date" data-bind="value: periodFromInputFormatted">
+	</div>
+	<label>
+		<input name="period" type="radio" data-bind="value: weekAgo, checked: periodFrom">
+		<span>week</span>
+	</label>
+	<label>
+		<input name="period" type="radio" data-bind="value: monthAgo, checked: periodFrom">
+		<span>month</span>
+	</label>
+</div>-->
+
+
+<div class="searchfield__wrapper">
+	<div class="f-checkbox hubcontrol__checkbox fd-peasant searchfield__unreadfilter hub-color__lightblack">
+		<label>
+			<input type="checkbox" value="on">
+			<span class="f-checkbox-control">
+				<i class="fi-check-icon"></i>
+			</span>
+			<span>непрочитанные (2)</span>
+		</label>
+	</div>
+
+	<div class="fd-f-between">
+		<div class="fd-f1 f-input-block hubcontrol__input searchfield__input">
+			<input type="text" data-bind="value: term, enterPress: fetch" placeholder="Поиск...">
+		</div>
+		<span class="fi-hub-filters searchfield__filters-icon"></span>
+	</div>
+</div>
+
+<div data-bind="if: hasConversations">
+	<div data-bind="template: {name: 'ConversationSelectable', foreach: filteredConversations}"></div>
+</div>
+<div class="fd-merchant" style="padding: 0 20px;" data-bind="ifnot: hasConversations">
+	У вас еще нет ни одного диалога
+</div>

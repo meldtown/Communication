@@ -1,64 +1,99 @@
 <!--<input placeholder="inviteDate..." type="datetime" data-bind="value: inviteDate, enable: hasChatId">-->
+<div class="message-form">
+	<div class="invite-info">
+		<div class="fd-f-left invite-info__date">
+			<div class="message-form__text -invite fd-craftsmen">Дата и время:</div>
 
-<input placeholder="date..." type="date" data-bind="value: inviteDateDate, enable: hasChatId">
-<label for="time">time</label>
-<select id="time" data-bind="value: inviteDateTime, optionsCaption: 'time...', enable: hasChatId">
-	<option>09:00</option>
-	<option>10:00</option>
-	<option>11:00</option>
-	<option>12:00</option>
-	<option>14:00</option>
-	<option>15:00</option>
-</select>
 
-<label for="addressId">address</label>
-<select id="addressId" data-bind="options: addresses, optionsText: 'optionText', optionsValue: 'id', value: addressId, optionsCaption: 'address...', enable: hasAddresses"></select>
+			<div class="message-form-control">
+				<input class="message-form-control__input" placeholder="date..." type="date" data-bind="value: inviteDateDate, enable: hasChatId">
+				<i class="fi-hub-data message-form-control__icon"></i>
+			</div>
+			<div class="message-form-control">
+				<select class="message-form-control__select" id="time" data-bind="value: inviteDateTime, optionsCaption: 'time...', enable: hasChatId">
+					<option>09:00</option>
+					<option>10:00</option>
+					<option>11:00</option>
+					<option>12:00</option>
+					<option>14:00</option>
+					<option>15:00</option>
+				</select>
+				<i class="fi-hub-time message-form-control__icon"></i>
+			</div>
 
-<textarea placeholder="invite..." data-bind="value: text, enable: hasChatId"></textarea>
-
-<label for="vacancyId">vacancy</label>
-<select id="vacancyId" data-bind="options: vacancies, optionsText: 'name', optionsValue: 'id', value: vacancyId, optionsCaption: 'vacancy...', enable: hasVacancies"></select>
-
-<br>
-<div>
-	<button data-bind="click: createAddress">Add address</button>
-	<div data-bind="with: addressForm">
-		<div data-bind="template: 'AddressForm'"></div>
+		</div>
+		<!--<label for="addressId">address</label>
+		<select id="addressId" data-bind="options: addresses, optionsText: 'optionText', optionsValue: 'id', value: addressId, optionsCaption: 'address...', enable: hasAddresses"></select>-->
+		<div class="fd-f-left invite-info__address">
+			<div class="message-form__text -invite fd-craftsmen">Адрес:</div>
+			<button class="invite-info__add-btn" data-bind="click: createAddress">Добавить адрес</button>
+			<div data-bind="with: addressForm">
+				<div data-bind="template: 'AddressForm'"></div>
+			</div>
+			<div data-bind="visible: addressForm">
+				<button class="invite-info__add-btn" data-bind="disable: isAddButtonDisabled, click: saveAddress">Добавить</button>
+				<button class="invite-info__add-btn" data-bind="click: cancelAddressForm">Отменить</button>
+			</div>
+		</div>
 	</div>
-	<div data-bind="visible: addressForm">
-		<button data-bind="disable: isAddButtonDisabled, click: saveAddress">Add</button>
-		<button data-bind="click: cancelAddressForm">Cancel</button>
-	</div>
-</div>
-<div data-bind="if: canBeSaved">
-	<a href="#" data-bind="click: save">Send</a>
-</div>
-<div data-bind="ifnot: canBeSaved">
-	<span>Send</span>
-	<span class="muted">select address and provide text</span>
-</div>
-<h3>Attached files</h3>
-<div data-bind="with: attach">
-	<h4 data-bind="if: id">
-		<span data-bind="text: fileName"></span>
-		<span data-bind="text: fileSize"></span>
-	</h4>
-	<div data-bind="ifnot: id">
-		<h4>No files chosen for attach</h4>
-	</div>
-	<div data-bind="if: id">
-		<span>You can choose another file for attaching</span>
-	</div>
-</div>
-<label class="attach-file-form">
-	<input type="file" data-bind="attach: {attach: attach}"/>
-	<span data-bind="with: attach">
-		<span data-bind="ifnot: id">Attach file</span>
-		<span data-bind="if: id">Choose another file</span>
-	</span>
-</label>
-<div data-bind="if: attach().id">
-	<button data-bind="click: resetAttach">Reset attach</button>
-	<div data-bind="template: {name: 'Attach', data: attach}"></div>
-</div>
 
+
+	<div class="f-input fm-input-block">
+		<select id="vacancyId" data-bind="options: vacancies, optionsText: 'name', optionsValue: 'id', value: vacancyId, optionsCaption: 'Выберете вакансию...', enable: hasVacancies"></select>
+		<i class="fi-drop-down-icon"></i>
+	</div>
+
+	<div class="form-attached-file">
+		<div data-bind="with: attach">
+			<div data-bind="if: id">
+
+				<div class="form-attached-file__name fd-craftsmen"><i class="fi-hub-attach"></i>&nbsp;&nbsp;<span data-bind="text: fileName"></span></div>
+				<div class="form-attached-file__size fd-craftsmen"><span data-bind="text: fileSize"></span>&nbsp;&nbsp;KB</div>
+			</div>
+			<!--<div data-bind="ifnot: id">-->
+			<!--<h4 class="fd-craftsmen">No files chosen for attach</h4>-->
+			<!--</div>-->
+			<!--<div data-bind="if: id">-->
+			<!--<span class="fd-craftsmen">You can choose another file for attaching</span>-->
+			<!--</div>-->
+		</div>
+		<div data-bind="if: attach().id">
+			<div data-bind="template: {name: 'Attach', data: attach}"></div>
+			<i class="form-attached-file__remove fi-close-big" data-bind="click: resetAttach"></i>
+		</div>
+	</div>
+
+	<textarea class="message-form__area fd-peasant" placeholder="Написать сообщение..." data-bind="value: text, enable: hasChatId"></textarea>
+
+	<div class="fd-f-between-middle">
+		<div class="fd-f-left fm-c-stretch opportunities">
+			<div class="message-form__text opportunities__item fd-craftsmen">
+				<i class="fi-hub-template"></i>
+				<span>шаблоны сообщений</span>
+			</div>
+			<div class="message-form__text opportunities__item fd-craftsmen ">
+				<i class="fi-hub-emozzi"></i>
+			</div>
+
+			<div class="opportunities__item">
+				<label class="attach-file-form">
+					<input type="file" data-bind="attach: {attach: attach}"/>
+					<div class="message-form__text fd-craftsmen" data-bind="with: attach">
+						<i class="fi-hub-attach" data-bind="ifnot: id"></i>
+						<span class="fd-craftsmen" data-bind="if: id">Выбрать другой файл</span>
+					</div>
+				</label>
+			</div>
+		</div>
+		<div>
+			<div data-bind="if: canBeSaved">
+				<a class="fd-craftsmen f-always-blue" href="#" data-bind="click: save">Пригласить</a>
+			</div>
+			<div data-bind="ifnot: canBeSaved">
+				<span class="fd-craftsmen">Пригласить</span>
+			</div>
+		</div>
+	</div>
+
+
+</div>

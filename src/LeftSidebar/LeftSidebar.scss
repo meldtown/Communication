@@ -1,0 +1,25 @@
+.left-sidebar {
+	&__wrapper {
+		width: 310px;
+		border-right: 1px solid $general_light_black;
+	}
+}
+.searchfield {
+	&__wrapper {
+		margin: 20px 0;
+		padding: 0 20px 0 16px;
+	}
+	&__unreadfilter {
+		margin-bottom: 7px;
+	}
+	&__input {
+		margin: 0;
+	}
+	&__filters-icon {
+		cursor: pointer;
+		padding: 0;
+		margin-left: 10px;
+		font-size: 33.5px;
+		color: $general_light_black;
+	}
+}

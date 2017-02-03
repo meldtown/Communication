@@ -1,35 +1,58 @@
-<label for="vacancyId">vacancy</label>
-<select id="vacancyId" data-bind="options: vacancies, optionsText: 'name', optionsValue: 'id', value: vacancyId, optionsCaption: 'vacancy...', enable: hasVacancies"></select>
-<br>
-<textarea placeholder="offer..." data-bind="value: text, valueUpdate: 'keyup', enable: hasChatId"></textarea>
-<div data-bind="if: canBeSaved">
-	<a href="#" data-bind="click: save">Send</a>
-</div>
-<div data-bind="ifnot: canBeSaved">
-	<span>Send</span>
-	<span class="muted">select vacancy and provide text</span>
-</div>
-<h3>Attached files</h3>
-<div data-bind="with: attach">
-	<h4 data-bind="if: id">
-		<span data-bind="text: fileName"></span>
-		<span data-bind="text: fileSize"></span>
-	</h4>
-	<div data-bind="ifnot: id">
-		<h4>No files chosen for attach</h4>
+<div class="message-form">
+	<div class="f-input fm-input-block">
+		<select id="vacancyId" data-bind="options: vacancies, optionsText: 'name', optionsValue: 'id', value: vacancyId, optionsCaption: 'Выбрете вакансию...', enable: hasVacancies"></select>
+		<i class="fi-drop-down-icon"></i>
 	</div>
-	<div data-bind="if: id">
-		<span>You can choose another file for attaching</span>
+	<br>
+
+	<div class="form-attached-file">
+		<div data-bind="with: attach">
+			<div data-bind="if: id">
+
+				<div class="form-attached-file__name fd-craftsmen"><i class="fi-hub-attach"></i>&nbsp;&nbsp;<span data-bind="text: fileName"></span></div>
+				<div class="form-attached-file__size fd-craftsmen"><span data-bind="text: fileSize"></span>&nbsp;&nbsp;KB</div>
+			</div>
+			<!--<div data-bind="ifnot: id">-->
+			<!--<h4 class="fd-craftsmen">No files chosen for attach</h4>-->
+			<!--</div>-->
+			<!--<div data-bind="if: id">-->
+			<!--<span class="fd-craftsmen">You can choose another file for attaching</span>-->
+			<!--</div>-->
+		</div>
+		<div data-bind="if: attach().id">
+			<div data-bind="template: {name: 'Attach', data: attach}"></div>
+			<i class="form-attached-file__remove fi-close-big" data-bind="click: resetAttach"></i>
+		</div>
 	</div>
-</div>
-<label class="attach-file-form">
-	<input type="file" data-bind="attach: {attach: attach}"/>
-	<div data-bind="with: attach">
-		<span data-bind="ifnot: id">Attach file</span>
-		<span data-bind="if: id">Choose another file</span>
+	<textarea class="message-form__area fd-peasant" placeholder="Написать сообщение..." data-bind="value: text, valueUpdate: 'keyup', enable: hasChatId"></textarea>
+
+	<div class="fd-f-between-middle">
+		<div class="fd-f-left fm-c-stretch opportunities">
+			<div class="message-form__text opportunities__item fd-craftsmen">
+				<i class="fi-hub-template"></i>
+				<span>шаблоны сообщений</span>
+			</div>
+			<div class="message-form__text opportunities__item fd-craftsmen ">
+				<i class="fi-hub-emozzi"></i>
+			</div>
+
+			<div class="opportunities__item">
+				<label class="attach-file-form">
+					<input type="file" data-bind="attach: {attach: attach}"/>
+					<div class="message-form__text fd-craftsmen" data-bind="with: attach">
+						<i class="fi-hub-attach" data-bind="ifnot: id"></i>
+						<span class="fd-craftsmen" data-bind="if: id">Выбрать другой файл</span>
+					</div>
+				</label>
+			</div>
+		</div>
+		<div>
+			<div data-bind="if: canBeSaved">
+				<a class="fd-craftsmen f-always-blue" href="#" data-bind="click: save">Предложить</a>
+			</div>
+			<div data-bind="ifnot: canBeSaved">
+				<span class="fd-craftsmen">Предложить</span>
+			</div>
+		</div>
 	</div>
-</label>
-<div data-bind="if: attach().id">
-	<button data-bind="click: resetAttach">Reset attach</button>
-	<div data-bind="template: {name: 'Attach', data: attach}"></div>
 </div>
