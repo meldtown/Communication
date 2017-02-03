@@ -6,5 +6,7 @@ export default class Attach {
 		this.fileSize = fileSize
 		this.url = url
 		this.isImage = this.url && this.url.search(/\.png|\.jpg|\.jpeg|\.svg|\.gif/i) !== -1
+
+
 	}
 }

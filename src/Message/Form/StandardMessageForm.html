@@ -1,24 +1,24 @@
 <div class="message-form">
-	<div class="form-attached-file">
-		<div data-bind="with: attach">
-			<div data-bind="if: id">
-
+	<div data-bind="with: attach">
+		<div data-bind="if: id">
+			<div class="form-attached-file">
 				<div class="form-attached-file__name fd-craftsmen"><i class="fi-hub-attach"></i>&nbsp;&nbsp;<span data-bind="text: fileName"></span></div>
 				<div class="form-attached-file__size fd-craftsmen"><span data-bind="text: fileSize"></span>&nbsp;&nbsp;KB</div>
+				<div data-bind="template: {name: 'Attach'}"></div>
+				<i class="form-attached-file__remove fi-close-big" data-bind="click: $parent.resetAttach.bind($parent)"></i>
 			</div>
+		</div>
 			<!--<div data-bind="ifnot: id">-->
 			<!--<h4 class="fd-craftsmen">No files chosen for attach</h4>-->
 			<!--</div>-->
 			<!--<div data-bind="if: id">-->
-				<!--<span class="fd-craftsmen">You can choose another file for attaching</span>-->
+			<!--<span class="fd-craftsmen">You can choose another file for attaching</span>-->
 			<!--</div>-->
-		</div>
-		<div data-bind="if: attach().id">
-			<div data-bind="template: {name: 'Attach', data: attach}"></div>
-			<i class="form-attached-file__remove fi-close-big" data-bind="click: resetAttach"></i>
-		</div>
-	</div>
 
+			<!--<div data-bind="if: id">-->
+				<!---->
+			<!--</div>-->
+	</div>
 	<textarea class="message-form__area fd-peasant" placeholder="Написать сообщение..." data-bind="value: text, enable: hasChatId"></textarea>
 
 	<div class="fd-f-between-middle">
