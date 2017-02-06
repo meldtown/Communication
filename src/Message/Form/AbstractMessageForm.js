@@ -29,7 +29,9 @@ export default class AbstractMessageForm {
 	}
 
 	resetAttach() {
+		console.log(this)
 		axios.delete(`${api2}/attaches/${this.attach().id}`).then(() => {
+
 			this.attach(new Attach())
 		}).catch(() => {
 			this.attach(new Attach())
