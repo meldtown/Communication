@@ -1,6 +1,8 @@
 <div class="conversation__container fd-f-left" data-bind="css: {'-is-active-conversation': isSelected}">
-	<img data-bind="if: avatar, attr: {src: avatar}" class="conversation__userpic" />
-	<div data-bind="if: !avatar">
+	<span data-bind="if: avatar">
+		<img data-bind="attr: {src: avatar}" class="conversation__userpic" />
+	</span>
+	<div data-bind="ifnot: avatar">
 		<div class="conversation__userpic -unknown">
 			<svg width="20px" height="26px" viewBox="0 0 20 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 				<defs></defs>
@@ -23,12 +25,12 @@
 	<div class="conversation__message-wrap fd-f1" data-bind="css: {'-is-active-conversation': isSelected}">
 
 		<!-- Readed || Selected -->
-		<h5 class="fd-beefy-peasant conversation__authorname" data-bind="if: ( !unreadMessagesCount() || isSelected() )">
+		<h5 class="fd-beefy-peasant conversation__authorname" data-bind="if: unreadHighlight">
 			<span data-bind="text: fullName, attr: { title: fullName }"></span>
 		</h5>
 
 		<!-- !Selected && HaveUnread -->
-		<h5 class="fd-fat-peasant conversation__authorname -unread" data-bind="if: ( unreadMessagesCount() && !isSelected() )">
+		<h5 class="fd-fat-peasant conversation__authorname -unread" data-bind="ifnot: unreadHighlight">
 			<span data-bind="text: fullName, attr: { title: fullName }"></span>
 		</h5>
 

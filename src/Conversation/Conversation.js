@@ -31,6 +31,10 @@ export default class Conversation {
 		this.isArchived = ko.computed(() => this.type() === constants.ARCHIVED_CONVERSATION)
 		this.isBlocked = ko.computed(() => this.type() === constants.BLOCKED_CONVERSATION)
 
+		this.unreadHighlight = ko.computed(() => {
+			return (this.unreadMessagesCount() || this.isSelected()) && !(this.unreadMessagesCount() && !this.isSelected())
+		})
+
 		this.lastMessageTemplate = ko.computed(() => {
 			return this.lastMessage()
 				? `${this.lastMessage().template()}Preview`
