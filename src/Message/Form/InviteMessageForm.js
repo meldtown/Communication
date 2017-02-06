@@ -39,7 +39,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 
 		this.hasVacancies = ko.computed(() => (this.vacancies() || []).length > 0)
 		this.hasAddresses = ko.computed(() => (this.addresses() || []).length > 0)
-		this.canBeSaved = ko.computed(() => this.chatId() && this.addressId() && this.text())
+		this.canBeSaved = ko.computed(() => this.chatId() && this.text())
 		this.isAddButtonDisabled = ko.computed(() => {
 			if (!this.addressForm()) return
 			return !this.addressForm().city() || !this.addressForm().street() || !this.addressForm().building()
