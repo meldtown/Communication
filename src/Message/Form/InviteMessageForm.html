@@ -30,16 +30,18 @@
 				<i class="fi-drop-down-icon icon-move message-form-control__icon"></i>
 			</span>
 			<div class="pseudo-dropdown" data-bind="css: {'-expanded': isAddressBeingSelected}">
-				<div class="pseudo-dropdown__options">
+				<div class="pseudo-dropdown__options" data-bind="perfectScroll">
 					<div data-bind="foreach: addresses">
 						<div class="option" data-bind="text: optionText, click: $parent.selectAddress.bind($parent)"></div>
 					</div>
 				</div>
+				<div class="pseudo-dropdown__buttons">
+					<button class="invite-info__add-btn" data-bind="click: createAddress">Добавить адрес</button>
+					<button class="invite-info__add-btn" data-bind="click: createAddress">Управлять</button>
+				</div>
 			</div>
 		</div>
 		<div class="fd-f-left invite-info__address">
-			<div class="message-form__text -invite fd-craftsmen">Адрес:</div>
-			<button class="invite-info__add-btn" data-bind="click: createAddress">Добавить адрес</button>
 			<div data-bind="with: addressForm">
 				<div data-bind="template: 'AddressForm'"></div>
 			</div>

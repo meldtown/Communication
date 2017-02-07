@@ -38,12 +38,16 @@
 .invite-info {
 	&__add-btn {
 		height: 26px;
+		padding: 0 17px;
+		box-sizing: content-box;
+		font-size: 12px;
 		border-radius: 2px;
 		border: solid 1px #78909c;
-		text-transform: uppercase;
 		color: #78909c;
 		background: transparent;
-		margin-left: 10px;
+		text-transform: none;
+		margin-left: 0;
+		cursor: pointer;
 	}
 
 	&__date {
@@ -88,7 +92,8 @@
 
 .pseudo-dropdown {
 	display: none;
-	max-width: 368px;
+	max-width: 500px;
+	min-width: 368px;
 	position: absolute;
 	top: calc(100% + 7px);
 	left: 0;
@@ -104,6 +109,10 @@
 	&__options {
 		padding: 20px 20px 15px;
 		border-top: 2px solid #757575;
+		position: relative;
+		min-height: 100px;
+		max-height: 150px;
+		overflow-y: auto;
 		.option {
 			padding: 4px 0;
 			font-size: 14px;
@@ -116,6 +125,13 @@
 			&:first-of-type {
 				padding-top: 0;
 			}
+		}
+	}
+	&__buttons {
+		padding: 15px 20px;
+		border-top: 1px solid $light_light_gray;
+		.invite-info__add-btn:nth-child(2) {
+			margin-left: 6px;
 		}
 	}
 }
