@@ -53,6 +53,7 @@
 }
 
 .message-form-control {
+	position: relative;
 	border-color: $light_gray;
 	&.-gray {
 		color: $gray;
@@ -69,12 +70,12 @@
 	}
 	&__icon {
 		box-sizing: content-box;
-		&.fi-drop-down-icon {
+		&.fi-drop-down-icon::before {
 			transition: all .2s;
 		}
 	}
 
-	&.-focused &__icon.fi-drop-down-icon::before {
+	& .-focused ~ &__icon.fi-drop-down-icon::before {
 		transform: rotate(180deg);
 	}
 
@@ -84,5 +85,40 @@
 		border-color: $light_gray;
 	}
 }
+
+.pseudo-dropdown {
+	display: none;
+	max-width: 368px;
+	position: absolute;
+	top: calc(100% + 7px);
+	left: 0;
+	z-index: 55;
+	margin: 0;
+	padding: 0;
+	background-color: #fff;
+	border-radius: 2px;
+	box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+	&.-expanded {
+		display: block;
+	}
+	&__options {
+		padding: 20px 20px 15px;
+		border-top: 2px solid #757575;
+		.option {
+			padding: 4px 0;
+			font-size: 14px;
+			color: rgba(0,0,0, .87);
+			list-style: none;
+			cursor: pointer;
+			&:hover {
+				color: $gray;
+			}
+			&:first-of-type {
+				padding-top: 0;
+			}
+		}
+	}
+}
+
 
 

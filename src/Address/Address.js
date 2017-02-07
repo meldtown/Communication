@@ -16,7 +16,8 @@ export default class Address {
 		})
 
 		this.optionText = ko.computed(() => {
-			return `${this.city()} ${this.street()} ${this.building()}, ${this.office()}`
+			return this.id() ? `${this.city()} ${this.street()} ${this.building()}, ${this.office()}`
+				: 'Адрес не указан'
 		})
 	}
 }

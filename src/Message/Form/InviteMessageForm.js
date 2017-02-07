@@ -18,9 +18,22 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.addresses = ko.observableArray([])
 		this.addressForm = ko.observable(null)
 
-		this.selectedAddress = ko.computed(() => {
-			return this.addresses().filter(address => address.id() === this.addressId())[0]
-		})
+		this.selectedAddress = ko.computed(
+			{
+				read: () => {
+					return this.addresses().filter(address => address.id() === this.addressId())[0]
+				},
+				write: (id) => {
+					this.addressId(id)
+				}
+			}
+		)
+		this.isAddressBeingSelected = ko.observable(false)
+		//
+		// this.selectedAddressOptionText = ko.computed(() => {
+		// 	console.log(this.selectedAddress())
+		// 	return this.selectedAddress() ? this.selectedAddress().optionText(0) : 'No address'
+		// })
 
 		this.vacancyId = ko.observable()
 		this.vacancies = ko.observableArray([])
@@ -117,8 +130,19 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.addressForm(null)
 	}
 
+	toggleAddressDropdown() {
+		this.isAddressBeingSelected(!this.isAddressBeingSelected())
+	}
+
+	selectAddress(address) {
+		this.selectedAddress(address.id())
+		this.toggleAddressDropdown()
+	}
+
 	fetchAddresses() {
 		return axios.get(`${api2}/employer/address`)
-			.then(response => this.addresses(response.data.map(item => new Address(item))))
+			.then(response => {
+				this.addresses([new Address({id: 0})].concat(response.data.map(item => new Address(item))))
+			})
 	}
 }
