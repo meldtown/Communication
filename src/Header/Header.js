@@ -1,4 +1,3 @@
-import './Header.scss'
 import * as ko from 'knockout'
 import ConversationList from '../Conversation/ConversationList'
 

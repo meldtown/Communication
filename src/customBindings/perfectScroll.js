@@ -1,6 +1,6 @@
 import * as ko from 'knockout'
 import perfectScroll from 'perfect-scrollbar'
-import './perfectScroll.min.css'
+import 'perfect-scrollbar/dist/css/perfect-scrollbar.min.css'
 
 
 ko.bindingHandlers.perfectScroll = {
