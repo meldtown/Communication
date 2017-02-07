@@ -17,5 +17,14 @@ export default class InviteMessage extends AbstractMessage {
 
 		this.formattedInviteDate = ko.computed(() => helpers.formattedDate(this.inviteDate()))
 		this.formattedInviteTime = ko.computed(() => helpers.formattedTime(this.inviteDate()))
+
+
+		this.isPopupVisible = ko.observable(false)
+		this.showPopup = (() => this.isPopupVisible(true))
+		this.hidePopup = (() => this.isPopupVisible(false))
+
+		this.lat = ko.computed(() => this.address().latitude())
+		this.lng = ko.computed(() => this.address().longitude())
+
 	}
 }

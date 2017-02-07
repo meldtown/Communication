@@ -122,6 +122,67 @@
 	}
 }
 
+.popup {
+	position: fixed;
+	background-color: rgba(0, 0, 0, 0.54);
+	width: 100%;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: hidden;
+	height: 100%;
+	z-index: 1000;
+
+	&__inner {
+		background: #fff;
+		position: fixed;
+		top: 10%;
+		left: 50%;
+		transform: translate(-50%);
+		z-index: 1001;
+	}
+
+	&__close {
+		color: #fff;
+		position: absolute;
+		z-index: 1001;
+		top: 0;
+		right: -32px;
+		cursor: pointer;
+		font-size: 22px;
+	}
+
+}
+
+.message-map {
+	width: 530px;
+
+	&__description {
+		padding: 20px;
+
+		& p {
+			margin: 0 0 5px 0;
+
+			&:last-child {
+				margin: 0;
+				color: $gray;
+			}
+		}
+
+		& div:last-child {
+			& p {
+				color: $light_gray;
+			}
+		}
+	}
+
+	&__map {
+		height: 320px;
+	}
+
+}
+
 @import 'Conversation/Conversation.scss';
 @import 'LeftSidebar/LeftSidebar';
 @import "Message/Form/scss/MessageForm";

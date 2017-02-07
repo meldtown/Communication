@@ -30,18 +30,47 @@
 					</div>
 					<div data-bind="with: address">
 						<div class="map" data-bind="if: mapSrc">
-							<img data-bind="attr: {src: mapSrc}" alt="map">
+							<img data-bind="attr: {src: mapSrc}, click: $parent.showPopup" alt="map">
 						</div>
 					</div>
 				</div>
 			</div>
 			<div data-bind="template: {name: 'Attach', data: attach}"></div>
+
 		</div>
 		<div class="fd-f-left-middle" data-bind="if: avatar">
 			<img class="message-avatar" width="26px" height="26px" data-bind="attr: {src: avatar}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
 		</div>
 		<div class="fd-f-left-middle" data-bind="ifnot: avatar">
 			<div class="message-avatar -anon"></div>
+		</div>
+		<div data-bind="if: isPopupVisible">
+			<div class="popup">
+				<div class="popup__inner message-map">
+					<div>
+						<div class="message-map__map" data-bind="map: {lat: lat, lng: lng}"></div>
+					</div>
+
+					<div class="message-map__description fd-f-between" data-bind="with: address">
+						<div>
+							<p class="fd-peasant">
+								<span data-bind="text: street"></span>
+								<span data-bind="text: building"></span>,
+								<span data-bind="text: office"></span>
+							</p>
+							<p class="fd-serf">
+								<span data-bind="text: description"></span>
+							</p>
+						</div>
+						<div>
+							<p class="fd-serf">
+								<span data-bind="text: city"></span>
+							</p>
+						</div>
+					</div>
+					<span class="popup__close fi-close-big" data-bind="click: hidePopup"></span>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div data-bind="ifnot: isMultiUser">
