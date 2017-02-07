@@ -1,6 +1,5 @@
 import * as ko from 'knockout'
 import axios from 'axios'
-import './Templates.scss'
 import * as constants from '../constants'
 import TemplateFactory from './TemplateFactory'
 import StandardTemplateView from '../Templates/View/StandardTemplateView'

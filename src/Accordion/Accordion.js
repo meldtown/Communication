@@ -1,4 +1,3 @@
-import './Accordion.scss'
 import * as ko from 'knockout'
 import MessageList from '../Message/MessageList'
 import StandardMessageForm from '../Message/Form/StandardMessageForm'

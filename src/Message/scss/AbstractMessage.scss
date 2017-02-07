@@ -107,4 +107,23 @@
 	}
 }
 
+.attached-map {
+	img {
+		-webkit-filter: grayscale(100%);
+		filter: grayscale(100%);
+		transition: all .3s;
+		cursor: pointer;
+		&:hover {
+			-webkit-filter: grayscale(0);
+			filter: grayscale(0);
+		}
+	}
+	&.-form {
+
+	}
+	&.-view {
+
+	}
+}
+
 

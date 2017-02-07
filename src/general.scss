@@ -18,6 +18,14 @@
 		color: $general_bold_black;
 	}
 
+	&__gray {
+		color: $gray;
+	}
+
+	&__light_gray {
+		color: $light_gray;
+	}
+
 }
 
 
@@ -152,7 +160,6 @@
 		cursor: pointer;
 		font-size: 22px;
 	}
-
 }
 
 .message-map {
@@ -183,6 +190,12 @@
 
 }
 
+@import 'Hub/EmployerHub.scss';
+@import 'Hub/JobsearcherHub.scss';
+@import 'Hub/JobsearcherHub.scss';
+@import 'Templates/Templates.scss';
+@import 'Accordion/Accordion.scss';
 @import 'Conversation/Conversation.scss';
+@import 'Header/Header.scss';
 @import 'LeftSidebar/LeftSidebar';
-@import "Message/Form/scss/MessageForm";
+@import 'Message/Form/scss/MessageForm';

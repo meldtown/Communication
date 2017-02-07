@@ -22,32 +22,57 @@
 			</div>
 
 		</div>
-		<!--<label for="addressId">address</label>
-		<select id="addressId" data-bind="options: addresses, optionsText: 'optionText', optionsValue: 'id', value: addressId, optionsCaption: 'address...', enable: hasAddresses"></select>-->
+		<label for="addressId" class="hub-color__light_gray message-form-control__label">Адрес: </label>
+		<div class="f-input f-input-icon-left f-input-icon-right message-form-control -gray">
+			<span data-bind="with: selectedAddress">
+				<input type="text" id="addressId" readonly data-bind="enable: $parent.hasAddresses, value: optionText, click: $parent.toggleAddressDropdown.bind($parent), css: {'-focused': $parent.isAddressBeingSelected}">
+				<i class="fi-location message-form-control__icon"></i>
+				<i class="fi-drop-down-icon icon-move message-form-control__icon"></i>
+			</span>
+			<div class="pseudo-dropdown" data-bind="css: {'-expanded': isAddressBeingSelected}">
+				<div class="pseudo-dropdown__options" data-bind="perfectScroll">
+					<div data-bind="foreach: addresses">
+						<div class="option" data-bind="text: optionText, click: $parent.selectAddress.bind($parent)"></div>
+					</div>
+				</div>
+				<div class="pseudo-dropdown__buttons">
+					<button class="invite-info__add-btn" data-bind="click: createAddress">Добавить адрес</button>
+					<button class="invite-info__add-btn" data-bind="click: createAddress">Управлять</button>
+				</div>
+			</div>
+		</div>
 		<div class="fd-f-left invite-info__address">
-			<div class="message-form__text -invite fd-craftsmen">Адрес:</div>
-			<button class="invite-info__add-btn" data-bind="click: createAddress">Добавить адрес</button>
 			<div data-bind="with: addressForm">
 				<div data-bind="template: 'AddressForm'"></div>
 			</div>
 			<div data-bind="visible: addressForm">
-				<button class="invite-info__add-btn" data-bind="disable: isAddButtonDisabled, click: saveAddress">Добавить</button>
+				<button class="invite-info__add-btn" data-bind="disable: isAddButtonDisabled, click: saveAddress">
+					Добавить
+				</button>
 				<button class="invite-info__add-btn" data-bind="click: cancelAddressForm">Отменить</button>
 			</div>
 		</div>
 	</div>
 
 
-	<div class="f-input fm-input-block">
-		<select id="vacancyId" data-bind="options: vacancies, optionsText: 'name', optionsValue: 'id', value: vacancyId, optionsCaption: 'Выберете вакансию...', enable: hasVacancies"></select>
-		<i class="fi-drop-down-icon"></i>
+	<!--<div class="f-input fm-input-block">-->
+		<!--<select id="vacancyId" data-bind="options: vacancies, optionsText: 'name', optionsValue: 'id', value: vacancyId, optionsCaption: 'Выберете вакансию...', enable: hasVacancies"></select>-->
+		<!--<i class="fi-drop-down-icon"></i>-->
+	<!--</div>-->
+
+	<div data-bind="with: selectedAddress">
+		<div class="attached-map" data-bind="if: id">
+			<img data-bind="attr: {src: mapSrc}" alt="map">
+		</div>
 	</div>
 
 	<div data-bind="with: attach">
 		<div data-bind="if: id">
 			<div class="form-attached-file">
-				<div class="form-attached-file__name fd-craftsmen"><i class="fi-hub-attach"></i>&nbsp;&nbsp;<span data-bind="text: fileName"></span></div>
-				<div class="form-attached-file__size fd-craftsmen"><span data-bind="text: fileSize"></span>&nbsp;&nbsp;KB</div>
+				<div class="form-attached-file__name fd-craftsmen">
+					<i class="fi-hub-attach"></i>&nbsp;&nbsp;<span data-bind="text: fileName"></span></div>
+				<div class="form-attached-file__size fd-craftsmen"><span data-bind="text: fileSize"></span>&nbsp;&nbsp;KB
+				</div>
 				<div data-bind="template: {name: 'Attach'}"></div>
 				<i class="form-attached-file__remove fi-close-big" data-bind="click: $parent.resetAttach.bind($parent)"></i>
 			</div>
