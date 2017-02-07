@@ -119,3 +119,11 @@ body {
 	display: block;
 	margin: 10px;
 }
+
+// -------------------------------
+
+.templates {
+	&__leftside {
+		//border-right: 1px solid $general_grey;
+	}
+}

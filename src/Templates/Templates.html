@@ -1,55 +1,66 @@
-<div class="templates-wrapper">
-	<div class="tabs">
-		<div class="tab" data-bind="css: {selectedTab: isStandardTabSelected()}">
-			<a href="#" data-bind="click: selectStandardTab">Standard</a>
-		</div>
-		<div class="tab" data-bind="css: {selectedTab: isInviteTabSelected()}">
-			<a href="#" data-bind="click: selectInviteTab">Invite</a>
-		</div>
-		<div class="tab" data-bind="css: {selectedTab: isDeclineTabSelected()}">
-			<a href="#" data-bind="click: selectDeclineTab">Decline</a>
-		</div>
-		<div class="tab" data-bind="css: {selectedTab: isOfferTabSelected()}">
-			<a href="#" data-bind="click: selectOfferTab">Offer</a>
-		</div>
-	</div>
+<!--<div class="templates-wrapper">-->
+	<!--<div class="tabs">-->
+		<!--<div class="tab" data-bind="css: {selectedTab: isStandardTabSelected()}">-->
+			<!--<a href="#" data-bind="click: selectStandardTab">Standard</a>-->
+		<!--</div>-->
+		<!--<div class="tab" data-bind="css: {selectedTab: isInviteTabSelected()}">-->
+			<!--<a href="#" data-bind="click: selectInviteTab">Invite</a>-->
+		<!--</div>-->
+		<!--<div class="tab" data-bind="css: {selectedTab: isDeclineTabSelected()}">-->
+			<!--<a href="#" data-bind="click: selectDeclineTab">Decline</a>-->
+		<!--</div>-->
+		<!--<div class="tab" data-bind="css: {selectedTab: isOfferTabSelected()}">-->
+			<!--<a href="#" data-bind="click: selectOfferTab">Offer</a>-->
+		<!--</div>-->
+	<!--</div>-->
 
-	<div class="filter">
-		<div class="language-filter">
-			<div class="language-item" data-bind="css: {selectedLanguage: isRussianLanguageSelected()}, click: toggleRussianLanguage">
-				Ru
-			</div>
-			<div class="language-item" data-bind="css: {selectedLanguage: isUkrainianLanguageSelected()}, click: toggleUkrainianLanguage">
-				Ua
-			</div>
-			<div class="language-item" data-bind="css: {selectedLanguage: isEnglishLanguageSelected()}, click: toggleEnglishLanguage">
-				En
-			</div>
-		</div>
-		<div class="filter-text">
-			<input type="search" data-bind="value: filter, valueUpdate: 'input'">
-		</div>
-	</div>
+	<!--<div class="filter">-->
+		<!--<div class="language-filter">-->
+			<!--<div class="language-item" data-bind="css: {selectedLanguage: isRussianLanguageSelected()}, click: toggleRussianLanguage">-->
+				<!--Ru-->
+			<!--</div>-->
+			<!--<div class="language-item" data-bind="css: {selectedLanguage: isUkrainianLanguageSelected()}, click: toggleUkrainianLanguage">-->
+				<!--Ua-->
+			<!--</div>-->
+			<!--<div class="language-item" data-bind="css: {selectedLanguage: isEnglishLanguageSelected()}, click: toggleEnglishLanguage">-->
+				<!--En-->
+			<!--</div>-->
+		<!--</div>-->
+		<!--<div class="filter-text">-->
+			<!--<input type="search" data-bind="value: filter, valueUpdate: 'input'">-->
+		<!--</div>-->
+	<!--</div>-->
 
 
-	<div class="templates-list" data-bind="foreach: filteredTemplates">
-		<div class="template-item" data-bind="text: name, click: select, css: {selectedTemplate: isSelected()}"></div>
+	<!--<div class="templates-list" data-bind="foreach: filteredTemplates">-->
+		<!--<div class="template-item" data-bind="text: name, click: select, css: {selectedTemplate: isSelected()}"></div>-->
+	<!--</div>-->
+<!--</div>-->
+<!--<div class="selected-template-template">-->
+	<!--<button class="create-new" data-bind="click: create">Create new template</button>-->
+	<!--<div data-bind="if: isSelectedTemplateBeingEdited">-->
+		<!--<div data-bind="with: selectedTemplateForm">-->
+			<!--<div data-bind="template: template"></div>-->
+		<!--</div>-->
+		<!--<button data-bind="click: $root.cancel">Cancel</button>-->
+		<!--<button data-bind="click: $root.save">Save</button>-->
+	<!--</div>-->
+	<!--<div data-bind="ifnot: isSelectedTemplateBeingEdited">-->
+		<!--<div data-bind="with: selectedTemplate">-->
+			<!--<div data-bind="template: template"></div>-->
+		<!--</div>-->
+		<!--<button data-bind="click: $root.edit">Edit</button>-->
+		<!--<button data-bind="click: $root.remove">Remove</button>-->
+	<!--</div>-->
+<!--</div>-->
+
+
+
+<div class="templates fd-f-left">
+	<div class="fd-f1 templates__leftside">
+		<h3>Шаблоны сообщений</h3>
 	</div>
-</div>
-<div class="selected-template-template">
-	<button class="create-new" data-bind="click: create">Create new template</button>
-	<div data-bind="if: isSelectedTemplateBeingEdited">
-		<div data-bind="with: selectedTemplateForm">
-			<div data-bind="template: template"></div>
-		</div>
-		<button data-bind="click: $root.cancel">Cancel</button>
-		<button data-bind="click: $root.save">Save</button>
-	</div>
-	<div data-bind="ifnot: isSelectedTemplateBeingEdited">
-		<div data-bind="with: selectedTemplate">
-			<div data-bind="template: template"></div>
-		</div>
-		<button data-bind="click: $root.edit">Edit</button>
-		<button data-bind="click: $root.remove">Remove</button>
+	<div class="fd-f1 templates__rightside">
+		выберите шаблон
 	</div>
 </div>

@@ -2,6 +2,7 @@ import axios from 'axios'
 import * as ko from 'knockout'
 import * as helpers from '../src/helpers'
 import Templates from '../src/Templates/Templates'
+import '../src/general.scss'
 
 axios.defaults.withCredentials = true
 
