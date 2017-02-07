@@ -63,6 +63,9 @@
 		color: $gray;
 		input, input:focus {
 			border-color: $light_gray;
+			font-size: 13px;
+			padding: 6px 15px 6px 23px;
+			cursor: pointer;
 		}
 	}
 	&__input,
@@ -72,8 +75,13 @@
 		padding: 6px;
 		margin-left: 10px;
 	}
-	&__icon {
+	&__label {
+		font-size: 13px;
+	}
+	& &__icon {
 		box-sizing: content-box;
+		font-size: 13px;
+		padding: 0 2px;
 		&.fi-drop-down-icon::before {
 			transition: all .2s;
 		}
