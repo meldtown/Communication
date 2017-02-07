@@ -22,8 +22,12 @@
 			</div>
 
 		</div>
-		<!--<label for="addressId">address</label>
-		<select id="addressId" data-bind="options: addresses, optionsText: 'optionText', optionsValue: 'id', value: addressId, optionsCaption: 'address...', enable: hasAddresses"></select>-->
+		<label for="addressId" class="hub-color__light_gray">Адрес: </label>
+		<div class="f-input f-input-icon-left f-input-icon-right message-form-control -gray -focused">
+			<input type="text" id="addressId" readonly data-bind="enable: hasAddresses">
+			<i class="fi-location message-form-control__icon"></i>
+			<i class="fi-drop-down-icon icon-move message-form-control__icon"></i>
+		</div>
 		<div class="fd-f-left invite-info__address">
 			<div class="message-form__text -invite fd-craftsmen">Адрес:</div>
 			<button class="invite-info__add-btn" data-bind="click: createAddress">Добавить адрес</button>
@@ -41,6 +45,12 @@
 	<div class="f-input fm-input-block">
 		<select id="vacancyId" data-bind="options: vacancies, optionsText: 'name', optionsValue: 'id', value: vacancyId, optionsCaption: 'Выберете вакансию...', enable: hasVacancies"></select>
 		<i class="fi-drop-down-icon"></i>
+	</div>
+
+	<div data-bind="with: selectedAddress">
+		<div class="attached-map" data-bind="if: mapSrc">
+			<img data-bind="attr: {src: mapSrc}" alt="map">
+		</div>
 	</div>
 
 	<div data-bind="with: attach">

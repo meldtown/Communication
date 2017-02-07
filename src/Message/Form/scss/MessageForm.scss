@@ -1,3 +1,5 @@
+@import "../../../variables";
+
 .message-form {
 	&__area {
 		width: 100%;
@@ -51,14 +53,35 @@
 }
 
 .message-form-control {
+	border-color: $light_gray;
+	&.-gray {
+		color: $gray;
+		input, input:focus {
+			border-color: $light_gray;
+		}
+	}
 	&__input,
 	&__select {
 		height: 26px;
 		border-radius: 2px;
-		border: solid 1px rgba(0, 0, 0, 0.3);
-		color: rgba(0, 0, 0, 0.3);
 		padding: 6px;
 		margin-left: 10px;
+	}
+	&__icon {
+		box-sizing: content-box;
+		&.fi-drop-down-icon {
+			transition: all .2s;
+		}
+	}
+
+	&.-focused &__icon.fi-drop-down-icon::before {
+		transform: rotate(180deg);
+	}
+
+	//For selector specificity increasing to override fedor styles
+	 &_gray {
+		color: $gray;
+		border-color: $light_gray;
 	}
 }
 
