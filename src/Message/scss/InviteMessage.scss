@@ -17,21 +17,6 @@
 					}
 				}
 			}
-
-			.map {
-				margin-top: 5px;
-				cursor: pointer;
-
-				img {
-					transition: .5s;
-				}
-
-				img:hover {
-					filter: grayscale(100%);
-					transition: .5s;
-				}
-			}
-
 		}
 	}
 }
