@@ -1,9 +1,10 @@
 .message-container {
 	.message-text-container.-invite {
-		background-color: $message_bg_color;
 		.invite-data {
+			background-color: $message_bg_color;
 			padding: 0 8px;
 			color: $gray;
+			border-radius: 2px;
 			i {
 				margin-right: 4px;
 			}
