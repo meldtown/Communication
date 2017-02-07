@@ -27,6 +27,8 @@ export default class Conversation {
 
 		this.isSelected = ko.observable(false)
 
+		this.toggleStatus = ko.observable(false)
+
 		this.isActive = ko.computed(() => this.type() === constants.ACTIVE_CONVERSATION)
 		this.isArchived = ko.computed(() => this.type() === constants.ARCHIVED_CONVERSATION)
 		this.isBlocked = ko.computed(() => this.type() === constants.BLOCKED_CONVERSATION)
@@ -44,6 +46,11 @@ export default class Conversation {
 		dispatcher.subscribe(({chatId}) => {
 			this.isSelected(this.id() === chatId)
 		}, this, constants.CONVERSATION_SELECTED)
+	}
+
+	toggleTypeDropdown() {
+		const prevStatus = this.toggleStatus()
+		return this.toggleStatus( !prevStatus )
 	}
 
 	select() {

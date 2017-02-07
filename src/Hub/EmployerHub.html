@@ -1,4 +1,4 @@
-<header class="header__wrap">
+<header class="header__wrap" data-bind="with: selectedConversation">
 	<!--<div data-bind="with: selectedConversation">-->
 		<!--<span data-bind="if: isActive">-->
 			<!--<span>Active</span>-->
@@ -24,8 +24,22 @@
 		<!--</span>-->
 	<!--</div>-->
 
-	<h3 class="header__title fd-soldier">
+	<h3 class="header__title fd-soldier" data-bind="click: toggleTypeDropdown">
 		Активные диалоги
+
+		<span class="header__icon" data-bind="if: toggleStatus">
+			<i class="fi-arrows-up"></i>
+		</span>
+		<span class="header__icon" data-bind="ifnot: toggleStatus">
+			<i class="fi-drop-down-icon"></i>
+		</span>
+
+		<ul class="dropdown -dialog-types" data-bind="with: $parent.conversations, css: { '-show': toggleStatus }">
+
+			<li><span data-bind="click: selectActive" href="#">Активные диалоги</span></li>
+			<li><a data-bind="click: selectArchive" href="#">Архив диалогов</a></li>
+			<li><a data-bind="click: selectBlocked" href="#">Заблокированные диалоги</a></li>
+		</ul>
 	</h3>
 
 </header>
