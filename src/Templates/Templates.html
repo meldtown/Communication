@@ -60,7 +60,7 @@
 	<div class="fd-f1 templates__leftside fd-p20">
 		<div class="fd-f-between-middle">
 			<h3 class="fd-f1 fd-beefy-soldier templates-title">Шаблоны сообщений</h3>
-			<a href="#" class="templates-title__createnew-btn fd-peasant">
+			<a href="#" class="templates-btn fd-peasant">
 				Создать новый шаблон
 			</a>
 		</div>
@@ -91,7 +91,7 @@
 				<p class="fd-peasant templates-lang__item">EN</p>
 			</div>
 			<div class="fd-f1 f-input-block hubcontrol__input templates-search__inputblock">
-				<input type="text" placeholder="Поиск...">
+				<input class="templates-input" type="text" placeholder="Поиск...">
 			</div>
 		</div>
 
@@ -102,7 +102,7 @@
 					<i class="fi-hub-wright"></i>
 					Новый шаблон сообщения
 				</span>
-				
+				<span class="templates-list__remove">&times;</span>
 			</li>
 			<li class="fd-f-left fd-peasant templates-list__item">
 				<span class="fd-f1">
@@ -140,11 +140,57 @@
 					17 апр 2017
 				</span>
 			</li>
-		</ul>	
+		</ul>
 
 
 	</div>
-	<div class="fd-f1 templates__rightside">
-		
+	<div class="fd-f1 templates__rightside fd-p20">
+		<div class="templates-lang">
+			<h5 class="fd-peasant templates-lang__title">Выберите язык сообщения</h5>
+			<div class="fd-f-left">
+				<p class="fd-peasant templates-lang__item -active">РУ</p>
+				<p class="fd-peasant templates-lang__item">УК</p>
+				<p class="fd-peasant templates-lang__item">EN</p>
+			</div>
+		</div>
+
+		<div class="templates-inputarea">
+			<label class="fd-peasant templates-inputarea__title" for="template_name">
+				Название шаблона
+			</label>
+
+			<div class="fd-f1 f-input-block hubcontrol__input">
+				<input
+					placeholder="Новый шаблон сообщения"
+					id="template_name"
+					type="text"
+					class="templates-input"
+				>
+			</div>
+		</div>
+
+		<div class="templates-inputarea">
+			<label class="fd-peasant templates-inputarea__title" for="template_message">
+				Текст сообщения
+			</label>
+
+			<div class="fd-f1 f-input-block hubcontrol__input">
+				<textarea
+					placeholder="Новый шаблон сообщения"
+					id="template_message"
+					class="templates-input"
+				></textarea>
+			</div>
+		</div>
+
+
+		<div class="fd-f-left templates-create-controls">
+			<a href="#" class="templates-btn -green fd-peasant">
+				Сохранить
+			</a>
+			<a href="#" class="templates-create-controls__discard templates-btn -grey -without-border fd-peasant">
+				Отменить
+			</a>
+		</div>
 	</div>
 </div>

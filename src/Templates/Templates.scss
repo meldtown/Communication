@@ -132,6 +132,7 @@ $templates_gray: #f2f2f2;
 	}
 	&__rightside {
 		padding-left: 25px;
+		padding-right: 25px;
 
 		&.-empty {
 			background-color: $general_grey;
@@ -139,15 +140,36 @@ $templates_gray: #f2f2f2;
 	}
 }
 
+.hubcontrol__input {
+	.templates-input {
+		padding-top: 6px;
+		padding-bottom: 6px;
+	}
+}
+
+.templates-btn {
+	color: #003399;
+	border: 1px solid #003399;
+	border-radius: 2px;
+	padding: 7px 15px;
+
+	&.-green {
+		color: #4ba661;
+		border-color: #4ba661;
+	}
+
+	&.-grey {
+		color: #78909c;
+		border-color: #78909c;
+	}
+
+	&.-without-border {
+		border: none;
+	}
+}
+
 .templates-title {
 	margin-bottom: 0;
-
-	&__createnew-btn {
-		color: #003399;
-		border: 1px solid #003399;
-		border-radius: 2px;
-		padding: 7px 15px;
-	}
 }
 
 .templates-tabs {
@@ -159,7 +181,6 @@ $templates_gray: #f2f2f2;
 		padding: 11px 3px;
 		width: 105px;
 		margin: 0;
-		border-radius: 2px;
 		border-radius: 2px 2px 0 0;
 		cursor: pointer;
 
@@ -174,23 +195,22 @@ $templates_gray: #f2f2f2;
 	}
 }
 
+
 .templates-search {
 	&__wrap {
-		margin: 25px 0 20px 0;	
+		margin: 25px 0 20px 0;
 	}
 
 	&__inputblock {
 		margin: 0;
 		margin-left: 15px;
-		
-		& input {
-			padding-top: 6px;
-			padding-bottom: 6px;
-		}
 	}
 }
 
 .templates-lang {
+	&__title {
+		margin-bottom: 3px;
+	}
 	&__item {
 		background-color: $templates_gray;
 		margin: 0;
@@ -207,10 +227,15 @@ $templates_gray: #f2f2f2;
 }
 
 .templates-list {
+	margin-bottom: 20px;
 	&__item {
 		cursor: pointer;
 		padding: 10px 0;
 		border-top: 1px solid $general_grey;
+
+		&:last-child {
+			border-bottom: 1px solid $general_grey;
+		}
 
 		& [class^='fi-'] {
 			margin-right: 5px;
@@ -223,5 +248,21 @@ $templates_gray: #f2f2f2;
 	}
 	&__date {
 		color: $general_light_black;
+	}
+	&__remove {
+		margin-right: 13px;
+	}
+}
+
+.templates-inputarea {
+	margin-top: 20px;
+}
+
+.templates-create-controls {
+	margin-top: 20px;
+	&__discard {
+		padding-left: 0;
+		padding-right: 0;
+		margin-left: 20px;
 	}
 }
