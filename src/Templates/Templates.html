@@ -1,84 +1,88 @@
-<!--<div class="templates-wrapper">-->
-	<!--<div class="tabs">-->
-		<!--<div class="tab" data-bind="css: {selectedTab: isStandardTabSelected()}">-->
-			<!--<a href="#" data-bind="click: selectStandardTab">Standard</a>-->
-		<!--</div>-->
-		<!--<div class="tab" data-bind="css: {selectedTab: isInviteTabSelected()}">-->
-			<!--<a href="#" data-bind="click: selectInviteTab">Invite</a>-->
-		<!--</div>-->
-		<!--<div class="tab" data-bind="css: {selectedTab: isDeclineTabSelected()}">-->
-			<!--<a href="#" data-bind="click: selectDeclineTab">Decline</a>-->
-		<!--</div>-->
-		<!--<div class="tab" data-bind="css: {selectedTab: isOfferTabSelected()}">-->
-			<!--<a href="#" data-bind="click: selectOfferTab">Offer</a>-->
-		<!--</div>-->
-	<!--</div>-->
+<div class="templates-wrapper">
+	<div class="tabs">
+		<div class="tab" data-bind="css: {selectedTab: isStandardTabSelected()}">
+			<a href="#" data-bind="click: selectStandardTab">Standard</a>
+		</div>
+		<div class="tab" data-bind="css: {selectedTab: isInviteTabSelected()}">
+			<a href="#" data-bind="click: selectInviteTab">Invite</a>
+		</div>
+		<div class="tab" data-bind="css: {selectedTab: isDeclineTabSelected()}">
+			<a href="#" data-bind="click: selectDeclineTab">Decline</a>
+		</div>
+		<div class="tab" data-bind="css: {selectedTab: isOfferTabSelected()}">
+			<a href="#" data-bind="click: selectOfferTab">Offer</a>
+		</div>
+	</div>
 
-	<!--<div class="filter">-->
-		<!--<div class="language-filter">-->
-			<!--<div class="language-item" data-bind="css: {selectedLanguage: isRussianLanguageSelected()}, click: toggleRussianLanguage">-->
-				<!--Ru-->
-			<!--</div>-->
-			<!--<div class="language-item" data-bind="css: {selectedLanguage: isUkrainianLanguageSelected()}, click: toggleUkrainianLanguage">-->
-				<!--Ua-->
-			<!--</div>-->
-			<!--<div class="language-item" data-bind="css: {selectedLanguage: isEnglishLanguageSelected()}, click: toggleEnglishLanguage">-->
-				<!--En-->
-			<!--</div>-->
-		<!--</div>-->
-		<!--<div class="filter-text">-->
-			<!--<input type="search" data-bind="value: filter, valueUpdate: 'input'">-->
-		<!--</div>-->
-	<!--</div>-->
+	<div class="filter">
+		<div class="language-filter">
+			<div class="language-item" data-bind="css: {selectedLanguage: isRussianLanguageSelected()}, click: toggleRussianLanguage">
+				Ru
+			</div>
+			<div class="language-item" data-bind="css: {selectedLanguage: isUkrainianLanguageSelected()}, click: toggleUkrainianLanguage">
+				Ua
+			</div>
+			<div class="language-item" data-bind="css: {selectedLanguage: isEnglishLanguageSelected()}, click: toggleEnglishLanguage">
+				En
+			</div>
+		</div>
+		<div class="filter-text">
+			<input type="search" data-bind="value: filter, valueUpdate: 'input'">
+		</div>
+	</div>
 
 
-	<!--<div class="templates-list" data-bind="foreach: filteredTemplates">-->
-		<!--<div class="template-item" data-bind="text: name, click: select, css: {selectedTemplate: isSelected()}"></div>-->
-	<!--</div>-->
-<!--</div>-->
-<!--<div class="selected-template-template">-->
-	<!--<button class="create-new" data-bind="click: create">Create new template</button>-->
-	<!--<div data-bind="if: isSelectedTemplateBeingEdited">-->
-		<!--<div data-bind="with: selectedTemplateForm">-->
-			<!--<div data-bind="template: template"></div>-->
-		<!--</div>-->
-		<!--<button data-bind="click: $root.cancel">Cancel</button>-->
-		<!--<button data-bind="click: $root.save">Save</button>-->
-	<!--</div>-->
-	<!--<div data-bind="ifnot: isSelectedTemplateBeingEdited">-->
-		<!--<div data-bind="with: selectedTemplate">-->
-			<!--<div data-bind="template: template"></div>-->
-		<!--</div>-->
-		<!--<button data-bind="click: $root.edit">Edit</button>-->
-		<!--<button data-bind="click: $root.remove">Remove</button>-->
-	<!--</div>-->
-<!--</div>-->
+	<div class="templates-list" data-bind="foreach: filteredTemplates">
+		<div class="template-item" data-bind="text: name, click: select, css: {selectedTemplate: isSelected()}"></div>
+	</div>
+</div>
+<div class="selected-template-template">
+	<button class="create-new" data-bind="click: create">Create new template</button>
+	<div data-bind="if: isSelectedTemplateBeingEdited">
+		<div data-bind="with: selectedTemplateForm">
+			<div data-bind="template: template"></div>
+		</div>
+		<button data-bind="click: $root.cancel">Cancel</button>
+		<button data-bind="click: $root.save">Save</button>
+	</div>
+	<div data-bind="ifnot: isSelectedTemplateBeingEdited">
+		<div data-bind="with: selectedTemplate">
+			<div data-bind="template: template"></div>
+		</div>
+		<button data-bind="click: $root.edit">Edit</button>
+		<button data-bind="click: $root.remove">Remove</button>
+	</div>
+</div>
+
+
+<br clear="all">
+<br><br><br><br><br><br><br><br><br><br>
 
 
 
 <div class="templates fd-f-left">
-	<div class="fd-f1 templates__leftside fd-p20">
+	<div class="fd-f1 templates__leftside">
 		<div class="fd-f-between-middle">
-			<h3 class="fd-f1 fd-beefy-soldier templates-title">Шаблоны сообщений</h3>
-			<a href="#" class="templates-btn fd-peasant">
+			<h3 class="fd-f1 fd-beefy-soldier templates-title f-text-black">Шаблоны сообщений</h3>
+			<p data-bind="click: create" class="templates-btn fd-peasant">
 				Создать новый шаблон
-			</a>
+			</p>
 		</div>
 
 		<div class="templates-tabs fd-f-between fd-text-center">
-			<p class="templates-tabs__item -active fd-serf">
+			<p class="templates-tabs__item fd-serf" data-bind="click: selectStandardTab, css: {'-active f-text-black': isStandardTabSelected(), 'f-text-gray': !isStandardTabSelected()}">
 				<i class="fi-hub-wright"></i>
 				Сообщения
 			</p>
-			<p class="templates-tabs__item fd-serf">
+			<p class="templates-tabs__item fd-serf" data-bind="click: selectInviteTab, css: {'-active f-text-black': isInviteTabSelected(), 'f-text-gray': !isInviteTabSelected()}">
 				<i class="fi-hub-invite"></i>
 				Приглашения
 			</p>
-			<p class="templates-tabs__item fd-serf">
+			<p class="templates-tabs__item fd-serf" data-bind="click: selectDeclineTab, css: {'-active f-text-black': isDeclineTabSelected(), 'f-text-gray': !isDeclineTabSelected()}">
 				<i class="fi-hub-refuse"></i>
 				Отказы
 			</p>
-			<p class="templates-tabs__item fd-serf">
+			<p class="templates-tabs__item fd-serf" data-bind="click: selectOfferTab, css: {'-active f-text-black': isOfferTabSelected(), 'f-text-gray': !isOfferTabSelected()}">
 				<i class="fi-hub-offer"></i>
 				Предложения
 			</p>
@@ -86,23 +90,26 @@
 
 		<div class="fd-f-left templates-search__wrap">
 			<div class="templates-lang fd-f-left">
-				<p class="fd-peasant templates-lang__item -active">РУ</p>
-				<p class="fd-peasant templates-lang__item">УК</p>
-				<p class="fd-peasant templates-lang__item">EN</p>
+				<p class="fd-peasant templates-lang__item -active" data-bind="css: {'-active': isRussianLanguageSelected()}, click: toggleRussianLanguage">РУ</p>
+				<p class="fd-peasant templates-lang__item" data-bind="css: {'-active': isUkrainianLanguageSelected()}, click: toggleUkrainianLanguage">УК</p>
+				<p class="fd-peasant templates-lang__item" data-bind="css: {'-active': isEnglishLanguageSelected()}, click: toggleEnglishLanguage">EN</p>
 			</div>
 			<div class="fd-f1 f-input-block hubcontrol__input templates-search__inputblock">
-				<input class="templates-input" type="text" placeholder="Поиск...">
+				<input data-bind="value: filter, valueUpdate: 'input'" class="templates-input" type="text" placeholder="Поиск...">
 			</div>
 		</div>
 
 
-		<ul class="templates-list f-reset-list">
+		<ul class="templates-list f-reset-list f-text-black">
 			<li class="fd-f-left fd-peasant templates-list__item -active">
 				<span class="fd-f1">
 					<i class="fi-hub-wright"></i>
 					Новый шаблон сообщения
 				</span>
-				<span class="templates-list__remove">&times;</span>
+				<span class="templates-list__date">
+					15 фев 2017
+				</span>
+				<span class="templates-list__remove f-text-gray">&times;</span>
 			</li>
 			<li class="fd-f-left fd-peasant templates-list__item">
 				<span class="fd-f1">
@@ -144,7 +151,7 @@
 
 
 	</div>
-	<div class="fd-f1 templates__rightside fd-p20">
+	<div class="fd-f1 templates__rightside">
 		<div class="templates-lang">
 			<h5 class="fd-peasant templates-lang__title">Выберите язык сообщения</h5>
 			<div class="fd-f-left">
@@ -174,13 +181,18 @@
 				Текст сообщения
 			</label>
 
-			<div class="fd-f1 f-input-block hubcontrol__input">
+			<div class="fd-peasant fd-f1 f-input-block hubcontrol__input">
 				<textarea
 					placeholder="Новый шаблон сообщения"
 					id="template_message"
 					class="templates-input"
 				></textarea>
 			</div>
+		</div>
+
+		<div class="templates-icons">
+			<span class="templates-icons__emozzi fi-hub-emozzi"></span>
+			<span class="fi-hub-attach"></span>
 		</div>
 
 
