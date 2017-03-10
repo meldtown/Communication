@@ -1,5 +1,6 @@
 import * as ko from 'knockout'
 import axios from 'axios'
+import './Templates.scss'
 import * as constants from '../constants'
 import TemplateFactory from './TemplateFactory'
 import StandardTemplateView from '../Templates/View/StandardTemplateView'
@@ -161,7 +162,7 @@ export default class Templates {
 				break
 			case InviteTemplateView:
 				form = new InviteTemplateForm(this.dispatcher, selectedTemplateData)
-				// form.addresses(this.addresses())
+				form.fetchAddresses()
 				break
 			case DeclineTemplateView:
 				form = new DeclineTemplateForm(this.dispatcher, selectedTemplateData)
@@ -217,16 +218,22 @@ export default class Templates {
 		this.isEnglishLanguageSelected(false)
 		let newTemplateForm = null
 		let newTemplateView = null
+		let data = {text: '', title: '', language: 'ru'}
 		switch (this.selectedTab()) {
 			case StandardTemplateView:
 				newTemplateForm = new StandardTemplateForm(this.dispatcher)
 				newTemplateView = new StandardTemplateView(this.dispatcher)
 				break
 			case InviteTemplateView:
-				newTemplateForm = new InviteTemplateForm(this.dispatcher)
-				newTemplateView = new InviteTemplateView(this.dispatcher)
-				// newTemplateForm.addresses(this.addresses())
-				// newTemplateForm.fetchAddresses()
+				newTemplateForm = new InviteTemplateForm(this.dispatcher, Object.assign({}, data, {
+					addressId: 0,
+					inviteDate: '2016-11-11'
+				}))
+				newTemplateView = new InviteTemplateView(this.dispatcher, Object.assign({}, data, {
+					addressId: 0,
+					inviteDate: '2016-11-11'
+				}))
+				newTemplateForm.fetchAddresses()
 				break
 			case DeclineTemplateView:
 				newTemplateForm = new DeclineTemplateForm(this.dispatcher)

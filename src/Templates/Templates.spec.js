@@ -10,6 +10,8 @@ import InviteTemplateView from './View/InviteTemplateView'
 import DeclineTemplateView from './View/DeclineTemplateView'
 import OfferTemplateView from './View/OfferTemplateView'
 import TemplateFactory from './TemplateFactory'
+import AbstractTemplate from './AbstractTemplate'
+import AbstractTemplateView from './View/AbstractTemplateView'
 import StandardTemplateForm from './Form/StandardTemplateForm'
 import InviteTemplateForm from './Form/InviteTemplateForm'
 import OfferTemplateForm from './Form/OfferTemplateForm'
@@ -608,6 +610,31 @@ describe('Templates', () => {
 	describe('save template', () => {
 		it('should have save method', () => {
 			assert.equal(typeof model.save, 'function')
+
+		})
+
+		it('should have fill method', () => {
+			mock.onGet(`${api}/addresses`).reply(200, [])
+			let stdTplForm = new StandardTemplateForm(dispatcher)
+			let invTplForm = new InviteTemplateForm(dispatcher)
+			let offerTplForm = new OfferTemplateForm(dispatcher)
+			let declForm = new DeclineTemplateForm(dispatcher)
+			let tplInv = model.templates()[1]
+			assert.equal(typeof stdTplForm.fill, 'function')
+			assert.equal(typeof invTplForm.fill, 'function')
+			assert.equal(typeof offerTplForm.fill, 'function')
+			assert.equal(typeof declForm.fill, 'function')
+
+			model.selectInviteTab()
+			tplInv.select()
+			invTplForm.text('Hello')
+			invTplForm.title('World')
+			invTplForm.addressId(666)
+			let selectedTemplate = model.selectedTemplate()
+			invTplForm.fill(selectedTemplate)
+			assert.equal(selectedTemplate.text(), 'Hello')
+			assert.equal(selectedTemplate.title(), 'World')
+			assert.equal(selectedTemplate.addressId(), 666)
 		})
 
 		it('should set data to corresponding templateView on success put request after save', () => {

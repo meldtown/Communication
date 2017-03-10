@@ -37,7 +37,7 @@
 				</div>
 				<div class="pseudo-dropdown__buttons">
 					<button class="invite-info__add-btn" data-bind="click: createAddress">Добавить адрес</button>
-					<button class="invite-info__add-btn" data-bind="click: createAddress">Управлять</button>
+					<button class="invite-info__add-btn" data-bind="click: manageAddress">Управлять</button>
 				</div>
 			</div>
 		</div>
@@ -56,13 +56,63 @@
 
 
 	<!--<div class="f-input fm-input-block">-->
-		<!--<select id="vacancyId" data-bind="options: vacancies, optionsText: 'name', optionsValue: 'id', value: vacancyId, optionsCaption: 'Выберете вакансию...', enable: hasVacancies"></select>-->
-		<!--<i class="fi-drop-down-icon"></i>-->
+	<!--<select id="vacancyId" data-bind="options: vacancies, optionsText: 'name', optionsValue: 'id', value: vacancyId, optionsCaption: 'Выберете вакансию...', enable: hasVacancies"></select>-->
+	<!--<i class="fi-drop-down-icon"></i>-->
 	<!--</div>-->
 
 	<div data-bind="with: selectedAddress">
 		<div class="attached-map" data-bind="if: id">
-			<img data-bind="attr: {src: mapSrc}" alt="map">
+			<img data-bind="attr: {src: mapSrc}, click: $parent.showPopup" alt="map">
+		</div>
+	</div>
+	<div data-bind="if: isPopupVisible">
+		<div class="popup">
+			<div class="popup__inner">
+				<div class="manage-address fd-f">
+					<div class="address-list">
+						<div class="heading">
+							<h3 class="fd-beefy-soldier">Адреса компании</h3>
+						</div>
+						<div class="container">
+							<div class="item add-address">
+								<span class="text fd-peasant">Добавить новый адрес</span>
+							</div>
+							<div data-bind="foreach: managedAddresses">
+								<div class="item fd-f-between-middle" data-bind="click: $parent.selectAddress.bind($parent)">
+									<div class="text">
+										Ул.&nbsp;<span class="fd-peasant street" data-bind="text: street"></span>,
+										<span class="fd-peasant building" data-bind="text: building"></span><span data-bind="if: office">,</span>
+										<span data-bind="if: office">
+											оф.&nbsp;<span class="fd-peasant office" data-bind="text: office"></span>
+										</span>
+										<br>
+										<span class="fd-serf city" data-bind="text: city"></span>
+									</div>
+									<i class="close fi-close-big"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="fd-f1">
+						<div class="address-map" data-bind="map: {lat: lat, lng: lng}"></div>
+						<div class="address-data">
+							<div data-bind="with: selectedAddress">
+								<div class="address fd-peasant">
+									<span data-bind="text: city"></span>,
+									ул.&nbsp;<span data-bind="text: street"></span>,
+									<span class="fd-peasant building" data-bind="text: building"></span><span data-bind="if: office">,</span>
+									оф.&nbsp;<span data-bind="text: office"></span>
+								</div>
+								<div class="description">
+									<h4 class="heading fd-peasant">Дополнительная информация о расположении офиса</h4>
+									<p class="text fd-peasant" data-bind="text: description"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<span class="popup__close fi-close-big" data-bind="click: hidePopup"></span>
+			</div>
 		</div>
 	</div>
 

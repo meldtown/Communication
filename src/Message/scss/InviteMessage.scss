@@ -1,3 +1,5 @@
+//SMACSS rulezzz !
+
 .message-container {
 	.message-text-container.-invite {
 		.invite-data {
@@ -19,4 +21,67 @@
 			}
 		}
 	}
+}
+
+.manage-address {
+	width: 850px;
+	.address-map {
+		height: 260px;
+	}
+	.address-list {
+		padding: 20px 30px 30px;
+		.heading {
+			padding-bottom: 15px;
+			border-bottom: 1px solid $light_black;
+			h3 {
+				margin: 0;
+			}
+		}
+		.item {
+			padding: 10px;
+			color: rgba(0,0,0,.87);
+			border-bottom: 1px solid $light_black;
+			cursor: pointer;
+			&.add-address {
+				cursor: auto;
+				color: #4ba661;
+				padding-top: 15px;
+				padding-bottom: 15px;
+				.text {
+					cursor: pointer;
+				}
+			}
+			&.is-active, &:hover {
+				background-color: rgba(0, 0, 0, 0.05);
+			}
+			.city {
+				color: $light_gray;
+			}
+			.text {
+				margin-right: 10px;
+			}
+			.close {
+				font-size: 10px;
+				cursor: pointer;
+			}
+		}
+	}
+	.address-data {
+		padding: 15px 10px 0 40px;
+		border-left: 1px solid $light_black;
+		.address, .description {
+			color: rgba(0,0,0, .87);
+		}
+		.description {
+			margin-top: 15px;
+			.heading {
+				color: $gray;
+				margin-bottom: 2px;
+			}
+			.text {
+				margin: 0;
+			}
+		}
+	}
+
 }

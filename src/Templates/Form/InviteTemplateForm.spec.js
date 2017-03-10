@@ -6,20 +6,24 @@ import AbstractTemplate from '../AbstractTemplate'
 import * as generator from '../../../db'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import InviteTemplateView from '../View/InviteTemplateView'
+import TemplateFactory from '../TemplateFactory'
+import Templates from '../Templates'
+import AddressForm from '../../Address/AddressForm'
+import Address from '../../Address/Address'
 
 const api = 'http://sample.com'
 
+before(() => {
+	global.api = api
+})
+
 describe('InviteTemplateForm', () => {
-	let mock
 	let model
 	let dispatcher
-
-	before(() => global.api = api)
-
+	let mock
 	beforeEach(() => {
-		mock = new MockAdapter(axios)
 		dispatcher = new ko.subscribable()
+		mock = new MockAdapter(axios)
 		model = new InviteTemplateForm(dispatcher)
 	})
 
@@ -33,58 +37,100 @@ describe('InviteTemplateForm', () => {
 		assert.equal(ko.isObservable(model.inviteDate), true)
 	})
 
-	// it('should have addressId', () => {
-	// 	assert.equal(ko.isObservable(model.addressId), true)
-	// })
+	it('should have addressId', () => {
+		assert.equal(ko.isObservable(model.addressId), true)
+	})
+
+	it('should have save method', () => {
+		assert.equal(typeof model.save, 'function')
+	})
 
 	it('should accept data into constructor', () => {
 		let data = generator.generateInviteTemplate(1)
+		// mock.onGet(`${api}/addresses`).reply(200, [])
 		model = new InviteTemplateForm(dispatcher, data)
-		let actual = ko.toJS(model)
-		let overrides = {dispatcher: 1, template: 1, type: 1, isAddButtonDisabled: true,  address: {...data.address, optionText: 1}}
-		assert.deepEqual({...actual, ...overrides}, {...data, ...overrides})
+
+		assert.equal(model.id(), data.id)
+		assert.equal(model.title(), data.title)
 	})
 
 	it('should have template prop', () => {
-		assert.ok(ko.isObservable(model.template))
+		assert.equal(ko.isObservable(model.template), true)
 		assert.equal((model.template()), 'InviteTemplateForm')
 	})
 
-	it('should have fill method', () => {
-		assert.equal(typeof model.fill, 'function')
+	it('should have addressForm prop', () => {
+		assert.equal(ko.isObservable(model.addressForm), true)
+		assert.equal(model.addressForm(), null)
 	})
 
-	it('should fill given template', () => {
-		model = new InviteTemplateForm(dispatcher, generator.generateInviteTemplate(1))
-		let template = new InviteTemplateView(dispatcher)
-		model.fill(template)
-
-		// noinspection JSUnusedLocalSymbols
-		let {isSelected, address, ...actual} = ko.toJS(template) // eslint-disable-line no-unused-vars
-		let {addresses, addressForm, ...expected} = ko.toJS(model) // eslint-disable-line no-unused-vars
-		assert.deepEqual({...actual, addressText: '', template: 1, isAddButtonDisabled: true}, {...expected, addressText: '', template: 1, isAddButtonDisabled: true})
+	it('should have createAddress method', () => {
+		assert.equal(typeof model.createAddress, 'function')
 	})
 
-	// it('should fill address if given', () => {
-	// 	model = new InviteTemplateForm(dispatcher, generator.generateInviteTemplate(1))
-	// 	let template = new InviteTemplateView(dispatcher, {address: generator.generateAddress(333)})
-	// 	model.addresses([generator.generateAddress(222), generator.generateAddress(333)].map(item => new Address(item)))
-	// 	model.addressId(333)
-	// 	model.fill(template)
-    //
-	// 	let address = model.addresses()[1]
-	// 	assert.equal(template.address(), address)
-	// 	assert.equal(template.addressText(), address.optionText())
-	// })
+	it('should have createAddress method', () => {
+		assert.equal(typeof model.createAddress, 'function')
+	})
 
-	// it('should set default message if there\'s not selected address', () => {
-	// 	model = new InviteTemplateForm(dispatcher, generator.generateInviteTemplate(1))
-	// 	let template = new InviteTemplateView(dispatcher)
-	// 	model.addresses([generator.generateAddress(222), generator.generateAddress(333)].map(item => new Address(item)))
-	// 	template.address(new Address(generator.generateAddress()))
-    //
-	// 	assert.equal(template.addressText(), 'No attached address')
-	// })
+	it('should have addresses observable array', () => {
+		assert.ok(ko.isObservable(model.addresses))
+		assert.equal(typeof model.addresses.push, 'function')
+		assert.equal(model.addresses().length, 0)
+	})
+
+	it('should have saveAddress method', () => {
+		let data = {
+			street: '12th Avenue',
+			houseNumber: '12',
+			office: '13',
+			city: 'New York',
+			description: ''
+		}
+
+		let mock = new MockAdapter(axios)
+
+		model.addresses([generator.generateAddress(1), generator.generateAddress(2)])
+		assert.equal(typeof model.saveAddress, 'function')
+
+		model.createAddress()
+		model.addressForm().city('New York')
+		model.addressForm().street('12th Avenue')
+		model.addressForm().houseNumber('12')
+		model.addressForm().office('13')
+		model.addressForm().description('')
+		mock.onPost(`${api}/addresses/`, data).reply(200, Object.assign({}, data, {id: 12}))
+		model.saveAddress().then(() => {
+			assert.equal(model.addressId(), 12)
+			assert.equal(model.addresses().length, 3)
+		})
+	})
+
+	it('should have cancelAddressForm method', () => {
+		assert.equal(typeof model.cancelAddressForm, 'function')
+
+		model.createAddress()
+		assert.equal(model.addressForm() instanceof AddressForm, true)
+
+		model.cancelAddressForm()
+		assert.equal(model.addressForm(), null)
+	})
+
+	it('should have fetchAddresses method', () => {
+		let mock = new MockAdapter(axios)
+		assert.equal(typeof model.fetchAddresses, 'function')
+
+		assert.equal(model.addresses().length, 0)
+
+		mock.onGet(`${api}/addresses`).reply(200, [
+			generator.generateAddress(1),
+			generator.generateAddress(2)
+		])
+
+		return model.fetchAddresses().then(() => {
+			assert.equal(model.addresses().length, 2)
+			assert.ok(model.addresses()[0] instanceof Address)
+		})
+	})
 
 	describe('save method', () => {
 		let {id, ...data} = generator.generateInviteTemplate(1)
@@ -95,6 +141,11 @@ describe('InviteTemplateForm', () => {
 
 		it('should call put while saving existing template', () => {
 			model = new InviteTemplateForm(dispatcher, {...data, id})
+			console.log({...data, id})
+			mock.onAny().reply(config => {
+				console.log(config.method, config.url, config.data)
+				return [500]
+			})
 			mock.onPut(`${api}/templates/${id}`, {...data, id}).reply(200)
 
 			return model.save().then(() => assert.ok(true))
@@ -107,6 +158,7 @@ describe('InviteTemplateForm', () => {
 			return model.save().then(() => assert.ok(true))
 		})
 	})
+
 })
 
 
