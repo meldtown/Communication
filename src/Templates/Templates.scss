@@ -140,6 +140,10 @@ $templates_gray: #f2f2f2;
 		&.-empty {
 			background-color: $general_grey;
 		}
+
+		&.-hide {
+			display: none;
+		}
 	}
 }
 
@@ -147,6 +151,10 @@ $templates_gray: #f2f2f2;
 	textarea.templates-input {
 		height: 62px;
 		resize: vertical;
+
+		&:not(:focus) {
+			border-color: #bbbbbb;
+		}
 	}
 	.templates-input {
 		padding-top: 6px;
@@ -231,6 +239,7 @@ $templates_gray: #f2f2f2;
 		padding: 0 7px;
 		cursor: pointer;
 		color: #7f7f7f;
+		text-transform: uppercase;
 
 		&.-active {
 			color: #222;
@@ -265,14 +274,15 @@ $templates_gray: #f2f2f2;
 		}
 	}
 	&__date {
+		padding-top: 2px;
 		color: $general_light_black;
 	}
 	&__remove {
 		margin-right: 13px;
 		font-size: 18px;
-		margin-top: -5px;
+		margin-top: -3px;
 		position: relative;
-		margin-left: 8px;
+		margin-left: 12px;
 		top: 3px;
 	}
 }
@@ -295,5 +305,16 @@ $templates_gray: #f2f2f2;
 
 	&__emozzi {
 		margin-right: 10px;
+	}
+}
+
+.templates-view {
+	&__key, &__value {
+		margin: 0;
+	}
+	&__key {
+		&:not(:first-child) {
+			margin-top: 20px;
+		}
 	}
 }

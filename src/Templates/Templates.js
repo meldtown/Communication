@@ -12,6 +12,7 @@ import DeclineTemplateForm from '../Templates/Form/DeclineTemplateForm'
 import OfferTemplateForm from '../Templates/Form/OfferTemplateForm'
 import '../bindingHandlers/attach'
 import Attach from '../Attach/Attach'
+import { formattedDateTemplates } from '../helpers'
 
 // import Address from '../Address/Address'
 
@@ -57,7 +58,6 @@ export default class Templates {
 					return template.name().toLowerCase().indexOf(str) !== -1 || template.text().toLowerCase().indexOf(str) !== -1
 				})
 		})
-
 
 		this.selectedStandardTemplate = ko.observable()
 		this.selectedInviteTemplate = ko.observable()
@@ -187,6 +187,11 @@ export default class Templates {
 				// if (this.selectedTemplateForm() instanceof InviteTemplateForm) {
 				// 	this.selectedTemplate().addressId(response.data.addressId)
 				// }
+
+				const datetime = new Date()
+				const formattedDt = formattedDateTemplates(datetime.toJSON())
+				this.selectedTemplate().datetime(formattedDt)
+
 				this.templates.push(this.selectedTemplate())
 			}
 			this.selectedTemplateForm(null)

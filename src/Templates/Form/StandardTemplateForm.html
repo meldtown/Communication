@@ -1,31 +1,83 @@
-<h3>Language</h3>
-<select name="language" id="language" data-bind="options: $parent.languages, value: language"></select>
-<h3>Name</h3>
-<input type="text" name="name" id="name" data-bind="value: name">
-<h3>text</h3>
-<input type="text" name="text" id="text" data-bind="value: text">
-<h3>Attached files</h3>
-<div data-bind="with: attach">
-	<h4 data-bind="if: id">
-		<span data-bind="text: fileName"></span>
-		<span data-bind="text: fileSize"></span>
-	</h4>
-	<div data-bind="ifnot: id">
-		<h4>No files chosen for attach</h4>
-	</div>
-	<div data-bind="if: id">
-		<span>You can choose another file for attaching</span>
+<!--<h3>Language</h3>-->
+<!--<select name="language" id="language" data-bind="options: $parent.languages, value: language"></select>-->
+<!--<h3>Name</h3>-->
+<!--<input type="text" name="name" id="name" data-bind="value: name">-->
+<!--<h3>text</h3>-->
+<!--<input type="text" name="text" id="text" data-bind="value: text">-->
+
+
+<!--<h3>Attached files</h3>-->
+<!--<div data-bind="with: attach">-->
+	<!--<h4 data-bind="if: id">-->
+		<!--<span data-bind="text: fileName"></span>-->
+		<!--<span data-bind="text: fileSize"></span>-->
+	<!--</h4>-->
+	<!--<div data-bind="ifnot: id">-->
+		<!--<h4>No files chosen for attach</h4>-->
+	<!--</div>-->
+	<!--<div data-bind="if: id">-->
+		<!--<span>You can choose another file for attaching</span>-->
+	<!--</div>-->
+<!--</div>-->
+<!--<label class="attach-file-form">-->
+	<!--<input type="file" data-bind="attach: {attach: attach}"/>-->
+	<!--<div data-bind="with: attach">-->
+		<!--<span data-bind="ifnot: id">Attach file</span>-->
+		<!--<span data-bind="if: id">Choose another file</span>-->
+	<!--</div>-->
+<!--</label>-->
+<!--<div data-bind="template: {name: 'Attach', data: attach}"></div>-->
+<!--<div data-bind="if: attach().id">-->
+	<!--<button data-bind="click: resetAttach">Reset attach</button>-->
+<!--</div>-->
+
+
+
+
+<div class="templates-lang">
+	<h5 class="fd-peasant templates-lang__title f-text-gray">Выберите язык сообщения</h5>
+	<div class="fd-f-left">
+		<p data-bind="text: langRuTxt, click: selectRuLang, css: {'-active': isRuActive()}" class="fd-peasant templates-lang__item"></p>
+		<p data-bind="text: langUaTxt, click: selectUaLang, css: {'-active': isUaActive()}" class="fd-peasant templates-lang__item"></p>
+		<p data-bind="text: langEnTxt, click: selectEnLang, css: {'-active': isEnActive()}" class="fd-peasant templates-lang__item"></p>
 	</div>
 </div>
-<label class="attach-file-form">
-	<input type="file" data-bind="attach: {attach: attach}"/>
-	<div data-bind="with: attach">
-		<span data-bind="ifnot: id">Attach file</span>
-		<span data-bind="if: id">Choose another file</span>
+
+<div class="templates-inputarea">
+	<label class="fd-peasant templates-inputarea__title f-text-gray" for="name">
+		Название шаблона
+	</label>
+
+	<div class="fd-f1 f-input-block hubcontrol__input">
+		<input
+			placeholder="Новый шаблон сообщения"
+			type="text"
+			class="templates-input"
+			name="name"
+			id="name"
+			data-bind="value: name"
+		>
 	</div>
-</label>
-<div data-bind="template: {name: 'Attach', data: attach}"></div>
-<div data-bind="if: attach().id">
-	<button data-bind="click: resetAttach">Reset attach</button>
+</div>
+
+<div class="templates-inputarea">
+	<label class="fd-peasant templates-inputarea__title f-text-gray" for="text">
+		Текст сообщения
+	</label>
+
+	<div class="fd-peasant fd-f1 f-input-block hubcontrol__input">
+				<textarea
+					placeholder="Новый шаблон сообщения"
+					class="templates-input"
+					name="text"
+					id="text"
+					data-bind="value: text"
+				></textarea>
+	</div>
+</div>
+
+<div class="templates-icons">
+	<span class="templates-icons__emozzi fi-hub-emozzi"></span>
+	<span class="fi-hub-attach"></span>
 </div>
 
