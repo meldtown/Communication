@@ -69,6 +69,20 @@ export default class InviteMessageForm extends AbstractMessageForm {
 
 		})
 
+		this.isPopupVisible = ko.observable(false)
+		this.showPopup = () => {
+			this.isPopupVisible(true)
+			this.toggleAddressDropdown()
+		}
+		this.hidePopup = () => this.isPopupVisible(false)
+
+		this.lat = ko.computed(() => this.selectedAddress() ? this.selectedAddress().latitude() : 0)
+		this.lng = ko.computed(() => this.selectedAddress() ? this.selectedAddress().longitude() : 0)
+
+		this.isManaged = ko.observable(false)
+
+		this.managedAddresses = ko.computed(() => this.addresses().slice(1))
+
 		dispatcher.subscribe(message => {
 			if (message.headId() === this.headId()) {
 				this.messages.push(message)
@@ -137,6 +151,10 @@ export default class InviteMessageForm extends AbstractMessageForm {
 	selectAddress(address) {
 		this.selectedAddress(address.id())
 		this.toggleAddressDropdown()
+	}
+
+	manageAddress = () => {
+		this.isPopupVisible(true)
 	}
 
 	fetchAddresses() {

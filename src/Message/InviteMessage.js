@@ -25,6 +25,5 @@ export default class InviteMessage extends AbstractMessage {
 
 		this.lat = ko.computed(() => this.address().latitude())
 		this.lng = ko.computed(() => this.address().longitude())
-
 	}
 }

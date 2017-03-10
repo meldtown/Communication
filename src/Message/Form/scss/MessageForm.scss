@@ -54,6 +54,10 @@
 		margin-bottom: 15px;
 		margin-top: 20px;
 	}
+
+	&__address {
+
+	}
 }
 
 .message-form-control {
@@ -62,6 +66,7 @@
 	&.-gray {
 		color: $gray;
 		input, input:focus {
+			min-width: 246px;
 			border-color: $light_gray;
 			font-size: 13px;
 			padding: 6px 15px 6px 23px;
