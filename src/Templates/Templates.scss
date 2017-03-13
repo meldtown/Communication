@@ -123,8 +123,10 @@ body {
 
 // -------------------------------
 
+$general_grey: #dddddd;
 $templates_lightblue: #e1f5fe;
 $templates_gray: #f2f2f2;
+$general_light_black: #bbbbbb;
 
 .templates {
 	&__leftside, &__rightside {
@@ -154,7 +156,7 @@ $templates_gray: #f2f2f2;
 		resize: vertical;
 
 		&:not(:focus) {
-			border-color: #bbbbbb;
+			border-color: $general_light_black;
 		}
 	}
 	.templates-input {
@@ -241,7 +243,7 @@ $templates_gray: #f2f2f2;
 		cursor: pointer;
 		color: #7f7f7f;
 		text-transform: uppercase;
-
+	
 		&.-active {
 			color: #222;
 			background-color: $templates_lightblue;
