@@ -78,7 +78,7 @@
 								<span class="text fd-peasant">Добавить новый адрес</span>
 							</div>
 							<div data-bind="foreach: managedAddresses">
-								<div class="item fd-f-between-middle" data-bind="click: $parent.selectAddress.bind($parent)">
+								<div class="item fd-f-between-middle" data-bind="click: $parent.selectAddress.bind($parent), css: {'is-active': isSelected}">
 									<div class="text">
 										Ул.&nbsp;<span class="fd-peasant street" data-bind="text: street"></span>,
 										<span class="fd-peasant building" data-bind="text: building"></span><span data-bind="if: office">,</span>
