@@ -152,7 +152,6 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.selectedAddress(address.id())
 		this.toggleAddressDropdown()
 		this.dispatcher.notifySubscribers({id: address.id()}, constants.ADDRESS_SELECTED)
-		console.log('selected')
 	}
 
 	manageAddress = () => {
