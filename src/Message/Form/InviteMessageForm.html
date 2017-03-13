@@ -41,17 +41,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="fd-f-left invite-info__address">
-			<div data-bind="with: addressForm">
-				<div data-bind="template: 'AddressForm'"></div>
-			</div>
-			<div data-bind="visible: addressForm">
-				<button class="invite-info__add-btn" data-bind="disable: isAddButtonDisabled, click: saveAddress">
-					Добавить
-				</button>
-				<button class="invite-info__add-btn" data-bind="click: cancelAddressForm">Отменить</button>
-			</div>
-		</div>
 	</div>
 
 
@@ -94,24 +83,34 @@
 						</div>
 					</div>
 					<div class="fd-f1">
-						<div class="address-map" data-bind="map: {lat: lat, lng: lng}"></div>
-						<div class="address-data">
-							<div data-bind="with: selectedAddress">
-								<div class="address fd-peasant">
-									<span data-bind="text: city"></span>,
-									ул.&nbsp;<span data-bind="text: street"></span>,
-									<span class="fd-peasant building" data-bind="text: building"></span><span data-bind="if: office">,</span>
-									оф.&nbsp;<span data-bind="text: office"></span>
+						<div data-bind="ifnot: addressForm">
+							<div class="address-map" data-bind="map: {lat: lat, lng: lng}"></div>
+							<div class="address-data">
+								<div data-bind="ifnot: addressForm">
+									<div data-bind="with: selectedAddress">
+										<div class="address fd-peasant">
+											<span data-bind="text: city"></span>,
+											ул.&nbsp;<span data-bind="text: street"></span>,
+											<span class="fd-peasant building" data-bind="text: building"></span><span data-bind="if: office">,</span>
+											оф.&nbsp;<span data-bind="text: office"></span>
+										</div>
+										<div class="description">
+											<h4 class="heading fd-peasant">Дополнительная информация о расположении
+												офиса</h4>
+											<p class="text fd-peasant" data-bind="text: description"></p>
+										</div>
+									</div>
 								</div>
-								<div class="description">
-									<h4 class="heading fd-peasant">Дополнительная информация о расположении офиса</h4>
-									<p class="text fd-peasant" data-bind="text: description"></p>
-								</div>
+							</div>
+						</div>
+						<div class="fd-f-left invite-info__address">
+							<div data-bind="with: addressForm">
+								<div data-bind="template: 'AddressForm'"></div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<span class="popup__close fi-close-big" data-bind="click: hidePopup"></span>
+				<span class="popup__close fi-close-big" data-bind="click: unManageAddress"></span>
 			</div>
 		</div>
 	</div>

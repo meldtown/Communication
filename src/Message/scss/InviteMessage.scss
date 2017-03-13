@@ -1,5 +1,16 @@
 //SMACSS rulezzz !
 
+
+//Base
+
+input, textarea, button {
+	outline: none;
+}
+
+//
+
+//Modules
+
 .message-container {
 	.message-text-container.-invite {
 		.invite-data {
@@ -25,63 +36,97 @@
 
 .manage-address {
 	width: 850px;
-	.address-map {
-		height: 260px;
-	}
-	.address-list {
-		padding: 20px 30px 30px;
-		.heading {
-			padding-bottom: 15px;
-			border-bottom: 1px solid $light_black;
-			h3 {
-				margin: 0;
-			}
+}
+
+.address-map {
+	width: 525px;
+	height: 260px;
+}
+.address-list {
+	padding: 20px 30px 30px;
+	.heading {
+		padding-bottom: 15px;
+		border-bottom: 1px solid $light_black;
+		h3 {
+			margin: 0;
 		}
-		.item {
-			padding: 10px;
-			color: rgba(0,0,0,.87);
-			border-bottom: 1px solid $light_black;
-			cursor: pointer;
-			&.add-address {
-				cursor: auto;
-				color: #4ba661;
-				padding-top: 15px;
-				padding-bottom: 15px;
-				.text {
-					cursor: pointer;
-				}
-			}
-			&.is-active, &:hover {
-				background-color: rgba(0, 0, 0, 0.05);
-			}
-			.city {
-				color: $light_gray;
-			}
+	}
+	.item {
+		padding: 10px;
+		color: rgba(0,0,0,.87);
+		border-bottom: 1px solid $light_black;
+		cursor: pointer;
+		&.add-address {
+			cursor: auto;
+			color: #4ba661;
+			padding-top: 15px;
+			padding-bottom: 15px;
 			.text {
-				margin-right: 10px;
-			}
-			.close {
-				font-size: 10px;
 				cursor: pointer;
 			}
 		}
+		&.is-active, &:hover {
+			background-color: rgba(0, 0, 0, 0.05);
+		}
+		.city {
+			color: $light_gray;
+		}
+		.text {
+			margin-right: 10px;
+		}
+		.close {
+			font-size: 10px;
+			cursor: pointer;
+		}
 	}
-	.address-data {
-		padding: 15px 10px 0 40px;
-		border-left: 1px solid $light_black;
-		.address, .description {
-			color: rgba(0,0,0, .87);
+}
+.address-data {
+	padding: 20px 40px 0;
+	border-left: 1px solid $light_black;
+	.address, .description {
+		color: rgba(0,0,0, .87);
+	}
+	.description {
+		margin-top: 15px;
+		.heading {
+			color: $gray;
+			margin-bottom: 2px;
 		}
-		.description {
+		.text {
+			margin: 0;
+		}
+	}
+}
+
+.address-data.address-data-form {
+	.control-container {
+		&:not(:first-of-type) {
 			margin-top: 15px;
-			.heading {
-				color: $gray;
-				margin-bottom: 2px;
-			}
-			.text {
-				margin: 0;
-			}
 		}
+	}
+	.control {
+		display: block;
+		width: 100%;
+		padding: 6px 0 6px 7px;
+		border-radius: 2px;
+		border: 1px solid $light_gray;
+	}
+	.label {
+		color: $gray;
 	}
 
+	.buttons-holder {
+		margin-top: 20px;
+		.save {
+			&:enabled {
+				color: $dark_green;
+			}
+			&:disabled {
+				cursor: not-allowed;
+			}
+		}
+		.cancel {
+			border: none;
+		}
+	}
 }

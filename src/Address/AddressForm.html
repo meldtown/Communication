@@ -1,19 +1,38 @@
-<div class="newAddress">
-	<label>City: <input type="text" data-bind="value: city, cityAutocomplete"></label>
+<div>
+	<div class="address-map" data-bind="map: {lat: lat, lng: lng, editable: true}"></div>
+	<div class="address-data address-data-form">
+		<div class="control-container">
+			<label class="label fd-peasant" for="city">Город</label>
+			<input class="control" type="text" id="city" data-bind="value: city, cityAutocomplete">
+		</div>
+		<div class="control-container">
+			<label class="label fd-peasant" for="street">Улица</label>
+			<input class="control" id="street" type="text" data-bind="value: street, streetAutocomplete">
+		</div>
+		<div class="control-container">
+			<label class="label fd-peasant" for="building">Дом</label>
+			<input class="control" id="building" type="text" data-bind="value: building">
+		</div>
+		<div class="control-container">
+			<label class="label fd-peasant" for="office">Офис</label>
+			<input class="control" id="office" type="text" data-bind="value: office">
+		</div>
 
-	<label>street: <input type="text" data-bind="value: street, streetAutocomplete"></label>
-	<label>building: <input type="text" data-bind="value: building"></label>
-	<label>office: <input type="text" data-bind="value: office"></label>
+		<input type="hidden" data-bind="value: lat">
+		<input type="hidden" data-bind="value: lng">
 
-	<br>
+		<div class="control-container">
+			<label class="label" for="description">Дополнительная информация о расположении офиса</label>
+			<textarea class="control" id="description" rows="3" data-bind="value: description"></textarea>
+		</div>
 
-	<label>Lat: <input type="text" data-bind="value: lat"></label>
-	<label>Lng: <input type="text" data-bind="value: lng"></label>
+		<div class="buttons-holder fd-serf">
+			<button class="invite-info__add-btn save" data-bind="disable: $parent.isAddButtonDisabled.bind($parent), click: $parent.saveAddress.bind($parent)">
+				Сохранить
+			</button>
+			<button class="invite-info__add-btn cancel" data-bind="click: $parent.cancelAddressForm.bind($parent)">Отменить
+			</button>
+		</div>
 
-	<div data-bind="template: { name: 'GoogleMap' }"></div>
-
-	<br><br>
-	<label>Description: <textarea style="width: 80%" rows="11" data-bind="value: description"></textarea></label>
-	<br><br>
-
+	</div>
 </div>
