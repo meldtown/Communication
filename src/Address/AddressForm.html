@@ -9,20 +9,22 @@
 			<label class="label fd-peasant" for="street">Улица</label>
 			<input class="control" id="street" type="text" data-bind="value: street, streetAutocomplete">
 		</div>
-		<div class="control-container">
-			<label class="label fd-peasant" for="building">Дом</label>
-			<input class="control" id="building" type="text" data-bind="value: building">
-		</div>
-		<div class="control-container">
-			<label class="label fd-peasant" for="office">Офис</label>
-			<input class="control" id="office" type="text" data-bind="value: office">
+		<div class="fd-f-between" style="margin-top: 15px;">
+			<div class="fd-f1" class="control-container">
+				<label class="label fd-peasant" for="building">Дом</label>
+				<input class="control" id="building" type="text" data-bind="value: building">
+			</div>
+			<div class="fd-f1" class="control-container" style="margin-top: 0; margin-left: 10px;">
+				<label class="label fd-peasant" for="office">Офис</label>
+				<input class="control" id="office" type="text" data-bind="value: office">
+			</div>
 		</div>
 
 		<input type="hidden" data-bind="value: lat">
 		<input type="hidden" data-bind="value: lng">
 
 		<div class="control-container">
-			<label class="label" for="description">Дополнительная информация о расположении офиса</label>
+			<label class="label fd-peasant" for="description">Дополнительная информация о расположении офиса</label>
 			<textarea class="control" id="description" rows="3" data-bind="value: description"></textarea>
 		</div>
 
@@ -30,7 +32,8 @@
 			<button class="invite-info__add-btn save" data-bind="disable: $parent.isAddButtonDisabled.bind($parent), click: $parent.saveAddress.bind($parent)">
 				Сохранить
 			</button>
-			<button class="invite-info__add-btn cancel" data-bind="click: $parent.cancelAddressForm.bind($parent)">Отменить
+			<button class="invite-info__add-btn cancel" data-bind="click: $parent.cancelAddressForm.bind($parent)">
+				Отменить
 			</button>
 		</div>
 

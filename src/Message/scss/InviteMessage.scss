@@ -43,7 +43,7 @@ input, textarea, button {
 	height: 260px;
 }
 .address-list {
-	max-height: 678px;
+	max-height: 615px;
 	min-height: 400px;
 	position: relative;
 	padding: 20px 30px 30px;
@@ -61,9 +61,11 @@ input, textarea, button {
 		cursor: pointer;
 		&.add-address {
 			cursor: auto;
-			color: #4ba661;
 			padding-top: 15px;
 			padding-bottom: 15px;
+			&:not(.is-active) {
+				color: #4ba661;
+			}
 			.text {
 				cursor: pointer;
 			}

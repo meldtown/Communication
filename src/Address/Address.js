@@ -16,11 +16,11 @@ export default class Address {
 			return `https://maps.googleapis.com/maps/api/staticmap?center=${this.latitude()},${this.longitude()}&markers=color:red%7C${this.latitude()},${this.longitude()}&zoom=16&size=461x80&key=AIzaSyBu7-9v1gFOFrwP4f62DQdDOcPAziS2wOc`
 		})
 
-		this.isSelected = ko.observable(false)
+		this.isViewed = ko.observable(false)
 		if (dispatcher) {
 			dispatcher.subscribe(({id}) => {
-				this.isSelected(this.id() === id)
-			}, this, constants.ADDRESS_SELECTED)
+				this.isViewed(this.id() === id)
+			}, this, constants.ADDRESS_IS_VIEWED)
 
 		}
 		this.optionText = ko.computed(() => {

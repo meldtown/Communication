@@ -63,11 +63,12 @@
 							<h3 class="fd-beefy-soldier">Адреса компании</h3>
 						</div>
 						<div class="container">
-							<div class="item add-address">
+							<div class="item add-address" data-bind="css: {'is-active': addressForm}, click: createAddress">
 								<span class="text fd-peasant">Добавить новый адрес</span>
+								<i class="fi-add"></i>
 							</div>
 							<div data-bind="foreach: managedAddresses">
-								<div class="item fd-f-between-middle" data-bind="click: $parent.selectAddress.bind($parent), css: {'is-active': isSelected}">
+								<div class="item fd-f-between-middle" data-bind="click: $parent.viewAddress.bind($parent), css: {'is-active': isViewed}">
 									<div class="text">
 										Ул.&nbsp;<span class="fd-peasant street" data-bind="text: street"></span>,
 										<span class="fd-peasant building" data-bind="text: building"></span><span data-bind="if: office">,</span>
@@ -83,11 +84,11 @@
 						</div>
 					</div>
 					<div class="fd-f1">
-						<div data-bind="ifnot: addressForm">
-							<div class="address-map" data-bind="map: {lat: lat, lng: lng}"></div>
-							<div class="address-data">
+						<div data-bind="ifnot: addressForm, style: {height: addressForm() ? 'auto' : '100%'}" class="fd-f fd-c">
+							<div class="address-map" data-bind="map: {lat: latManaged, lng: lngManaged}"></div>
+							<div class="address-data fd-f1">
 								<div data-bind="ifnot: addressForm">
-									<div data-bind="with: selectedAddress">
+									<div data-bind="with: managedAddress">
 										<div class="address fd-peasant">
 											<span data-bind="text: city"></span>,
 											ул.&nbsp;<span data-bind="text: street"></span>,

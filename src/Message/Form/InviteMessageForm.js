@@ -80,8 +80,10 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		this.lng = ko.computed(() => this.selectedAddress() ? this.selectedAddress().longitude() : 0)
 
 		this.isManaged = ko.observable(false)
-
 		this.managedAddresses = ko.computed(() => this.addresses().slice(1))
+		this.managedAddress = ko.observable()
+		this.latManaged = ko.computed(() => this.managedAddress() ? this.managedAddress().latitude() : 0)
+		this.lngManaged = ko.computed(() => this.managedAddress() ? this.managedAddress().longitude() : 0)
 
 		dispatcher.subscribe(message => {
 			if (message.headId() === this.headId()) {
@@ -130,7 +132,8 @@ export default class InviteMessageForm extends AbstractMessageForm {
 
 	createAddress() {
 		this.addressForm(new AddressForm())
-		this.manageAddress(true)
+		this.isPopupVisible(true)
+		this.dispatcher.notifySubscribers({id: -1}, constants.ADDRESS_IS_VIEWED)
 	}
 
 	saveAddress() {
@@ -152,10 +155,20 @@ export default class InviteMessageForm extends AbstractMessageForm {
 	selectAddress(address) {
 		this.selectedAddress(address.id())
 		this.toggleAddressDropdown()
-		this.dispatcher.notifySubscribers({id: address.id()}, constants.ADDRESS_SELECTED)
+	}
+
+	viewAddress(address) {
+		this.managedAddress(address)
+		this.dispatcher.notifySubscribers({id: address.id()}, constants.ADDRESS_IS_VIEWED)
 	}
 
 	manageAddress = () => {
+		this.isAddressBeingSelected(false)
+
+		let firstManagedAddress = this.managedAddresses()[0]
+
+		this.managedAddress(firstManagedAddress)
+		this.dispatcher.notifySubscribers({id: firstManagedAddress.id()}, constants.ADDRESS_IS_VIEWED)
 		this.isPopupVisible(true)
 		this.isManaged(true)
 	}
