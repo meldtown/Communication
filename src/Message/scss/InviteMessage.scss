@@ -43,6 +43,9 @@ input, textarea, button {
 	height: 260px;
 }
 .address-list {
+	max-height: 678px;
+	min-height: 400px;
+	position: relative;
 	padding: 20px 30px 30px;
 	.heading {
 		padding-bottom: 15px;
@@ -81,7 +84,7 @@ input, textarea, button {
 	}
 }
 .address-data {
-	padding: 20px 40px 0;
+	padding: 20px 40px;
 	border-left: 1px solid $light_black;
 	.address, .description {
 		color: rgba(0,0,0, .87);

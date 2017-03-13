@@ -130,6 +130,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 
 	createAddress() {
 		this.addressForm(new AddressForm())
+		this.manageAddress(true)
 	}
 
 	saveAddress() {
@@ -156,6 +157,12 @@ export default class InviteMessageForm extends AbstractMessageForm {
 
 	manageAddress = () => {
 		this.isPopupVisible(true)
+		this.isManaged(true)
+	}
+
+	unManageAddress = () => {
+		this.isPopupVisible(false)
+		this.isManaged(false)
 	}
 
 	fetchAddresses() {
