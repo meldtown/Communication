@@ -36,8 +36,13 @@
 		<div class="template-item" data-bind="text: name, click: select, css: {selectedTemplate: isSelected()}"></div>
 	</div>
 </div>
+
+
+
 <div class="selected-template-template">
 	<button class="create-new" data-bind="click: create">Create new template</button>
+
+
 	<div data-bind="if: isSelectedTemplateBeingEdited">
 		<div data-bind="with: selectedTemplateForm">
 			<div data-bind="template: template"></div>
@@ -45,6 +50,7 @@
 		<button data-bind="click: $root.cancel">Cancel</button>
 		<button data-bind="click: $root.save">Save</button>
 	</div>
+
 	<div data-bind="ifnot: isSelectedTemplateBeingEdited">
 		<div data-bind="with: selectedTemplate">
 			<div data-bind="template: template"></div>
@@ -52,11 +58,24 @@
 		<button data-bind="click: $root.edit">Edit</button>
 		<button data-bind="click: $root.remove">Remove</button>
 	</div>
+
+
+
 </div>
 
 
 <br clear="all">
 <br><br><br><br><br><br><br><br><br><br>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -99,110 +118,50 @@
 			</div>
 		</div>
 
-
-		<ul class="templates-list f-reset-list f-text-black">
-			<li class="fd-f-left fd-peasant templates-list__item -active">
+		<ul class="templates-list f-reset-list f-text-black" data-bind="foreach: filteredTemplates">
+			<li class="fd-f-left fd-peasant templates-list__item" data-bind="click: select, css: {'-active': isSelected()}">
 				<span class="fd-f1">
 					<i class="fi-hub-wright"></i>
-					Новый шаблон сообщения
+					<span data-bind="text: name"></span>
 				</span>
-				<span class="templates-list__date">
-					15 фев 2017
-				</span>
+				<span class="templates-list__date" data-bind="text: datetime"></span>
 				<span class="templates-list__remove f-text-gray">&times;</span>
 			</li>
-			<li class="fd-f-left fd-peasant templates-list__item">
-				<span class="fd-f1">
-					<i class="fi-hub-wright"></i>
-					О компании
-				</span>
-				<span class="templates-list__date">
-					22 апр 2017
-				</span>
-			</li>
-			<li class="fd-f-left fd-peasant templates-list__item">
-				<span class="fd-f1">
-					<i class="fi-hub-wright"></i>
-					Приветствие в базе резюме
-				</span>
-				<span class="templates-list__date">
-					02 янв 2017
-				</span>
-			</li>
-			<li class="fd-f-left fd-peasant templates-list__item">
-				<span class="fd-f1">
-					<i class="fi-hub-wright"></i>
-					Сказ о том, как круто работать карлсоном
-				</span>
-				<span class="templates-list__date">
-					15 фев 2017
-				</span>
-			</li>
-			<li class="fd-f-left fd-peasant templates-list__item">
-				<span class="fd-f1">
-					<i class="fi-hub-wright"></i>
-					Приглашение + анкета
-				</span>
-				<span class="templates-list__date">
-					17 апр 2017
-				</span>
-			</li>
 		</ul>
-
-
 	</div>
-	<div class="fd-f1 templates__rightside">
-		<div class="templates-lang">
-			<h5 class="fd-peasant templates-lang__title">Выберите язык сообщения</h5>
-			<div class="fd-f-left">
-				<p class="fd-peasant templates-lang__item -active">РУ</p>
-				<p class="fd-peasant templates-lang__item">УК</p>
-				<p class="fd-peasant templates-lang__item">EN</p>
-			</div>
+
+
+	<div class="fd-f1 templates__rightside" data-bind="if: isSelectedTemplateBeingEdited, css: { '-hide': !isSelectedTemplateBeingEdited() }">
+		<div data-bind="with: selectedTemplateForm">
+			<div data-bind="template: template"></div>
 		</div>
-
-		<div class="templates-inputarea">
-			<label class="fd-peasant templates-inputarea__title" for="template_name">
-				Название шаблона
-			</label>
-
-			<div class="fd-f1 f-input-block hubcontrol__input">
-				<input
-					placeholder="Новый шаблон сообщения"
-					id="template_name"
-					type="text"
-					class="templates-input"
-				>
-			</div>
-		</div>
-
-		<div class="templates-inputarea">
-			<label class="fd-peasant templates-inputarea__title" for="template_message">
-				Текст сообщения
-			</label>
-
-			<div class="fd-peasant fd-f1 f-input-block hubcontrol__input">
-				<textarea
-					placeholder="Новый шаблон сообщения"
-					id="template_message"
-					class="templates-input"
-				></textarea>
-			</div>
-		</div>
-
-		<div class="templates-icons">
-			<span class="templates-icons__emozzi fi-hub-emozzi"></span>
-			<span class="fi-hub-attach"></span>
-		</div>
-
 
 		<div class="fd-f-left templates-create-controls">
-			<a href="#" class="templates-btn -green fd-peasant">
+			<a data-bind="click: $root.save" href="#save" class="templates-btn -green fd-peasant">
 				Сохранить
 			</a>
-			<a href="#" class="templates-create-controls__discard templates-btn -grey -without-border fd-peasant">
+			<a data-bind="click: $root.cancel" href="#cancel" class="templates-create-controls__discard templates-btn -grey -without-border fd-peasant">
 				Отменить
 			</a>
 		</div>
 	</div>
+
+
+
+	<div class="fd-f1 templates__rightside" data-bind="ifnot: isSelectedTemplateBeingEdited, css: { '-hide': isSelectedTemplateBeingEdited() }">
+		<div data-bind="with: selectedTemplate">
+			<div data-bind="template: template"></div>
+		</div>
+
+		<div class="fd-f-left templates-create-controls">
+			<a data-bind="click: $root.edit" href="#save" class="templates-btn -green fd-peasant">
+				Редактировать
+			</a>
+			<a data-bind="click: $root.remove" href="#remove" class="templates-create-controls__discard templates-btn -grey -without-border fd-peasant">
+				Удалить
+			</a>
+		</div>
+	</div>
+
+
 </div>

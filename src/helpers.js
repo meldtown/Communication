@@ -1,4 +1,6 @@
 import moment from 'moment'
+moment.locale('ru')
+
 
 export const injectTemplate = (name, template) => {
 	let script = document.createElement('SCRIPT')
@@ -19,6 +21,7 @@ export const formattedDate = date => date && !isNaN(Date.parse(date)) && moment(
 export const formattedTime = date => date && !isNaN(Date.parse(date)) && moment(date).isValid() ? moment(date).format('HH:mm') : null
 export const isoDateTime = date => date && !isNaN(Date.parse(date)) && moment(date).isValid() ? moment(date).format() : null
 export const inputFormattedDate = date => date && !isNaN(Date.parse(date)) && moment(date).isValid() ? moment(date).format('YYYY-MM-DD') : null
+export const formattedDateTemplates = date => date && !isNaN(Date.parse(date)) && moment(date).isValid() ? moment(date).format('DD MMM YYYY').replace('.', '') : null
 
 export const formattedAgo = date => {
 	if( date && !isNaN(Date.parse(date)) && moment(date).isValid() ) {

@@ -1,17 +1,21 @@
-<h3>Language</h3>
-<div data-bind="text: language"></div>
-<h3>Name</h3>
-<div data-bind="text: name"></div>
-<h3>Text</h3>
-<div data-bind="text: text"></div>
-<div data-bind="with: attach">
-	<div data-bind="if: id">
-		<h3>Attached files</h3>
-		<p data-bind="text: fileName"></p>
-		<p>
-			<span data-bind="text: fileSize"></span>
-			<span>kb</span>
-		</p>
-		<div data-bind="template: 'Attach'"></div>
-	</div>
-</div>
+<!--<h3>Languagee</h3>-->
+<!--<div data-bind="text: language"></div>-->
+<!--<h3>Name</h3>-->
+<!--<div data-bind="text: name"></div>-->
+<!--<h3>Text</h3>-->
+<!--<div data-bind="text: text"></div>-->
+<!--<div data-bind="with: attach">-->
+	<!--<div data-bind="if: id">-->
+		<!--<h3>Attached files</h3>-->
+		<!--<p data-bind="text: fileName"></p>-->
+		<!--<p>-->
+			<!--<span data-bind="text: fileSize"></span>-->
+			<!--<span>kb</span>-->
+		<!--</p>-->
+		<!--<div data-bind="template: 'Attach'"></div>-->
+	<!--</div>-->
+<!--</div>-->
+
+
+<p class="f-text-gray fd-peasant templates-view__key">Язык сообщения</p>
+<p class="f-text-black fd-peasant templates-view__value" data-bind="text: language"></p>

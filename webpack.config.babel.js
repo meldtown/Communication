@@ -49,7 +49,7 @@ export default (app) => ({
 	},
 	plugins: isProduction
 		? plugins.concat([new ExtractTextPlugin('[name].css')])
-		: plugins.concat([new HotModuleReplacementPlugin(), new DefinePlugin({api2: `"https://hub-api.${process.env.COMPUTERNAME.toLowerCase()}.rabota.ua"`})]), // new DefinePlugin({api2: `"http://175e30fa.eu.ngrok.io"`})]),
+		: plugins.concat([new HotModuleReplacementPlugin(), new DefinePlugin({api2: `"https://hub-api.${process.env.COMPUTERNAME.toLowerCase()}.rabota.ua"`})]),
 	devServer: {
 		hot: true,
 		host: '0.0.0.0',
