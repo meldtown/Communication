@@ -139,9 +139,12 @@ export default class InviteMessageForm extends AbstractMessageForm {
 
 	saveAddress() {
 		return this.addressForm().save().then(() => {
-			this.addresses.push(new Address(this.dispatcher, ko.toJS(this.addressForm())))
+			let newAddress = new Address(this.dispatcher, ko.toJS(this.addressForm()))
+			this.addresses.splice(1,0,newAddress)
 			this.addressId(this.addressForm().id)
 			this.addressForm(null)
+			this.managedAddress(newAddress)
+			if (!this.addressForm()) this.dispatcher.notifySubscribers({id: newAddress.id()}, constants.ADDRESS_IS_VIEWED)
 		})
 	}
 
@@ -184,7 +187,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 	fetchAddresses() {
 		return axios.get(`${api2}/employer/address`)
 			.then(response => {
-				this.addresses([new Address(null, {id: 0})].concat(response.data.map(item => new Address(this.dispatcher, item))))
+				this.addresses([new Address(null, {id: 0})].concat(response.data.map(item => new Address(this.dispatcher, item)).reverse()))
 			})
 	}
 }
