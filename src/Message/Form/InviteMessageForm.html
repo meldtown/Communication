@@ -64,8 +64,8 @@
 						</div>
 						<div class="container">
 							<div class="item add-address" data-bind="css: {'is-active': addressForm}, click: createAddress">
-								<span class="text fd-peasant">Добавить новый адрес</span>
-								<i class="fi-add"></i>
+								<span data-bind="ifnot: addressForm" class="text fd-peasant">Добавить новый адрес</span>
+								<span data-bind="if: addressForm" class="text fd-peasant">Hовый адрес</span>
 							</div>
 							<div data-bind="foreach: managedAddresses">
 								<div class="item fd-f-between-middle" data-bind="click: $parent.viewAddress.bind($parent), css: {'is-active': isViewed}">
