@@ -60,6 +60,10 @@ export default class Templates {
 				})
 		})
 
+		this.templatesIsEmpty = ko.computed(() => {
+			return this.filteredTemplates().length === 0
+		})
+
 		this.selectedStandardTemplate = ko.observable()
 		this.selectedInviteTemplate = ko.observable()
 		this.selectedDeclineTemplate = ko.observable()
