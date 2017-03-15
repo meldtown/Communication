@@ -131,6 +131,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 	}
 
 	createAddress() {
+		this.isAddressBeingSelected(false)
 		this.addressForm(new AddressForm())
 		this.isPopupVisible(true)
 		this.dispatcher.notifySubscribers({id: -1}, constants.ADDRESS_IS_VIEWED)
@@ -145,6 +146,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 	}
 
 	cancelAddressForm() {
+		this.isPopupVisible(false)
 		this.addressForm(null)
 	}
 
@@ -158,6 +160,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 	}
 
 	viewAddress(address) {
+		this.addressForm(null)
 		this.managedAddress(address)
 		this.dispatcher.notifySubscribers({id: address.id()}, constants.ADDRESS_IS_VIEWED)
 	}
@@ -168,7 +171,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 		let firstManagedAddress = this.managedAddresses()[0]
 
 		this.managedAddress(firstManagedAddress)
-		this.dispatcher.notifySubscribers({id: firstManagedAddress.id()}, constants.ADDRESS_IS_VIEWED)
+		if (!this.addressForm()) this.dispatcher.notifySubscribers({id: firstManagedAddress.id()}, constants.ADDRESS_IS_VIEWED)
 		this.isPopupVisible(true)
 		this.isManaged(true)
 	}
