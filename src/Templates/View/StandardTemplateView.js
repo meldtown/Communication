@@ -7,4 +7,3 @@ export default class StandardTemplateView extends AbstractTemplateView {
 		this.template = ko.observable('StandardTemplateView')
 	}
 }
-

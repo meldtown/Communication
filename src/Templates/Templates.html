@@ -1,71 +1,71 @@
-<div class="templates-wrapper">
-	<div class="tabs">
-		<div class="tab" data-bind="css: {selectedTab: isStandardTabSelected()}">
-			<a href="#" data-bind="click: selectStandardTab">Standard</a>
-		</div>
-		<div class="tab" data-bind="css: {selectedTab: isInviteTabSelected()}">
-			<a href="#" data-bind="click: selectInviteTab">Invite</a>
-		</div>
-		<div class="tab" data-bind="css: {selectedTab: isDeclineTabSelected()}">
-			<a href="#" data-bind="click: selectDeclineTab">Decline</a>
-		</div>
-		<div class="tab" data-bind="css: {selectedTab: isOfferTabSelected()}">
-			<a href="#" data-bind="click: selectOfferTab">Offer</a>
-		</div>
-	</div>
+<!--<div class="templates-wrapper">-->
+	<!--<div class="tabs">-->
+		<!--<div class="tab" data-bind="css: {selectedTab: isStandardTabSelected()}">-->
+			<!--<a href="#" data-bind="click: selectStandardTab">Standard</a>-->
+		<!--</div>-->
+		<!--<div class="tab" data-bind="css: {selectedTab: isInviteTabSelected()}">-->
+			<!--<a href="#" data-bind="click: selectInviteTab">Invite</a>-->
+		<!--</div>-->
+		<!--<div class="tab" data-bind="css: {selectedTab: isDeclineTabSelected()}">-->
+			<!--<a href="#" data-bind="click: selectDeclineTab">Decline</a>-->
+		<!--</div>-->
+		<!--<div class="tab" data-bind="css: {selectedTab: isOfferTabSelected()}">-->
+			<!--<a href="#" data-bind="click: selectOfferTab">Offer</a>-->
+		<!--</div>-->
+	<!--</div>-->
 
-	<div class="filter">
-		<div class="language-filter">
-			<div class="language-item" data-bind="css: {selectedLanguage: isRussianLanguageSelected()}, click: toggleRussianLanguage">
-				Ru
-			</div>
-			<div class="language-item" data-bind="css: {selectedLanguage: isUkrainianLanguageSelected()}, click: toggleUkrainianLanguage">
-				Ua
-			</div>
-			<div class="language-item" data-bind="css: {selectedLanguage: isEnglishLanguageSelected()}, click: toggleEnglishLanguage">
-				En
-			</div>
-		</div>
-		<div class="filter-text">
-			<input type="search" data-bind="value: filter, valueUpdate: 'input'">
-		</div>
-	</div>
-
-
-	<div class="templates-list" data-bind="foreach: filteredTemplates">
-		<div class="template-item" data-bind="text: name, click: select, css: {selectedTemplate: isSelected()}"></div>
-	</div>
-</div>
+	<!--<div class="filter">-->
+		<!--<div class="language-filter">-->
+			<!--<div class="language-item" data-bind="css: {selectedLanguage: isRussianLanguageSelected()}, click: toggleRussianLanguage">-->
+				<!--Ru-->
+			<!--</div>-->
+			<!--<div class="language-item" data-bind="css: {selectedLanguage: isUkrainianLanguageSelected()}, click: toggleUkrainianLanguage">-->
+				<!--Ua-->
+			<!--</div>-->
+			<!--<div class="language-item" data-bind="css: {selectedLanguage: isEnglishLanguageSelected()}, click: toggleEnglishLanguage">-->
+				<!--En-->
+			<!--</div>-->
+		<!--</div>-->
+		<!--<div class="filter-text">-->
+			<!--<input type="search" data-bind="value: filter, valueUpdate: 'input'">-->
+		<!--</div>-->
+	<!--</div>-->
 
 
-
-<div class="selected-template-template">
-	<button class="create-new" data-bind="click: create">Create new template</button>
-
-
-	<div data-bind="if: isSelectedTemplateBeingEdited">
-		<div data-bind="with: selectedTemplateForm">
-			<div data-bind="template: template"></div>
-		</div>
-		<button data-bind="click: $root.cancel">Cancel</button>
-		<button data-bind="click: $root.save">Save</button>
-	</div>
-
-	<div data-bind="ifnot: isSelectedTemplateBeingEdited">
-		<div data-bind="with: selectedTemplate">
-			<div data-bind="template: template"></div>
-		</div>
-		<button data-bind="click: $root.edit">Edit</button>
-		<button data-bind="click: $root.remove">Remove</button>
-	</div>
+	<!--<div class="templates-list" data-bind="foreach: filteredTemplates">-->
+		<!--<div class="template-item" data-bind="text: name, click: select, css: {selectedTemplate: isSelected()}"></div>-->
+	<!--</div>-->
+<!--</div>-->
 
 
 
-</div>
+<!--<div class="selected-template-template">-->
+	<!--<button class="create-new" data-bind="click: create">Create new template</button>-->
 
 
-<br clear="all">
-<br><br><br><br><br><br><br><br><br><br>
+	<!--<div data-bind="if: isSelectedTemplateBeingEdited">-->
+		<!--<div data-bind="with: selectedTemplateForm">-->
+			<!--<div data-bind="template: template"></div>-->
+		<!--</div>-->
+		<!--<button data-bind="click: $root.cancel">Cancel</button>-->
+		<!--<button data-bind="click: $root.save">Save</button>-->
+	<!--</div>-->
+
+	<!--<div data-bind="ifnot: isSelectedTemplateBeingEdited">-->
+		<!--<div data-bind="with: selectedTemplate">-->
+			<!--<div data-bind="template: template"></div>-->
+		<!--</div>-->
+		<!--<button data-bind="click: $root.edit">Edit</button>-->
+		<!--<button data-bind="click: $root.remove">Remove</button>-->
+	<!--</div>-->
+
+
+
+<!--</div>-->
+
+
+<!--<br clear="all">-->
+<!--<br><br><br><br><br><br><br><br><br><br>-->
 
 
 
@@ -118,6 +118,17 @@
 			</div>
 		</div>
 
+		<div class="templates-empty" data-bind="if: templatesIsEmpty">
+			<p class="fd-peasant templates-empty__text">
+				Создайте шаблон сообщений. <br />
+				Это поможет Вам экономить время
+			</p>
+
+			<p data-bind="click: create" class="templates-btn -emptycreate -grey fd-serf">
+				Создать шаблон
+			</p>
+		</div>
+
 		<ul class="templates-list f-reset-list f-text-black" data-bind="foreach: filteredTemplates">
 			<li class="fd-f-left fd-peasant templates-list__item" data-bind="click: select, css: {'-active': isSelected()}">
 				<span class="fd-f1">
@@ -125,7 +136,12 @@
 					<span data-bind="text: name"></span>
 				</span>
 				<span class="templates-list__date" data-bind="text: datetime"></span>
-				<span class="templates-list__remove f-text-gray">&times;</span>
+				<span class="templates-list__wrap-remove" data-bind="if: isSelected">
+					<span data-bind="click: function() { $root.remove() /* I don't why, but it's work */ }" class="templates-list__remove f-text-gray">&times;</span>
+				</span>
+				<span class="templates-list__wrap-remove" data-bind="ifnot: isSelected">
+					<span class="templates-list__remove -hidden f-text-gray">&times;</span>
+				</span>
 			</li>
 		</ul>
 	</div>
@@ -146,9 +162,7 @@
 		</div>
 	</div>
 
-
-
-	<div class="fd-f1 templates__rightside" data-bind="ifnot: isSelectedTemplateBeingEdited, css: { '-hide': isSelectedTemplateBeingEdited() }">
+	<div class="fd-f1 templates__rightside" data-bind="if: ( !templatesIsEmpty() && !isSelectedTemplateBeingEdited() ), css: { '-hide': isSelectedTemplateBeingEdited(), '-empty': templatesIsEmpty() }">
 		<div data-bind="with: selectedTemplate">
 			<div data-bind="template: template"></div>
 		</div>
@@ -162,6 +176,5 @@
 			</a>
 		</div>
 	</div>
-
 
 </div>
