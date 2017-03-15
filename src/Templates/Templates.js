@@ -69,6 +69,8 @@ export default class Templates {
 		this.selectedDeclineTemplate = ko.observable()
 		this.selectedOfferTemplate = ko.observable()
 
+
+
 		this.selectedTemplate = ko.computed(() => {
 			switch (this.selectedTab()) {
 				case StandardTemplateView:
@@ -81,6 +83,8 @@ export default class Templates {
 					return this.selectedOfferTemplate()
 			}
 		})
+
+		window.sss = this.selectedTemplate
 
 		this.selectedTemplateForm = ko.observable(null)
 		this.isSelectedTemplateBeingEdited = ko.observable(false)
@@ -181,6 +185,11 @@ export default class Templates {
 	cancel() {
 		if (!this.selectedTemplateForm().attach().id) this.selectedTemplate().attach(new Attach())
 		this.isSelectedTemplateBeingEdited(false)
+
+		if (!this.selectedTemplateForm().id()) {
+			this.filteredTemplates()[0].select()
+		}
+
 		this.selectedTemplateForm(null)
 	}
 
@@ -220,6 +229,7 @@ export default class Templates {
 		this.isRussianLanguageSelected(false)
 		this.isUkrainianLanguageSelected(false)
 		this.isEnglishLanguageSelected(false)
+
 		let newTemplateForm = null
 		let newTemplateView = null
 		let data = {text: '', title: '', language: 'ru'}

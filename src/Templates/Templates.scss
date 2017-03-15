@@ -299,13 +299,19 @@ $general_light_black: #bbbbbb;
 		padding-top: 2px;
 		color: $general_light_black;
 	}
+	&__wrap-remove {
+		position: relative;
+		top: 3px;
+		margin-top: -3px;
+	}
 	&__remove {
 		margin-right: 13px;
 		font-size: 18px;
-		margin-top: -3px;
-		position: relative;
 		margin-left: 12px;
-		top: 3px;
+
+		&.-hidden {
+			opacity: 0;
+		}
 	}
 }
 

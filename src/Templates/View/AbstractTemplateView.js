@@ -14,7 +14,6 @@ export default class AbstractTemplateView extends AbstractTemplate {
 		}, this, actions.TEMPLATE_SELECTED)
 
 		this.isSelected = ko.observable(false)
-
 	}
 
 	select() {

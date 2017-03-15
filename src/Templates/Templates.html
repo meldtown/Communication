@@ -136,7 +136,12 @@
 					<span data-bind="text: name"></span>
 				</span>
 				<span class="templates-list__date" data-bind="text: datetime"></span>
-				<span class="templates-list__remove f-text-gray">&times;</span>
+				<span class="templates-list__wrap-remove" data-bind="if: isSelected">
+					<span data-bind="click: function() { $root.remove() /* I don't why, but it's work */ }" class="templates-list__remove f-text-gray">&times;</span>
+				</span>
+				<span class="templates-list__wrap-remove" data-bind="ifnot: isSelected">
+					<span class="templates-list__remove -hidden f-text-gray">&times;</span>
+				</span>
 			</li>
 		</ul>
 	</div>
@@ -157,8 +162,6 @@
 		</div>
 	</div>
 
-
-
 	<div class="fd-f1 templates__rightside" data-bind="if: ( !templatesIsEmpty() && !isSelectedTemplateBeingEdited() ), css: { '-hide': isSelectedTemplateBeingEdited(), '-empty': templatesIsEmpty() }">
 		<div data-bind="with: selectedTemplate">
 			<div data-bind="template: template"></div>
@@ -173,6 +176,5 @@
 			</a>
 		</div>
 	</div>
-
 
 </div>
