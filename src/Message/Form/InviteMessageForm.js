@@ -51,7 +51,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 
 
 		this.hasVacancies = ko.computed(() => (this.vacancies() || []).length > 0)
-		this.hasAddresses = ko.computed(() => (this.addresses() || []).length > 0)
+		this.hasAddresses = ko.computed(() => (this.addresses() || []).length > 1)
 		this.canBeSaved = ko.computed(() => this.chatId() && this.text())
 		this.isAddButtonDisabled = ko.computed(() => {
 			if (!this.addressForm()) return
@@ -81,6 +81,7 @@ export default class InviteMessageForm extends AbstractMessageForm {
 
 		this.isManaged = ko.observable(false)
 		this.managedAddresses = ko.computed(() => this.addresses().slice(1))
+		this.hasManagedAddresses = ko.computed(() => !!this.managedAddresses().length)
 		this.managedAddress = ko.observable()
 		this.latManaged = ko.computed(() => this.managedAddress() ? this.managedAddress().latitude() : 0)
 		this.lngManaged = ko.computed(() => this.managedAddress() ? this.managedAddress().longitude() : 0)
@@ -194,8 +195,12 @@ export default class InviteMessageForm extends AbstractMessageForm {
 	removeAddress(address) {
 		axios.delete(`${api2}/employer/address/${address.id()}`).then(() => {
 			this.addresses.remove(address)
-			this.managedAddress(this.managedAddresses()[0])
-			this.managedAddress().isViewed(true)
+			if (this.hasManagedAddresses()) {
+				this.managedAddress(this.managedAddresses()[0])
+				this.managedAddress().isViewed(true)
+			} else {
+				this.createAddress()
+			}
 		})
 	}
 }
