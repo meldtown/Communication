@@ -1,5 +1,6 @@
 import * as ko from 'knockout'
 import * as constants from '../constants'
+import axios from 'axios'
 
 export default class Address {
 	constructor(dispatcher, {id, city, street, building, office, description, mapFile, longitude, latitude, lat, lng} = {}) {

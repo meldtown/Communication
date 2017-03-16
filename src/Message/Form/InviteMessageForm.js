@@ -190,4 +190,12 @@ export default class InviteMessageForm extends AbstractMessageForm {
 				this.addresses([new Address(null, {id: 0})].concat(response.data.map(item => new Address(this.dispatcher, item)).reverse()))
 			})
 	}
+
+	removeAddress(address) {
+		axios.delete(`${api2}/employer/address/${address.id()}`).then(() => {
+			this.addresses.remove(address)
+			this.managedAddress(this.managedAddresses()[0])
+			this.managedAddress().isViewed(true)
+		})
+	}
 }
